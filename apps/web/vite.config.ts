@@ -15,6 +15,9 @@ export default defineConfig({
 		sveltekit()
 	],
 	server: {
-		host: true
+		host: true,
+		fs: {
+			allow: ["../.."]
+		}
 	}
 });

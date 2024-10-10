@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ContentWrapper from '$src/lib/view/common/content_wrapper.svelte';
-	import escohotadoFumandoImg from '../assets/img/escohotado-fumando.png';
+	import escohotadoFumandoImg from 'gaudi/assets/img/escohotado-fumando.png';
 	import { EscotaButton } from 'gaudi';
 </script>
 

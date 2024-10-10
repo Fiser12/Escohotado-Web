@@ -1,5 +1,5 @@
 <script lang="ts">
-	import hamburguer from '../assets/svgs/hamburguer.svg';
+	import hamburguer from 'gaudi/assets/svgs/hamburguer.svg';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();

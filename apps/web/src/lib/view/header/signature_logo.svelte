@@ -1,5 +1,5 @@
 <script lang="ts">
-	import logo from '../assets/svgs/signature.svg';
+	import logo from 'gaudi/assets/svgs/signature.svg';
 
 	export let homeUrl: string = '/';
 	export let tabindex: number = 0;
