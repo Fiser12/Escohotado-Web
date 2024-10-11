@@ -1,7 +1,10 @@
-<script>
-	import TiptapEditor from '$src/lib/view/common/tiptap_editor.svelte';
-	import { Tabs, TabItem } from 'flowbite-svelte';
-	import { H3, ContentWrapper } from "gaudi";
+<script lang="ts">
+	import { ContentWrapper } from "gaudi";
+	import { graphql, fragment  } from '$houdini';
+  /* @type { import('./$houdini').PageData } */
+  export let data
+
+  $: ({ GetAllMedia } = data)
 
 </script>
 
@@ -12,5 +15,13 @@
 
 
 <ContentWrapper>
-	<H3>Administración de usuarios</H3>
+  {#await $GetAllMedia}
+    <p>Cargando usuarios...</p>
+  {:then result}
+    <ul>
+      {JSON.stringify(result.data.allMedia.docs)}
+    </ul>
+  {:catch error}
+    <p>Error al cargar los usuarios: {error.message}</p>
+  {/await}
 </ContentWrapper>

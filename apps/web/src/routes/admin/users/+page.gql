@@ -1,0 +1,13 @@
+query GetAllMedia {
+  allMedia(limit: 100) {
+    docs {
+      url
+    }
+    totalDocs
+    totalPages
+    hasNextPage
+    hasPrevPage
+    page
+    limit
+  }
+}

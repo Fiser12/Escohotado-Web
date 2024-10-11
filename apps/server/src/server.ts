@@ -1,11 +1,17 @@
 import express from 'express'
 import payload from 'payload'
+import cors from 'cors'
 
 require('dotenv').config()
 const app = express()
 
 // Redirect root to Admin panel
-app.get('/', (_, res) => {
+app
+.use(cors({
+  origin: 'http://localhost:5173', // El servidor donde corre tu app SvelteKit
+  credentials: true, // Si usas cookies o autenticación
+}))
+.get('/', (_, res) => {
   res.redirect('/admin')
 })
 

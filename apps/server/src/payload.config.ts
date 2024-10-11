@@ -5,7 +5,8 @@ import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 
-import Users from './collections/Users'
+import { Users } from './collections/Users'
+import { Media } from './collections/Media'
 import stripePlugin from '@payloadcms/plugin-stripe'
 
 export default buildConfig({
@@ -14,7 +15,7 @@ export default buildConfig({
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users],
+  collections: [Users, Media],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
