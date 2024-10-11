@@ -30,8 +30,8 @@ COPY --from=installer /app .
 
 WORKDIR /app/apps/web
 
-COPY apps/web/scripts/docker_entrypoint.sh /docker_entrypoint.sh
-RUN chmod +x /docker_entrypoint.sh
+COPY apps/web/scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ "/docker_entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 CMD ["sh", "-c", "node --env-file=/app/.env build"]

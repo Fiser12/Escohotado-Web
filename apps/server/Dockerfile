@@ -19,8 +19,8 @@ COPY --from=builder /app/apps/server/dist ./dist
 COPY --from=builder /app/apps/server/build ./build
 COPY --from=builder /app/apps/server/src ./src
 
-COPY apps/server/scripts/docker_entrypoint.sh /docker_entrypoint.sh
-RUN chmod +x /docker_entrypoint.sh
+COPY apps/server/scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ "/docker_entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 CMD ["sh", "-c", "node dist/server.js"]
