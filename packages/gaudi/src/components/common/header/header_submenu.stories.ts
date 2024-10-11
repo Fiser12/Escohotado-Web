@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/svelte';
 import HeaderSubMenu from '../header/header_submenu/header_submenu.svelte';
 import { mockAdminUser, menuSectionsLoaderMock } from 'gaudi/mockData/user.model.js';
 import { mobileParameters } from 'gaudi/components/storybook.js';
@@ -8,7 +8,8 @@ const meta = {
 	component: HeaderSubMenu,
 	args: {
         user: mockAdminUser,
-		menuSectionsLoader : menuSectionsLoaderMock
+		menuSectionsLoader : menuSectionsLoaderMock,
+		toggleMenu: () => {}
     },
 	parameters: {
 		layout: 'fullscreen',
@@ -18,9 +19,10 @@ const meta = {
 		}
 	}
 } satisfies Meta<HeaderSubMenu>;
+type Story = StoryObj<typeof meta>;
 
 export default meta;
 
-export const Default = { parameters: {}};
-export const Mobile = { parameters: mobileParameters };
+export const Default: Story = { parameters: {}};
+export const Mobile: Story = { parameters: mobileParameters };
 

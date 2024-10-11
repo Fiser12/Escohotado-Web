@@ -3,7 +3,6 @@
 	import Logo from './signature_logo.svelte';
 	import NavItem from './nav_item.svelte';
 	import HamburgerMenu from './hamburguer_menu.svelte';
-	import LoginButton from '../../../../../../apps/web/src/lib/view/common/login_button.svelte';
 	import UserAccountButton from './user_account_button.svelte';
 	import HeaderSubmenu from './header_submenu/header_submenu.svelte';
 	import { slide } from 'svelte/transition';
@@ -12,6 +11,7 @@
 
 	let isMenuOpen = false;
 	export let user: Optional<UserModel>;
+	export let signIn: () => void;
 	export let menuSectionsLoader: (user: UserModel) => [MenuSection]
 
 	function toggleMenu(changeTo?: boolean) {
@@ -50,7 +50,9 @@
 							{/if}
 						</div>
 					{:else}
-						<LoginButton />
+						<button on:click={signIn}>
+							<EscotaButton text="Entrar" variant="secondary" />
+						</button>
 					{/if}
 				</div>
 			</div>

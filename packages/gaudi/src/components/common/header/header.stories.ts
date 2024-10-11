@@ -1,13 +1,16 @@
-import type { Meta } from '@storybook/svelte';
+import type { Meta, StoryObj } from '@storybook/svelte';
 import { Header } from 'index';
 import { mobileParameters } from 'gaudi/components/storybook.js';
-import { mockUser } from 'gaudi/mockData/user.model';
+import { menuSectionsLoaderMock, mockUser } from 'gaudi/mockData/user.model';
 
 const meta = {
 	title: 'Common/Components/Header',
 	component: Header,
 	args: {
-		user: mockUser
+		user: mockUser,
+		signIn: () => {},
+		menuSectionsLoader: menuSectionsLoaderMock
+
 	},
 	parameters: {
 		// More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
@@ -18,8 +21,9 @@ const meta = {
 		}
 	}
 } satisfies Meta<Header>;
+type Story = StoryObj<typeof meta>;
 
 export default meta;
 
-export const Default = { parameters: {}};
-export const Mobile = { parameters: mobileParameters };
+export const Default: Story = { parameters: {}};
+export const Mobile: Story = { parameters: mobileParameters };

@@ -6,9 +6,9 @@ const meta = {
 	title: 'Subscription/Component/SubscriptionCard',
 	component: SubscriptionCard,
 	args: {
-		price: "9.99",
-		title: "Basic",
-		features: ["Feature 1", "Feature 2", "Feature 3"],
+		price: "49.99€",
+		title: "Plan Básico",
+		features: ["Acceso a la newsletter", "Acceso anticipado a los vídeos", "Acceso a parte del contenido"],
 		mainCard: false
 	},
 	parameters: {
@@ -21,6 +21,7 @@ const meta = {
 } satisfies Meta<SubscriptionCard>;
 
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
