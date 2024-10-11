@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MainSection from '$src/lib/view/main-section/main_section.svelte';
+	import { MainSection } from 'gaudi';
 	import type { LayoutServerData } from './$types.js';
 
 	export let data: LayoutServerData;
@@ -11,5 +11,5 @@
 </svelte:head>
 
 <section>
-	<MainSection></MainSection>
+	<MainSection/>
 </section>

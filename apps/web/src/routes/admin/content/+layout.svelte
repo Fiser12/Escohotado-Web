@@ -1,6 +1,5 @@
 <script lang="ts">
-	import ContentWrapper from '$src/lib/view/common/content_wrapper.svelte';
-	import H3 from '$src/lib/view/common/headers/h3.svelte';
+	import { H3, ContentWrapper } from "gaudi";
 	import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
 	import { YoutubeSolid, NewspaperSolid } from 'flowbite-svelte-icons';
 

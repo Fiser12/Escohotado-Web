@@ -2,7 +2,7 @@
 	export let text: string;
 	export let variant: 'primary' | 'secondary' | 'transparent'  = 'primary';
 	export let noBreak: boolean = false;
-    export let classname: string = "";
+  export let classname: string = "";
 	export let fitContent: boolean = true;
 </script>
 

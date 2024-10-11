@@ -1,6 +1,5 @@
 <script lang="ts">
-	import H3 from "../common/headers/h3.svelte";
-	import { TextVariant } from "../common/headers/text-variant.js";
+	import { H3, TextVariant } from "../../../index";
 
     export let title: string;
     export let price: string;

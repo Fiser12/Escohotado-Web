@@ -3,8 +3,12 @@ name: Build and Publish Storybook to GitHub Pages
 on:
   # Event for the workflow to run on
   push:
+    tags:
+      - 'v*'
     branches:
-      - 'main'
+      - main
+    paths:
+      - 'packages/gaudi/**'
 
 permissions:
   contents: read
@@ -27,7 +31,7 @@ jobs:
         env:
           STORYBOOK_FIGMA_ACCESS_TOKEN: ${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}
         with:
-          install_command: cd apps/web && pnpm install
-          build_command: pnpm build-storybook
-          path: apps/web/storybook-static
+          install_command: pnpm install --no-frozen-lockfile
+          build_command: cd packages/gaudi && pnpm build-storybook
+          path: packages/gaudi/storybook-static
           checkout: false

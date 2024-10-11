@@ -1,4 +1,4 @@
-import { type Optional } from './common/optional_helpers.js';
+import { type Optional } from './optional_helpers.js';
 
 export interface UserModel {
 	userId: string;

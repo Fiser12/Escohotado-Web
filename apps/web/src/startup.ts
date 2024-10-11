@@ -10,3 +10,7 @@ for (let i = 0; i < 100; i++) {
     await videoCmsUpsert(videoMock(`${i}`));
 }
     */
+
+
+
+[undefined, null, 1].mapNotNull((x) => x) // [1]

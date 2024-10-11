@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { accountMenuBuilder, type MenuSection } from '$src/lib/view/header/header_submenu/header_submenu_model.js';
-	import type { UserModel } from '$src/lib/domain/user-model.js';
+	import { type MenuSection } from '../../../../domain/header_submenu_model.js';
+	import type { UserModel } from '../../../../domain/user-model.js';
 
 	export let user: UserModel;
   export let toggleMenu: (changeTo?: boolean) => void
 
-  let menuSections = accountMenuBuilder(user)
+  export let menuSectionsLoader: (user: UserModel) => [MenuSection]
+  const menuSections = menuSectionsLoader(user)
 </script>
 
 <div class="w-40 bg-white rounded-sm flex-col justify-start items-start inline-flex" on:mouseleave={() => toggleMenu(false)} role="menu" tabindex={7}>

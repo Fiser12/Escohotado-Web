@@ -1,4 +1,4 @@
-import type { Optional } from "$src/lib/domain/common/optional_helpers.js";
+import type { Optional } from "gaudi";
 import type Stripe from "stripe";
 import { stripe } from "./stripe_service.js";
 import { getPrice } from './get_price.js';

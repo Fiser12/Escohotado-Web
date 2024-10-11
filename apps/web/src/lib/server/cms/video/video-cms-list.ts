@@ -1,6 +1,6 @@
 import type { ContentCMSPrismaTyped } from "$src/lib/domain/cms/content-cms.js";
 import type { VideoContentCMS } from "$src/lib/domain/cms/video-content-cms.js";
-import { notNull } from "$src/lib/domain/common/optional_helpers.js";
+import { notNull } from "../../../../../../../packages/gaudi/src/domain/optional_helpers.js";
 import { contentCMSTypes } from "$src/lib/domain/prisma-enum-mapping.js";
 import { prismaClient } from "../../prisma/prisma_client.js";
 

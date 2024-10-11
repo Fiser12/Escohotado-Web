@@ -1,7 +1,7 @@
 <script lang="ts">
-	import ContentWrapper from '$src/lib/view/common/content_wrapper.svelte';
-	import escohotadoFumandoImg from 'gaudi/assets/img/escohotado-fumando.png';
-	import { EscotaButton } from 'gaudi';
+	import ContentWrapper from '../../common/content_wrapper.svelte';
+	import escohotadoFumandoImg from '../../../assets/img/escohotado-fumando.png';
+	import EscotaButton from '../../common/escota_button/escota_button.svelte';
 </script>
 
 <ContentWrapper classname="h-96 relative" backgroundClassname="bg-white">

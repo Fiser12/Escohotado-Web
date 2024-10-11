@@ -1,6 +1,6 @@
 import type Stripe from "stripe";
 import { prismaClient } from "../prisma_client.js";
-import { notNullAsync } from "$src/lib/domain/common/optional_helpers.js";
+import { notNullAsync } from "../../../../../../../packages/gaudi/src/domain/optional_helpers.js";
 import { upsertPrice } from "./upsert_stripe_price_prisma.js";
 
 export async function upsertLineItem(lineItem: Stripe.LineItem, checkoutId: string) {

@@ -2,14 +2,14 @@ import { SvelteKitAuth, type Session } from '@auth/sveltekit';
 import Keycloak from '@auth/sveltekit/providers/keycloak';
 import { env } from '$env/dynamic/public';
 import { redirect } from '@sveltejs/kit';
-import { notNull, type Optional } from '../domain/common/optional_helpers.js';
-import { type UserModel } from '../domain/user-model.js';
+import { type UserModel } from '../../../../../packages/gaudi/src/domain/user-model.js';
 import { externalUrl } from './routing.js';
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prismaClient } from './prisma/prisma_client.js';
 import { getUserInfo } from './keycloak.service.js';
 import { updateUserRoles } from './prisma/user/update_user_roles.js';
 import { type Prisma } from '@prisma/client';
+import { notNull, type Optional } from 'gaudi';
 
 const authjsSecret = env.PUBLIC_AUTH_SECRET;
 

@@ -1,11 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import MainSection from '$src/lib/view/main-section/main_section.svelte';
-import { mobileParameters } from '../storybook.js';
+import { SubscriptionCard } from 'index';
+import { mobileParameters } from '../../storybook.js';
 
 const meta = {
-	title: 'Escohotado/Section/Main Section',
-	component: MainSection,
-	args: {},
+	title: 'Subscription/Component/SubscriptionCard',
+	component: SubscriptionCard,
+	args: {
+		price: "9.99",
+		title: "Basic",
+		features: ["Feature 1", "Feature 2", "Feature 3"],
+		mainCard: false
+	},
 	parameters: {
 		layout: 'fullscreen',
 		design: {
@@ -13,10 +18,13 @@ const meta = {
 			url: 'https://www.figma.com/file/CQS7dIcNELi5HMFoEoNcsX/Nexo-Labs?node-id=83-4246&t=6S2t4TA9HCLBkeoP-4'
 		}
 	}
-} satisfies Meta<MainSection>;
+} satisfies Meta<SubscriptionCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+export const MainCard: Story = {
+	args: { mainCard: true }
+};
 export const Mobile: Story = { parameters: mobileParameters };

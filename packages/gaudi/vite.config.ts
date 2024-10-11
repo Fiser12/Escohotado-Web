@@ -7,5 +7,11 @@ export default defineConfig({
 	],
 	server: {
 		host: true
+	},
+	resolve: {
+		alias: {
+			'gaudi': "/src",
+			'index': "/src/index.ts"
+		}
 	}
 });

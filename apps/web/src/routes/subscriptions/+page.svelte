@@ -1,13 +1,8 @@
 <script lang="ts">
-	import { notNull } from '$src/lib/domain/common/optional_helpers.js';
 	import { relativeUrls } from '$src/lib/domain/routing.js';
-	import ContentWrapper from '$src/lib/view/common/content_wrapper.svelte';
-	import { EscotaButton } from 'gaudi';
-	import H2 from '$src/lib/view/common/headers/h3.svelte';
-	import H4 from '$src/lib/view/common/headers/h4.svelte';
+	import { EscotaButton, H2, H4, ContentWrapper, notNull } from 'gaudi';
 	import type { PageData } from './$types.js';
-	import ToggleButtonGroup from '$src/lib/view/common/toggle_button_group.svelte';
-	import SubscriptionsCard from '$src/lib/view/subscriptions/subscription_card.svelte';
+	import { ToggleButtonGroup, SubscriptionCard } from 'gaudi';
 
 	export let data: PageData;
 	const options = [
@@ -40,7 +35,7 @@
 						style: 'currency',
 						currency: 'EUR'
 					})}
-					<SubscriptionsCard
+					<SubscriptionCard
 						title={product.name}
 						price={priceStr}
 						features={JSON.parse(product.metadata.features)}
@@ -86,7 +81,7 @@
 								<EscotaButton text="Suscribirse" />
 							</a>
 						{/if}
-					</SubscriptionsCard>
+					</SubscriptionCard>
 				{/each}
 			{/each}
 		{:else}

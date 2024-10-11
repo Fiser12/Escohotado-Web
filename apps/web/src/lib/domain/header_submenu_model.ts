@@ -1,19 +1,6 @@
-import type { Optional } from "../../../domain/common/optional_helpers.js";
-import { relativeUrls } from "../../../domain/routing.js";
-import type { UserModel } from "../../../domain/user-model.js";
+import { relativeUrls } from "./routing.js";
+import type { UserModel, MenuSection } from "gaudi";
 import { signOut } from '@auth/sveltekit/client';
-
-export type MenuItem = {
-  text: string;
-  action?: (() => void);
-  href?: string;
-  icon?: string;
-}
-
-export type MenuSection = {
-   title?: Optional<string>;
-   items: MenuItem[];
-}
 
 export const accountMenuBuilder: (user: UserModel) => [MenuSection] = (user) => {
     let sections: MenuSection[] = [

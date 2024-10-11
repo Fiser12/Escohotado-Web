@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
 	import { fade } from 'svelte/transition';
 
 	type ButtonOption = {

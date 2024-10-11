@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import { EscotaButton } from '../index';
+import { EscotaButton } from 'index';
 
 const meta = {
-	title: 'Escohotado/Atoms/EscotaButton',
+	title: 'Common/Atoms/EscotaButton',
 	component: EscotaButton,
 	tags: ['autodocs']
 } satisfies Meta<EscotaButton>;

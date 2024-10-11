@@ -1,19 +1,18 @@
 <script lang="ts">
-	import ContentWrapper from '$src/lib/view/common/content_wrapper.svelte';
+	import ContentWrapper from '../content_wrapper.svelte';
 	import Logo from './signature_logo.svelte';
 	import NavItem from './nav_item.svelte';
 	import HamburgerMenu from './hamburguer_menu.svelte';
-	import LoginButton from './login_button.svelte';
+	import LoginButton from '../../../../../../apps/web/src/lib/view/common/login_button.svelte';
 	import UserAccountButton from './user_account_button.svelte';
 	import HeaderSubmenu from './header_submenu/header_submenu.svelte';
-	import type { UserModel } from '$src/lib/domain/user-model.js';
-	import type { Optional } from '$src/lib/domain/common/optional_helpers.js';
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-	import { EscotaButton } from 'gaudi';
+	import { type MenuSection, EscotaButton, type UserModel, type Optional } from '../../../index';
 
 	let isMenuOpen = false;
 	export let user: Optional<UserModel>;
+	export let menuSectionsLoader: (user: UserModel) => [MenuSection]
 
 	function toggleMenu(changeTo?: boolean) {
 		isMenuOpen = changeTo ?? !isMenuOpen;
@@ -46,7 +45,7 @@
 									class="absolute left-0 z-10"
 									transition:slide={{ delay: 100, duration: 800, easing: quintOut, axis: 'y' }}
 								>
-									<HeaderSubmenu user={user} toggleMenu={toggleMenu}/>
+									<HeaderSubmenu user={user} toggleMenu={toggleMenu} menuSectionsLoader={menuSectionsLoader} />
 								</div>
 							{/if}
 						</div>
