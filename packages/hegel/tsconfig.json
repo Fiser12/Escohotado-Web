@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "target": "ES2022",
+      "useDefineForClassFields": true,
+      "module": "ES2022",
+      "moduleResolution": "Node",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "isolatedModules": true,
+      "resolveJsonModule": true,
+      "baseUrl": "./"
+    },
+    "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js"],
+    "exclude": ["node_modules"]
+  }
+  

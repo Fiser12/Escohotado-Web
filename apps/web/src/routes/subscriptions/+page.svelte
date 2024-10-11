@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { relativeUrls } from '$src/lib/domain/routing.js';
-	import { EscotaButton, H2, H4, ContentWrapper, notNull } from 'gaudi';
+	import { notNull } from 'hegel';
 	import type { PageData } from './$types.js';
-	import { ToggleButtonGroup, SubscriptionCard } from 'gaudi';
+	import { ToggleButtonGroup, SubscriptionCard, EscotaButton, H2, H4, ContentWrapper } from 'gaudi';
 
 	export let data: PageData;
 	const options = [

@@ -1,4 +1,5 @@
-import type { MenuSection, UserModel } from "index";
+import type { MenuSection } from "../domain/header_submenu_model.js";
+import type { UserModel } from "../domain/user-model.js";
 
 export const mockUser: UserModel = {
     userId: "123",

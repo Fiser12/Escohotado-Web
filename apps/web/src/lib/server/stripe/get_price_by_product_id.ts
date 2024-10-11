@@ -1,4 +1,4 @@
-import type { Optional } from "gaudi";
+import type { Optional } from "hegel";
 import type Stripe from "stripe";
 import { stripe } from "./stripe_service.js";
 import { getPrice } from './get_price.js';

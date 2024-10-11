@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import HeaderSubMenu from '../header/header_submenu/header_submenu.svelte';
-import { mockAdminUser, menuSectionsLoaderMock } from 'gaudi/mockData/user.model.js';
+import HeaderSubMenu from './header_submenu.svelte';
+import { mockAdminUser, menuSectionsLoaderMock } from 'hegel';
 import { mobileParameters } from 'gaudi/components/storybook.js';
 
 const meta = {

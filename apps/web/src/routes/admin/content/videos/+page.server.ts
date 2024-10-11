@@ -2,7 +2,7 @@ import { getUser } from '$src/lib/server/auth.service.js';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types.js';
 import { videoCmsList, getTotalVideos } from '$src/lib/server/cms/video/video-cms-list.js';
-import { notNull } from '../../../../../../../packages/gaudi/src/domain/optional_helpers.js';
+import { notNull } from 'hegel';
 
 export const load: PageServerLoad = async ({ locals, url   }) => {
 	const user = await getUser(locals);

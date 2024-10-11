@@ -1,5 +1,5 @@
 import { relativeUrls } from "./routing.js";
-import type { UserModel, MenuSection } from "gaudi";
+import type { UserModel, MenuSection } from "hegel";
 import { signOut } from '@auth/sveltekit/client';
 
 export const accountMenuBuilder: (user: UserModel) => [MenuSection] = (user) => {

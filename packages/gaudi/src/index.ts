@@ -9,6 +9,3 @@ export { default as MainSection } from './components/landing/main_section/main_s
 export { default as ToggleButtonGroup } from './components/common/toggle_button_group/toggle_button_group.svelte';
 export { default as Header } from './components/common/header/header.svelte';
 export { default as SubscriptionCard } from './components/subscriptions/subscription_card/subscription_card.svelte';
-export { notNull, notNullAsync, type Optional } from './domain/optional_helpers.js';
-export type { UserModel } from './domain/user-model.js';
-export type { MenuItem, MenuSection } from './domain/header_submenu_model.js';

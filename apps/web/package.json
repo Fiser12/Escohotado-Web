@@ -38,6 +38,7 @@
     },
     "devDependencies": {
         "eslint-config-custom": "workspace:*",
+        "hegel": "workspace:*",
         "gaudi": "workspace:*",
         "config": "workspace:*",
         "@auth/prisma-adapter": "^2.5.0",
@@ -45,14 +46,6 @@
         "@iconify/svelte": "^4.0.2",
         "@playwright/test": "^1.47.2",
         "@prisma/client": "^5.20.0",
-        "@storybook/addon-designs": "^8.0.3",
-        "@storybook/addon-essentials": "^8.3.3",
-        "@storybook/addon-interactions": "^8.3.3",
-        "@storybook/addon-links": "^8.3.3",
-        "@storybook/blocks": "^8.3.3",
-        "@storybook/svelte": "^8.3.3",
-        "@storybook/sveltekit": "^8.3.3",
-        "@storybook/test": "^8.3.3",
         "@sveltejs/adapter-node": "^5.2.4",
         "@sveltejs/kit": "^2.5.28",
         "@sveltejs/package": "^2.3.5",
@@ -75,7 +68,6 @@
         "autoprefixer": "^10.4.20",
         "eslint": "^9.11.1",
         "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-storybook": "^0.8.0",
         "eslint-plugin-svelte": "^2.44.0",
         "flowbite": "^2.5.1",
         "flowbite-svelte": "^0.46.18",
@@ -86,7 +78,6 @@
         "prettier-plugin-svelte": "^3.2.6",
         "prisma": "^5.20.0",
         "publint": "^0.1.16",
-        "storybook": "^8.3.3",
         "stripe": "^16.12.0",
         "svelte": "^4.2.19",
         "svelte-check": "^3.8.6",
@@ -102,14 +93,8 @@
     "svelte": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "type": "module",
-    "eslintConfig": {
-        "extends": [
-            "plugin:storybook/recommended"
-        ]
-    },
     "dependencies": {
         "@sentry/sveltekit": "^8.31.0",
-        "@storybook/addon-viewport": "^8.3.3",
         "flowbite-svelte-icons": "^1.6.1"
     }
 }

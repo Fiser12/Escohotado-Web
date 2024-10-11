@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import { Header } from 'index';
 import { mobileParameters } from 'gaudi/components/storybook.js';
-import { menuSectionsLoaderMock, mockUser } from 'gaudi/mockData/user.model';
+import { menuSectionsLoaderMock, mockUser } from 'hegel';
 
 const meta = {
 	title: 'Common/Components/Header',

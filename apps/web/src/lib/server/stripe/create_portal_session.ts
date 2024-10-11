@@ -1,5 +1,5 @@
 import { relativeUrls } from "$src/lib/domain/routing.js";
-import type { UserModel } from "$src/lib/domain/user-model.js";
+import type { UserModel } from "hegel";
 import type Stripe from "stripe";
 import { stripe } from "./stripe_service.js";
 
