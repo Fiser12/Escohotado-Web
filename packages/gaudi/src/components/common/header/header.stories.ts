@@ -13,11 +13,10 @@ const meta = {
 
 	},
 	parameters: {
-		// More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
 		layout: 'fullscreen',
 		design: {
 			type: 'figspec',
-			url: 'https://www.figma.com/file/CQS7dIcNELi5HMFoEoNcsX/Nexo-Labs?node-id=83-4246&t=6S2t4TA9HCLBkeoP-4'
+			url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=166-258&m=dev'
 		}
 	}
 } satisfies Meta<Header>;

@@ -275,6 +275,9 @@ importers:
 
   packages/gaudi:
     dependencies:
+      '@storybook/addon-svelte-csf':
+        specifier: ^4.1.7
+        version: 4.1.7(@storybook/svelte@8.3.5(storybook@8.3.5)(svelte@4.2.19))(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1)))(babel-plugin-macros@3.1.0)(storybook@8.3.5)(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1))
       '@storybook/addon-viewport':
         specifier: ^8.3.3
         version: 8.3.5(storybook@8.3.5)
@@ -2587,6 +2590,22 @@ packages:
     peerDependencies:
       storybook: ^8.3.5
 
+  '@storybook/addon-svelte-csf@4.1.7':
+    resolution: {integrity: sha512-gMyk6Fz2PPff8zb52giSAJGSZkd/+mmA25m/ORlxMKrwp6WhB+4dcVB8RtexndCvZrSts0rzVH8Nd9c9lBCGpQ==}
+    peerDependencies:
+      '@storybook/svelte': ^7.0.0 || ^8.0.0 || ^8.0.0-beta.0 || ^8.2.0-beta.0
+      '@sveltejs/vite-plugin-svelte': ^2.0.0 || ^3.0.0
+      svelte: ^4.0.0
+      svelte-loader: ^3.1.2
+      vite: ^4.0.0 || ^5.0.0
+    peerDependenciesMeta:
+      '@sveltejs/vite-plugin-svelte':
+        optional: true
+      svelte-loader:
+        optional: true
+      vite:
+        optional: true
+
   '@storybook/addon-toolbars@8.3.5':
     resolution: {integrity: sha512-Ml2gc9q8WbteDvmuAZGgBxt5SqWMXzuTkMjlsA8EB53hlkN1w9esX4s8YtBeNqC3HKoUzcdq8uexSBqU8fDbSA==}
     peerDependencies:
@@ -2707,6 +2726,11 @@ packages:
 
   '@storybook/theming@8.3.5':
     resolution: {integrity: sha512-9HmDDyC691oqfg4RziIM9ElsS2HITaxmH7n/yeUPtuirkPdAQzqOzhvH/Sa0qOhifzs8VjR+Gd/a/ZQ+S38r7w==}
+    peerDependencies:
+      storybook: ^8.3.5
+
+  '@storybook/types@8.3.5':
+    resolution: {integrity: sha512-XWK8tCgoTI1QycQiZCYtAijws2JjbbGANuq1olBRZ1BcZWvc1TkNSipqF1TLMkPGiNq+MxrXAKutUoQK459fTg==}
     peerDependencies:
       storybook: ^8.3.5
 
@@ -4063,6 +4087,14 @@ packages:
 
   dedent-js@1.0.1:
     resolution: {integrity: sha512-OUepMozQULMLUmhxS95Vudo0jb0UchLimi3+pQ2plj61Fcy8axbP9hbiD4Sz6DPqn6XG3kfmziVfQ1rSys5AJQ==}
+
+  dedent@1.5.3:
+    resolution: {integrity: sha512-NHQtfOOW68WD8lgypbLA5oT+Bt0xXJhiYvoR6SmmNXZfpzOGXwdKWmcwG8N7PwVVWV3eF/68nmD9BaJSsTBhyQ==}
+    peerDependencies:
+      babel-plugin-macros: ^3.1.0
+    peerDependenciesMeta:
+      babel-plugin-macros:
+        optional: true
 
   deep-eql@4.1.3:
     resolution: {integrity: sha512-WaEtAOpRA1MQ0eohqZjpGD8zdI0Ovsm8mmFhaDN8dvDZzyoUMcYDnf5Y6iu7HTXxf8JDS23qWa4a+hKCDyOPzw==}
@@ -11116,6 +11148,21 @@ snapshots:
       storybook: 8.3.5
       ts-dedent: 2.2.0
 
+  '@storybook/addon-svelte-csf@4.1.7(@storybook/svelte@8.3.5(storybook@8.3.5)(svelte@4.2.19))(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1)))(babel-plugin-macros@3.1.0)(storybook@8.3.5)(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1))':
+    dependencies:
+      '@babel/runtime': 7.25.7
+      '@storybook/svelte': 8.3.5(storybook@8.3.5)(svelte@4.2.19)
+      '@storybook/types': 8.3.5(storybook@8.3.5)
+      dedent: 1.5.3(babel-plugin-macros@3.1.0)
+      magic-string: 0.30.11
+      svelte: 4.2.19
+    optionalDependencies:
+      '@sveltejs/vite-plugin-svelte': 3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1))
+      vite: 5.4.8(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1)
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - storybook
+
   '@storybook/addon-toolbars@8.3.5(storybook@8.3.5)':
     dependencies:
       storybook: 8.3.5
@@ -11318,6 +11365,10 @@ snapshots:
     dependencies:
       storybook: 8.3.5
 
+  '@storybook/types@8.3.5(storybook@8.3.5)':
+    dependencies:
+      storybook: 8.3.5
+
   '@sveltejs/adapter-node@5.2.5(@sveltejs/kit@2.6.4(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1)))(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1)))':
     dependencies:
       '@rollup/plugin-commonjs': 28.0.0(rollup@4.24.0)
@@ -11399,7 +11450,7 @@ snapshots:
       debug: 4.3.7
       deepmerge: 4.3.1
       kleur: 4.1.5
-      magic-string: 0.30.8
+      magic-string: 0.30.11
       svelte: 3.59.2
       svelte-hmr: 0.15.3(svelte@3.59.2)
       vite: 4.5.5(@types/node@22.7.5)(sass@1.69.4)(terser@5.34.1)
@@ -12888,6 +12939,10 @@ snapshots:
       mimic-response: 3.1.0
 
   dedent-js@1.0.1: {}
+
+  dedent@1.5.3(babel-plugin-macros@3.1.0):
+    optionalDependencies:
+      babel-plugin-macros: 3.1.0
 
   deep-eql@4.1.3:
     dependencies:

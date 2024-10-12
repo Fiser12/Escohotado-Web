@@ -15,8 +15,6 @@
     "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "config": "workspace:*",
     "@storybook/addon-designs": "^8.0.3",
     "@storybook/addon-essentials": "^8.3.3",
     "@storybook/addon-interactions": "^8.3.3",
@@ -32,7 +30,9 @@
     "@tailwindcss/typography": "^0.5.15",
     "@types/eslint": "^8.56.12",
     "autoprefixer": "^10.4.20",
+    "config": "workspace:*",
     "eslint": "^9.11.1",
+    "eslint-config-custom": "workspace:*",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-svelte": "^2.44.0",
@@ -53,7 +53,8 @@
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "hegel": "workspace:*",
-    "@storybook/addon-viewport": "^8.3.3"
+    "@storybook/addon-svelte-csf": "^4.1.7",
+    "@storybook/addon-viewport": "^8.3.3",
+    "hegel": "workspace:*"
   }
 }

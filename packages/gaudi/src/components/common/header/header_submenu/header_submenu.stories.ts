@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import HeaderSubMenu from './header_submenu.svelte';
+import { HeaderSubMenu } from 'index';
 import { mockAdminUser, menuSectionsLoaderMock } from 'hegel';
 import { mobileParameters } from 'gaudi/components/storybook.js';
 
@@ -15,7 +15,7 @@ const meta = {
 		layout: 'fullscreen',
 		design: {
 			type: 'figspec',
-			url: 'https://www.figma.com/design/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=441-7374&t=w8HFySdc4mVtGh0h-4'
+			url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=440-6646&m=dev'
 		}
 	}
 } satisfies Meta<HeaderSubMenu>;
