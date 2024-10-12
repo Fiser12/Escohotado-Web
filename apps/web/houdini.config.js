@@ -3,7 +3,7 @@
 /** @type {import('houdini').ConfigFile} */
 const config = {
     "watchSchema": {
-        "url": "/api/graphql"
+        "url": "http://localhost:3000/api/graphql"
     },
     "plugins": {
         "houdini-svelte": {}

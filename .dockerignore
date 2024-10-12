@@ -4,3 +4,5 @@ dist/
 volumes/
 out/
 **/node_modules
+.env
+**/.env

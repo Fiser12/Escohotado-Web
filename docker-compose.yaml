@@ -9,7 +9,7 @@ services:
       - 3000:3000
     platform: linux/amd64
     env_file:
-      - .env
+      - .env.docker
     environment:
       PUBLIC_AUTH_KEYCLOAK_ID: ${PUBLIC_AUTH_KEYCLOAK_ID}
       PUBLIC_AUTH_KEYCLOAK_SECRET: ${PUBLIC_AUTH_KEYCLOAK_SECRET}
@@ -18,11 +18,12 @@ services:
 
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-      DOMAIN: localhost
 
       DATABASE_URL: postgresql://admin:devsecret@escota_db:5432/escota_web?schema=public
+      PUBLIC_CMS_URL: ${PUBLIC_CMS_URL}
     depends_on:
       - postgres
+      - cms
 
   cms:
     container_name: cms
@@ -34,10 +35,13 @@ services:
       - 3001:3000
     platform: linux/amd64
     env_file:
-      - .env
+      - .env.docker
     environment:
       DATABASE_URI: postgresql://admin:devsecret@escota_db:5432/escota_cms
       PAYLOAD_SECRET: YOUR_SECRET_HERE
+      NODE_ENV: production
+
+
     depends_on:
       - postgres
 

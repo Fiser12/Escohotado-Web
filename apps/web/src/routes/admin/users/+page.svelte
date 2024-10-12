@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { ContentWrapper } from "gaudi";
-	import { graphql, fragment  } from '$houdini';
-  /* @type { import('./$houdini').PageData } */
-  export let data
+  import type { PageData } from "./$houdini"
+  export let data: PageData
 
   $: ({ GetAllMedia } = data)
 
@@ -19,7 +18,7 @@
     <p>Cargando usuarios...</p>
   {:then result}
     <ul>
-      {JSON.stringify(result.data.allMedia.docs)}
+      {JSON.stringify(result?.data?.allMedia?.docs)}
     </ul>
   {:catch error}
     <p>Error al cargar los usuarios: {error.message}</p>

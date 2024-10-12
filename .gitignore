@@ -36,6 +36,7 @@ out
 package
 .env
 .env.*
+.env.docker
 !.env.example
 
 misc

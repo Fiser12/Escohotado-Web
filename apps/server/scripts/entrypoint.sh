@@ -13,7 +13,5 @@ do
     echo "$var" >> /app/.env
   fi
 done
-
-pnpm run payload migrate
-
+pnpm run payload migrate &
 exec "$@"
