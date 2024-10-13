@@ -7,7 +7,7 @@
 	import HeaderSubmenu from './header_submenu/header_submenu.svelte';
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-	import { EscotaButton } from '../../../index';
+	import { EscotaButton } from 'gaudi';
 	import type {  MenuSection, UserModel, Optional } from 'hegel';
 
 	let isMenuOpen = false;

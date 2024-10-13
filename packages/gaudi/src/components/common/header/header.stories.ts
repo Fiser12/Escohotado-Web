@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import { Header } from 'index';
-import { mobileParameters } from 'gaudi/components/storybook.js';
+import { Header, storybookHelpers } from 'gaudi';
 import { menuSectionsLoaderMock, mockUser } from 'hegel';
 
 const meta = {
@@ -25,4 +24,4 @@ type Story = StoryObj<typeof meta>;
 export default meta;
 
 export const Default: Story = { parameters: {}};
-export const Mobile: Story = { parameters: mobileParameters };
+export const Mobile: Story = { parameters: storybookHelpers.mobileParameters };

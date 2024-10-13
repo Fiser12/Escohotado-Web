@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import { ToggleButtonGroup } from 'index';
-import { mobileParameters } from 'gaudi/components/storybook.js';
+import { ToggleButtonGroup, storybookHelpers } from 'gaudi';
 
 const meta = {
 	title: 'Common/Atoms/Toggle Button Group',
@@ -25,4 +24,4 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default = {};
-export const Mobile = { parameters: mobileParameters };
+export const Mobile = { parameters: storybookHelpers.mobileParameters };

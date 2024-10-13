@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import { EscotaButton } from 'index';
+import { EscotaButton } from 'gaudi';
 
 const meta = {
 	title: 'Common/Atoms/EscotaButton',

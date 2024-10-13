@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import { MainSection } from 'index';
-import { mobileParameters } from '../../storybook.js';
+import { MainSection, storybookHelpers } from 'gaudi';
 
 const meta = {
 	title: 'Landing/Section/Main Section',
@@ -19,4 +18,4 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
-export const Mobile: Story = { parameters: mobileParameters };
+export const Mobile: Story = { parameters: storybookHelpers.mobileParameters };

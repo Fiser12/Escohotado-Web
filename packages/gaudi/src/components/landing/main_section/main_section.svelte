@@ -1,7 +1,6 @@
 <script lang="ts">
-	import ContentWrapper from '../../common/content_wrapper.svelte';
+	import { ContentWrapper, EscotaButton } from 'gaudi';
 	import escohotadoFumandoImg from '../../../assets/img/escohotado-fumando.png';
-	import EscotaButton from '../../common/escota_button/escota_button.svelte';
 </script>
 
 <ContentWrapper classname="h-96 relative" backgroundClassname="bg-white">
