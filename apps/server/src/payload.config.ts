@@ -29,6 +29,11 @@ export default buildConfig({
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOKS_ENDPOINT_SECRET
     }),
   ],
+  localization: {
+    locales: ['es', 'en'],
+    defaultLocale: 'es',
+    fallback: true
+  },
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI,
