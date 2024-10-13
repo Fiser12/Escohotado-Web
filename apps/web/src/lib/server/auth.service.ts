@@ -1,6 +1,6 @@
 import { SvelteKitAuth, type Session } from '@auth/sveltekit';
 import Keycloak from '@auth/sveltekit/providers/keycloak';
-import { env } from '$env/dynamic/public';
+import { env } from '$env/dynamic/private';
 import { redirect } from '@sveltejs/kit';
 import { externalUrl } from './routing.js';
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -11,12 +11,12 @@ import { type Prisma } from '@prisma/client';
 import type {  UserModel, Optional } from 'hegel';
 import {  notNull } from 'hegel';
 
-const authjsSecret = env.PUBLIC_AUTH_SECRET;
+const authjsSecret = env.AUTH_SECRET;
 
 const kcConfig = {
 	issuer: externalUrl.keycloak.issuer,
-	clientId: env.PUBLIC_AUTH_KEYCLOAK_ID,
-	clientSecret: env.PUBLIC_AUTH_KEYCLOAK_SECRET
+	clientId: env.AUTH_KEYCLOAK_ID,
+	clientSecret: env.AUTH_KEYCLOAK_SECRET
 };
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
