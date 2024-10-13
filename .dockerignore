@@ -6,3 +6,4 @@ out/
 **/node_modules
 .env
 **/.env
+**/.svelte-kit
