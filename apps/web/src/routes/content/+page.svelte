@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ContentWrapper } from "gaudi";
-  import type { PageData } from "./$houdini"
+  import type { PageData } from "../admin/users/$houdini"
   export let data: PageData
 
   $: ({ GetAllMedia } = data)

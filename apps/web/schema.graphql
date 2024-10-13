@@ -15,6 +15,12 @@ A field whose value conforms to the standard internet email address format as sp
 """
 scalar EmailAddress
 
+enum FallbackLocaleInputType {
+  en
+  es
+  none
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -25,8 +31,13 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 """
 scalar JSONObject
 
+enum LocaleInputType {
+  en
+  es
+}
+
 type Media {
-  alt: String!
+  alt: String
   caption(depth: Int): JSON
   createdAt: DateTime
   filename: String
@@ -851,9 +862,9 @@ input Media_width_operator {
 }
 
 type Mutation {
-  createMedia(data: mutationMediaInput!): Media
-  createPayloadPreference(data: mutationPayloadPreferenceInput!): PayloadPreference
-  createUser(data: mutationUserInput!): User
+  createMedia(data: mutationMediaInput!, locale: LocaleInputType): Media
+  createPayloadPreference(data: mutationPayloadPreferenceInput!, locale: LocaleInputType): PayloadPreference
+  createUser(data: mutationUserInput!, locale: LocaleInputType): User
   deleteMedia(id: Int!): Media
   deletePayloadPreference(id: Int!): PayloadPreference
   deleteUser(id: Int!): User
@@ -863,9 +874,9 @@ type Mutation {
   refreshTokenUser: usersRefreshedUser
   resetPasswordUser(password: String, token: String): usersResetPassword
   unlockUser(email: String!): Boolean!
-  updateMedia(autosave: Boolean, data: mutationMediaUpdateInput!, id: Int!): Media
-  updatePayloadPreference(autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, id: Int!): PayloadPreference
-  updateUser(autosave: Boolean, data: mutationUserUpdateInput!, id: Int!): User
+  updateMedia(autosave: Boolean, data: mutationMediaUpdateInput!, id: Int!, locale: LocaleInputType): Media
+  updatePayloadPreference(autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, id: Int!, locale: LocaleInputType): PayloadPreference
+  updateUser(autosave: Boolean, data: mutationUserUpdateInput!, id: Int!, locale: LocaleInputType): User
   verifyEmailUser(token: String): Boolean
 }
 
@@ -874,7 +885,7 @@ type PayloadPreference {
   id: Int
   key: String
   updatedAt: DateTime
-  user: PayloadPreference_User_Relationship!
+  user(fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): PayloadPreference_User_Relationship!
   value: JSON
 }
 
@@ -1304,15 +1315,15 @@ type PayloadPreferencesUpdateDocAccess {
 
 type Query {
   Access: Access
-  Media(id: Int!): Media
-  PayloadPreference(id: Int!): PayloadPreference
-  PayloadPreferences(limit: Int, page: Int, sort: String, where: PayloadPreference_where): PayloadPreferences
-  User(id: Int!): User
-  Users(limit: Int, page: Int, sort: String, where: User_where): Users
-  allMedia(limit: Int, page: Int, sort: String, where: Media_where): allMedia
-  countPayloadPreferences(where: PayloadPreference_where): countPayloadPreferences
-  countUsers(where: User_where): countUsers
-  countallMedia(where: Media_where): countallMedia
+  Media(fallbackLocale: FallbackLocaleInputType, id: Int!, locale: LocaleInputType): Media
+  PayloadPreference(fallbackLocale: FallbackLocaleInputType, id: Int!, locale: LocaleInputType): PayloadPreference
+  PayloadPreferences(fallbackLocale: FallbackLocaleInputType, limit: Int, locale: LocaleInputType, page: Int, sort: String, where: PayloadPreference_where): PayloadPreferences
+  User(fallbackLocale: FallbackLocaleInputType, id: Int!, locale: LocaleInputType): User
+  Users(fallbackLocale: FallbackLocaleInputType, limit: Int, locale: LocaleInputType, page: Int, sort: String, where: User_where): Users
+  allMedia(fallbackLocale: FallbackLocaleInputType, limit: Int, locale: LocaleInputType, page: Int, sort: String, where: Media_where): allMedia
+  countPayloadPreferences(locale: LocaleInputType, where: PayloadPreference_where): countPayloadPreferences
+  countUsers(locale: LocaleInputType, where: User_where): countUsers
+  countallMedia(locale: LocaleInputType, where: Media_where): countallMedia
   docAccessMedia(id: Int!): mediaDocAccess
   docAccessPayloadPreference(id: Int!): payload_preferencesDocAccess
   docAccessUser(id: Int!): usersDocAccess
@@ -1708,7 +1719,7 @@ type mediaDocAccess {
 }
 
 input mutationMediaInput {
-  alt: String!
+  alt: String
   caption: JSON
   createdAt: String
   filename: String

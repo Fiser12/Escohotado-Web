@@ -8,22 +8,17 @@ services:
     ports:
       - 3000:3000
     platform: linux/amd64
-    env_file:
-      - .env.docker
+    env_file: .docker.env
     environment:
-      AUTH_KEYCLOAK_ID: ${AUTH_KEYCLOAK_ID}
-      AUTH_KEYCLOAK_SECRET: ${AUTH_KEYCLOAK_SECRET}
-      AUTH_SECRET: ${AUTH_SECRET}
+      VIRTUAL_HOST: local.nexolabs.dev
+      VIRTUAL_PORT: 3000
+      VIRTUAL_PATH: /
       PUBLIC_AUTH_KEYCLOAK_ISSUER: https://auth.nexolabs.xyz/realms/Escohotado
-
-      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
-
-      DATABASE_URL: postgresql://admin:devsecret@escota_db:5432/escota_web?schema=public
-      PUBLIC_CMS_URL: ${PUBLIC_CMS_URL}
     depends_on:
       - postgres
       - cms
+    networks:
+      - outside
 
   cms:
     container_name: cms
@@ -34,16 +29,15 @@ services:
     ports:
       - 3001:3000
     platform: linux/amd64
-    env_file:
-      - .env.docker
+    env_file: .docker.env
     environment:
-      DATABASE_URI: postgresql://admin:devsecret@escota_db:5432/escota_cms
-      PAYLOAD_SECRET: YOUR_SECRET_HERE
-      NODE_ENV: production
-
-
+      VIRTUAL_HOST: local.nexolabs.dev
+      VIRTUAL_PORT: 3000
+      VIRTUAL_PATH: ~^/(api|admin)
     depends_on:
       - postgres
+    networks:
+      - outside
 
   postgres:
     container_name: escota_db
@@ -56,3 +50,36 @@ services:
       - POSTGRES_PASSWORD=devsecret
       - POSTGRES_USER=admin
       - POSTGRES_DB=escota_web
+    networks:
+      - outside
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - outside
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    env_file:
+    - .docker.env
+    restart: unless-stopped
+    networks:
+      - outside
+
+volumes:
+  conf:
+  html:
+  vhost:
+
+networks:
+  outside:
