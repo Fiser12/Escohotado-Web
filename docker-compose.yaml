@@ -35,7 +35,7 @@ services:
     environment:
       VIRTUAL_HOST: local.nexolabs.dev
       VIRTUAL_PORT: 3000
-      VIRTUAL_PATH: ~^/(api|admin)
+      VIRTUAL_PATH: ~^/(api|admin|media)
     depends_on:
       postgres:
         condition: service_healthy
