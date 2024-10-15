@@ -11,6 +11,7 @@ export interface Config {
     users: UserAuthOperations;
   };
   collections: {
+    accounts: Account;
     users: User;
     pages: Page;
     media: Media;
@@ -44,6 +45,21 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accounts".
+ */
+export interface Account {
+  id: number;
+  name?: string | null;
+  picture?: string | null;
+  user?: (number | User)[] | null;
+  issuerName: string;
+  scope: string;
+  sub: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -113,6 +129,10 @@ export interface Media {
 export interface PayloadLockedDocument {
   id: number;
   document?:
+    | ({
+        relationTo: 'accounts';
+        value: number | Account;
+      } | null)
     | ({
         relationTo: 'users';
         value: number | User;

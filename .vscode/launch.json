@@ -6,10 +6,18 @@
 	"configurations": [
 		{
 			"command": "pnpm run dev",
-			"name": "Run development server",
+			"name": "Run development Project",
+			"request": "launch",
+			"type": "node-terminal",
+			"preLaunchTask": "Run Database at Docker"
+		},
+		{
+			"command": "pnpm run dev:server",
+			"name": "Run development CMS",
 			"request": "launch",
 			"type": "node-terminal",
 			"preLaunchTask": "Run Database at Docker"
 		}
+
 	]
 }

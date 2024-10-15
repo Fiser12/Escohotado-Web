@@ -4,12 +4,604 @@ Indicates exactly one field must be supplied and this field must not be `null`.
 directive @oneOf on INPUT_OBJECT
 
 type Access {
+  accounts: accountsAccess
   canAccessAdmin: Boolean!
   media: mediaAccess
   pages: pagesAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
   users: usersAccess
+}
+
+type Account {
+  createdAt: DateTime
+  id: Int!
+  issuerName: String!
+  name: String
+  picture: String
+  scope: String!
+  sub: String!
+  updatedAt: DateTime
+  user: [User!]
+}
+
+input Account_createdAt_operator {
+  equals: DateTime
+  exists: Boolean
+  greater_than: DateTime
+  greater_than_equal: DateTime
+  less_than: DateTime
+  less_than_equal: DateTime
+  like: DateTime
+  not_equals: DateTime
+}
+
+input Account_id_operator {
+  equals: Int
+  exists: Boolean
+  greater_than: Int
+  greater_than_equal: Int
+  less_than: Int
+  less_than_equal: Int
+  not_equals: Int
+}
+
+input Account_issuerName_operator {
+  all: [String]
+  contains: String
+  equals: String
+  in: [String]
+  like: String
+  not_equals: String
+  not_in: [String]
+}
+
+input Account_name_operator {
+  all: [String]
+  contains: String
+  equals: String
+  exists: Boolean
+  in: [String]
+  like: String
+  not_equals: String
+  not_in: [String]
+}
+
+input Account_picture_operator {
+  all: [String]
+  contains: String
+  equals: String
+  exists: Boolean
+  in: [String]
+  like: String
+  not_equals: String
+  not_in: [String]
+}
+
+input Account_scope_operator {
+  all: [String]
+  contains: String
+  equals: String
+  in: [String]
+  like: String
+  not_equals: String
+  not_in: [String]
+}
+
+input Account_sub_operator {
+  all: [String]
+  contains: String
+  equals: String
+  in: [String]
+  like: String
+  not_equals: String
+  not_in: [String]
+}
+
+input Account_updatedAt_operator {
+  equals: DateTime
+  exists: Boolean
+  greater_than: DateTime
+  greater_than_equal: DateTime
+  less_than: DateTime
+  less_than_equal: DateTime
+  like: DateTime
+  not_equals: DateTime
+}
+
+input Account_user_operator {
+  all: [JSON]
+  equals: JSON
+  exists: Boolean
+  in: [JSON]
+  not_equals: JSON
+  not_in: [JSON]
+}
+
+input Account_where {
+  AND: [Account_where_and]
+  OR: [Account_where_or]
+  createdAt: Account_createdAt_operator
+  id: Account_id_operator
+  issuerName: Account_issuerName_operator
+  name: Account_name_operator
+  picture: Account_picture_operator
+  scope: Account_scope_operator
+  sub: Account_sub_operator
+  updatedAt: Account_updatedAt_operator
+  user: Account_user_operator
+}
+
+input Account_where_and {
+  AND: [Account_where_and]
+  OR: [Account_where_or]
+  createdAt: Account_createdAt_operator
+  id: Account_id_operator
+  issuerName: Account_issuerName_operator
+  name: Account_name_operator
+  picture: Account_picture_operator
+  scope: Account_scope_operator
+  sub: Account_sub_operator
+  updatedAt: Account_updatedAt_operator
+  user: Account_user_operator
+}
+
+input Account_where_or {
+  AND: [Account_where_and]
+  OR: [Account_where_or]
+  createdAt: Account_createdAt_operator
+  id: Account_id_operator
+  issuerName: Account_issuerName_operator
+  name: Account_name_operator
+  picture: Account_picture_operator
+  scope: Account_scope_operator
+  sub: Account_sub_operator
+  updatedAt: Account_updatedAt_operator
+  user: Account_user_operator
+}
+
+type Accounts {
+  docs: [Account]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+type AccountsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AccountsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AccountsDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AccountsDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AccountsDocAccessFields {
+  createdAt: AccountsDocAccessFields_createdAt
+  issuerName: AccountsDocAccessFields_issuerName
+  name: AccountsDocAccessFields_name
+  picture: AccountsDocAccessFields_picture
+  scope: AccountsDocAccessFields_scope
+  sub: AccountsDocAccessFields_sub
+  updatedAt: AccountsDocAccessFields_updatedAt
+  user: AccountsDocAccessFields_user
+}
+
+type AccountsDocAccessFields_createdAt {
+  create: AccountsDocAccessFields_createdAt_Create
+  delete: AccountsDocAccessFields_createdAt_Delete
+  read: AccountsDocAccessFields_createdAt_Read
+  update: AccountsDocAccessFields_createdAt_Update
+}
+
+type AccountsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_issuerName {
+  create: AccountsDocAccessFields_issuerName_Create
+  delete: AccountsDocAccessFields_issuerName_Delete
+  read: AccountsDocAccessFields_issuerName_Read
+  update: AccountsDocAccessFields_issuerName_Update
+}
+
+type AccountsDocAccessFields_issuerName_Create {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_issuerName_Delete {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_issuerName_Read {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_issuerName_Update {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_name {
+  create: AccountsDocAccessFields_name_Create
+  delete: AccountsDocAccessFields_name_Delete
+  read: AccountsDocAccessFields_name_Read
+  update: AccountsDocAccessFields_name_Update
+}
+
+type AccountsDocAccessFields_name_Create {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_name_Delete {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_name_Read {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_name_Update {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_picture {
+  create: AccountsDocAccessFields_picture_Create
+  delete: AccountsDocAccessFields_picture_Delete
+  read: AccountsDocAccessFields_picture_Read
+  update: AccountsDocAccessFields_picture_Update
+}
+
+type AccountsDocAccessFields_picture_Create {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_picture_Delete {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_picture_Read {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_picture_Update {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_scope {
+  create: AccountsDocAccessFields_scope_Create
+  delete: AccountsDocAccessFields_scope_Delete
+  read: AccountsDocAccessFields_scope_Read
+  update: AccountsDocAccessFields_scope_Update
+}
+
+type AccountsDocAccessFields_scope_Create {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_scope_Delete {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_scope_Read {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_scope_Update {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_sub {
+  create: AccountsDocAccessFields_sub_Create
+  delete: AccountsDocAccessFields_sub_Delete
+  read: AccountsDocAccessFields_sub_Read
+  update: AccountsDocAccessFields_sub_Update
+}
+
+type AccountsDocAccessFields_sub_Create {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_sub_Delete {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_sub_Read {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_sub_Update {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_updatedAt {
+  create: AccountsDocAccessFields_updatedAt_Create
+  delete: AccountsDocAccessFields_updatedAt_Delete
+  read: AccountsDocAccessFields_updatedAt_Read
+  update: AccountsDocAccessFields_updatedAt_Update
+}
+
+type AccountsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_user {
+  create: AccountsDocAccessFields_user_Create
+  delete: AccountsDocAccessFields_user_Delete
+  read: AccountsDocAccessFields_user_Read
+  update: AccountsDocAccessFields_user_Update
+}
+
+type AccountsDocAccessFields_user_Create {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_user_Delete {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_user_Read {
+  permission: Boolean!
+}
+
+type AccountsDocAccessFields_user_Update {
+  permission: Boolean!
+}
+
+type AccountsFields {
+  createdAt: AccountsFields_createdAt
+  issuerName: AccountsFields_issuerName
+  name: AccountsFields_name
+  picture: AccountsFields_picture
+  scope: AccountsFields_scope
+  sub: AccountsFields_sub
+  updatedAt: AccountsFields_updatedAt
+  user: AccountsFields_user
+}
+
+type AccountsFields_createdAt {
+  create: AccountsFields_createdAt_Create
+  delete: AccountsFields_createdAt_Delete
+  read: AccountsFields_createdAt_Read
+  update: AccountsFields_createdAt_Update
+}
+
+type AccountsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type AccountsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type AccountsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type AccountsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type AccountsFields_issuerName {
+  create: AccountsFields_issuerName_Create
+  delete: AccountsFields_issuerName_Delete
+  read: AccountsFields_issuerName_Read
+  update: AccountsFields_issuerName_Update
+}
+
+type AccountsFields_issuerName_Create {
+  permission: Boolean!
+}
+
+type AccountsFields_issuerName_Delete {
+  permission: Boolean!
+}
+
+type AccountsFields_issuerName_Read {
+  permission: Boolean!
+}
+
+type AccountsFields_issuerName_Update {
+  permission: Boolean!
+}
+
+type AccountsFields_name {
+  create: AccountsFields_name_Create
+  delete: AccountsFields_name_Delete
+  read: AccountsFields_name_Read
+  update: AccountsFields_name_Update
+}
+
+type AccountsFields_name_Create {
+  permission: Boolean!
+}
+
+type AccountsFields_name_Delete {
+  permission: Boolean!
+}
+
+type AccountsFields_name_Read {
+  permission: Boolean!
+}
+
+type AccountsFields_name_Update {
+  permission: Boolean!
+}
+
+type AccountsFields_picture {
+  create: AccountsFields_picture_Create
+  delete: AccountsFields_picture_Delete
+  read: AccountsFields_picture_Read
+  update: AccountsFields_picture_Update
+}
+
+type AccountsFields_picture_Create {
+  permission: Boolean!
+}
+
+type AccountsFields_picture_Delete {
+  permission: Boolean!
+}
+
+type AccountsFields_picture_Read {
+  permission: Boolean!
+}
+
+type AccountsFields_picture_Update {
+  permission: Boolean!
+}
+
+type AccountsFields_scope {
+  create: AccountsFields_scope_Create
+  delete: AccountsFields_scope_Delete
+  read: AccountsFields_scope_Read
+  update: AccountsFields_scope_Update
+}
+
+type AccountsFields_scope_Create {
+  permission: Boolean!
+}
+
+type AccountsFields_scope_Delete {
+  permission: Boolean!
+}
+
+type AccountsFields_scope_Read {
+  permission: Boolean!
+}
+
+type AccountsFields_scope_Update {
+  permission: Boolean!
+}
+
+type AccountsFields_sub {
+  create: AccountsFields_sub_Create
+  delete: AccountsFields_sub_Delete
+  read: AccountsFields_sub_Read
+  update: AccountsFields_sub_Update
+}
+
+type AccountsFields_sub_Create {
+  permission: Boolean!
+}
+
+type AccountsFields_sub_Delete {
+  permission: Boolean!
+}
+
+type AccountsFields_sub_Read {
+  permission: Boolean!
+}
+
+type AccountsFields_sub_Update {
+  permission: Boolean!
+}
+
+type AccountsFields_updatedAt {
+  create: AccountsFields_updatedAt_Create
+  delete: AccountsFields_updatedAt_Delete
+  read: AccountsFields_updatedAt_Read
+  update: AccountsFields_updatedAt_Update
+}
+
+type AccountsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type AccountsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type AccountsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type AccountsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type AccountsFields_user {
+  create: AccountsFields_user_Create
+  delete: AccountsFields_user_Delete
+  read: AccountsFields_user_Read
+  update: AccountsFields_user_Update
+}
+
+type AccountsFields_user_Create {
+  permission: Boolean!
+}
+
+type AccountsFields_user_Delete {
+  permission: Boolean!
+}
+
+type AccountsFields_user_Read {
+  permission: Boolean!
+}
+
+type AccountsFields_user_Update {
+  permission: Boolean!
+}
+
+type AccountsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AccountsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AccountsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AccountsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
 }
 
 """
@@ -862,16 +1454,19 @@ input Media_width_operator {
 }
 
 type Mutation {
+  createAccount(data: mutationAccountInput!, draft: Boolean): Account
   createMedia(data: mutationMediaInput!, draft: Boolean): Media
   createPage(data: mutationPageInput!, draft: Boolean): Page
   createPayloadLockedDocument(data: mutationPayloadLockedDocumentInput!, draft: Boolean): PayloadLockedDocument
   createPayloadPreference(data: mutationPayloadPreferenceInput!, draft: Boolean): PayloadPreference
   createUser(data: mutationUserInput!, draft: Boolean): User
+  deleteAccount(id: Int!): Account
   deleteMedia(id: Int!): Media
   deletePage(id: Int!): Page
   deletePayloadLockedDocument(id: Int!): PayloadLockedDocument
   deletePayloadPreference(id: Int!): PayloadPreference
   deleteUser(id: Int!): User
+  duplicateAccount(id: Int!): Account
   duplicatePage(id: Int!): Page
   duplicatePayloadLockedDocument(id: Int!): PayloadLockedDocument
   duplicatePayloadPreference(id: Int!): PayloadPreference
@@ -881,6 +1476,7 @@ type Mutation {
   refreshTokenUser: usersRefreshedUser
   resetPasswordUser(password: String, token: String): usersResetPassword
   unlockUser(email: String!): Boolean!
+  updateAccount(autosave: Boolean, data: mutationAccountUpdateInput!, draft: Boolean, id: Int!): Account
   updateMedia(autosave: Boolean, data: mutationMediaUpdateInput!, draft: Boolean, id: Int!): Media
   updatePage(autosave: Boolean, data: mutationPageUpdateInput!, draft: Boolean, id: Int!): Page
   updatePayloadLockedDocument(autosave: Boolean, data: mutationPayloadLockedDocumentUpdateInput!, draft: Boolean, id: Int!): PayloadLockedDocument
@@ -1245,6 +1841,7 @@ input PayloadLockedDocumentUpdate_DocumentRelationshipInput {
 }
 
 enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
+  accounts
   media
   pages
   users
@@ -1259,7 +1856,7 @@ enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   users
 }
 
-union PayloadLockedDocument_Document = Media | Page | User
+union PayloadLockedDocument_Document = Account | Media | Page | User
 
 input PayloadLockedDocument_DocumentRelationshipInput {
   relationTo: PayloadLockedDocument_DocumentRelationshipInputRelationTo
@@ -1267,12 +1864,14 @@ input PayloadLockedDocument_DocumentRelationshipInput {
 }
 
 enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
+  accounts
   media
   pages
   users
 }
 
 enum PayloadLockedDocument_Document_RelationTo {
+  accounts
   media
   pages
   users
@@ -1320,6 +1919,7 @@ input PayloadLockedDocument_document_Relation {
 }
 
 enum PayloadLockedDocument_document_Relation_RelationTo {
+  accounts
   media
   pages
   users
@@ -2134,6 +2734,8 @@ type PayloadPreferencesUpdateDocAccess {
 
 type Query {
   Access: Access
+  Account(draft: Boolean, id: Int!): Account
+  Accounts(draft: Boolean, limit: Int, page: Int, sort: String, where: Account_where): Accounts
   Media(draft: Boolean, id: Int!): Media
   Page(draft: Boolean, id: Int!): Page
   Pages(draft: Boolean, limit: Int, page: Int, sort: String, where: Page_where): Pages
@@ -2144,11 +2746,13 @@ type Query {
   User(draft: Boolean, id: Int!): User
   Users(draft: Boolean, limit: Int, page: Int, sort: String, where: User_where): Users
   allMedia(draft: Boolean, limit: Int, page: Int, sort: String, where: Media_where): allMedia
+  countAccounts(draft: Boolean, where: Account_where): countAccounts
   countPages(draft: Boolean, where: Page_where): countPages
   countPayloadLockedDocuments(draft: Boolean, where: PayloadLockedDocument_where): countPayloadLockedDocuments
   countPayloadPreferences(draft: Boolean, where: PayloadPreference_where): countPayloadPreferences
   countUsers(draft: Boolean, where: User_where): countUsers
   countallMedia(draft: Boolean, where: Media_where): countallMedia
+  docAccessAccount(id: Int!): accountsDocAccess
   docAccessMedia(id: Int!): mediaDocAccess
   docAccessPage(id: Int!): pagesDocAccess
   docAccessPayloadLockedDocument(id: Int!): payload_locked_documentsDocAccess
@@ -2203,6 +2807,16 @@ input User_id_operator {
   not_equals: Int
 }
 
+input User_password_operator {
+  all: [String]
+  contains: String
+  equals: String
+  in: [String]
+  like: String
+  not_equals: String
+  not_in: [String]
+}
+
 input User_updatedAt_operator {
   equals: DateTime
   exists: Boolean
@@ -2220,6 +2834,7 @@ input User_where {
   createdAt: User_createdAt_operator
   email: User_email_operator
   id: User_id_operator
+  password: User_password_operator
   updatedAt: User_updatedAt_operator
 }
 
@@ -2229,6 +2844,7 @@ input User_where_and {
   createdAt: User_createdAt_operator
   email: User_email_operator
   id: User_id_operator
+  password: User_password_operator
   updatedAt: User_updatedAt_operator
 }
 
@@ -2238,6 +2854,7 @@ input User_where_or {
   createdAt: User_createdAt_operator
   email: User_email_operator
   id: User_id_operator
+  password: User_password_operator
   updatedAt: User_updatedAt_operator
 }
 
@@ -2503,6 +3120,22 @@ type UsersUpdateDocAccess {
   where: JSONObject
 }
 
+type accountsAccess {
+  create: AccountsCreateAccess
+  delete: AccountsDeleteAccess
+  fields: AccountsFields
+  read: AccountsReadAccess
+  update: AccountsUpdateAccess
+}
+
+type accountsDocAccess {
+  create: AccountsCreateDocAccess
+  delete: AccountsDeleteDocAccess
+  fields: AccountsDocAccessFields
+  read: AccountsReadDocAccess
+  update: AccountsUpdateDocAccess
+}
+
 type allMedia {
   docs: [Media]
   hasNextPage: Boolean
@@ -2515,6 +3148,10 @@ type allMedia {
   prevPage: Int
   totalDocs: Int
   totalPages: Int
+}
+
+type countAccounts {
+  totalDocs: Int
 }
 
 type countPages {
@@ -2551,6 +3188,28 @@ type mediaDocAccess {
   fields: MediaDocAccessFields
   read: MediaReadDocAccess
   update: MediaUpdateDocAccess
+}
+
+input mutationAccountInput {
+  createdAt: String
+  issuerName: String!
+  name: String
+  picture: String
+  scope: String!
+  sub: String!
+  updatedAt: String
+  user: [Int]
+}
+
+input mutationAccountUpdateInput {
+  createdAt: String
+  issuerName: String
+  name: String
+  picture: String
+  scope: String
+  sub: String
+  updatedAt: String
+  user: [Int]
 }
 
 input mutationMediaInput {

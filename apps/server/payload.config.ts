@@ -24,12 +24,23 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import { keycloakProvider } from '@/plugins/oauth/keycloak'
+import { adminAuthPlugin } from '@/plugins/oauth'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  //editor: slateEditor({}),
+  plugins: [
+    adminAuthPlugin({
+      providers: [keycloakProvider(
+        process.env.AUTH_KEYCLOAK_ID as string,
+        process.env.AUTH_KEYCLOAK_SECRET as string,
+        process.env.PUBLIC_AUTH_KEYCLOAK_ISSUER as string
+      )],
+    })
+  ],
+
   editor: lexicalEditor(),
   collections: [
     {
@@ -45,6 +56,10 @@ export default buildConfig({
       slug: 'pages',
       admin: {
         useAsTitle: 'title',
+        components: {
+        
+        },
+    
       },
       fields: [
         {
@@ -87,6 +102,9 @@ export default buildConfig({
   },
   cors: '*',
   admin: {
+    components: {
+      afterLogin: ['@/components/Auth'],
+    },
     autoLogin: {
       email: 'dev@payloadcms.com',
       password: 'test',
