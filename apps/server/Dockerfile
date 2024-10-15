@@ -3,7 +3,7 @@ RUN npm i -g pnpm turbo
 WORKDIR /app
 
 FROM base AS runner
-ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
+ENV PAYLOAD_CONFIG_PATH=payload.config.js
 
 COPY . .
 RUN pnpm install
