@@ -1,119 +1,107 @@
-import path from 'path'
-// import { postgresAdapter } from '@payloadcms/db-postgres'
-import { en } from 'payload/i18n/en'
+import { media, pages, sessions, users } from '@/payload/collections'
+import { COLLECTION_SLUG_MEDIA, COLLECTION_SLUG_PAGE, COLLECTION_SLUG_PRODUCTS } from '@/payload/collections/config'
+import { siteSettings } from '@/payload/globals/site-settings'
+import generateBreadcrumbsUrl from '@/payload/utils/generateBreadcrumbsUrl'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { resendAdapter } from '@payloadcms/email-resend'
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+import { seoPlugin } from '@payloadcms/plugin-seo'
+import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
+import { stripePlugin } from '@payloadcms/plugin-stripe'
+import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 
-import {
-  AlignFeature,
-  BlockquoteFeature,
-  BlocksFeature,
-  BoldFeature,
-  ChecklistFeature,
-  HeadingFeature,
-  IndentFeature,
-  InlineCodeFeature,
-  ItalicFeature,
-  lexicalEditor,
-  LinkFeature,
-  OrderedListFeature,
-  ParagraphFeature,
-  RelationshipFeature,
-  UnorderedListFeature,
-  UploadFeature,
-} from '@payloadcms/richtext-lexical'
-import { postgresAdapter } from '@payloadcms/db-postgres'
-import { buildConfig } from 'payload'
+import { prices, products, subscriptions } from '@/payload/collections/stripe'
+import { priceUpsert, subscriptionDeleted, subscriptionUpsert } from '@/payload/stripe/webhooks'
+import path from 'path'
+import { buildConfig } from 'payload/config'
+import { en } from 'payload/i18n/en'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import _get from 'lodash/get'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  //editor: slateEditor({}),
-  editor: lexicalEditor(),
-  collections: [
-    {
-      slug: 'users',
-      auth: true,
-      access: {
-        delete: () => false,
-        update: () => false,
-      },
-      fields: [],
-    },
-    {
-      slug: 'pages',
-      admin: {
-        useAsTitle: 'title',
-      },
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-        },
-        {
-          name: 'content',
-          type: 'richText',
-        },
-      ],
-    },
-    {
-      slug: 'media',
-      upload: true,
-      fields: [
-        {
-          name: 'text',
-          type: 'text',
-        },
-      ],
-    },
-  ],
-  secret: process.env.PAYLOAD_SECRET || '',
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
-   db: postgresAdapter({
-     pool: {
-       connectionString: process.env.POSTGRES_URI || ''
-     }
-  }),
-
-  /**
-   * Payload can now accept specific translations from 'payload/i18n/en'
-   * This is completely optional and will default to English if not provided
-   */
-  i18n: {
-    supportedLanguages: { en },
-  },
-  cors: '*',
+  globals: [siteSettings],
+  collections: [users, pages, media, sessions, products, prices, subscriptions],
   admin: {
-    autoLogin: {
-      email: 'dev@payloadcms.com',
-      password: 'test',
-      prefillOnly: true,
-    },
-  },
-  async onInit(payload) {
-    const existingUsers = await payload.find({
-      collection: 'users',
-      limit: 1,
-    })
-
-    if (existingUsers.docs.length === 0) {
-      await payload.create({
-        collection: 'users',
-        data: {
-          email: 'dev@payloadcms.com',
-          password: 'test',
-        },
-      })
+    livePreview: {
+      url: ({ data, locale }) => `${process.env.NEXT_PUBLIC_SITE_URL}/preview${data.path}${locale ? `?locale=${locale.code}` : ''}`,
+      collections: [COLLECTION_SLUG_PAGE]
     }
   },
-  // Sharp is now an optional dependency -
-  // if you want to resize images, crop, set focal point, etc.
-  // make sure to install it and pass it to the config.
-
-  // This is temporary - we may make an adapter pattern
-  // for this before reaching 3.0 stable
-  sharp,
+  cors: ['https://checkout.stripe.com', `${process.env.NEXT_PUBLIC_SITE_URL}` || ''],
+  csrf: ['https://checkout.stripe.com', process.env.NEXT_PUBLIC_SITE_URL || ''],
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()]
+  }),
+  secret: process.env.AUTH_SECRET || '',
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI || ''
+  }),
+  serverURL: process.env.NEXT_PUBLIC_SITE_URL,
+  email:
+    process.env.RESEND_DEFAULT_EMAIL && process.env.AUTH_RESEND_KEY
+      ? resendAdapter({
+          defaultFromAddress: process.env.RESEND_DEFAULT_EMAIL,
+          defaultFromName: 'Payload Admin',
+          apiKey: process.env.AUTH_RESEND_KEY || ''
+        })
+      : undefined,
+  i18n: {
+    supportedLanguages: { en }
+  },
+  plugins: [
+    nestedDocsPlugin({
+      collections: [COLLECTION_SLUG_PAGE],
+      generateURL: generateBreadcrumbsUrl,
+      breadcrumbsFieldSlug: 'breadcrumbs'
+    }),
+    formBuilderPlugin({
+      redirectRelationships: [COLLECTION_SLUG_PAGE],
+      fields: {
+        state: false
+      }
+    }),
+    stripePlugin({
+      isTestKey: Boolean(process.env.NEXT_PUBLIC_STRIPE_IS_TEST_KEY),
+      rest: false,
+      stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
+      stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOKS_SIGNING_SECRET,
+      webhooks: {
+        'price.updated': priceUpsert,
+        'price.created': priceUpsert,
+        'customer.subscription.created': subscriptionUpsert,
+        'customer.subscription.updated': subscriptionUpsert,
+        'customer.subscription.deleted': subscriptionDeleted
+      },
+      sync: [
+        {
+          collection: COLLECTION_SLUG_PRODUCTS,
+          stripeResourceType: 'products',
+          stripeResourceTypeSingular: 'product',
+          fields: [
+            { fieldPath: 'active', stripeProperty: 'active' },
+            { fieldPath: 'name', stripeProperty: 'name' },
+            { fieldPath: 'description', stripeProperty: 'description' },
+            { fieldPath: 'image', stripeProperty: 'images.0' }
+          ]
+        }
+      ]
+    }),
+    seoPlugin({
+      collections: [COLLECTION_SLUG_PAGE],
+      uploadsCollection: COLLECTION_SLUG_MEDIA,
+      generateURL: ({ doc }) => {
+        const path = _get(doc, 'path.value', null)
+        return `${process.env.NEXT_PUBLIC_SITE_URL || ''}${path}`
+      },
+      tabbedUI: true
+    })
+  ],
+  typescript: {
+    outputFile: path.resolve(dirname, 'payload-types.ts')
+  },
+  sharp
 })
