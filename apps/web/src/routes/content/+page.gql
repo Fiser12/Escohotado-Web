@@ -3,11 +3,5 @@ query GetAllMedia {
     docs {
       url
     }
-    totalDocs
-    totalPages
-    hasNextPage
-    hasPrevPage
-    page
-    limit
   }
 }
