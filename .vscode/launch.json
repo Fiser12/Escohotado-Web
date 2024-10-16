@@ -5,7 +5,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"command": "pnpm run dev",
+			"command": "pnpm run dev:server",
 			"name": "Run development server",
 			"request": "launch",
 			"type": "node-terminal",
