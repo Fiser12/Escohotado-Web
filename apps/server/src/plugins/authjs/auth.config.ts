@@ -8,7 +8,7 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 export const authConfig: NextAuthConfig = {
   theme: { logo: 'https://authjs.dev/img/logo-sm.png' },
   trustHost: true,
-  secret: 'secret',
+  secret: process.env.AUTH_SECRET,
   providers: [
     keycloak({
       allowDangerousEmailAccountLinking: true,
@@ -45,22 +45,27 @@ export const authConfig: NextAuthConfig = {
       }
       return session
     },
+    
     async signIn(data) {
       const payload = await getPayloadHMR({config})
       const userId = data.user.id;
+
       if (!userId || !data.account?.access_token) {
-        return false
+        return true
       }
       const keycloakRoles = await getUserInfo(data.account.access_token)
-      
+      if (!keycloakRoles.includes("admin")) return false
 
-      await payload.update({
-        collection: "users",
-        id: userId,
-        data: {
-          roles: keycloakRoles,
-        }
-      });
+      try {
+
+        await payload.update({
+          collection: "users",
+          id: userId,
+          data: {
+            roles: keycloakRoles,
+          }
+        }); 
+      } catch {}  
       return true
     },
     authorized: async ({ auth }) => {

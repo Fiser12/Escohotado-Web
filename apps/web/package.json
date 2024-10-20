@@ -25,9 +25,6 @@
             "svelte": "./dist/index.js"
         }
     },
-    "prisma": {
-        "schema": "prisma/schema.prisma"
-    },
     "files": [
         "dist",
         "!dist/**/*.test.*",
@@ -37,11 +34,9 @@
         "svelte": "^4.2.18"
     },
     "devDependencies": {
-        "@auth/prisma-adapter": "^2.5.0",
         "@auth/sveltekit": "^1.5.0",
         "@iconify/svelte": "^4.0.2",
         "@playwright/test": "^1.47.2",
-        "@prisma/client": "^5.20.0",
         "@sveltejs/adapter-node": "^5.2.4",
         "@sveltejs/kit": "^2.5.28",
         "@sveltejs/package": "^2.3.5",
@@ -78,7 +73,6 @@
         "postcss": "^8.4.47",
         "prettier": "^3.3.3",
         "prettier-plugin-svelte": "^3.2.6",
-        "prisma": "^5.20.0",
         "publint": "^0.1.16",
         "stripe": "^16.12.0",
         "svelte": "^4.2.19",

@@ -20,7 +20,6 @@ COPY turbo.json turbo.json
 WORKDIR /app/apps/web
 
 RUN pnpm install
-RUN npx prisma generate
 WORKDIR /app/
 RUN pnpm turbo run build --filter=web
 

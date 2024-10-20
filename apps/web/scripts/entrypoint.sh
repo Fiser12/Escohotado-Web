@@ -18,7 +18,5 @@ do
   fi
 done
 
-#Ejecutamos las migraciones nuevas
-pnpm prisma migrate deploy
 # Ejecutar el comando que se pase como argumento
 exec "$@"
