@@ -54,3 +54,4 @@ volumes
 .yarn/*
 !.yarn/releases
 !.yarn/plugins
+*storybook.log

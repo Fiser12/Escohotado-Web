@@ -1,7 +1,0 @@
-query GetAllMedia {
-  allMedia(limit: 100) {
-    docs {
-      url
-    }
-  }
-}
