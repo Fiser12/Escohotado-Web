@@ -15,6 +15,8 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
     "@storybook/addon-essentials": "^8.3.6",
+    "@storybook/addon-designs": "^8.0.3",
+    "@storybook/addon-viewport": "^8.3.6",
     "@storybook/addon-interactions": "^8.3.6",
     "@storybook/addon-links": "^8.3.6",
     "@storybook/addon-onboarding": "^8.3.6",
@@ -38,7 +40,6 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@storybook/addon-designs": "^8.0.3",
     "@tailwindcss/typography": "^0.5.15",
     "classnames": "^2.5.1",
     "hegel": "workspace:*",

@@ -149,6 +149,9 @@ importers:
       '@storybook/addon-designs':
         specifier: ^8.0.3
         version: 8.0.3(@storybook/blocks@8.3.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.3.6))(@storybook/components@8.3.6(storybook@8.3.6))(@storybook/theming@8.3.6(storybook@8.3.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@storybook/addon-viewport':
+        specifier: ^8.3.6
+        version: 8.3.6(storybook@8.3.6)
       '@tailwindcss/typography':
         specifier: ^0.5.15
         version: 0.5.15(tailwindcss@3.4.14(ts-node@10.9.2(@swc/core@1.6.1(@swc/helpers@0.5.13))(@types/node@20.16.11)(typescript@5.6.3)))
