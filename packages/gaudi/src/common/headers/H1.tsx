@@ -7,7 +7,7 @@ type Args = {
 
 export const H1 = ({ label }: Args) => {
     return (
-        <h1 className={"text-[#023350] text-6xl font-regular font-['YesevaOne']"}>{label}</h1>
+        <h1 className={"text-[#023350] text-6xl font-regular font-yesevaone"}>{label}</h1>
     )
 }
 

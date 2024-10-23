@@ -5,4 +5,5 @@ export interface UserModel {
 	name: Optional<string>;
 	image: Optional<string>;
 	email: string;
+	roles: string[];
 }

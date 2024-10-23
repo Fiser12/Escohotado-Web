@@ -6,6 +6,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
+    "build": "tsc",
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
     "storybook": "storybook dev -p 6006",
@@ -27,17 +28,20 @@
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.4.20",
+    "config": "workspace:*",
     "eslint": "^8.57.0",
     "eslint-config": "workspace:*",
     "eslint-plugin-storybook": "^0.10.1",
     "postcss": "^8.4.47",
     "storybook": "^8.3.6",
     "tailwindcss": "^3.4.14",
-    "typescript": "^5.3.3",
-    "config": "workspace:*"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@storybook/addon-designs": "^8.0.3",
     "@tailwindcss/typography": "^0.5.15",
+    "classnames": "^2.5.1",
+    "hegel": "workspace:*",
     "react": "^18.2.0"
   }
 }
