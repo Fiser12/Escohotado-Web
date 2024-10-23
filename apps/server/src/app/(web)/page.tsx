@@ -1,5 +1,5 @@
 
-import { Button } from "gaudi/button";
+import { H1 } from "gaudi";
 import './tailwind.scss'
 
 type Args = {
@@ -8,7 +8,7 @@ type Args = {
 
 const Layout = ({ children }: Args) => (
     <div>
-        <Button label='2'></Button>
+        <H1 label={"Antonio Escohotado"}/>
     </div>
 )
 
