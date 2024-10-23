@@ -1,9 +1,10 @@
-import type { Preview } from '@storybook/svelte';
+import type { Preview } from "@storybook/react";
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import "../src/styles.css";
+
+import "./tailwind.css"
 
 const preview: Preview = {
-	parameters: {
+  parameters: {
 		viewport: {
 			viewports: INITIAL_VIEWPORTS,
 			defaultViewport: 'reset'
@@ -15,7 +16,7 @@ const preview: Preview = {
 				date: /Date$/i
 			}
 		}
-	}
+  },
 };
 
 export default preview;

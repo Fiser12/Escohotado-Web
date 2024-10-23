@@ -1,17 +1,9 @@
 {
   "name": "config",
   "version": "0.0.0",
-  "type": "module",
-  "module": "index.ts",
-  "main": "index.ts",
-  "exports": {
-    ".": "./tailwind.config.ts"
-  },
-  "scripts": {
-    "lint": "eslint ."
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.15",
-    "tailwindcss": "^3.4.13"
+  "private": true,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -8,8 +8,7 @@
 			"command": "pnpm run dev",
 			"name": "Run development server",
 			"request": "launch",
-			"type": "node-terminal",
-			"preLaunchTask": "Run Database at Docker"
+			"type": "node-terminal"
 		}
 	]
 }

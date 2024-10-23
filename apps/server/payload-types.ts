@@ -12,14 +12,13 @@ export interface Config {
   };
   collections: {
     users: User;
-    pages: Page;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {};
   locale: null;
@@ -50,40 +49,34 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
-  updatedAt: string;
-  createdAt: string;
+  roles?: string[];
+  id: string;
   email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: number;
-  title?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
+  name?: string | null;
+  image?: string | null;
+  emailVerified?: string | null;
+  accounts?:
+    | {
+        id?: string | null;
+        provider: string;
+        providerAccountId: string;
         type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+      }[]
+    | null;
+  sessions?:
+    | {
+        id?: string | null;
+        sessionToken: string;
+        expires: string;
+      }[]
+    | null;
+  verificationTokens?:
+    | {
+        id?: string | null;
+        token: string;
+        expires: string;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -92,7 +85,7 @@ export interface Page {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   text?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -111,24 +104,20 @@ export interface Media {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'pages';
-        value: number | Page;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -138,10 +127,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -161,7 +150,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;

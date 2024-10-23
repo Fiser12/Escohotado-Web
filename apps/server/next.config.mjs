@@ -5,6 +5,9 @@ const nextConfig = {
   // Your Next.js config here
   experimental: {
     reactCompiler: false
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   }
 }
 

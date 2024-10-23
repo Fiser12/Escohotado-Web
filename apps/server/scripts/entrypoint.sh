@@ -13,5 +13,5 @@ do
     echo "$var" >> /app/apps/server/.env
   fi
 done
-pnpm --prefix /app/apps/server payload migrate &
+
 exec "$@"

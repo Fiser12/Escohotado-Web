@@ -16,8 +16,7 @@ services:
       VIRTUAL_PATH: /
       PUBLIC_AUTH_KEYCLOAK_ISSUER: https://auth.nexolabs.xyz/realms/Escohotado
     depends_on:
-      postgres:
-        condition: service_healthy
+      - cms
     networks:
       - outside
 
@@ -37,29 +36,33 @@ services:
       VIRTUAL_PORT: 3000
       VIRTUAL_PATH: ~^/(api|admin|media|_next)
     depends_on:
-      postgres:
-        condition: service_healthy
+      - mongo
     networks:
       - outside
 
-  postgres:
-    container_name: escota_db
-    image: postgres:14-alpine
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
     ports:
-      - 5432:5432
-    volumes:
-      - ./volumes/postgres:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=devsecret
-      - POSTGRES_USER=admin
-      - POSTGRES_DB=escota_web
+      - 27017:27017
     networks:
       - outside
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+    env_file: .docker.env
+    volumes:
+      - ./volumes/mongo:/data/db
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+    networks:
+      - outside
 
   nginx-proxy:
     image: nginxproxy/nginx-proxy

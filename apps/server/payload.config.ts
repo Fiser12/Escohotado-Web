@@ -3,60 +3,23 @@ import path from 'path'
 import { en } from 'payload/i18n/en'
 
 import {
-  AlignFeature,
-  BlockquoteFeature,
-  BlocksFeature,
-  BoldFeature,
-  ChecklistFeature,
-  HeadingFeature,
-  IndentFeature,
-  InlineCodeFeature,
-  ItalicFeature,
   lexicalEditor,
-  LinkFeature,
-  OrderedListFeature,
-  ParagraphFeature,
-  RelationshipFeature,
-  UnorderedListFeature,
-  UploadFeature,
 } from '@payloadcms/richtext-lexical'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import { authConfig } from '@/plugins/authjs/auth.config'
+import UsersCollection from '@/collections/user'
+import { authjsPlugin } from 'payload-authjs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  //editor: slateEditor({}),
   editor: lexicalEditor(),
   collections: [
-    {
-      slug: 'users',
-      auth: true,
-      access: {
-        delete: () => false,
-        update: () => false,
-      },
-      fields: [],
-    },
-    {
-      slug: 'pages',
-      admin: {
-        useAsTitle: 'title',
-      },
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-        },
-        {
-          name: 'content',
-          type: 'richText',
-        },
-      ],
-    },
+    UsersCollection,
     {
       slug: 'media',
       upload: true,
@@ -68,14 +31,13 @@ export default buildConfig({
       ],
     },
   ],
+  plugins: [authjsPlugin({ authjsConfig: authConfig })],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-   db: postgresAdapter({
-     pool: {
-       connectionString: process.env.POSTGRES_URI || ''
-     }
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI || ''
   }),
 
   /**
@@ -87,27 +49,10 @@ export default buildConfig({
   },
   cors: '*',
   admin: {
-    autoLogin: {
-      email: 'dev@payloadcms.com',
-      password: 'test',
-      prefillOnly: true,
+    user: UsersCollection.slug,
+    importMap: {
+      baseDir: path.resolve(dirname),
     },
-  },
-  async onInit(payload) {
-    const existingUsers = await payload.find({
-      collection: 'users',
-      limit: 1,
-    })
-
-    if (existingUsers.docs.length === 0) {
-      await payload.create({
-        collection: 'users',
-        data: {
-          email: 'dev@payloadcms.com',
-          password: 'test',
-        },
-      })
-    }
   },
   // Sharp is now an optional dependency -
   // if you want to resize images, crop, set focal point, etc.
