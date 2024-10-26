@@ -5,18 +5,20 @@ import type { MenuSection, UserModel, Optional } from 'hegel';
 import { NavItem } from "./nav_item";
 import { UserMenu } from "./user_menu";
 
-export type Args = {
+export interface Props {
     className?: string
     user: Optional<UserModel>
-    menuSectionsLoader: (user: UserModel) => [MenuSection]
-    signIn: () => void
+    menuSections: MenuSection[]
+    signIn: () => Promise<void>
+    signOut: () => Promise<void>
 }
 
 export const Header = ({
     user,
     signIn,
-    menuSectionsLoader
-}: Args): JSX.Element => {
+    signOut,
+    menuSections
+}: Props): JSX.Element => {
 
     return (
         <header>
@@ -34,12 +36,22 @@ export const Header = ({
                                 <EscotaButton text="La emboscadura" variant="primary" />
                             </a>
                         </div>
-                        {user && 
-                            <UserMenu user={user} menuSectionsLoader={menuSectionsLoader}/>
-                        }
-                        {!user && <button onClick={signIn}>
-                            <EscotaButton text="Entrar" variant="secondary" />
-                        </button>
+                        {user ? <UserMenu 
+                            user={user} 
+                            menuSections={[
+                                ...menuSections,
+                                { items: [{text: "Cerrar sesión", action: signOut}] }
+                            ]}
+                        /> : <form
+                            action={async () => {
+                                "use server";
+                                await signIn();
+                            }}
+                        >
+                            <button type="submit">
+                                <EscotaButton text="Entrar" variant="secondary" />
+                            </button>
+                        </form>
                         }
                     </div>
                 </nav>

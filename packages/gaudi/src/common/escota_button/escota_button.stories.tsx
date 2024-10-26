@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { EscotaButton } from './escota_button.js';
+import { EscotaButton } from './escota_button';
 
 // Configuración de la historia
 const meta = {

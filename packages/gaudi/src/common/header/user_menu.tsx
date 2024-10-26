@@ -7,10 +7,10 @@ import { MenuSection, UserModel } from "hegel";
 
 export type Args = {
     user: UserModel
-    menuSectionsLoader: (user: UserModel) => [MenuSection]
+    menuSections: MenuSection[]
 }
 
-export const UserMenu = ({ user, menuSectionsLoader }: Args): JSX.Element => {
+export const UserMenu = ({ user, menuSections }: Args): JSX.Element => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     function toggleMenu(changeTo?: boolean) {
@@ -26,7 +26,7 @@ export const UserMenu = ({ user, menuSectionsLoader }: Args): JSX.Element => {
                 <EscotaButton text={`Hola, ${user.name ?? user.email}`} variant="transparent" classname="focus:outline-none" />
             </button>
             {isMenuOpen && <div className="absolute left-0 z-10">
-                <HeaderSubmenu user={user} toggleMenu={toggleMenu} menuSectionsLoader={menuSectionsLoader} />
+                <HeaderSubmenu toggleMenu={toggleMenu} menuSections={menuSections} />
             </div>}
         </div>
     );

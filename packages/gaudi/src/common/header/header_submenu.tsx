@@ -1,19 +1,16 @@
 "use client";
-import { MenuSection, UserModel } from "hegel";
+import { MenuSection } from "hegel";
 import React from "react"
 import { useState } from "react"
 
 type Args = {
-    user: UserModel
     toggleMenu: (changeTo?: boolean) => void
-    menuSectionsLoader: (user: UserModel) => [MenuSection]
+    menuSections: MenuSection[]
 }
 export const HeaderSubmenu = ({
-    user,
     toggleMenu,
-    menuSectionsLoader
+    menuSections
 }: Args): JSX.Element => {
-    const [menuSections] = useState<MenuSection[]>(menuSectionsLoader(user));
 
     return (
         <div

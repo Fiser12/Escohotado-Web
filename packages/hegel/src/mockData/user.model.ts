@@ -2,21 +2,24 @@ import type { MenuSection } from "../domain/header_submenu_model.js";
 import type { UserModel } from "../domain/user-model.js";
 
 export const mockUser: UserModel = {
-    userId: "123",
+    id: "123",
     name: "name",
     email: "email@fake.com",
     image: "https://fake.com/image.jpg",
     roles: []
 }
 export const mockAdminUser: UserModel = {
-    userId: "123",
+    id: "123",
     name: "name",
     email: "email@fake.com",
     image: "https://fake.com/image.jpg",
     roles: ["admin"]
 }
 
-export function menuSectionsLoaderMock(user: UserModel): [MenuSection] {
+export function menuSectionsLoaderMock(user: UserModel | null): MenuSection[] {
+    if(!user) {
+        return [];
+    }
     let sections: MenuSection[] = [
         {
             items: [
@@ -34,10 +37,5 @@ export function menuSectionsLoaderMock(user: UserModel): [MenuSection] {
             ]
         });
     }
-    sections.push({
-        items: [
-            { text: "Cerrar sessión", href: "signOut" }
-        ]
-    });
-    return sections as [MenuSection];
+    return sections;
 }

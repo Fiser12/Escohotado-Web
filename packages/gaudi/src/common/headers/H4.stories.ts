@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { H4 } from './H4.js';
+import { H4 } from './H4';
 
 const meta = {
     title: 'Common/Atoms/Typography/H4',

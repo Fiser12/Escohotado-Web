@@ -21,14 +21,14 @@
     "@storybook/addon-links": "^8.3.6",
     "@storybook/addon-onboarding": "^8.3.6",
     "@storybook/blocks": "^8.3.6",
+    "@storybook/nextjs": "^8.3.6",
     "@storybook/react": "^8.3.6",
-    "@storybook/react-vite": "^8.3.6",
     "@storybook/test": "^8.3.6",
     "@turbo/gen": "^1.12.4",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.24",
-    "@types/react": "^18.2.61",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "npm:types-react@19.0.0-rc.0",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0",
     "autoprefixer": "^10.4.20",
     "config": "workspace:*",
     "eslint": "^8.57.0",
@@ -43,6 +43,6 @@
     "@tailwindcss/typography": "^0.5.15",
     "classnames": "^2.5.1",
     "hegel": "workspace:*",
-    "react": "^18.2.0"
+    "react": "^19.0.0-rc.0"
   }
 }
