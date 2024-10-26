@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { H1 } from './H1.js';
+import { H1 } from './H1';
 
 const meta = {
     title: 'Common/Atoms/Typography/H1',

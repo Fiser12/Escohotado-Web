@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ToggleButtonGroup } from './toggle_button_group.js'; // Adjust the import path if needed
-import storybookHelpers from '../../storybook-helpers.js';
+import { ToggleButtonGroup } from './toggle_button_group'; // Adjust the import path if needed
+import storybookHelpers from '../../storybook-helpers';
 
 const meta = {
   title: 'Common/Atoms/Toggle Button Group',

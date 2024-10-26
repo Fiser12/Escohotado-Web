@@ -1,14 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { mockAdminUser, menuSectionsLoaderMock } from 'hegel';
-import { HeaderSubmenu } from './header_submenu.js';
-import storybookHelpers from '../../storybook-helpers.js';
+import { HeaderSubmenu } from './header_submenu';
+import storybookHelpers from '../../storybook-helpers';
 
 const meta = {
 	title: 'Common/Components/Header/SubMenu',
 	component: HeaderSubmenu,
 	args: {
-        user: mockAdminUser,
-		menuSectionsLoader : menuSectionsLoaderMock,
+		menuSections : menuSectionsLoaderMock(mockAdminUser),
 		toggleMenu: () => {}
     },
 	parameters: {

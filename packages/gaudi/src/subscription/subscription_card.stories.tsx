@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SubscriptionCard } from './subscription_card.js';
-import { EscotaButton } from '../common/escota_button/escota_button.js';
+import { SubscriptionCard } from './subscription_card';
+import { EscotaButton } from '../common/escota_button/escota_button';
 
 const meta = {
   title: 'Subscription/Component/SubscriptionCard',

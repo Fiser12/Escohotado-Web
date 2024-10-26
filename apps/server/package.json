@@ -30,6 +30,7 @@
     "config": "workspace:*",
     "cross-env": "^7.0.3",
     "gaudi": "workspace:*",
+    "hegel": "workspace:*",
     "graphql": "^16.8.2",
     "jsonwebtoken": "^9.0.2",
     "next": "15.0.1",
