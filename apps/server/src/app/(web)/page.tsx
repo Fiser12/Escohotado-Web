@@ -1,7 +1,9 @@
+import AuthOverview from "./_components/AuthOverview";
+
 const Page = async () => {
   return (
     <div>
-      <p>Prueba</p>
+      <AuthOverview/>
     </div>
   );
 };

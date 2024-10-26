@@ -30,8 +30,8 @@
     "config": "workspace:*",
     "cross-env": "^7.0.3",
     "gaudi": "workspace:*",
-    "hegel": "workspace:*",
     "graphql": "^16.8.2",
+    "hegel": "workspace:*",
     "jsonwebtoken": "^9.0.2",
     "next": "15.0.1",
     "next-auth": "^5.0.0-beta.25",
@@ -39,6 +39,7 @@
     "payload-authjs": "^0.3.1",
     "react": "19.0.0-rc-1631855f-20241023",
     "react-dom": "19.0.0-rc-1631855f-20241023",
+    "sharp": "^0.33.5",
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
