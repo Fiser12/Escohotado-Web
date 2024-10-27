@@ -4,6 +4,12 @@ import jwt from 'jsonwebtoken'
 import { getUserInfo } from './keycloak.service'
 import config from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { COLLECTION_SLUG_USER } from '@/collections/config'
+
+export const SESSION_STRATEGY = 'database' as 'jwt' | 'database'
+export const FIELDS_USER_IS_ALLOWED_TO_CHANGE = ['name']
+export const ADMIN_ACCESS_ROLES = 'admin'
+
 
 export const authConfig: NextAuthConfig = {
   theme: { logo: 'https://authjs.dev/img/logo-sm.png' },
@@ -35,7 +41,7 @@ export const authConfig: NextAuthConfig = {
     }),
   ],
   session: {
-    strategy: "database",
+    strategy: SESSION_STRATEGY,
   },
   callbacks: {
     session: async (temp) => {
@@ -54,12 +60,10 @@ export const authConfig: NextAuthConfig = {
         return true
       }
       const keycloakRoles = await getUserInfo(data.account.access_token)
-      if (!keycloakRoles.includes("admin")) return false
-
       try {
 
         await payload.update({
-          collection: "users",
+          collection: COLLECTION_SLUG_USER,
           id: userId,
           data: {
             roles: keycloakRoles,

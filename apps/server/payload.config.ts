@@ -1,6 +1,6 @@
 import path from 'path'
-// import { postgresAdapter } from '@payloadcms/db-postgres'
 import { en } from 'payload/i18n/en'
+import { es } from 'payload/i18n/es'
 
 import {
   lexicalEditor,
@@ -10,8 +10,13 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { authConfig } from '@/plugins/authjs/auth.config'
-import UsersCollection from '@/collections/user'
+import {users} from '@/collections/user'
+import media from '@/collections/media'
 import { authjsPlugin } from 'payload-authjs'
+import { prices, products, subscriptions } from '@/collections/stripe'
+import { priceUpsert, subscriptionDeleted, subscriptionUpsert } from '@/plugins/stripe'
+import { stripePlugin } from '@payloadcms/plugin-stripe'
+import { COLLECTION_SLUG_PAGE, COLLECTION_SLUG_PRODUCTS } from '@/collections/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,19 +24,42 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   editor: lexicalEditor(),
   collections: [
-    UsersCollection,
-    {
-      slug: 'media',
-      upload: true,
-      fields: [
-        {
-          name: 'text',
-          type: 'text',
-        },
-      ],
-    },
+    users, 
+    prices,
+    products,
+    subscriptions,
+    media
   ],
-  plugins: [authjsPlugin({ authjsConfig: authConfig })],
+  plugins: [
+    authjsPlugin({ authjsConfig: authConfig }),
+    stripePlugin({
+      isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test'),
+      stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
+      stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
+      webhooks: {
+        'price.updated': priceUpsert,
+        'price.created': priceUpsert,
+        'customer.subscription.created': subscriptionUpsert,
+        'customer.subscription.updated': subscriptionUpsert,
+        'customer.subscription.deleted': subscriptionDeleted
+      },
+      sync: [
+        {
+          collection: COLLECTION_SLUG_PRODUCTS,
+          stripeResourceType: 'products',
+          stripeResourceTypeSingular: 'product',
+          fields: [
+            { fieldPath: 'active', stripeProperty: 'active' },
+            { fieldPath: 'name', stripeProperty: 'name' },
+            { fieldPath: 'description', stripeProperty: 'description' },
+            { fieldPath: 'image', stripeProperty: 'images.0' }
+          ]
+        }
+      ]
+    }
+  ),
+
+  ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -45,20 +73,20 @@ export default buildConfig({
    * This is completely optional and will default to English if not provided
    */
   i18n: {
-    supportedLanguages: { en },
+    supportedLanguages: { es, en },
+    fallbackLanguage: "es"
   },
-  cors: '*',
+  cors: ['https://checkout.stripe.com', `${process.env.NEXT_PUBLIC_SITE_URL}` || ''],
+  csrf: ['https://checkout.stripe.com', process.env.NEXT_PUBLIC_SITE_URL || ''],
   admin: {
-    user: UsersCollection.slug,
+    user: users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    livePreview: {
+      url: ({ data, locale }) => `${process.env.NEXT_PUBLIC_SITE_URL}/preview${data.path}${locale ? `?locale=${locale.code}` : ''}`,
+      collections: [COLLECTION_SLUG_PAGE]
+    }
   },
-  // Sharp is now an optional dependency -
-  // if you want to resize images, crop, set focal point, etc.
-  // make sure to install it and pass it to the config.
-
-  // This is temporary - we may make an adapter pattern
-  // for this before reaching 3.0 stable
   sharp,
 })

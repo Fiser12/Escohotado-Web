@@ -12,6 +12,9 @@ export interface Config {
   };
   collections: {
     users: User;
+    prices: Price;
+    products: Product;
+    subscriptions: Subscription;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -49,10 +52,11 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
+  name?: string | null;
   roles?: string[];
+  stripeCustomerId?: string | null;
   id: string;
   email: string;
-  name?: string | null;
   image?: string | null;
   emailVerified?: string | null;
   accounts?:
@@ -82,11 +86,91 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prices".
+ */
+export interface Price {
+  id: string;
+  stripeID: string;
+  stripeProductId: string;
+  product?: (string | null) | Product;
+  active: boolean;
+  description?: string | null;
+  unitAmount: number;
+  currency: string;
+  type: 'one_time' | 'recurring';
+  interval?: ('day' | 'week' | 'month' | 'year') | null;
+  intervalCount?: number | null;
+  trialPeriodDays?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  active: boolean;
+  name: string;
+  description?: string | null;
+  image?: string | null;
+  prices?:
+    | {
+        price: string | Price;
+        id?: string | null;
+      }[]
+    | null;
+  features?:
+    | {
+        title?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  stripeID?: string | null;
+  skipSync?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: string;
+  user: string | User;
+  product: string | Product;
+  status: 'trialing' | 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'paused';
+  created?: string | null;
+  currentPeriodStart?: string | null;
+  currentPeriodEnd?: string | null;
+  endedAt?: string | null;
+  cancelAt?: string | null;
+  canceledAt?: string | null;
+  cancelAtPeriodEnd?: boolean | null;
+  trialStart?: string | null;
+  trialEnd?: string | null;
+  stripeID?: string | null;
+  stripeCustomerId?: string | null;
+  metadata?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: string;
-  text?: string | null;
+  title?: string | null;
+  rawContent?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -98,6 +182,16 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -109,6 +203,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'prices';
+        value: string | Price;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'subscriptions';
+        value: string | Subscription;
       } | null)
     | ({
         relationTo: 'media';

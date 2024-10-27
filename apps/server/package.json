@@ -21,11 +21,13 @@
     "node": ">=20.9.0"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "3.0.0-beta.118",
-    "@payloadcms/next": "3.0.0-beta.118",
-    "@payloadcms/richtext-lexical": "3.0.0-beta.118",
-    "@payloadcms/richtext-slate": "3.0.0-beta.118",
-    "@payloadcms/ui": "3.0.0-beta.118",
+    "@payloadcms/db-mongodb": "3.0.0-beta.119",
+    "@payloadcms/next": "3.0.0-beta.119",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.119",
+    "@payloadcms/richtext-slate": "3.0.0-beta.119",
+    "@payloadcms/ui": "3.0.0-beta.119",
+    "@payloadcms/plugin-stripe": "3.0.0-beta.119",
+    "stripe": "17.2.1",
     "babel-plugin-react-compiler": "0.0.0-experimental-48eb8f4-20240822",
     "config": "workspace:*",
     "cross-env": "^7.0.3",
@@ -35,7 +37,7 @@
     "jsonwebtoken": "^9.0.2",
     "next": "15.0.1",
     "next-auth": "^5.0.0-beta.25",
-    "payload": "3.0.0-beta.118",
+    "payload": "3.0.0-beta.119",
     "payload-authjs": "^0.3.1",
     "react": "19.0.0-rc-1631855f-20241023",
     "react-dom": "19.0.0-rc-1631855f-20241023",
@@ -43,7 +45,7 @@
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
-    "@payloadcms/graphql": "3.0.0-beta.118",
+    "@payloadcms/graphql": "3.0.0-beta.119",
     "@tailwindcss/typography": "^0.5.15",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20.14.9",
