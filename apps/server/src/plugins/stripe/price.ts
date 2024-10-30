@@ -1,11 +1,11 @@
 import { COLLECTION_SLUG_PRICES } from '@/collections/config'
+import { getPayload } from '@/utils/payload'
 import { payloadUpsert } from '@/utils/upsert'
-import type { StripeWebhookHandler } from '@payloadcms/plugin-stripe/types'
 import type Stripe from 'stripe'
-import type { Price } from '@/../payload-types'
 
-export function ensurePriceExist(price: Stripe.Price): Promise<Price | null> {
+export function priceUpsert(price: Stripe.Price) {
   const stripeProductID = typeof price.product === 'string' ? price.product : price.product.id
+  if (price.deleted) return priceDeleted(price)
   return payloadUpsert({
     collection: COLLECTION_SLUG_PRICES,
     data: {
@@ -24,21 +24,9 @@ export function ensurePriceExist(price: Stripe.Price): Promise<Price | null> {
   })
 }
 
-export const priceUpsert: StripeWebhookHandler<{ data: { object: Stripe.Price } }> = async (args) => {
-  const { event, payload, pluginConfig } = args
-
-  try {
-    await ensurePriceExist(event.data.object)
-
-    pluginConfig?.logs && payload.logger.info(`✅ Successfully upserted price with Stripe ID: ${event.data.object.id}`)
-  } catch (error) {
-    payload.logger.error(`- Error upserting price: ${error}`)
-  }
-}
-
-export const priceDeleted: StripeWebhookHandler<{ data: { object: Stripe.Price } }> = async (args) => {
-  const { event, payload } = args
-  const { id } = event.data.object
+const priceDeleted = async (price: Stripe.Price) => {
+  const { id } = price
+  const payload = await getPayload()
 
   try {
     await payload.delete({

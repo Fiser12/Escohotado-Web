@@ -1,11 +1,11 @@
 import { COLLECTION_SLUG_USER, COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_SUBSCRIPTIONS } from '@/collections/config'
+import { getPayload } from '@/utils/payload'
 import { payloadUpsert } from '@/utils/upsert'
-import type { StripeWebhookHandler } from '@payloadcms/plugin-stripe/types'
 import type Stripe from 'stripe'
 
 const logs = false
 
-export const manageSubscriptionStatusChange = async (subscription: Stripe.Subscription, payload: any) => {
+export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
   const {
     id: stripeID,
     customer,
@@ -20,6 +20,7 @@ export const manageSubscriptionStatusChange = async (subscription: Stripe.Subscr
     trial_start,
     trial_end
   } = subscription
+  const payload = await getPayload()
 
   try {
     const userQuery = await payload.find({
@@ -76,14 +77,8 @@ export const manageSubscriptionStatusChange = async (subscription: Stripe.Subscr
   }
 }
 
-export const subscriptionUpsert: StripeWebhookHandler<{ data: { object: Stripe.Subscription } }> = async (args) => {
-  const { event, payload } = args
-  await manageSubscriptionStatusChange(event.data.object as Stripe.Subscription, payload)
-}
-
-export const subscriptionDeleted: StripeWebhookHandler<{ data: { object: Stripe.Subscription } }> = async (args) => {
-  const { event, payload } = args
-  const subscription = event.data.object as Stripe.Subscription
+export const subscriptionDeleted = async (subscription: Stripe.Subscription) => {
+  const payload = await getPayload()
   const { id: stripeSubscriptionID } = subscription
 
   try {

@@ -1,13 +1,13 @@
 import { COLLECTION_SLUG_PRODUCTS } from '@/collections/config'
+import { getPayload } from '@/utils/payload'
 import { payloadUpsert } from '@/utils/upsert'
-import type { StripeWebhookHandler } from '@payloadcms/plugin-stripe/types'
 import type Stripe from 'stripe'
 
 const logs = false
 
-export const productUpsert: StripeWebhookHandler<{ data: { object: Stripe.Product } }> = async (args) => {
-  const { event, payload } = args
-  const { id: stripeProductID, name, description, images } = event.data.object
+export const productSync = async (object: Stripe.Product) => {
+  const { id: stripeProductID, name, description, images } = object
+  if (object.deleted) return productDeleted(object)
 
   try {
     await payloadUpsert({
@@ -20,25 +20,24 @@ export const productUpsert: StripeWebhookHandler<{ data: { object: Stripe.Produc
         skipSync: true
       },
       where: {
-        stripeProductId: { equals: stripeProductID }
+        stripeID: { equals: stripeProductID }
       }
     })
 
-    if (logs) payload.logger.info(`✅ Successfully upserted product with Stripe ID: ${stripeProductID}`)
   } catch (error) {
-    payload.logger.error(`- Error upserting product: ${error}`)
+    console.error(error)
   }
 }
 
-export const productDeleted: StripeWebhookHandler<{ data: { object: Stripe.Product } }> = async (args) => {
-  const { event, payload } = args
-  const { id: stripeProductID } = event.data.object
+const productDeleted = async (object: Stripe.Product) => {
+  const { id: stripeProductID } = object
+  const payload = await getPayload()
 
   try {
     const productQuery = await payload.find({
       collection: COLLECTION_SLUG_PRODUCTS,
       where: {
-        stripeProductId: { equals: stripeProductID }
+        stripeID: { equals: stripeProductID }
       }
     })
 

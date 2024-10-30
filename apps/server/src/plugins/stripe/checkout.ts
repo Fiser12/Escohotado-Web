@@ -1,6 +1,6 @@
 import type { StripeWebhookHandler } from '@payloadcms/plugin-stripe/types'
 import type Stripe from 'stripe'
-import { manageSubscriptionStatusChange } from './subscription'
+import { subscriptionUpsert } from './subscription'
 
 const logs = false
 
@@ -15,7 +15,7 @@ export const checkoutSessionCompleted: StripeWebhookHandler<{ data: { object: St
       const subscription = await stripe.subscriptions.retrieve(subscriptionId as string)
 
       if (subscription) {
-        await manageSubscriptionStatusChange(subscription, payload)
+        await subscriptionUpsert(subscription)
 
         if (logs) payload.logger.info(`✅ Successfully managed subscription status change for session ${checkoutSession.id}`)
       }

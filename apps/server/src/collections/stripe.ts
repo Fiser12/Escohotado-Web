@@ -3,9 +3,8 @@ import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_SUBSC
 import { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 import Stripe from 'stripe'
 import type { Price } from '@/../payload-types'
-import { ensurePriceExist } from '@/plugins/stripe/price'
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-09-30.acacia' })
+import { priceUpsert } from '@/plugins/stripe/price'
+import { stripe } from '@/plugins/stripe'
 
 const populateProductRelationshipFieldFromStripeProductId: CollectionBeforeChangeHook = async ({ req, data }) => {
   if (!data.stripeProductId.startsWith('prod_')) return data
@@ -46,7 +45,7 @@ const populatePrices: CollectionBeforeChangeHook = async ({ data, req }) => {
   if (missingPrices.length > 0) {
     const newDocs = await Promise.all(
       missingPrices.map(async (price) => {
-        const newPriceDoc = await ensurePriceExist(price)
+        const newPriceDoc = await priceUpsert(price)
         return newPriceDoc
       })
     )

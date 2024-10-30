@@ -36,13 +36,6 @@ export default buildConfig({
       isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test'),
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
-      webhooks: {
-        'price.updated': priceUpsert,
-        'price.created': priceUpsert,
-        'customer.subscription.created': subscriptionUpsert,
-        'customer.subscription.updated': subscriptionUpsert,
-        'customer.subscription.deleted': subscriptionDeleted
-      },
       sync: [
         {
           collection: COLLECTION_SLUG_PRODUCTS,
