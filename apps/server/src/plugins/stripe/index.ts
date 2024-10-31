@@ -1,5 +1,5 @@
 export { productSync } from './product'
-export { priceUpsert } from './price'
+export { priceUpsert, priceDeleted } from './price'
 export { subscriptionUpsert, subscriptionDeleted } from './subscription'
 export { checkoutSessionCompleted } from './checkout'
 
