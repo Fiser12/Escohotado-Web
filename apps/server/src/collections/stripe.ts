@@ -1,61 +1,6 @@
 import { isAdmin, isAdminOrStripeActive, isAdminOrUserFieldMatchingCurrentUser } from '@/utils/access'
 import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from './config'
-import { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
-import Stripe from 'stripe'
-import type { Price } from '@/../payload-types'
-import { priceUpsert } from '@/plugins/stripe/price'
-import { stripe } from '@/plugins/stripe'
-
-const populateProductRelationshipFieldFromStripeProductId: CollectionBeforeChangeHook = async ({ req, data }) => {
-  if (!data.stripeProductId.startsWith('prod_')) return data
-
-  const { docs } = await req.payload.find({
-    collection: COLLECTION_SLUG_PRODUCTS,
-    where: { stripeID: { equals: data.stripeProductId } }
-  })
-
-  const productId = docs?.at(0)?.id || null
-
-  if (productId) {
-    data.product = productId
-  }
-
-  return data
-}
-
-const populatePrices: CollectionBeforeChangeHook = async ({ data, req }) => {
-  if (!data.stripeID.startsWith('prod_')) return data
-
-  const { data: prices } = await stripe.prices.list({
-    limit: 100,
-    product: data.stripeID
-  })
-
-  const priceIds = prices.map((price) => price.id)
-
-  const { docs } = (await req.payload.find({
-    collection: COLLECTION_SLUG_PRICES,
-    where: { stripeID: { in: priceIds } }
-  })) as { docs: Price[] }
-
-  const existingPriceIds = new Set(docs.map((doc) => doc.stripeID))
-
-  const missingPrices = prices.filter((price) => !existingPriceIds.has(price.id))
-
-  if (missingPrices.length > 0) {
-    const newDocs = await Promise.all(
-      missingPrices.map(async (price) => {
-        const newPriceDoc = await priceUpsert(price)
-        return newPriceDoc
-      })
-    )
-    docs.push(...(newDocs.filter((doc) => doc != null) as Price[]))
-  }
-
-  data.prices = docs.map((doc) => ({ price: doc.id }))
-
-  return data
-}
+import { CollectionConfig } from 'payload'
 
 const group = 'Stripe'
 
@@ -98,24 +43,13 @@ export const products: CollectionConfig = {
     group
   },
   access,
-  hooks: {
-    beforeChange: [populatePrices]
-  },
   fields: [
+    { name: 'stripeID', type: 'text', required: true, admin: { position: 'sidebar', readOnly: true } },
     { name: 'active', type: 'checkbox', required: true, admin: { position: 'sidebar' } },
     { name: 'name', type: 'text', required: true },
     { name: 'description', type: 'textarea' },
     { name: 'image', type: 'text' },
-    {
-      name: 'prices',
-      type: 'array',
-      fields: [
-        {
-          type: 'row',
-          fields: [{ name: 'price', type: 'relationship', relationTo: COLLECTION_SLUG_PRICES, required: true }]
-        }
-      ]
-    },
+    { name: 'prices', type: 'relationship', relationTo: COLLECTION_SLUG_PRICES, hasMany: true },
     {
       type: 'array',
       name: 'features',
@@ -136,13 +70,10 @@ export const prices: CollectionConfig = {
     group
   },
   access,
-  hooks: {
-    beforeChange: [populateProductRelationshipFieldFromStripeProductId]
-  },
   fields: [
     { name: 'stripeID', type: 'text', required: true, admin: { position: 'sidebar', readOnly: true } },
     { name: 'stripeProductId', type: 'text', required: true, admin: { position: 'sidebar', readOnly: true } },
-    { name: 'product', type: 'relationship', relationTo: COLLECTION_SLUG_PRODUCTS, admin: { readOnly: true } },
+    { name: 'product', type: 'join', collection: COLLECTION_SLUG_PRODUCTS, on: 'prices' },
     { name: 'active', type: 'checkbox', required: true, admin: { position: 'sidebar' } },
     { name: 'description', type: 'textarea' },
     {

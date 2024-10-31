@@ -13,11 +13,12 @@ export const productSync = async (object: Stripe.Product) => {
     await payloadUpsert({
       collection: COLLECTION_SLUG_PRODUCTS,
       data: {
+        prices: [],
+        stripeID: stripeProductID,
         active: true,
         name,
         description,
-        image: images?.[0] || '',
-        skipSync: true
+        image: images?.[0] || ''
       },
       where: {
         stripeID: { equals: stripeProductID }

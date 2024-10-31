@@ -92,7 +92,10 @@ export interface Price {
   id: string;
   stripeID: string;
   stripeProductId: string;
-  product?: (string | null) | Product;
+  product?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   active: boolean;
   description?: string | null;
   unitAmount: number;
@@ -110,24 +113,18 @@ export interface Price {
  */
 export interface Product {
   id: string;
+  stripeID: string;
   active: boolean;
   name: string;
   description?: string | null;
   image?: string | null;
-  prices?:
-    | {
-        price: string | Price;
-        id?: string | null;
-      }[]
-    | null;
+  prices?: (string | Price)[] | null;
   features?:
     | {
         title?: string | null;
         id?: string | null;
       }[]
     | null;
-  stripeID?: string | null;
-  skipSync?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }

@@ -75,8 +75,8 @@ importers:
         specifier: 3.0.0-beta.119
         version: 3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.38.0)(react-dom@19.0.0-rc-1631855f-20241023(react@19.0.0-rc-1631855f-20241023))(react@19.0.0-rc-1631855f-20241023)(typescript@5.5.4)
       payload-authjs:
-        specifier: ^0.3.1
-        version: 0.3.1(eappopzoilh4lkwqsgv2ybwn3y)
+        specifier: ^0.3.2
+        version: 0.3.3(eappopzoilh4lkwqsgv2ybwn3y)
       react:
         specifier: 19.0.0-rc-1631855f-20241023
         version: 19.0.0-rc-1631855f-20241023
@@ -285,20 +285,6 @@ packages:
   '@apidevtools/json-schema-ref-parser@11.7.0':
     resolution: {integrity: sha512-pRrmXMCwnmrkS3MLgAIW5dXRzeTv6GLjkjb4HmxNnvAKXN1Nfzp4KmGADBQvlVUcqi+a5D+hfGDLLnd5NnYxog==}
     engines: {node: '>= 16'}
-
-  '@auth/core@0.34.2':
-    resolution: {integrity: sha512-KywHKRgLiF3l7PLyL73fjLSIBe1YNcA6sMeew4yMP6cfCWGXZrkkXd32AjRi1hlJ9nvovUBGZHvbn+LijO6ZeQ==}
-    peerDependencies:
-      '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.2
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      '@simplewebauthn/browser':
-        optional: true
-      '@simplewebauthn/server':
-        optional: true
-      nodemailer:
-        optional: true
 
   '@auth/core@0.37.2':
     resolution: {integrity: sha512-kUvzyvkcd6h1vpeMAojK2y7+PAV5H+0Cc9+ZlKYDFhDY31AlvsB+GW5vNO4qE3Y07KeQgvNO9U0QUx/fN62kBw==}
@@ -3663,10 +3649,6 @@ packages:
   cookie-signature@1.0.6:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
 
-  cookie@0.6.0:
-    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
-    engines: {node: '>= 0.6'}
-
   cookie@0.7.1:
     resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
     engines: {node: '>= 0.6'}
@@ -5550,9 +5532,6 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  oauth4webapi@2.17.0:
-    resolution: {integrity: sha512-lbC0Z7uzAFNFyzEYRIC+pkSVvDHJTbEW+dYlSBAlCYDe6RxUkJ26bClhk8ocBZip1wfI9uKTe0fm4Ib4RHn6uQ==}
-
   oauth4webapi@3.1.2:
     resolution: {integrity: sha512-KQZkNU+xn02lWrFu5Vjqg9E81yPtDSxUZorRHlLWVoojD+H/0GFbH59kcnz5Thdjj7c4/mYMBPj/mhvGe/kKXA==}
 
@@ -5757,14 +5736,14 @@ packages:
     resolution: {integrity: sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==}
     engines: {node: '>= 14.16'}
 
-  payload-authjs@0.3.1:
-    resolution: {integrity: sha512-uVKTgCUnlON7r+Ueeyf0KI8HUtET50JHSv9U6wNDOUiEq9CTvWD6U8aLo+0DzOOedyeF/6bnNxWdajPABx8JYw==}
+  payload-authjs@0.3.3:
+    resolution: {integrity: sha512-fcyRmzJo1gBKUMYQmKsdHJpNKVbp+jbJJ/qxRGoiViqLIkTeIo4196JZdJzWm46ePIfRl+wTpgpVtYNV2Zl3yw==}
     peerDependencies:
-      '@payloadcms/next': ^3.0.0-beta.111
-      '@payloadcms/ui': ^3.0.0-beta.111
-      next: ^15.0.0-canary.173
-      next-auth: ^5.0.0-beta.22
-      payload: ^3.0.0-beta.111
+      '@payloadcms/next': ^3.0.0-beta.120
+      '@payloadcms/ui': ^3.0.0-beta.120
+      next: ^15.0.0
+      next-auth: ^5.0.0-beta.25
+      payload: ^3.0.0-beta.120
 
   payload@3.0.0-beta.119:
     resolution: {integrity: sha512-3+RkDuyYl3Vd4foz5MC9kuhVFLx3n65aFChrK5wPSNjgJADm4pqc8YwkqebHm3DeT9g+DlFKGKpVygFoIINs0w==}
@@ -7383,18 +7362,6 @@ snapshots:
       '@jsdevtools/ono': 7.1.3
       '@types/json-schema': 7.0.15
       js-yaml: 4.1.0
-
-  '@auth/core@0.34.2(nodemailer@6.9.15)':
-    dependencies:
-      '@panva/hkdf': 1.2.1
-      '@types/cookie': 0.6.0
-      cookie: 0.6.0
-      jose: 5.9.3
-      oauth4webapi: 2.17.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
-    optionalDependencies:
-      nodemailer: 6.9.15
 
   '@auth/core@0.37.2(nodemailer@6.9.15)':
     dependencies:
@@ -11963,8 +11930,6 @@ snapshots:
 
   cookie-signature@1.0.6: {}
 
-  cookie@0.6.0: {}
-
   cookie@0.7.1: {}
 
   core-js-compat@3.38.1:
@@ -14338,8 +14303,6 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  oauth4webapi@2.17.0: {}
-
   oauth4webapi@3.1.2: {}
 
   object-assign@4.1.1: {}
@@ -14569,9 +14532,9 @@ snapshots:
 
   pathval@2.0.0: {}
 
-  payload-authjs@0.3.1(eappopzoilh4lkwqsgv2ybwn3y):
+  payload-authjs@0.3.3(eappopzoilh4lkwqsgv2ybwn3y):
     dependencies:
-      '@auth/core': 0.34.2(nodemailer@6.9.15)
+      '@auth/core': 0.37.2(nodemailer@6.9.15)
       '@payloadcms/next': 3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.38.0)(next@15.0.1(@opentelemetry/api@1.9.0)(@playwright/test@1.48.0)(babel-plugin-react-compiler@0.0.0-experimental-48eb8f4-20240822)(react-dom@19.0.0-rc-1631855f-20241023(react@19.0.0-rc-1631855f-20241023))(react@19.0.0-rc-1631855f-20241023)(sass@1.77.4))(payload@3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.38.0)(react-dom@19.0.0-rc-1631855f-20241023(react@19.0.0-rc-1631855f-20241023))(react@19.0.0-rc-1631855f-20241023)(typescript@5.5.4))(react-dom@19.0.0-rc-1631855f-20241023(react@19.0.0-rc-1631855f-20241023))(react@19.0.0-rc-1631855f-20241023)(types-react@19.0.0-rc.0)(typescript@5.5.4)
       '@payloadcms/ui': 3.0.0-beta.119(monaco-editor@0.38.0)(next@15.0.1(@opentelemetry/api@1.9.0)(@playwright/test@1.48.0)(babel-plugin-react-compiler@0.0.0-experimental-48eb8f4-20240822)(react-dom@19.0.0-rc-1631855f-20241023(react@19.0.0-rc-1631855f-20241023))(react@19.0.0-rc-1631855f-20241023)(sass@1.77.4))(payload@3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.38.0)(react-dom@19.0.0-rc-1631855f-20241023(react@19.0.0-rc-1631855f-20241023))(react@19.0.0-rc-1631855f-20241023)(typescript@5.5.4))(react-dom@19.0.0-rc-1631855f-20241023(react@19.0.0-rc-1631855f-20241023))(react@19.0.0-rc-1631855f-20241023)(types-react@19.0.0-rc.0)(typescript@5.5.4)
       next: 15.0.1(@opentelemetry/api@1.9.0)(@playwright/test@1.48.0)(babel-plugin-react-compiler@0.0.0-experimental-48eb8f4-20240822)(react-dom@19.0.0-rc-1631855f-20241023(react@19.0.0-rc-1631855f-20241023))(react@19.0.0-rc-1631855f-20241023)(sass@1.77.4)

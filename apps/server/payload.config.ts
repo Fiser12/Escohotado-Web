@@ -36,19 +36,6 @@ export default buildConfig({
       isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test'),
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
-      sync: [
-        {
-          collection: COLLECTION_SLUG_PRODUCTS,
-          stripeResourceType: 'products',
-          stripeResourceTypeSingular: 'product',
-          fields: [
-            { fieldPath: 'active', stripeProperty: 'active' },
-            { fieldPath: 'name', stripeProperty: 'name' },
-            { fieldPath: 'description', stripeProperty: 'description' },
-            { fieldPath: 'image', stripeProperty: 'images.0' }
-          ]
-        }
-      ]
     }
   ),
 
