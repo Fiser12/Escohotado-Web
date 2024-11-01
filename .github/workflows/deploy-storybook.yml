@@ -32,6 +32,6 @@ jobs:
           STORYBOOK_FIGMA_ACCESS_TOKEN: ${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}
         with:
           install_command: pnpm install --no-frozen-lockfile
-          build_command: cd packages/gaudi && pnpm build-storybook
-          path: packages/gaudi/storybook-static
+          build_command: cd apps/server && pnpm build-storybook
+          path: apps/server/storybook-static
           checkout: false

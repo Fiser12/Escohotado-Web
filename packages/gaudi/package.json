@@ -8,22 +8,9 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^1.9.0",
-    "@storybook/addon-essentials": "^8.3.6",
-    "@storybook/addon-designs": "^8.0.3",
-    "@storybook/addon-viewport": "^8.3.6",
-    "@storybook/addon-interactions": "^8.3.6",
-    "@storybook/addon-links": "^8.3.6",
-    "@storybook/addon-onboarding": "^8.3.6",
-    "@storybook/blocks": "^8.3.6",
-    "@storybook/nextjs": "^8.3.6",
-    "@storybook/react": "^8.3.6",
-    "@storybook/test": "^8.3.6",
     "@turbo/gen": "^1.12.4",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.24",
