@@ -11,8 +11,8 @@ type ButtonOption = {
 
 type Args = {
   options: ButtonOption[];
-  selected: ButtonOption;
-  setOption: (option: ButtonOption) => void;
+  selected: string;
+  setOption: (option: string) => void;
 };
 
 export const ToggleButtonGroup = ({
@@ -21,11 +21,11 @@ export const ToggleButtonGroup = ({
   setOption,
 }: Args): JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(
-    options.map((option) => option.id).indexOf(selected.id)
+    options.map((option) => option.id).indexOf(selected)
   );
 
   const handleClick = (option: ButtonOption, index: number) => {
-    setOption(option);
+    setOption(option.id);
     setActiveIndex(index);
   };
 
@@ -44,12 +44,12 @@ export const ToggleButtonGroup = ({
               className={classNames(
                 'relative flex text-xs h-8 rounded-full gap-1 transition-colors duration-150 ease-in-out font-montserrat justify-center items-center mx-2',
                 {
-                  'text-black font-bold': selected.id === option.id,
-                  'text-neutral-400 font-normal': selected.id !== option.id,
+                  'text-black font-bold': selected === option.id,
+                  'text-neutral-400 font-normal': selected !== option.id,
                 }
               )}
               onClick={() => handleClick(option, index)}
-              aria-pressed={selected.id === option.id}
+              aria-pressed={selected === option.id}
             >
               {option.label}
               {option.sublabel && (
