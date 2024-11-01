@@ -1,6 +1,7 @@
 import { getPayload } from "@/utils/payload";
 import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi";
 import { IntervalOptions } from "hegel";
+import { SubscriptionButtonActionType } from "node_modules/gaudi/src/subscription/subscriptions_card_group";
 
 const Page = async () => {
   const payload = await getPayload();
@@ -28,10 +29,24 @@ const Page = async () => {
         <SubscriptionsGroupCard
             products={products.docs}
             options={options}
+            action={subscriptionButtonAction}
         />
-        
+            
     </ContentWrapper>
   );
 };
 
 export default Page;
+
+const subscriptionButtonAction: (action: SubscriptionButtonActionType) => Promise<void> = async (action) => {
+  'use server';
+  if(action === 'cancel') {
+
+  } else if(action === 'renew') {
+
+  } else if(action === 'change') {
+  
+  } else if(action === 'select') {
+  
+  }
+}

@@ -21,7 +21,7 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
     trial_end
   } = subscription
   const payload = await getPayload()
-
+  console.error('customer', customer)
   try {
     const userQuery = await payload.find({
       collection: COLLECTION_SLUG_USER,
@@ -41,10 +41,11 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
       }
     })
     const productID = products.at(0)?.id
+    if (!productID) return
 
     const subscriptionData = {
       stripeID,
-      stripeCustomerId: customer,
+      stripeCustomerId: customer as string,
       product: productID,
       user: userID,
       status,
@@ -62,7 +63,6 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
 
     await payloadUpsert({
       collection: COLLECTION_SLUG_SUBSCRIPTIONS,
-      // @ts-ignore
       data: subscriptionData,
       where: {
         stripeID: { equals: stripeID }
