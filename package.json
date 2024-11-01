@@ -11,6 +11,7 @@
     "dev:web": "turbo run dev --filter=web",
     "build:server": "turbo run build --filter=server",
     "start:server": "turbo run start --filter=server",
+    "storybook": "turbo run storybook --filter=server",
     "lint": "turbo run lint",
     "format": "prettier --write ."
   },
