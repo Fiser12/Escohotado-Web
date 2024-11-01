@@ -6,7 +6,7 @@ const meta = {
   title: 'Common/Atoms/Toggle Button Group',
   component: ToggleButtonGroup,
   args: {
-    selected: { id: '1', label: 'Option 1' },
+    selected: '1',
     options: [
       { id: '1', label: 'Option 1' },
       { id: '2', label: 'Option 2' },

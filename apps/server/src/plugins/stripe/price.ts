@@ -1,12 +1,20 @@
-import { COLLECTION_SLUG_PRICES } from '@/collections/config'
+import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS } from '@/collections/config'
 import { getPayload } from '@/utils/payload'
 import { payloadUpsert } from '@/utils/upsert'
 import type Stripe from 'stripe'
 
-export function priceUpsert(price: Stripe.Price) {
+export async function priceUpsert(price: Stripe.Price) {
   const stripeProductID = typeof price.product === 'string' ? price.product : price.product.id
+  const payload = await getPayload()
+  const productsQuery = await payload.find({
+    collection: COLLECTION_SLUG_PRODUCTS,
+    where: {
+      stripeID: { equals: stripeProductID }
+    }
+  })
+
   if (price.deleted) return priceDeleted(price)
-  return payloadUpsert({
+  await payloadUpsert({
     collection: COLLECTION_SLUG_PRICES,
     data: {
       stripeID: price.id,
@@ -22,9 +30,19 @@ export function priceUpsert(price: Stripe.Price) {
       stripeID: { equals: price.id }
     }
   })
+
+  await payload.update({
+    collection: COLLECTION_SLUG_PRODUCTS,
+    data: {
+      prices: productsQuery.docs?.[0]?.prices?.concat(price.id)
+    },
+    where: {
+      stripeID: { equals: stripeProductID }
+    }
+  })
 }
 
-const priceDeleted = async (price: Stripe.Price) => {
+export const priceDeleted = async (price: Stripe.Price) => {
   const { id } = price
   const payload = await getPayload()
 

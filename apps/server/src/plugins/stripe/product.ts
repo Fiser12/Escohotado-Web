@@ -9,27 +9,30 @@ export const productSync = async (object: Stripe.Product) => {
   const { id: stripeProductID, name, description, images } = object
   if (object.deleted) return productDeleted(object)
 
+
   try {
     await payloadUpsert({
       collection: COLLECTION_SLUG_PRODUCTS,
       data: {
+        prices: [],
+        stripeID: stripeProductID,
         active: true,
+        metadata: object.metadata,
+        type: object.type,
         name,
         description,
-        image: images?.[0] || '',
-        skipSync: true
+        images: images?.map((image) => ({ url: image })) || [],
       },
       where: {
-        stripeID: { equals: stripeProductID }
-      }
+        stripeID: { equals: stripeProductID },
+      },
     })
-
   } catch (error) {
     console.error(error)
   }
 }
 
-const productDeleted = async (object: Stripe.Product) => {
+export const productDeleted = async (object: Stripe.Product) => {
   const { id: stripeProductID } = object
   const payload = await getPayload()
 
@@ -37,8 +40,8 @@ const productDeleted = async (object: Stripe.Product) => {
     const productQuery = await payload.find({
       collection: COLLECTION_SLUG_PRODUCTS,
       where: {
-        stripeID: { equals: stripeProductID }
-      }
+        stripeID: { equals: stripeProductID },
+      },
     })
 
     const payloadProductID = productQuery.docs?.[0]?.id
@@ -46,10 +49,11 @@ const productDeleted = async (object: Stripe.Product) => {
     if (payloadProductID) {
       await payload.delete({
         collection: COLLECTION_SLUG_PRODUCTS,
-        id: payloadProductID
+        id: payloadProductID,
       })
 
-      if (logs) payload.logger.info(`✅ Successfully deleted product with Stripe ID: ${stripeProductID}`)
+      if (logs)
+        payload.logger.info(`✅ Successfully deleted product with Stripe ID: ${stripeProductID}`)
     }
   } catch (error) {
     payload.logger.error(`- Error deleting product: ${error}`)

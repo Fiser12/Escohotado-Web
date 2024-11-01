@@ -13,10 +13,9 @@ import { authConfig } from '@/plugins/authjs/auth.config'
 import {users} from '@/collections/user'
 import media from '@/collections/media'
 import { authjsPlugin } from 'payload-authjs'
-import { prices, products, subscriptions } from '@/collections/stripe'
-import { priceUpsert, subscriptionDeleted, subscriptionUpsert } from '@/plugins/stripe'
+import { prices, products, subscriptions } from '@/collections/stripe/stripe'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
-import { COLLECTION_SLUG_PAGE, COLLECTION_SLUG_PRODUCTS } from '@/collections/config'
+import { COLLECTION_SLUG_PAGE } from '@/collections/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,19 +35,6 @@ export default buildConfig({
       isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test'),
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
-      sync: [
-        {
-          collection: COLLECTION_SLUG_PRODUCTS,
-          stripeResourceType: 'products',
-          stripeResourceTypeSingular: 'product',
-          fields: [
-            { fieldPath: 'active', stripeProperty: 'active' },
-            { fieldPath: 'name', stripeProperty: 'name' },
-            { fieldPath: 'description', stripeProperty: 'description' },
-            { fieldPath: 'image', stripeProperty: 'images.0' }
-          ]
-        }
-      ]
     }
   ),
 

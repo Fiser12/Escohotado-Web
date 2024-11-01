@@ -92,7 +92,10 @@ export interface Price {
   id: string;
   stripeID: string;
   stripeProductId: string;
-  product?: (string | null) | Product;
+  product?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   active: boolean;
   description?: string | null;
   unitAmount: number;
@@ -101,6 +104,15 @@ export interface Price {
   interval?: ('day' | 'week' | 'month' | 'year') | null;
   intervalCount?: number | null;
   trialPeriodDays?: number | null;
+  metadata?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -110,15 +122,26 @@ export interface Price {
  */
 export interface Product {
   id: string;
+  stripeID: string;
+  type?: ('good' | 'service') | null;
   active: boolean;
   name: string;
   description?: string | null;
-  image?: string | null;
-  prices?:
+  images?:
     | {
-        price: string | Price;
+        url?: string | null;
         id?: string | null;
       }[]
+    | null;
+  prices?: (string | Price)[] | null;
+  metadata?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
   features?:
     | {
@@ -126,8 +149,6 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  stripeID?: string | null;
-  skipSync?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
