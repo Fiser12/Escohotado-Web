@@ -5,10 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "command": "pnpm storybook",
+      "name": "Run storybook",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
       "command": "pnpm --prefix apps/server run dev",
       "name": "Run development server",
       "request": "launch",
       "type": "node-terminal"
     }
+
   ]
 }
