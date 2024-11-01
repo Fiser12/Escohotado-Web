@@ -1,6 +1,7 @@
-const userInfoUrl = `${process.env.PUBLIC_AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/userinfo`
 
 export async function getUserInfo(accessToken: string): Promise<string[]> {
+   const userInfoUrl = `${process.env.PUBLIC_AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/userinfo`
+
    const response = await fetch(userInfoUrl, {
       method: 'GET',
       headers: {

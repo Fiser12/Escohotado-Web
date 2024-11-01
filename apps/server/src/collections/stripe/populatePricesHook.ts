@@ -1,11 +1,11 @@
-import { stripe, priceUpsert } from '@/plugins/stripe'
+import { stripeBuilder, priceUpsert } from '@/plugins/stripe'
 import { Price } from 'payload-types'
 import { COLLECTION_SLUG_PRICES } from '../config'
 import { CollectionBeforeChangeHook } from 'payload'
 
 export const populatePricesHook: CollectionBeforeChangeHook = async ({ data, req }) => {
   if (!data.stripeID.startsWith('prod_')) return data
-
+  const stripe = stripeBuilder()
   const { data: prices } = await stripe.prices.list({
     limit: 100,
     product: data.stripeID,

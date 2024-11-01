@@ -3,7 +3,7 @@ import "./globals.scss";
 import { Header } from "gaudi";
 import { signIn, signOut } from "@/plugins/authjs/plugin";
 import { accountMenuBuilder } from "@/domain/accountMenuBuilder";
-import { getPayloadUser } from "payload-authjs";
+import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
 import { DataFromCollectionSlug } from "payload";
 
 const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {

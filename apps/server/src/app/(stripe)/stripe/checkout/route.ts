@@ -1,7 +1,7 @@
-import { stripe } from "@/plugins/stripe";
+import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
+import { stripeBuilder } from "@/plugins/stripe";
 import { NextResponse } from "next/server";
 import { DataFromCollectionSlug } from "payload";
-import { getPayloadUser } from "payload-authjs";
 import { User } from "payload-types";
 import Stripe from "stripe";
 
@@ -21,6 +21,8 @@ async function createSubscriptionCheckout(
 	user: User,
 	priceId: string
 ): Promise<Stripe.Checkout.Session> {
+	const stripe = stripeBuilder()
+
 	return await stripe.checkout.sessions.create({
 		success_url: `${url.origin}/subscriptions`,
 		cancel_url: `${url.origin}/subscriptions`,

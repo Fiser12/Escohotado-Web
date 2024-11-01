@@ -1,4 +1,4 @@
-import { priceUpsert, priceDeleted, productSync, stripe, subscriptionDeleted, subscriptionUpsert } from "@/plugins/stripe";
+import { priceUpsert, priceDeleted, productSync, stripeBuilder, subscriptionDeleted, subscriptionUpsert } from "@/plugins/stripe";
 import { productDeleted } from "@/plugins/stripe/product";
 import { NextResponse } from "next/server";
 import { Stripe } from "stripe";
@@ -10,6 +10,7 @@ export async function POST(request: Request) {
 		console.error('Stripe webhook secret is not set');
 		return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
 	}
+  const stripe = stripeBuilder()
 
 	const signature = request.headers.get('stripe-signature') ?? '';
 	const body = await request.text();

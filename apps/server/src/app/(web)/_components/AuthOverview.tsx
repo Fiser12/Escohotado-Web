@@ -1,6 +1,6 @@
 import { DataFromCollectionSlug } from "payload";
 import { auth } from "@/plugins/authjs/plugin";
-import { getPayloadUser } from "payload-authjs";
+import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
 import { ContentWrapper } from "gaudi";
 
 const AuthOverview = async () => {

@@ -1,7 +1,7 @@
-import { stripe } from "@/plugins/stripe";
+import { stripeBuilder } from "@/plugins/stripe";
 import { NextResponse } from "next/server";
 import { DataFromCollectionSlug } from "payload";
-import { getPayloadUser } from "payload-authjs";
+import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
 import { User } from "payload-types";
 import Stripe from "stripe";
 
@@ -32,6 +32,8 @@ async function createPortalSession(
 	user: User,
 	flowData?: Stripe.BillingPortal.SessionCreateParams.FlowData
 ) {
+    const stripe = stripeBuilder()
+
 	const customers = await stripe.customers.list({
 		email: user.email
 	});
