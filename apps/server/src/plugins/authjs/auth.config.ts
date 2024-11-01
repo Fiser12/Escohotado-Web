@@ -26,7 +26,6 @@ export const authConfig: NextAuthConfig = {
         if (tokens.access_token) {
           const decodedToken = jwt.decode(tokens.access_token)
           if (decodedToken && typeof decodedToken !== 'string') {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             profile.roles = decodedToken.resource_access?.[process.env.AUTH_KEYCLOAK_ID!]?.roles 
           }
         }
