@@ -22,6 +22,6 @@ export async function GET(request: Request) {
         },
         where: { stripeID: { equals: subscriptionId } },
     })
-    return NextResponse.redirect("/subscriptions", 303);
+    return NextResponse.redirect(`${url.origin}/subscriptions`, 303);
 }
 

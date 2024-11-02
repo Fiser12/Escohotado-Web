@@ -4,20 +4,21 @@ import { EscotaButton } from "../common/escota_button/escota_button";
 import { Subscription, calculateButtonActionType } from "./subscriptions_card_group";
 
 interface Props {
+    href: string;
     subscription?: Subscription;
     currentPriceId: string;
 }
 export const SubscriptionButton = ({
-    currentPriceId, subscription
+    currentPriceId, subscription, href
 }: Props): JSX.Element => {
     const buttonAction = calculateButtonActionType(currentPriceId, subscription);
-    const canceledDate = notNull(subscription?.canceled?.canceledAt, (cancelAt) => new Date(cancelAt * 1000));
+    const canceledDate = notNull(subscription?.canceledAt, (cancelAt) => new Date(cancelAt));
 
-    if (buttonAction === "cancel") return <EscotaButton text="Cancelar" />;
-    else if (buttonAction === "change") return <EscotaButton text="Cambiar de plan" />;
-    else if (buttonAction === "select") return <EscotaButton text="Elegir" />;
+    if (buttonAction === "cancel") return <a href={href}><EscotaButton text="Cancelar" /></a>;
+    else if (buttonAction === "change") return <a href={href}><EscotaButton text="Cambiar de plan" /></a>;
+    else if (buttonAction === "select") return <a href={href}><EscotaButton text="Elegir" /></a>;
     else if (buttonAction === "renew") return <>
-        <EscotaButton text="Renovar" />
+        <a href={href}><EscotaButton text="Renovar" /></a>
         {canceledDate && <p>La suscripción se cancelará el {canceledDate.toLocaleDateString()}</p>}
     </>;
 

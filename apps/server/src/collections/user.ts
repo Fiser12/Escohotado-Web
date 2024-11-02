@@ -43,7 +43,7 @@ export const users: CollectionConfig = {
         }),
       ],
     },
-    { name: 'subscription', type: 'join', collection: COLLECTION_SLUG_SUBSCRIPTIONS, on: 'user' },
+    { name: 'subscription', type: 'join', collection: COLLECTION_SLUG_SUBSCRIPTIONS, on: 'user', hasMany: false },
     { name: 'stripeCustomerId', type: 'text', admin: { readOnly: true, position: 'sidebar' } },
   ]
 } as const

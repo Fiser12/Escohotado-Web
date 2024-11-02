@@ -1,10 +1,11 @@
-import { getPayload } from "@/utils/payload";
+import { getCurrentUser, getPayload } from "@/utils/payload";
 import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi";
 import { IntervalOptions } from "hegel";
-import { SubscriptionButtonActionType } from "node_modules/gaudi/src/subscription/subscriptions_card_group";
+import { Subscription } from "payload-types";
 
 const Page = async () => {
   const payload = await getPayload();
+  const user = await getCurrentUser();
   const products = await payload.find({
     collection: "products",
     where: {
@@ -28,6 +29,7 @@ const Page = async () => {
       </p>
       <SubscriptionsGroupCard
         products={products.docs}
+        subscription={user?.subscription?.docs?.[0] as Subscription | undefined}
         options={options}
       />
 

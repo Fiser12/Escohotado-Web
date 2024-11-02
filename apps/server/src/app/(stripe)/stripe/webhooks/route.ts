@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 				await priceUpsert(event.data.object); break
       case 'price.deleted':
         await priceDeleted(event.data.object); break
-			case 'customer.subscription.created': case 'customer.subscription.updated': 
+			case 'customer.subscription.created': case 'customer.subscription.paused': case 'customer.subscription.updated': 
 				await subscriptionUpsert(event.data.object); break
       case 'customer.subscription.deleted':
 			  await subscriptionDeleted(event.data.object); break

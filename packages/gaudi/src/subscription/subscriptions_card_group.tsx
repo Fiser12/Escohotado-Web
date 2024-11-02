@@ -10,23 +10,28 @@ interface Price {
     id: string;
     currency: string;
     unitAmount: number;
-    stripeID?: string;
+    stripeID: string;
     interval?: Interval | null;
 }
 interface Product {
     id: string;
     name: string;
+    features?:
+    | {
+        title?: string | null;
+        id?: string | null;
+    }[]
+    | null;
     metadata?: any;
     prices?: (string | Price)[] | null;
 }
 
 export interface Subscription {
     id: string;
-    priceId: string;
-    canceled?: {
-        isCanceled: boolean;
-        canceledAt: number;
-    }
+    stripeID: string;
+    stripePriceID: string;
+    cancelAtPeriodEnd?: boolean | null;
+    canceledAt?: string | null;
 }
 
 export enum SubscriptionButtonActionType {
@@ -63,19 +68,18 @@ export const SubscriptionsGroupCard = ({
                             key={product.id}
                             title={product.name}
                             price={`${price.unitAmount / 100} ${price.currency}`}
-                            features={[]}
+                            features={product.features?.mapNotNull((feature) => feature.title) ?? []}
                             mainCard={product.metadata?.prominent === 'true'}
                         >
-                            <a href={subscriptionButtonHref(
-                                calculateButtonActionType(price.id, subscription),
-                                price.stripeID ?? "error",
-                                subscription?.id
-                            )} >
-                                <SubscriptionButton
-                                    subscription={subscription}
-                                    currentPriceId={price.stripeID ?? "error"}
-                                />
-                            </a>
+                            <SubscriptionButton
+                                href={subscriptionButtonHref(
+                                    calculateButtonActionType(price.stripeID, subscription),
+                                    price.stripeID,
+                                    subscription?.stripeID
+                                )}
+                                subscription={subscription}
+                                currentPriceId={price.stripeID}
+                            />
                         </SubscriptionCard>
                     ))}
             </div>
@@ -89,7 +93,7 @@ const subscriptionButtonHref: (action: SubscriptionButtonActionType, priceId: st
     else if (action === 'change') return `/stripe/portal?updateSubscriptionId=${subscriptionId}`
     else if (action === 'select') return `/stripe/checkout?priceId=${priceId}`
     return ''
-  }
+}
 const getPriceByProduct = (product: Product, interval: Interval): Price | null => {
     const price = product.prices?.find((price) => typeof price !== 'string' && price.interval === interval) as Price | undefined;
     if (!price) return null;
@@ -97,13 +101,13 @@ const getPriceByProduct = (product: Product, interval: Interval): Price | null =
 }
 
 export const calculateButtonActionType = (currentPriceId: string, subscription?: Subscription): SubscriptionButtonActionType => {
-    if (subscription && subscription.priceId === currentPriceId) {
-        if (subscription.canceled?.isCanceled) {
-            return SubscriptionButtonActionType.cancel;
-        } else {
+    if (subscription && subscription.stripePriceID === currentPriceId) {
+        if (subscription.cancelAtPeriodEnd) {
             return SubscriptionButtonActionType.renew;
+        } else {
+            return SubscriptionButtonActionType.cancel;
         }
-    } else if (subscription && subscription.priceId !== currentPriceId) {
+    } else if (subscription && subscription.stripePriceID !== currentPriceId) {
         return SubscriptionButtonActionType.change;
     } else {
         return SubscriptionButtonActionType.select;

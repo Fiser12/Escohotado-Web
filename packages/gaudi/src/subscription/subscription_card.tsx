@@ -20,7 +20,7 @@ export const SubscriptionCard = ({
   return (
     <div
       className={classNames(
-        'w-96 h-96 p-10 rounded-sm border border-stone-300 flex-col justify-center items-center gap-10 inline-flex',
+        'w-96 h-96 p-10 rounded-sm border border-stone-300 flex-col justify-center items-center gap-6 inline-flex',
         {
           'bg-stone-100': mainCard,
           'bg-white': !mainCard,

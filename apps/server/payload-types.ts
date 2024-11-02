@@ -106,8 +106,9 @@ export interface Subscription {
   cancelAtPeriodEnd?: boolean | null;
   trialStart?: string | null;
   trialEnd?: string | null;
-  stripeID?: string | null;
-  stripeCustomerId?: string | null;
+  stripeID: string;
+  stripePriceID: string;
+  stripeCustomerId: string;
   metadata?:
     | {
         [k: string]: unknown;

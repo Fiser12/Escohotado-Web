@@ -194,8 +194,9 @@ export const subscriptions: CollectionConfig = {
         {
           type: 'row',
           fields: [
-            { name: 'stripeID', type: 'text', label: 'Stripe ID', admin: { readOnly: true } },
-            { name: 'stripeCustomerId', type: 'text', admin: { readOnly: true } },
+            { name: 'stripeID', type: 'text', label: 'Stripe ID', admin: { readOnly: true }, required: true },
+            { name: 'stripePriceID', type: 'text', label: 'Stripe Price ID', admin: { readOnly: true }, required: true },
+            { name: 'stripeCustomerId', type: 'text', admin: { readOnly: true }, required: true },
           ],
         },
       ],

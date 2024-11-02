@@ -33,11 +33,12 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
     const userID = userQuery.docs?.[0]?.id
     if (!userID) return
     const subscriptionItem = subscription.items.data.at(0)
+    if (!subscriptionItem) return
 
     const { docs: products } = await payload.find({
       collection: COLLECTION_SLUG_PRODUCTS,
       where: {
-        stripeID: { equals: subscriptionItem?.plan?.product }
+        stripeID: { equals: subscriptionItem.price.product }
       }
     })
     const productID = products.at(0)?.id
@@ -46,6 +47,7 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
     const subscriptionData = {
       stripeID,
       stripeCustomerId: customer as string,
+      stripePriceID: subscriptionItem.price.id,
       product: productID,
       user: userID,
       status,
