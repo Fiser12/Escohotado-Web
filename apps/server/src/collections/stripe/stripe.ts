@@ -177,7 +177,7 @@ export const subscriptions: CollectionConfig = {
         { name: 'endedAt', type: 'date', admin: { readOnly: true } },
         { name: 'cancelAt', type: 'date', admin: { readOnly: true } },
         { name: 'canceledAt', type: 'date', admin: { readOnly: true } },
-        { name: 'cancelAtPeriodEnd', type: 'checkbox' },
+        { name: 'cancelAtPeriodEnd', type: 'checkbox', admin: { readOnly: true } },
       ],
     },
     {

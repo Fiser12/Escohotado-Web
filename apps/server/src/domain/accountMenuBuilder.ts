@@ -8,7 +8,7 @@ export const accountMenuBuilder: (user?: UserModel | null) => MenuSection[] = (u
         {
             items: [
                 { text: "Cuenta", href: "relativeUrls.user.profile" },
-                { text: "Suscripción", href: "relativeUrls.subscriptions.list" }
+                { text: "Suscripción", href: "subscriptions" }
             ]   
         }
     ];

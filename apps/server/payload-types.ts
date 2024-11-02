@@ -54,6 +54,10 @@ export interface UserAuthOperations {
 export interface User {
   name?: string | null;
   roles?: string[];
+  subscription?: {
+    docs?: (string | Subscription)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   stripeCustomerId?: string | null;
   id: string;
   email: string;
@@ -86,24 +90,24 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "prices".
+ * via the `definition` "subscriptions".
  */
-export interface Price {
+export interface Subscription {
   id: string;
-  stripeID: string;
-  stripeProductId: string;
-  product?: {
-    docs?: (string | Product)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  active: boolean;
-  description?: string | null;
-  unitAmount: number;
-  currency: string;
-  type: 'one_time' | 'recurring';
-  interval?: ('day' | 'week' | 'month' | 'year') | null;
-  intervalCount?: number | null;
-  trialPeriodDays?: number | null;
+  user: string | User;
+  product: string | Product;
+  status: 'trialing' | 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'paused';
+  created?: string | null;
+  currentPeriodStart?: string | null;
+  currentPeriodEnd?: string | null;
+  endedAt?: string | null;
+  cancelAt?: string | null;
+  canceledAt?: string | null;
+  cancelAtPeriodEnd?: boolean | null;
+  trialStart?: string | null;
+  trialEnd?: string | null;
+  stripeID?: string | null;
+  stripeCustomerId?: string | null;
   metadata?:
     | {
         [k: string]: unknown;
@@ -154,24 +158,24 @@ export interface Product {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscriptions".
+ * via the `definition` "prices".
  */
-export interface Subscription {
+export interface Price {
   id: string;
-  user: string | User;
-  product: string | Product;
-  status: 'trialing' | 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'paused';
-  created?: string | null;
-  currentPeriodStart?: string | null;
-  currentPeriodEnd?: string | null;
-  endedAt?: string | null;
-  cancelAt?: string | null;
-  canceledAt?: string | null;
-  cancelAtPeriodEnd?: boolean | null;
-  trialStart?: string | null;
-  trialEnd?: string | null;
-  stripeID?: string | null;
-  stripeCustomerId?: string | null;
+  stripeID: string;
+  stripeProductId: string;
+  product?: {
+    docs?: (string | Product)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  active: boolean;
+  description?: string | null;
+  unitAmount: number;
+  currency: string;
+  type: 'one_time' | 'recurring';
+  interval?: ('day' | 'week' | 'month' | 'year') | null;
+  intervalCount?: number | null;
+  trialPeriodDays?: number | null;
   metadata?:
     | {
         [k: string]: unknown;

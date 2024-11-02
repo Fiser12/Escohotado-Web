@@ -1,6 +1,6 @@
 import { isAdmin, isAdminOrCurrentUser } from '@/utils/access'
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_USER } from './config'
+import { COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from './config'
 import { ADMIN_ACCESS_ROLES } from '@/plugins/authjs/auth.config'
 import { revalidateUser } from '@/utils/actions'
 
@@ -43,6 +43,7 @@ export const users: CollectionConfig = {
         }),
       ],
     },
+    { name: 'subscription', type: 'join', collection: COLLECTION_SLUG_SUBSCRIPTIONS, on: 'user' },
     { name: 'stripeCustomerId', type: 'text', admin: { readOnly: true, position: 'sidebar' } },
   ]
 } as const

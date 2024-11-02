@@ -21,12 +21,12 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
     trial_end
   } = subscription
   const payload = await getPayload()
-  console.error('customer', customer)
+
   try {
     const userQuery = await payload.find({
       collection: COLLECTION_SLUG_USER,
       where: {
-        stripeCustomerId: { equals: customer }
+        id: { equals: metadata.userId }
       }
     })
 

@@ -1,26 +1,29 @@
-import type { StripeWebhookHandler } from '@payloadcms/plugin-stripe/types'
 import type Stripe from 'stripe'
 import { subscriptionUpsert } from './subscription'
+import { stripeBuilder } from '.'
+import { getPayload } from '@/utils/payload'
 
 const logs = false
 
-export const checkoutSessionCompleted: StripeWebhookHandler<{ data: { object: Stripe.Checkout.Session } }> = async (args) => {
-  const { event, payload, stripe } = args
-  const checkoutSession = event.data.object as Stripe.Checkout.Session
+export const checkoutSessionCompleted = async (checkoutSession: Stripe.Checkout.Session) => {
+  const payload = await getPayload()
+  const subscriptionId =
+    typeof checkoutSession.subscription === 'string'
+      ? checkoutSession.subscription
+      : checkoutSession.subscription?.id
 
-  if (checkoutSession.mode === 'subscription') {
-    const subscriptionId = typeof checkoutSession.subscription === 'string' ? checkoutSession.subscription : checkoutSession.subscription?.id
+  if (!subscriptionId || checkoutSession.mode !== 'subscription') return
 
-    try {
-      const subscription = await stripe.subscriptions.retrieve(subscriptionId as string)
+  try {
+    const subscription = await stripeBuilder().subscriptions.retrieve(subscriptionId)
 
-      if (subscription) {
-        await subscriptionUpsert(subscription)
+    if (subscription!) return 
+    await subscriptionUpsert(subscription)
 
-        if (logs) payload.logger.info(`✅ Successfully managed subscription status change for session ${checkoutSession.id}`)
-      }
-    } catch (error) {
-      payload.logger.error(`- Error fetching subscription from Stripe: ${error}`)
-    }
+    if (logs) payload.logger.info(
+      `✅ Successfully managed subscription status change for session ${checkoutSession.id}`,
+    )
+  } catch (error) {
+    payload.logger.error(`- Error fetching subscription from Stripe: ${error}`)
   }
 }

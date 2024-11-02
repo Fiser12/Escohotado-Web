@@ -10,6 +10,7 @@ interface Price {
     id: string;
     currency: string;
     unitAmount: number;
+    stripeID?: string;
     interval?: Interval | null;
 }
 interface Product {
@@ -39,14 +40,12 @@ interface Props {
     products: Product[];
     subscription?: Subscription;
     options: IntervalOptions[];
-    action: (action: SubscriptionButtonActionType) => Promise<void>;
 }
 
 export const SubscriptionsGroupCard = ({
     products,
     subscription,
     options,
-    action
 }: Props): JSX.Element => {
     const [selected, setSelected] = useState(options[0]!.id);
 
@@ -55,25 +54,28 @@ export const SubscriptionsGroupCard = ({
             <ToggleButtonGroup options={options} selected={selected!} setOption={setSelected as () => void} />
             <div className="h-96 justify-start items-start gap-7 inline-flex">
                 {products
-                    .map((product) => ({ product, price: getPriceByProduct(product, selected) }))
+                    .mapNotNull((product) => {
+                        const price = getPriceByProduct(product, selected);
+                        return price ? { product, price } : null;
+                    })
                     .map(({ product, price }) => (
                         <SubscriptionCard
                             key={product.id}
                             title={product.name}
-                            price={price}
+                            price={`${price.unitAmount / 100} ${price.currency}`}
                             features={[]}
                             mainCard={product.metadata?.prominent === 'true'}
                         >
-                            <form action={async () => {
-                                await action(calculateButtonActionType(price, subscription));
-                            }}>
-                                <button type="submit" >
-                                    <SubscriptionButton
-                                        subscription={subscription}
-                                        currentPriceId={price}
-                                    />
-                                </button>
-                            </form>
+                            <a href={subscriptionButtonHref(
+                                calculateButtonActionType(price.id, subscription),
+                                price.stripeID ?? "error",
+                                subscription?.id
+                            )} >
+                                <SubscriptionButton
+                                    subscription={subscription}
+                                    currentPriceId={price.stripeID ?? "error"}
+                                />
+                            </a>
                         </SubscriptionCard>
                     ))}
             </div>
@@ -81,10 +83,17 @@ export const SubscriptionsGroupCard = ({
     );
 };
 
-const getPriceByProduct = (product: Product, interval: Interval): string => {
+const subscriptionButtonHref: (action: SubscriptionButtonActionType, priceId: string, subscriptionId?: string) => string = (action, priceId, subscriptionId) => {
+    if (action === 'cancel') return `/stripe/update?subscriptionId=${subscriptionId}&cancelAtPeriodEnd=true`
+    else if (action === 'renew') return `/stripe/update?subscriptionId=${subscriptionId}`
+    else if (action === 'change') return `/stripe/portal?updateSubscriptionId=${subscriptionId}`
+    else if (action === 'select') return `/stripe/checkout?priceId=${priceId}`
+    return ''
+  }
+const getPriceByProduct = (product: Product, interval: Interval): Price | null => {
     const price = product.prices?.find((price) => typeof price !== 'string' && price.interval === interval) as Price | undefined;
-    if (!price) return 'N/A';
-    return `${price.unitAmount / 100} ${price.currency}`;
+    if (!price) return null;
+    return price;
 }
 
 export const calculateButtonActionType = (currentPriceId: string, subscription?: Subscription): SubscriptionButtonActionType => {

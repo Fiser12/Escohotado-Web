@@ -30,12 +30,12 @@ async function createSubscriptionCheckout(
 		customer_email: user.email,
 		client_reference_id: user.id,
 		line_items: [{ price: priceId, quantity: 1 }],
-		metadata: { user_id: user.id },
+		metadata: { userId: user.id },
 		tax_id_collection: {
 			enabled: true
    	    },
 		subscription_data: {
-			metadata: { user_id: user.id }
+			metadata: { userId: user.id }
 		}
 	});
 }
