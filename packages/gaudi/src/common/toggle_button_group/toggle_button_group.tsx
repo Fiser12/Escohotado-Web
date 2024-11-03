@@ -20,6 +20,7 @@ export const ToggleButtonGroup = ({
   selected,
   setOption,
 }: Args): JSX.Element => {
+  
   const [activeIndex, setActiveIndex] = useState(
     options.map((option) => option.id).indexOf(selected)
   );
