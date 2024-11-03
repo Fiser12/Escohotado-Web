@@ -37,3 +37,8 @@ export const populatePricesHook: CollectionBeforeChangeHook = async ({ data, req
 
   return data
 }
+
+Array.prototype.mapNotNull = function <T, U>(callback: (value: T, index: number, array: T[]) => U | null | undefined): U[] {
+	return this.map(callback).filter((item): item is U => item != null);
+};
+

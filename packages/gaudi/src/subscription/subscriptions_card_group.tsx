@@ -87,6 +87,11 @@ export const SubscriptionsGroupCard = ({
     );
 };
 
+Array.prototype.mapNotNull = function <T, U>(callback: (value: T, index: number, array: T[]) => U | null | undefined): U[] {
+	return this.map(callback).filter((item): item is U => item != null);
+};
+
+
 const subscriptionButtonHref: (action: SubscriptionButtonActionType, priceId: string, subscriptionId?: string) => string = (action, priceId, subscriptionId) => {
     if (action === 'cancel') return `/stripe/update?subscriptionId=${subscriptionId}&cancelAtPeriodEnd=true`
     else if (action === 'renew') return `/stripe/update?subscriptionId=${subscriptionId}`
