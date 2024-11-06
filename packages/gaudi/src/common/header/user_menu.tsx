@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { HeaderSubmenu } from "./header_submenu";
 import { MenuSection, UserModel } from "hegel";
