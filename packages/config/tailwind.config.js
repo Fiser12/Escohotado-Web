@@ -1,30 +1,42 @@
-const path = require('path');
+const path = require("path");
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    '../../apps/server/**/*.{js,ts,jsx,tsx}',
-    '../../packages/gaudi/**/*.{js,ts,jsx,tsx}',
-    '!../../apps/server/node_modules/**',
-    '!../../packages/gaudi/node_modules/**',
+    "../../apps/server/**/*.{js,ts,jsx,tsx}",
+    "../../packages/gaudi/**/*.{js,ts,jsx,tsx}",
+    "!../../apps/server/node_modules/**",
+    "!../../packages/gaudi/node_modules/**",
   ],
-	theme: {
-		extend: {
-			screens: {},
-			colors: {
-				'generic-main': '#D9D9D2',
-				'generic-secondary': '#B6B7A3',
-				'generic-bg-dark': '#222222',
-				'title-primary': '#0E2F41',
-				'menu-section-title': '#939393',
-				'text-primary': '#333333'
-			},
-			fontFamily: {
-				escohotado: ['Escohotado', 'serif'],
-				yesevaone: ['YesevaOne', 'serif'],
-				montserrat: ['Montserrat', 'sans-serif']
-			}
-		}
-	},
-	plugins: [require('@tailwindcss/typography')]
-}
+  theme: {
+    extend: {
+      screens: {},
+      borderRadius: {
+        generic: "3px",
+      },
+      fontFamily: {
+        display: ["Yeseva One", "serif"],
+        body: ["Montserrat", "sans-serif"],
+        handwritten: ["Escohotado", "cursive"],
+      },
+      colors: {
+        primary: {
+          50: "#D4E4EA",
+          100: "#B0CFDB",
+          200: "#86B7C8",
+          300: "#5D9DB3",
+          400: "#3084A0",
+          500: "#023350",
+          900: "#001827",
+        },
+        gray: {
+          light: "#F4F4F4",
+          dark: "#939393",
+          disabled: "#C2C2C2",
+        },
+        "bg-light": "#F9F9F9",
+      },
+    },
+  },
+  plugins: [require("@tailwindcss/typography")],
+};

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { SubscriptionCard } from './subscription_card';
-import { EscotaButton } from '../common/escota_button/escota_button';
+import { MainButton } from "../common/main_button/main_button";
 
 const meta = {
   title: 'Subscription/Component/SubscriptionCard',
@@ -34,7 +34,7 @@ export const Normal: Story = {
   },
   render: (args) => (
     <SubscriptionCard {...args}>
-      <EscotaButton text="Comprar" variant="secondary" />
+      <MainButton text="Comprar" />
     </SubscriptionCard>
   ),
 };
@@ -51,7 +51,7 @@ export const Destacado: Story = {
   },
   render: (args) => (
     <SubscriptionCard {...args}>
-      <EscotaButton text="Comprar" variant="secondary" />
+      <MainButton text="Comprar"  />
     </SubscriptionCard>
   ),
 };

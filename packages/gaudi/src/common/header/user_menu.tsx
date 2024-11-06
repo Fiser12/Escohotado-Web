@@ -1,9 +1,9 @@
 "use client";
-
 import { useState } from "react";
-import { EscotaButton } from "../escota_button/escota_button";
 import { HeaderSubmenu } from "./header_submenu";
 import { MenuSection, UserModel } from "hegel";
+import { MainButton } from "../main_button/main_button";
+import { UserIcon } from '../icons/UserIcon';
 
 export type Args = {
     user: UserModel
@@ -23,7 +23,7 @@ export const UserMenu = ({ user, menuSections }: Args): JSX.Element => {
                 onMouseEnter={() => toggleMenu(true)}
                 onFocus={() => toggleMenu(true)}
             >
-                <EscotaButton text={`Hola, ${user.name ?? user.email}`} variant="transparent" classname="focus:outline-none" />
+                <MainButton text={`Hola, ${user.name ?? user.email}`} type="line" icon={<UserIcon height='14' color='primary' />} classname="focus:outline-none" />
             </button>
             {isMenuOpen && <div className="absolute left-0 z-10">
                 <HeaderSubmenu toggleMenu={toggleMenu} menuSections={menuSections} />

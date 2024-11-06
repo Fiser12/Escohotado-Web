@@ -1,9 +1,9 @@
 import { ContentWrapper } from "../content_wrapper/content_wrapper"
-import { EscotaButton } from "../escota_button/escota_button"
 import { Logo } from "./logo"
 import type { MenuSection, UserModel, Optional } from 'hegel';
 import { NavItem } from "./nav_item";
 import { UserMenu } from "./user_menu";
+import { MainButton } from "../main_button/main_button";
 
 export interface Props {
     className?: string
@@ -33,7 +33,7 @@ export const Header = ({
                         <NavItem href="/eventos" text="Eventos" tabindex={5} />
                         <div className="h-8 justify-start items-center gap-2.5 inline-flex">
                             <a href="https://laemboscadura.com/" tabIndex={6}>
-                                <EscotaButton text="La emboscadura" variant="primary" />
+                                <MainButton text="La emboscadura" />
                             </a>
                         </div>
                         {user ? <UserMenu 
@@ -49,7 +49,7 @@ export const Header = ({
                             }}
                         >
                             <button type="submit">
-                                <EscotaButton text="Entrar" variant="secondary" />
+                                <MainButton text="Entrar" color="secondary" />
                             </button>
                         </form>
                         }
