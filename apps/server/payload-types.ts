@@ -197,6 +197,7 @@ export interface Media {
   id: string;
   title?: string | null;
   rawContent?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
