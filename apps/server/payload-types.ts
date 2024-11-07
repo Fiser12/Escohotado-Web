@@ -21,7 +21,7 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {};
   locale: null;
@@ -55,7 +55,7 @@ export interface User {
   name?: string | null;
   roles?: string[];
   subscription?: {
-    docs?: (string | Subscription)[] | null;
+    docs?: (number | Subscription)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   stripeCustomerId?: string | null;
@@ -93,9 +93,9 @@ export interface User {
  * via the `definition` "subscriptions".
  */
 export interface Subscription {
-  id: string;
+  id: number;
   user: string | User;
-  product: string | Product;
+  product: number | Product;
   status: 'trialing' | 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'paused';
   created?: string | null;
   currentPeriodStart?: string | null;
@@ -126,7 +126,7 @@ export interface Subscription {
  * via the `definition` "products".
  */
 export interface Product {
-  id: string;
+  id: number;
   stripeID: string;
   type?: ('good' | 'service') | null;
   active: boolean;
@@ -138,7 +138,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  prices?: (string | Price)[] | null;
+  prices?: (number | Price)[] | null;
   metadata?:
     | {
         [k: string]: unknown;
@@ -162,11 +162,11 @@ export interface Product {
  * via the `definition` "prices".
  */
 export interface Price {
-  id: string;
+  id: number;
   stripeID: string;
   stripeProductId: string;
   product?: {
-    docs?: (string | Product)[] | null;
+    docs?: (number | Product)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   active: boolean;
@@ -194,7 +194,7 @@ export interface Price {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   title?: string | null;
   rawContent?: string | null;
   prefix?: string | null;
@@ -225,7 +225,7 @@ export interface Media {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
@@ -233,19 +233,19 @@ export interface PayloadLockedDocument {
       } | null)
     | ({
         relationTo: 'prices';
-        value: string | Price;
+        value: number | Price;
       } | null)
     | ({
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'subscriptions';
-        value: string | Subscription;
+        value: number | Subscription;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -260,7 +260,7 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
     value: string | User;
@@ -283,7 +283,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;

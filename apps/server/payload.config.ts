@@ -2,15 +2,13 @@ import path from 'path'
 import { en } from 'payload/i18n/en'
 import { es } from 'payload/i18n/es'
 
-import {
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { authConfig } from '@/plugins/authjs/auth.config'
-import {users} from '@/collections/user'
+import { users } from '@/collections/user'
 import media from '@/collections/media'
 import { authjsPlugin } from 'payload-authjs'
 import { prices, products, subscriptions } from '@/collections/stripe/stripe'
@@ -33,13 +31,19 @@ export default buildConfig({
     subscriptions,
     media
   ],
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URL,
+    },
+  }),
   plugins: [
-    authjsPlugin({ authjsConfig: authConfig }),
     stripePlugin({
       isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test'),
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
     }),
+    authjsPlugin({ authjsConfig: authConfig }),
+
     sentryPlugin({
       Sentry
     }),
@@ -52,17 +56,12 @@ export default buildConfig({
         }
       }
     }),
-
   ],
 
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: mongooseAdapter({
-    url: process.env.MONGODB_URI || ''
-  }),
-
   /**
    * Payload can now accept specific translations from 'payload/i18n/en'
    * This is completely optional and will default to English if not provided
