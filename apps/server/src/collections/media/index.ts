@@ -3,6 +3,7 @@ import { addContentHashToFile } from './addContentHashToFileHook'
 import { handleSvgUpload } from './handleSvgUploadHook'
 import { isAdmin, isAnyone } from '@/utils/access'
 import { COLLECTION_SLUG_MEDIA } from '../config'
+import { updateCacheControl } from './updateCacheControl'
 
 const media: CollectionConfig = {
   slug: COLLECTION_SLUG_MEDIA,
@@ -28,7 +29,7 @@ const media: CollectionConfig = {
   },
   hooks: {
     beforeOperation: [addContentHashToFile],
-    afterChange: [handleSvgUpload]
+    afterChange: [updateCacheControl, handleSvgUpload]
   },
   fields: [
     {
