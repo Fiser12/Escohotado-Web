@@ -15,9 +15,11 @@ import media from '@/collections/media'
 import { authjsPlugin } from 'payload-authjs'
 import { prices, products, subscriptions } from '@/collections/stripe/stripe'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
-import { COLLECTION_SLUG_PAGE } from '@/collections/config'
+import { COLLECTION_SLUG_MEDIA, COLLECTION_SLUG_PAGE } from '@/collections/config'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
 import * as Sentry from '@sentry/nextjs'
+import { S3_PLUGIN_CONFIG } from '@/plugins/s3'
+import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -41,6 +43,16 @@ export default buildConfig({
     sentryPlugin({
       Sentry
     }),
+    s3StoragePlugin({
+      ...S3_PLUGIN_CONFIG,
+      collections: {
+        [COLLECTION_SLUG_MEDIA]: {
+          disableLocalStorage: true,
+          prefix: 'media'
+        }
+      }
+    }),
+
   ],
 
   secret: process.env.PAYLOAD_SECRET || '',
