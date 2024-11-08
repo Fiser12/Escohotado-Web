@@ -7,14 +7,14 @@ type Args = {
     toggleMenu: (changeTo?: boolean) => void
     menuSections: MenuSection[]
 }
-export const HeaderSubmenu = ({
+export const HeaderMenuUser = ({
     toggleMenu,
     menuSections
 }: Args): JSX.Element => {
 
     return (
         <div
-            className="w-40 bg-white rounded-sm flex-col justify-start items-start inline-flex"
+            className="w-full md:w-40 bg-white rounded-sm flex-col justify-start items-start inline-flex shadow-lg"
             onMouseLeave={() => toggleMenu(false)}
             role="menu"
             tabIndex={7}
@@ -22,7 +22,7 @@ export const HeaderSubmenu = ({
             {menuSections.map((section, i) => (
                 <React.Fragment key={i}>
                     {section.title && (
-                        <div className="text-menu-section-title text-xs px-5 py-2.5 font-bold font-montserrat leading-3">
+                        <div className="text-menu-section-title text-xs px-5 py-3 font-semibold font-body leading-3 text-gray-dark">
                             {section.title}
                         </div>
                     )}
@@ -34,20 +34,20 @@ export const HeaderSubmenu = ({
                         return (
                             <div
                                 key={j}
-                                className="h-8 px-5 py-2.5 flex-col justify-start items-start gap-2.5 flex"
+                                className="h-8 w-full px-5 py-2.5 flex flex-col justify-start items-center gap-2.5 hover:bg-gray-light active:bg-primary-50 focus:bg-primary-50"
                             >
-                                <div className="self-stretch h-3.5 justify-start items-center gap-1 flex">
+                                <div className="flex self-stretch h-3.5 justify-start items-center gap-1">
                                     {action ? (
                                         <button
                                             onClick={action}
-                                            className="text-black text-xs font-normal font-montserrat leading-3"
+                                            className="text-primary-900 text-xs font-normal font-body leading-3"
                                         >
                                             {item.text}
                                         </button>
                                     ) : href ? (
                                         <a
                                             href={href}
-                                            className="text-black text-xs font-normal font-montserrat leading-3"
+                                            className="text-primary-900 text-xs font-normal font-body leading-3"
                                         >
                                             {item.text}
                                         </a>
@@ -58,7 +58,7 @@ export const HeaderSubmenu = ({
                     })}
 
                     {i < menuSections.length - 1 && (
-                        <div className="self-stretch h-px border border-[#dadada]"></div>
+                        <div className="self-stretch h-px border border-gray-light"></div>
                     )}
                 </React.Fragment>
             ))}
