@@ -16,6 +16,7 @@ export interface Config {
     products: Product;
     subscriptions: Subscription;
     media: Media;
+    taxonomy: Taxonomy;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -222,6 +223,23 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "taxonomy".
+ */
+export interface Taxonomy {
+  id: number;
+  slug: string;
+  title: string;
+  seed?: string | null;
+  parent?: (number | null) | Taxonomy;
+  children?: {
+    docs?: (number | Taxonomy)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -246,6 +264,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'taxonomy';
+        value: number | Taxonomy;
       } | null);
   globalSlug?: string | null;
   user: {
