@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { MainButton } from './main_button';
-import { EmailIcon } from '../icons/EmailIcon';
+import { EmailIcon } from '../icons/email_icon';
 
 const meta: Meta<typeof MainButton> = {
     title: 'Common/Atoms/Button/Primary',
@@ -15,7 +15,7 @@ const meta: Meta<typeof MainButton> = {
                 options: ['fill', 'line'],
             },
         },
-        classname: {
+        className: {
             control: 'text',
         },
         icon: {
@@ -60,6 +60,6 @@ export const WithIcon: Story = {
         icon: true,
     },
     render: (args) => (
-        <MainButton {...args} icon={<EmailIcon height='14' />} />
+        <MainButton {...args} icon={<EmailIcon />} />
     ),
 };

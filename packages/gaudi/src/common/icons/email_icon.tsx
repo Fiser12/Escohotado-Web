@@ -2,18 +2,16 @@ import React from 'react';
 import classNames from 'classnames';
 
 interface Args {
-    height?: string;
     className?: string;
     color?: 'default' | 'primary' | 'secondary';
 }
 
 export const EmailIcon = ({
-    height = '14px',
-    className = '', 
+    className = '',
     color = 'default',
 }: Args): JSX.Element => {
     const iconClass = classNames(
-        'w-4 h-4 stroke-current',
+        'h-4 stroke-current text-primary-900',
         className,
         {
             'text-white': color === 'default',
@@ -24,7 +22,6 @@ export const EmailIcon = ({
 
     return (
         <svg
-            height={height}
             viewBox="0 0 14 14"
             fill="none"
             className={iconClass}

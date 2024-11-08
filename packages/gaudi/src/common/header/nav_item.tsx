@@ -8,7 +8,7 @@ export const NavItem = ({ href, text, tabindex }: NavItemArgs) => {
         <a
             tabIndex={tabindex}
             href={href}
-            className="text-black text-base font-normal font-montserrat leading-none whitespace-nowrap flex-shrink-0"
+            className="text-primary-900 text-sm font-normal font-body leading-none whitespace-nowrap flex-shrink-0"
         >
             {text}
         </a>

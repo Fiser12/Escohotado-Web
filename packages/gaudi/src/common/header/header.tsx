@@ -2,8 +2,9 @@ import { ContentWrapper } from "../content_wrapper/content_wrapper"
 import { Logo } from "./logo"
 import type { MenuSection, UserModel, Optional } from 'hegel';
 import { NavItem } from "./nav_item";
-import { UserMenu } from "./user_menu";
+import { UserMenu } from "./user_menu/user_menu";
 import { MainButton } from "../main_button/main_button";
+import { HamburguerIcon } from "../icons/hamburguer_icon";
 
 export interface Props {
     className?: string
@@ -23,24 +24,24 @@ export const Header = ({
     return (
         <header>
             <ContentWrapper>
-                <nav className="h-20 py-5 bg-white flex justify-between items-center">
+                <nav className="h-16 py-5 bg-white flex justify-between items-center">
                     <Logo tabindex={0} />
-                    <div className="hidden lg:flex justify-end items-center lg:gap-4 xl:gap-6 xxl:gap-6 flex-shrink-0">
+                    <div className="hidden lg:flex justify-center items-center gap-7 flex-shrink-0">
                         <NavItem href="/ad-memoriam" text="Ad Memoriam" tabindex={1} />
                         <NavItem href="/biblioteca" text="Biblioteca" tabindex={2} />
                         <NavItem href="/articulos" text="Artículos" tabindex={3} />
-                        <NavItem href="/videos" text="Videos" tabindex={4} />
+                        <NavItem href="/videos" text="Filmoteca" tabindex={4} />
                         <NavItem href="/eventos" text="Eventos" tabindex={5} />
-                        <div className="h-8 justify-start items-center gap-2.5 inline-flex">
-                            <a href="https://laemboscadura.com/" tabIndex={6}>
-                                <MainButton text="La emboscadura" />
-                            </a>
-                        </div>
-                        {user ? <UserMenu 
-                            user={user} 
+                    </div>
+                    <div className="hidden lg:flex justify-center items-center gap-7 flex-shrink-0">
+                        <a href="https://laemboscadura.com/" tabIndex={6}>
+                            <MainButton text="La emboscadura" icon="" />
+                        </a>
+                        {user ? <UserMenu
+                            user={user}
                             menuSections={[
                                 ...menuSections,
-                                { items: [{text: "Cerrar sesión", action: signOut}] }
+                                { items: [{ text: "Cerrar sesión", action: signOut }] }
                             ]}
                         /> : <form
                             action={async () => {
@@ -54,8 +55,10 @@ export const Header = ({
                         </form>
                         }
                     </div>
+                    <div className="lg:hidden md:block">
+                        <HamburguerIcon></HamburguerIcon>
+                    </div>
                 </nav>
-
             </ContentWrapper>
         </header>
     )

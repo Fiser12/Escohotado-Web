@@ -5,7 +5,7 @@ const meta = {
     title: 'Common/Atoms/Typography/H4',
     component: H4,
     args: {
-        label: 'Sample Heading',
+        label: 'Sample Heading 4',
     },
     parameters: {
         layout: 'centered',

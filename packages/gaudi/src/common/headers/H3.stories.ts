@@ -5,8 +5,7 @@ const meta = {
     title: 'Common/Atoms/Typography/H3',
     component: H3,
     args: {
-        label: 'Sample Heading',
-        variant: 'primary',
+        label: 'Sample Heading 3',
     },
     parameters: {
         layout: 'centered',
@@ -23,18 +22,4 @@ export default meta;
 
 export const Default: Story = {
     parameters: {},
-};
-
-export const Secondary: Story = {
-    args: {
-        variant: 'secondary',
-        label: 'Secondary Heading',
-    },
-};
-
-export const Tertiary: Story = {
-    args: {
-        variant: 'tertiary',
-        label: 'Tertiary Heading',
-    },
 };
