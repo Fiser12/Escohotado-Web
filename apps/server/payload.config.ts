@@ -9,6 +9,7 @@ import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { authConfig } from '@/plugins/authjs/auth.config'
 import { users } from '@/collections/user'
+import taxonomy from '@/collections/taxonomy'
 import media from '@/collections/media'
 import { authjsPlugin } from 'payload-authjs'
 import { prices, products, subscriptions } from '@/collections/stripe/stripe'
@@ -29,7 +30,8 @@ export default buildConfig({
     prices,
     products,
     subscriptions,
-    media
+    media,
+    taxonomy
   ],
   db: postgresAdapter({
     pool: {
@@ -43,7 +45,6 @@ export default buildConfig({
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
     }),
     authjsPlugin({ authjsConfig: authConfig }),
-
     sentryPlugin({
       Sentry
     }),
