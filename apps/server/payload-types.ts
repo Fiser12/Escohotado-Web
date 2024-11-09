@@ -155,6 +155,13 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  taxonomies?: (number | Taxonomy)[] | null;
+  seeds?:
+    | {
+        seed?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -192,6 +199,23 @@ export interface Price {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "taxonomy".
+ */
+export interface Taxonomy {
+  id: number;
+  slug: string;
+  title: string;
+  seed?: string | null;
+  parent?: (number | null) | Taxonomy;
+  children?: {
+    docs?: (number | Taxonomy)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -220,23 +244,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "taxonomy".
- */
-export interface Taxonomy {
-  id: number;
-  slug: string;
-  title: string;
-  seed?: string | null;
-  parent?: (number | null) | Taxonomy;
-  children?: {
-    docs?: (number | Taxonomy)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
