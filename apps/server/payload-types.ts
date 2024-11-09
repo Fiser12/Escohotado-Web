@@ -155,7 +155,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  taxonomies?: (number | Taxonomy)[] | null;
+  permissions?: (number | Taxonomy)[] | null;
   seeds?:
     | {
         seed?: string | null;

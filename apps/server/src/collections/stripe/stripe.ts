@@ -49,7 +49,18 @@ export const SubscriptionStatus = {
 const formatOptions = (obj: Record<string, string>) =>
   Object.entries(obj).map(([key, value]) => ({ value: key, label: value }))
 
-const taxonomiesRelationship = taxonomiesRelationshipBuilder()
+const taxonomiesRelationship = taxonomiesRelationshipBuilder({
+  relationship: { 
+    name: 'permissions', 
+    label: 'Permisos',
+    filterOptions: () => {
+      return {
+        seed: { like: "permissions/%" }
+      }
+    }
+  },
+  seeds: { name: 'seeds', label: 'Semillas de permisos' }
+})
 
 export const products: CollectionConfig = {
   slug: COLLECTION_SLUG_PRODUCTS,
