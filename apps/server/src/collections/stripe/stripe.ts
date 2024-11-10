@@ -7,10 +7,12 @@ import {
   COLLECTION_SLUG_PRICES,
   COLLECTION_SLUG_PRODUCTS,
   COLLECTION_SLUG_SUBSCRIPTIONS,
+  COLLECTION_SLUG_TAXONOMY,
   COLLECTION_SLUG_USER,
 } from '../config'
 import { CollectionConfig } from 'payload'
 import { populatePricesHook } from './populatePricesHook'
+import { taxonomiesRelationshipBuilder } from '../taxonomy/taxonomiesRelationshipFields'
 
 const group = 'Stripe'
 
@@ -47,6 +49,18 @@ export const SubscriptionStatus = {
 const formatOptions = (obj: Record<string, string>) =>
   Object.entries(obj).map(([key, value]) => ({ value: key, label: value }))
 
+const taxonomiesRelationship = taxonomiesRelationshipBuilder({
+  relationship: { 
+    name: 'permissions', 
+    label: 'Permisos',
+    filterOptions: () => {
+      return {
+        seed: { like: "permissions/%" }
+      }
+    }
+  },
+  seeds: { name: 'seeds', label: 'Semillas de permisos' }
+})
 
 export const products: CollectionConfig = {
   slug: COLLECTION_SLUG_PRODUCTS,
@@ -56,7 +70,10 @@ export const products: CollectionConfig = {
   },
   access,
   hooks: {
-    beforeChange: [populatePricesHook],
+    beforeChange: [
+      populatePricesHook,
+      taxonomiesRelationship.hook
+    ],
   },
   fields: [
     {
@@ -80,7 +97,6 @@ export const products: CollectionConfig = {
       relationTo: COLLECTION_SLUG_PRICES,
       hasMany: true,
       required: false,
-
     },
     { name: 'metadata', type: 'json', label: 'Metadata' },
     {
@@ -88,8 +104,10 @@ export const products: CollectionConfig = {
       name: 'features',
       fields: [ { type: 'text', name: 'title' } ],
     },
+    ...taxonomiesRelationship.fields,
   ],
 }
+
 
 export const prices: CollectionConfig = {
   slug: COLLECTION_SLUG_PRICES,

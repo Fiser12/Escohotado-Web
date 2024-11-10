@@ -34,6 +34,7 @@ export default buildConfig({
     taxonomy
   ],
   db: postgresAdapter({
+    idType: "uuid",
     pool: {
       connectionString: process.env.DATABASE_URL,
     },
