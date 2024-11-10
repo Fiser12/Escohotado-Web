@@ -44,11 +44,12 @@
     "next-auth": "^5.0.0-beta.25",
     "payload": "3.0.0-beta.119",
     "payload-authjs": "^0.3.2",
-    "react": "19.0.0-rc-1631855f-20241023",
-    "react-dom": "19.0.0-rc-1631855f-20241023",
+    "react": "rc",
+    "react-dom": "rc",
     "sharp": "^0.33.5",
     "stripe": "17.2.1",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^2.5.4",
+    "uuid": "^11.0.2"
   },
   "devDependencies": {
     "@storybook/addon-designs": "^8.0.4",
@@ -63,8 +64,8 @@
     "@tailwindcss/typography": "^0.5.15",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20.14.9",
-    "@types/react": "npm:types-react@beta",
-    "@types/react-dom": "npm:types-react-dom@beta",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
     "eslint-config-next": "15.0.3",

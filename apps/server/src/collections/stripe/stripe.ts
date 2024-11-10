@@ -16,13 +16,6 @@ import { taxonomiesRelationshipBuilder } from '../taxonomy/taxonomiesRelationshi
 
 const group = 'Stripe'
 
-const access = {
-  read: isAdminOrStripeActive,
-  create: isAdmin,
-  update: isAdmin,
-  delete: isAdmin,
-}
-
 export const PricingType = {
   one_time: 'One Time',
   recurring: 'Recurring',
@@ -49,14 +42,12 @@ export const SubscriptionStatus = {
 const formatOptions = (obj: Record<string, string>) =>
   Object.entries(obj).map(([key, value]) => ({ value: key, label: value }))
 
-const taxonomiesRelationship = taxonomiesRelationshipBuilder({
+const permissionsRelationship = taxonomiesRelationshipBuilder({
   relationship: { 
     name: 'permissions', 
     label: 'Permisos',
     filterOptions: () => {
-      return {
-        seed: { like: "permissions/%" }
-      }
+      return { seed: { like: "permissions/%" } }
     }
   },
   seeds: { name: 'seeds', label: 'Semillas de permisos' }
@@ -68,11 +59,16 @@ export const products: CollectionConfig = {
     useAsTitle: 'name',
     group,
   },
-  access,
+  access: {
+    read: isAdminOrStripeActive,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
+  },
   hooks: {
     beforeChange: [
+      permissionsRelationship.hook,
       populatePricesHook,
-      taxonomiesRelationship.hook
     ],
   },
   fields: [
@@ -104,10 +100,9 @@ export const products: CollectionConfig = {
       name: 'features',
       fields: [ { type: 'text', name: 'title' } ],
     },
-    ...taxonomiesRelationship.fields,
+    ...permissionsRelationship.fields,
   ],
 }
-
 
 export const prices: CollectionConfig = {
   slug: COLLECTION_SLUG_PRICES,
@@ -115,7 +110,12 @@ export const prices: CollectionConfig = {
     useAsTitle: 'unitAmount',
     group,
   },
-  access,
+  access: {
+    read: isAdminOrStripeActive,
+    create: () => false,
+    update: () => false,
+    delete: isAdmin,
+  },
   fields: [
     {
       name: 'stripeID',

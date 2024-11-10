@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { isAdmin, isAnyone } from '@/utils/access'
 import { COLLECTION_SLUG_TAXONOMY } from '../config'
 import { populateSeedHook } from './populateSeedHook'
+import { v4 as uuid_v4 } from 'uuid'
 
 const taxonomy: CollectionConfig = {
   slug: COLLECTION_SLUG_TAXONOMY,
@@ -22,6 +23,17 @@ const taxonomy: CollectionConfig = {
     beforeChange: [populateSeedHook],
   },
   fields: [
+    {
+      name: 'id',
+      type: 'text',
+      defaultValue: uuid_v4,
+      admin: { position: 'sidebar', readOnly: true },
+    },
+    {
+      name: 'selectable',
+      type: 'checkbox',
+      defaultValue: true,
+    },
     {
       name: 'slug',
       unique: true,

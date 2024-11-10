@@ -17,6 +17,7 @@ export interface Config {
     subscriptions: Subscription;
     media: Media;
     taxonomy: Taxonomy;
+    article_pdf: ArticlePdf;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -156,12 +157,7 @@ export interface Product {
       }[]
     | null;
   permissions?: (string | Taxonomy)[] | null;
-  seeds?:
-    | {
-        seed?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  seeds?: string[];
   updatedAt: string;
   createdAt: string;
 }
@@ -203,6 +199,7 @@ export interface Price {
  */
 export interface Taxonomy {
   id: string;
+  selectable?: boolean | null;
   slug: string;
   title: string;
   seed?: string | null;
@@ -247,6 +244,30 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article_pdf".
+ */
+export interface ArticlePdf {
+  id: string;
+  title?: string | null;
+  description?: string | null;
+  cover?: (string | null) | Media;
+  categories?: (string | Taxonomy)[] | null;
+  seeds?: string[];
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -275,6 +296,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'taxonomy';
         value: string | Taxonomy;
+      } | null)
+    | ({
+        relationTo: 'article_pdf';
+        value: string | ArticlePdf;
       } | null);
   globalSlug?: string | null;
   user: {
