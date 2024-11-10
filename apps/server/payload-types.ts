@@ -22,7 +22,7 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {};
   locale: null;
@@ -56,7 +56,7 @@ export interface User {
   name?: string | null;
   roles?: string[];
   subscription?: {
-    docs?: (number | Subscription)[] | null;
+    docs?: (string | Subscription)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   stripeCustomerId?: string | null;
@@ -94,9 +94,9 @@ export interface User {
  * via the `definition` "subscriptions".
  */
 export interface Subscription {
-  id: number;
+  id: string;
   user: string | User;
-  product: number | Product;
+  product: string | Product;
   status: 'trialing' | 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'paused';
   created?: string | null;
   currentPeriodStart?: string | null;
@@ -127,7 +127,7 @@ export interface Subscription {
  * via the `definition` "products".
  */
 export interface Product {
-  id: number;
+  id: string;
   stripeID: string;
   type?: ('good' | 'service') | null;
   active: boolean;
@@ -139,7 +139,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  prices?: (number | Price)[] | null;
+  prices?: (string | Price)[] | null;
   metadata?:
     | {
         [k: string]: unknown;
@@ -155,7 +155,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  permissions?: (number | Taxonomy)[] | null;
+  permissions?: (string | Taxonomy)[] | null;
   seeds?:
     | {
         seed?: string | null;
@@ -170,11 +170,11 @@ export interface Product {
  * via the `definition` "prices".
  */
 export interface Price {
-  id: number;
+  id: string;
   stripeID: string;
   stripeProductId: string;
   product?: {
-    docs?: (number | Product)[] | null;
+    docs?: (string | Product)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   active: boolean;
@@ -202,13 +202,13 @@ export interface Price {
  * via the `definition` "taxonomy".
  */
 export interface Taxonomy {
-  id: number;
+  id: string;
   slug: string;
   title: string;
   seed?: string | null;
-  parent?: (number | null) | Taxonomy;
+  parent?: (string | null) | Taxonomy;
   children?: {
-    docs?: (number | Taxonomy)[] | null;
+    docs?: (string | Taxonomy)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   updatedAt: string;
@@ -219,7 +219,7 @@ export interface Taxonomy {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   title?: string | null;
   rawContent?: string | null;
   prefix?: string | null;
@@ -250,7 +250,7 @@ export interface Media {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
@@ -258,23 +258,23 @@ export interface PayloadLockedDocument {
       } | null)
     | ({
         relationTo: 'prices';
-        value: number | Price;
+        value: string | Price;
       } | null)
     | ({
         relationTo: 'products';
-        value: number | Product;
+        value: string | Product;
       } | null)
     | ({
         relationTo: 'subscriptions';
-        value: number | Subscription;
+        value: string | Subscription;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'taxonomy';
-        value: number | Taxonomy;
+        value: string | Taxonomy;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -289,7 +289,7 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
     value: string | User;
@@ -312,7 +312,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
