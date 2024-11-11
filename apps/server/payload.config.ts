@@ -12,7 +12,9 @@ import { users } from '@/collections/user'
 import taxonomy from '@/collections/taxonomy'
 import media from '@/collections/media'
 import { authjsPlugin } from 'payload-authjs'
-import { prices, products, subscriptions } from '@/collections/stripe/stripe'
+import { subscriptions } from '@/collections/stripe/subscriptions'
+import { prices } from '@/collections/stripe/prices'
+import { products } from '@/collections/stripe/products'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
 import { COLLECTION_SLUG_MEDIA, COLLECTION_SLUG_ARTICLE_PDF } from '@/collections/config'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
@@ -26,18 +28,10 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [
-    users, 
-    prices,
-    products,
-    subscriptions,
-    media,
-    taxonomy,
-    articlePDF
-  ],
+  collections: [users, prices, products, subscriptions, media, taxonomy, articlePDF],
   db: postgresAdapter({
-    idType: "uuid",
-    
+    idType: 'uuid',
+
     pool: {
       connectionString: process.env.DATABASE_URL,
     },
@@ -50,20 +44,20 @@ export default buildConfig({
     }),
     authjsPlugin({ authjsConfig: authConfig }),
     sentryPlugin({
-      Sentry
+      Sentry,
     }),
     s3StoragePlugin({
       ...S3_PLUGIN_CONFIG,
       collections: {
         [COLLECTION_SLUG_MEDIA]: {
           disableLocalStorage: true,
-          prefix: 'media'
+          prefix: 'media',
         },
         [COLLECTION_SLUG_ARTICLE_PDF]: {
           disableLocalStorage: true,
-          prefix: 'article_pdf'
-        }
-      }
+          prefix: 'article_pdf',
+        },
+      },
     }),
   ],
 
@@ -77,7 +71,7 @@ export default buildConfig({
    */
   i18n: {
     supportedLanguages: { es, en },
-    fallbackLanguage: "es"
+    fallbackLanguage: 'es',
   },
   cors: ['https://checkout.stripe.com', `${process.env.NEXT_PUBLIC_SITE_URL}` || ''],
   csrf: ['https://checkout.stripe.com', process.env.NEXT_PUBLIC_SITE_URL || ''],
@@ -85,7 +79,7 @@ export default buildConfig({
     user: users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
-    }
+    },
   },
   sharp,
 })

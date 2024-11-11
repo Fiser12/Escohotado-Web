@@ -1,21 +1,20 @@
-import type { CollectionConfig, PayloadRequest } from 'payload'
+import type { Access, CollectionConfig } from 'payload'
 import { addContentHashToFile } from '../../media/addContentHashToFileHook'
-import { isAdmin, isAnyone } from '@/utils/access'
+import { checkReadPermissions, isAdmin } from '@/utils/access'
 import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_MEDIA } from '../../config'
 import { taxonomiesRelationshipBuilder } from '@/collections/taxonomy/taxonomiesRelationshipFields'
 
-const categoriesRelationship = taxonomiesRelationshipBuilder({
+const permissionsRelationship = taxonomiesRelationshipBuilder({
     relationship: { 
-      name: 'categories', 
-      label: 'Categorías',
+      name: 'permissions', 
+      label: 'Permisos',
       filterOptions: () => {
-        return { selectable: {equals: true} }
-      }
+        return { seed: { like: 'permissions/%' } }
+      },
     },
-    seeds: { name: 'seeds', label: 'Semillas de categorías' }
+    seeds: { name: 'seeds', label: 'Semillas de permisos' }
   }
 )
-
 
 export const articlePDF: CollectionConfig = {
   slug: COLLECTION_SLUG_ARTICLE_PDF,
@@ -27,10 +26,7 @@ export const articlePDF: CollectionConfig = {
     mimeTypes: ['application/pdf'],
   },
   access: {
-    read:  (props) => {
-      console.log(props.req.user?.subscription?.docs)
-      return true
-    },
+    read: checkReadPermissions,
     create: isAdmin,
     update: isAdmin,
     delete: isAdmin
@@ -40,7 +36,7 @@ export const articlePDF: CollectionConfig = {
     group: 'Contenido'
   },
   hooks: {
-    beforeChange: [categoriesRelationship.hook],
+    beforeChange: [permissionsRelationship.hook],
     beforeOperation: [addContentHashToFile]
   },
   fields: [
@@ -61,6 +57,6 @@ export const articlePDF: CollectionConfig = {
           mimeType: { contains: 'image' },
         }
     },
-    ...categoriesRelationship.fields
+    ...permissionsRelationship.fields
   ]
 }

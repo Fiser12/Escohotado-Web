@@ -1,4 +1,15 @@
 import { Access } from "payload"
+import { Subscription } from "payload-types"
+
+export const checkReadPermissions: Access = (props) => {
+  if(isAdmin(props)) return true
+  const userPermissions = props.req.user?.subscription?.docs?.flatMap(sub => (sub as Subscription).seeds) ?? []
+  return {or: [
+    {seeds: { equals: "" }},
+    ...userPermissions.map(perm => ({ seeds: { contains: perm }}))
+  ]}
+}
+
 
 export const isAdmin: Access = ({ req }) => {
   return req?.user?.roles?.includes('admin') || false

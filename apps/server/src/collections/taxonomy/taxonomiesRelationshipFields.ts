@@ -9,6 +9,7 @@ interface TaxonomyBuilderProps {
     },
     seeds: {
         name: string
+        hidden?: boolean,
         label?: string,
         additionalFields?: Field[]
     }
@@ -29,18 +30,9 @@ const taxonomiesRelationship: (props: TaxonomyBuilderProps) => Field[] = (props)
     {
       name: props.seeds.name,
       label: props.seeds.label || undefined,
-      type: 'json',
-      typescriptSchema: [
-        () => ({
-          type: "array",
-          items: {
-            type: "string",
-          },
-        }),
-      ],
-      required: false,
-      defaultValue: [],
-      admin: { position: 'sidebar', readOnly: true },
+      type: 'text',
+      defaultValue: "",
+      admin: { position: 'sidebar', readOnly: true, hidden: props.seeds.hidden },
     }
   ]
 }
@@ -49,7 +41,7 @@ const populateSeedArrayHook: (props: TaxonomyBuilderProps) => CollectionBeforeCh
   if (data[props.relationship.name].length === 0)
     return {
       ...data,
-      [props.seeds.name]: [],
+      [props.seeds.name]: "",
     }
   const taxonomies = await req.payload.find({
     collection: COLLECTION_SLUG_TAXONOMY,
@@ -61,7 +53,7 @@ const populateSeedArrayHook: (props: TaxonomyBuilderProps) => CollectionBeforeCh
 
   return {
     ...data,
-    [props.seeds.name]: seeds,
+    [props.seeds.name]: seeds.join(' '),
   }
 }
 

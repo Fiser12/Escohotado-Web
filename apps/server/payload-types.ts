@@ -120,6 +120,15 @@ export interface Subscription {
     | number
     | boolean
     | null;
+  seeds?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -157,7 +166,7 @@ export interface Product {
       }[]
     | null;
   permissions?: (string | Taxonomy)[] | null;
-  seeds?: string[];
+  seeds?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -251,8 +260,8 @@ export interface ArticlePdf {
   title?: string | null;
   description?: string | null;
   cover?: (string | null) | Media;
-  categories?: (string | Taxonomy)[] | null;
-  seeds?: string[];
+  permissions?: (string | Taxonomy)[] | null;
+  seeds?: string | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
