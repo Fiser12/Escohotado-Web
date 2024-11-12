@@ -41,14 +41,15 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
         stripeID: { equals: subscriptionItem.price.product }
       }
     })
-    const productID = products.at(0)?.id
-    if (!productID) return
+    const product = products.at(0)
+    if (!product) return
 
     const subscriptionData = {
       stripeID,
       stripeCustomerId: customer as string,
       stripePriceID: subscriptionItem.price.id,
-      product: productID,
+      product: product.id,
+      seeds: product.seeds,
       user: userID,
       status,
       metadata,
