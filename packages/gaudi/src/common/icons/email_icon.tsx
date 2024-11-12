@@ -3,21 +3,14 @@ import classNames from 'classnames';
 
 interface Args {
     className?: string;
-    color?: 'default' | 'primary' | 'secondary';
 }
 
 export const EmailIcon = ({
     className = '',
-    color = 'default',
 }: Args): JSX.Element => {
     const iconClass = classNames(
-        'h-4 stroke-current text-primary-900',
+        'h-4 stroke-current',
         className,
-        {
-            'text-white': color === 'default',
-            'text-primary-900': color === 'primary',
-            'text-primary-300': color === 'secondary',
-        }
     );
 
     return (

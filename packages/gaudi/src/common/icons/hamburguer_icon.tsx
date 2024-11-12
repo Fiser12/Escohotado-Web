@@ -10,7 +10,7 @@ export const HamburguerIcon = ({
 }: Args): JSX.Element => {
     const iconClass = classNames(
         'h-6 stroke-current text-primary-900',
-        className
+        className,
     );
 
     return (

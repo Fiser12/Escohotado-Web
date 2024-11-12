@@ -8,7 +8,7 @@ const meta: Meta<typeof Tag> = {
         layout: 'fullscreen',
         design: {
             type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=55-116&m=dev'
+            url: 'https://www.figma.com/design/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=25-98&m=dev'
         }
     },
     argTypes: {

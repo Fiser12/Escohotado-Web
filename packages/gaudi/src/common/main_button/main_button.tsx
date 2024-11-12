@@ -31,9 +31,18 @@ export const MainButton = ({
         }
     );
 
+    const iconClass = classNames(
+        className,
+        {
+            'text-white': type === 'fill',
+            'text-primary-900': type === 'line' && color === 'primary',
+            'text-primary-300': type === 'line' && color === 'secondary',
+        }
+    );
+
     return (
         <div className={buttonClass}>
-            {icon && <span className="icon-class">{icon}</span>}
+            {icon && <span className={iconClass}>{icon}</span>}
             {text}
         </div>
     );
