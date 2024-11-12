@@ -7,6 +7,10 @@ const meta: Meta<typeof MainButton> = {
     component: MainButton,
     parameters: {
         layout: 'fullscreen',
+        design: {
+            type: 'figspec',
+            url: 'https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=55-116&t=mL310kV4x7dAEoiY-4',
+        },
     },
     argTypes: {
         type: {
@@ -31,13 +35,6 @@ type Story = StoryObj<typeof meta>;
 // Fill
 export const Fill: Story = {
     name: 'Fill',
-    parameters: {
-        layout: 'fullscreen',
-        design: {
-            type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=59-120&m=dev',
-        },
-    },
     args: {
         text: 'Secondary Fill Button',
         color: 'secondary',
@@ -45,20 +42,13 @@ export const Fill: Story = {
         icon: false,
     },
     render: (args) => (
-        <MainButton {...args} icon={args.icon ? <EmailIcon /> : undefined} />
+        <MainButton {...args} icon={args.icon ? <EmailIcon /> : null} />
     ),
 };
 
 // Line
 export const Line: Story = {
     name: 'Line',
-    parameters: {
-        layout: 'fullscreen',
-        design: {
-            type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=59-124&m=dev',
-        },
-    },
     args: {
         text: 'Secondary Line Button',
         color: 'secondary',
@@ -66,49 +56,7 @@ export const Line: Story = {
         icon: false,
     },
     render: (args) => (
-        <MainButton {...args} icon={args.icon ? <EmailIcon /> : undefined} />
-    ),
-};
-
-// Icon Fill
-export const WithIconFill: Story = {
-    name: 'With Icon Fill',
-    parameters: {
-        layout: 'fullscreen',
-        design: {
-            type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=62-117&m=dev',
-        },
-    },
-    args: {
-        text: 'Button with Icon',
-        color: 'secondary',
-        type: 'fill',
-        icon: true,
-    },
-    render: (args) => (
-        <MainButton {...args} icon={args.icon ? <EmailIcon /> : undefined} />
-    ),
-};
-
-// Icon Line
-export const WithIconLine: Story = {
-    name: 'With Icon Line',
-    parameters: {
-        layout: 'fullscreen',
-        design: {
-            type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=64-239&m=dev',
-        },
-    },
-    args: {
-        text: 'Button with Icon',
-        color: 'secondary',
-        type: 'line',
-        icon: true,
-    },
-    render: (args) => (
-        <MainButton {...args} icon={args.icon ? <EmailIcon /> : undefined} />
+        <MainButton {...args} icon={args.icon ? <EmailIcon /> : null} />
     ),
 };
 

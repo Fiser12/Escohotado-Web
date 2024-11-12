@@ -8,7 +8,7 @@ const meta: Meta<typeof Tag> = {
         layout: 'fullscreen',
         design: {
             type: 'figspec',
-            url: 'https://www.figma.com/design/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=25-98&m=dev'
+            url: 'https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=25-98&t=mL310kV4x7dAEoiY-4'
         }
     },
     argTypes: {
@@ -31,6 +31,11 @@ type Story = StoryObj<typeof meta>;
 //Light
 export const Light: Story = {
     name: 'Light',
+    parameters: {
+        backgrounds: {
+            default: 'dark',
+        },
+    },
     args: {
         text: 'Sample tag',
         variant: 'light',

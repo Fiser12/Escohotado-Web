@@ -8,6 +8,10 @@ const meta: Meta<typeof MainButton> = {
     component: MainButton,
     parameters: {
         layout: 'fullscreen',
+        design: {
+            type: 'figspec',
+            url: 'https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=55-116&t=mL310kV4x7dAEoiY-4',
+        },
     },
     argTypes: {
         type: {
@@ -32,77 +36,27 @@ type Story = StoryObj<typeof meta>;
 // Fill
 export const Fill: Story = {
     name: 'Fill',
-    parameters: {
-        layout: 'fullscreen',
-        design: {
-            type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=55-117&m=dev',
-        },
-    },
     args: {
         text: 'Primary Fill Button',
         color: 'primary',
         type: 'fill',
         icon: false,
     },
+    render: (args) => (
+        <MainButton {...args} icon={args.icon ? <EmailIcon /> : null} />
+    ),
 };
 
 // Line
 export const Line: Story = {
     name: 'Line',
-    parameters: {
-        layout: 'fullscreen',
-        design: {
-            type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=3-88&m=dev',
-        },
-    },
     args: {
         text: 'Primary Line Button',
         color: 'primary',
         type: 'line',
         icon: false,
     },
-};
-
-// Icon Fill
-export const WithIconFill: Story = {
-    name: 'With Icon Fill',
-    parameters: {
-        layout: 'fullscreen',
-        design: {
-            type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=64-221&m=dev',
-        },
-    },
-    args: {
-        text: 'Button with Icon',
-        color: 'primary',
-        type: 'fill',
-        icon: true,
-    },
     render: (args) => (
-        <MainButton {...args} icon={<EmailIcon />} />
-    ),
-};
-
-// Icon Line
-export const WithIconLine: Story = {
-    name: 'With Icon Line',
-    parameters: {
-        layout: 'fullscreen',
-        design: {
-            type: 'figspec',
-            url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=64-251&m=dev',
-        },
-    },
-    args: {
-        text: 'Button with Icon',
-        color: 'primary',
-        type: 'line',
-        icon: true,
-    },
-    render: (args) => (
-        <MainButton {...args} icon={<EmailIcon />} />
+        <MainButton {...args} icon={args.icon ? <EmailIcon /> : null} />
     ),
 };

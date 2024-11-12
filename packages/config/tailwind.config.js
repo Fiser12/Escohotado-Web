@@ -36,6 +36,10 @@ export default {
         },
         "bg-light": "#F9F9F9",
       },
+      borderWidth: {
+        DEFAULT: '1px',
+        '0.5': '0.5px',
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],
