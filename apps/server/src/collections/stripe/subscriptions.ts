@@ -117,9 +117,9 @@ export const subscriptions: CollectionConfig = {
     { 
       name: 'seeds', 
       label: 'Semilla de permisos', 
-      type: 'json',
+      type: 'text',
       admin: { readOnly: true, position: 'sidebar' }, 
-      defaultValue: [] 
+      defaultValue: ""
     },
   ],
 }

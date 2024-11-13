@@ -120,15 +120,7 @@ export interface Subscription {
     | number
     | boolean
     | null;
-  seeds?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  seeds?: string | null;
   updatedAt: string;
   createdAt: string;
 }
