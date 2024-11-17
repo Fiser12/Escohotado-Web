@@ -3,17 +3,15 @@ import { addContentHashToFile } from '../../media/addContentHashToFileHook'
 import { checkReadPermissions, isAdmin } from '@/utils/access'
 import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_MEDIA } from '../../config'
 import { taxonomiesRelationshipBuilder } from '@/collections/taxonomy/taxonomiesRelationshipFields'
+import { permissionRelationship, populatePermissionSeedsHook } from '@/collections/permissions/permissionsRelationshipFields'
 
-const permissionsRelationship = taxonomiesRelationshipBuilder({
-    relationship: { 
-      name: 'permissions', 
-      label: 'Permisos',
-      filterOptions: () => {
-        return { seed: { like: 'permissions/%' } }
-      },
-    },
-    seeds: { name: 'seeds', label: 'Semillas de permisos' }
-  }
+const categoriesRelationship = taxonomiesRelationshipBuilder({
+  relationship: { 
+    name: 'categories', 
+    label: 'Categories'
+  },
+  seeds: { name: 'seeds', label: 'Semillas de categorías' }
+}
 )
 
 export const articlePDF: CollectionConfig = {
@@ -36,7 +34,7 @@ export const articlePDF: CollectionConfig = {
     group: 'Contenido'
   },
   hooks: {
-    beforeChange: [permissionsRelationship.hook],
+    beforeChange: [categoriesRelationship.hook, populatePermissionSeedsHook],
     beforeOperation: [addContentHashToFile]
   },
   fields: [
@@ -57,6 +55,7 @@ export const articlePDF: CollectionConfig = {
           mimeType: { contains: 'image' },
         }
     },
-    ...permissionsRelationship.fields
+    ...categoriesRelationship.fields,
+    ...permissionRelationship()
   ]
 }

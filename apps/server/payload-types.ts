@@ -18,6 +18,7 @@ export interface Config {
     media: Media;
     taxonomy: Taxonomy;
     article_pdf: ArticlePdf;
+    permission: Permission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -120,7 +121,7 @@ export interface Subscription {
     | number
     | boolean
     | null;
-  seeds?: string | null;
+  permissions_seeds?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -157,8 +158,8 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  permissions?: (string | Taxonomy)[] | null;
-  seeds?: string | null;
+  permissions?: (string | Permission)[] | null;
+  permissions_seeds?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -196,19 +197,12 @@ export interface Price {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "taxonomy".
+ * via the `definition` "permission".
  */
-export interface Taxonomy {
+export interface Permission {
   id: string;
-  selectable?: boolean | null;
   slug: string;
   title: string;
-  seed?: string | null;
-  parent?: (string | null) | Taxonomy;
-  children?: {
-    docs?: (string | Taxonomy)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -245,6 +239,25 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "taxonomy".
+ */
+export interface Taxonomy {
+  id: string;
+  selectable?: boolean | null;
+  slug: string;
+  singular_name: string;
+  plural_name?: string | null;
+  seed?: string | null;
+  parent?: (string | null) | Taxonomy;
+  children?: {
+    docs?: (string | Taxonomy)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "article_pdf".
  */
 export interface ArticlePdf {
@@ -252,8 +265,10 @@ export interface ArticlePdf {
   title?: string | null;
   description?: string | null;
   cover?: (string | null) | Media;
-  permissions?: (string | Taxonomy)[] | null;
+  categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
+  permissions?: (string | Permission)[] | null;
+  permissions_seeds?: string | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -301,6 +316,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'article_pdf';
         value: string | ArticlePdf;
+      } | null)
+    | ({
+        relationTo: 'permission';
+        value: string | Permission;
       } | null);
   globalSlug?: string | null;
   user: {

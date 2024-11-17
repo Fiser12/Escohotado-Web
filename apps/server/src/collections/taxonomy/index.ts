@@ -17,7 +17,8 @@ const taxonomy: CollectionConfig = {
     delete: isAdmin,
   },
   admin: {
-    useAsTitle: 'title',
+    useAsTitle: 'singular_name',
+    group: 'Contenido'
   },
   hooks: {
     beforeChange: [populateSeedHook],
@@ -41,10 +42,18 @@ const taxonomy: CollectionConfig = {
       required: true,
     },
     {
-      name: 'title',
+      name: 'singular_name',
+      label: 'Nombre singular',
       type: 'text',
       localized: true,
       required: true,
+    },
+    {
+      name: 'plural_name',
+      label: 'Nombre plural',
+      type: 'text',
+      localized: true,
+      required: false,
     },
     {
       name: 'seed',
