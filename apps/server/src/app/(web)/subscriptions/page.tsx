@@ -32,7 +32,6 @@ const Page = async () => {
         subscription={user?.subscription?.docs?.[0] as Subscription | undefined}
         options={options}
       />
-
     </ContentWrapper>
   );
 };

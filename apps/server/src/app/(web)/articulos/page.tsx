@@ -23,6 +23,7 @@ const Page = async () => {
             key={index}
             title={article.title ?? "No title"}
             href={article.url ?? "#"}
+            publishedAt={article.publishedAt as string}
             coverHref={(article.cover as Media | null)?.url ?? "#"}
             buttonTitle="Descargar"
             categories={article.categories as Taxonomy[]}
