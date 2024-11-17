@@ -43,6 +43,11 @@ export const articlePDF: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'publishedAt',
+      label: 'Fecha de publicación',
+      type: 'date'
+    },
+    {
       name: 'description',
       type: 'textarea'
     },

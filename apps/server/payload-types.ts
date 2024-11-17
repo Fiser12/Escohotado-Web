@@ -263,6 +263,7 @@ export interface Taxonomy {
 export interface ArticlePdf {
   id: string;
   title?: string | null;
+  publishedAt?: string | null;
   description?: string | null;
   cover?: (string | null) | Media;
   categories?: (string | Taxonomy)[] | null;
