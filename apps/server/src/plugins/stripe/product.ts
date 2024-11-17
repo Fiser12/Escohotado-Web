@@ -9,7 +9,6 @@ export const productSync = async (object: Stripe.Product) => {
   const { id: stripeProductID, name, description, images } = object
   if (object.deleted) return productDeleted(object)
 
-
   try {
     await payloadUpsert({
       collection: COLLECTION_SLUG_PRODUCTS,

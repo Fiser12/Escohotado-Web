@@ -2,18 +2,7 @@ import { isAdminOrStripeActive, isAdmin } from '@/utils/access'
 import { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES } from '../config'
 import { populatePricesHook } from './populatePricesHook'
-import { taxonomiesRelationshipBuilder } from '../taxonomy/taxonomiesRelationshipFields'
-
-export const permissionsRelationship = taxonomiesRelationshipBuilder({
-  relationship: {
-    name: 'permissions',
-    label: 'Permisos',
-    filterOptions: () => {
-      return { seed: { like: 'permissions/%' } }
-    },
-  },
-  seeds: { name: 'seeds', label: 'Semillas de permisos' },
-})
+import { permissionRelationship, populatePermissionSeedsHook } from '../permissions/permissionsRelationshipFields'
 
 export const products: CollectionConfig = {
   slug: COLLECTION_SLUG_PRODUCTS,
@@ -29,7 +18,7 @@ export const products: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
-      permissionsRelationship.hook, 
+      populatePermissionSeedsHook, 
       populatePricesHook
     ],
   },
@@ -66,6 +55,6 @@ export const products: CollectionConfig = {
       name: 'features',
       fields: [{ type: 'text', name: 'title' }],
     },
-    ...permissionsRelationship.fields,
+    ...permissionRelationship(),
   ],
 }

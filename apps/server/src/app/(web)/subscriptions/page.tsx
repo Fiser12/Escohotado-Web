@@ -5,7 +5,7 @@ import { Subscription } from "payload-types";
 
 const Page = async () => {
   const payload = await getPayload();
-  const user = await getCurrentUser();
+  const user = await getCurrentUser(payload);
   const products = await payload.find({
     collection: "products",
     where: {

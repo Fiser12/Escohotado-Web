@@ -14,6 +14,7 @@ import media from '@/collections/media'
 import { authjsPlugin } from 'payload-authjs'
 import { subscriptions } from '@/collections/stripe/subscriptions'
 import { prices } from '@/collections/stripe/prices'
+import permissions from '@/collections/permissions'
 import { products } from '@/collections/stripe/products'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
 import { COLLECTION_SLUG_MEDIA, COLLECTION_SLUG_ARTICLE_PDF } from '@/collections/config'
@@ -28,7 +29,7 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [users, prices, products, subscriptions, media, taxonomy, articlePDF],
+  collections: [users, prices, products, subscriptions, media, taxonomy, articlePDF, permissions],
   db: postgresAdapter({
     idType: 'uuid',
 

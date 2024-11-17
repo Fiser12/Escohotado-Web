@@ -25,7 +25,8 @@ const media: CollectionConfig = {
     delete: isAdmin
   },
   admin: {
-    useAsTitle: 'title'
+    useAsTitle: 'title',
+    group: 'Contenido'
   },
   hooks: {
     beforeOperation: [addContentHashToFile],

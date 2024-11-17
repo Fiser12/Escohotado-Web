@@ -22,7 +22,7 @@ const updateSeedFromProduct: CollectionBeforeChangeHook = async (props) => {
     collection: COLLECTION_SLUG_PRODUCTS,
     id: props.data.product,
   })
-  props.data.seeds = product.seeds
+  props.data.permissions_seeds = product.permissions_seeds
 }
 
 const formatOptions = (obj: Record<string, string>) =>
@@ -115,7 +115,7 @@ export const subscriptions: CollectionConfig = {
     },
     { name: 'metadata', type: 'json', admin: { readOnly: true } },
     { 
-      name: 'seeds', 
+      name: 'permissions_seeds', 
       label: 'Semilla de permisos', 
       type: 'text',
       admin: { readOnly: true, position: 'sidebar' }, 
