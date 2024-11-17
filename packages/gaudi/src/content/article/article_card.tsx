@@ -5,8 +5,9 @@ interface Props {
     title: string;
     coverHref: string;
     href: string;
+    publishedAt: string;
     buttonTitle: string;
-    categories: { id: string; singular_name: string; }[];
+    categories: { id: string; singular_name: string; seed?: string | null}[];
     hasPermission: boolean;
 }
 export const ArticleCard = (props: Props) => {
@@ -19,9 +20,9 @@ export const ArticleCard = (props: Props) => {
             </a>
             <div>
                 {props.categories?.map((category, index) => 
-                <p
-                    key={index}
-                    className="my-2 block rounded bg-zinc-100 px-4 pb-2.5 pt-3 text-xs font-medium uppercase leading-tight text-neutral-500 data-[twe-nav-active]:!bg-primary-100 data-[twe-nav-active]:text-primary-700 dark:bg-neutral-700 dark:text-white/50 dark:data-[twe-nav-active]:!bg-slate-900 dark:data-[twe-nav-active]:text-primary-500 md:me-4">
+                    <p
+                        key={index}
+                        className="my-2 block rounded bg-zinc-100 px-4 pb-2.5 pt-3 text-xs font-medium uppercase leading-tight text-neutral-500 data-[twe-nav-active]:!bg-primary-100 data-[twe-nav-active]:text-primary-700 dark:bg-neutral-700 dark:text-white/50 dark:data-[twe-nav-active]:!bg-slate-900 dark:data-[twe-nav-active]:text-primary-500 md:me-4">
                         {category.singular_name}
                     </p>
                 )}

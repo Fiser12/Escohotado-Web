@@ -39,26 +39,28 @@ export const articlePDF: CollectionConfig = {
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: 'cover',
+      type: 'upload',
+      relationTo: COLLECTION_SLUG_MEDIA,
+      hasMany: false,
+      required: true,
+      filterOptions: {
+        mimeType: { contains: 'image' },
+      }
     },
     {
-      name: 'publishedAt',
-      label: 'Fecha de publicación',
-      type: 'date'
+      name: 'title',
+      type: 'text',
     },
     {
       name: 'description',
       type: 'textarea'
     },
     {
-        name: 'cover',
-        type: 'upload',
-        relationTo: COLLECTION_SLUG_MEDIA,
-        hasMany: false,
-        filterOptions: {
-          mimeType: { contains: 'image' },
-        }
+      name: 'publishedAt',
+      label: 'Fecha de publicación',
+      required: true,
+      type: 'date'
     },
     ...categoriesRelationship.fields,
     ...permissionRelationship()
