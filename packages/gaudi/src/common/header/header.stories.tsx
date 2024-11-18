@@ -4,7 +4,7 @@ import storybookHelpers from '../../storybook-helpers';
 import { Header } from './header';
 
 const meta = {
-	title: 'Common/Components/Header',
+	title: 'Components/Header',
 	component: Header,
 	args: {
 		user: mockUser,

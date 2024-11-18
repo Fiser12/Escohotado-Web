@@ -18,6 +18,7 @@ export interface Config {
     media: Media;
     taxonomy: Taxonomy;
     article_pdf: ArticlePdf;
+    article_web: ArticleWeb;
     permission: Permission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -285,6 +286,38 @@ export interface ArticlePdf {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article_web".
+ */
+export interface ArticleWeb {
+  id: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  cover: string | Media;
+  title?: string | null;
+  description?: string | null;
+  publishedAt: string;
+  categories?: (string | Taxonomy)[] | null;
+  seeds?: string | null;
+  permissions?: (string | Permission)[] | null;
+  permissions_seeds?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -317,6 +350,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'article_pdf';
         value: string | ArticlePdf;
+      } | null)
+    | ({
+        relationTo: 'article_web';
+        value: string | ArticleWeb;
       } | null)
     | ({
         relationTo: 'permission';

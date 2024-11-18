@@ -3,7 +3,7 @@ import { ToggleButtonGroup } from './toggle_button_group'; // Adjust the import 
 import storybookHelpers from '../../storybook-helpers';
 
 const meta = {
-  title: 'Common/Atoms/Toggle Button Group',
+  title: 'Atoms/Toggle Button Group',
   component: ToggleButtonGroup,
   args: {
     selected: '1',
