@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import { H3 } from "gaudi";
 import { Link } from "../../common/links/link";
 import { Tag } from "../../common/tag/tag";
 import { LockIcon } from "../../common/icons/lock_icon";
 import { text } from "stream/consumers";
+import { H3 } from "../../common/headers/H3";
 
 interface Props {
     title: string;
