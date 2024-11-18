@@ -2,8 +2,6 @@ import classNames from "classnames";
 import { Link } from "../../common/links/link";
 import { Tag } from "../../common/tag/tag";
 import { LockIcon } from "../../common/icons/lock_icon";
-import { text } from "stream/consumers";
-import { H3 } from "../../common/headers/H3";
 
 interface Props {
     title: string;
@@ -20,37 +18,56 @@ interface Props {
 }
 export const ArticleCard = (props: Props) => {
     const cardClass = classNames(
-        'w-[340px] h-[340px] rounded-generic p-1',
+        'w-full sm:w-1/2 md:w-1/3 lg:w-1/4 min-h-[350px] rounded-generic flex flex-col flex-grow m-auto',
         {
             'bg-white text-black': props.hasPermission,
-            'bg-gray-light text-gray-dark border-solid border-[0.8px] border-gray-disabled': !props.hasPermission,
+            'bg-gray-light text-gray-dark border-solid border-[0.8px] border-gray-disabled pb-2': !props.hasPermission,
         }
     );
 
-    const containerTextClass = classNames(
-        'flex flex-col '
+    const containerClass = classNames(
+        'w-full flex flex-col justify-between flex-1 px-3 gap-1'
+    );
+
+    const overlayClass = classNames(
+        'absolute inset-0 flex items-center justify-center',
+        {
+            'bg-black bg-opacity-40 z-10': !props.hasPermission,
+        }
+    );
+
+    const categoriesClass = classNames(
+        'flex flex-wrap gap-1 px-3'
     );
 
     return (
         <div className={cardClass}>
-            <div className="h-[170px] relative">
-                {props.hasPermission ?
-                    <div className="w-full h-full bg-black bg-opacity-40 flex items-center justify-center absolute top-0 left-0">
-                        <LockIcon></LockIcon>
+            <div className="p-1 flex flex-col gap-3 flex-1">
+                <div className="relative w-full h-[150px] overflow-hidden">
+                    <img
+                        src={props.coverHref}
+                        alt={props.title}
+                        className="w-full h-full object-cover"
+                    />
+                    <div className={overlayClass}>
+                        {!props.hasPermission && <LockIcon />}
                     </div>
-                    : null}
-                <img src={props.coverHref} alt={props.title} className="w-full h-full object-cover absolute top-0 left-0" />
-            </div>
-            <div className={containerTextClass}>
-                <div>
+                </div>
+                <div className={categoriesClass}>
                     {props.categories?.map((category, index) =>
                         <Tag key={index} text={category.singular_name}></Tag>
                     )}
                 </div>
-                <H3 label={props.title} />
-                <p className="font-body text-sm">{props.publishedAt}</p>
+                <div className={containerClass}>
+                    <p className="font-display text-lg md:text-xl line-clamp-3 break-words">{props.title}</p>
+                    <p className="font-body text-sm">{props.publishedAt}</p>
+                </div>
             </div>
-            {props.hasPermission ? <Link href={props.href} text={props.textLink}></Link> : null}
+            {props.hasPermission && (
+                <div>
+                    <Link href={props.href} text={props.textLink} className="px-3 py-2" />
+                </div>
+            )}
         </div>
     );
 };

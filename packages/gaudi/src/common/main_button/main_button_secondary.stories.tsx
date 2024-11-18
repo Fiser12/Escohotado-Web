@@ -3,10 +3,10 @@ import { MainButton } from './main_button';
 import { EmailIcon } from '../icons/email_icon';
 
 const meta: Meta<typeof MainButton> = {
-    title: 'Common/Atoms/Button/Secondary',
+    title: 'Atoms/Button/Secondary',
     component: MainButton,
     parameters: {
-        layout: 'fullscreen',
+        layout: 'centered',
         design: {
             type: 'figspec',
             url: 'https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=55-116&t=mL310kV4x7dAEoiY-4',

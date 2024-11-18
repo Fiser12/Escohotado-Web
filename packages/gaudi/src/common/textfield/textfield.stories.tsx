@@ -3,7 +3,7 @@ import { TextField } from './textfield';
 import { EmailIcon } from '../icons/email_icon';
 
 const meta: Meta<typeof TextField> = {
-    title: 'Common/Atoms/Inputs',
+    title: 'Atoms/Inputs',
     component: TextField,
     argTypes: {
         state: {
@@ -28,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 export const Textfield: Story = {
     name: 'Textfield',
     parameters: {
-        layout: 'fullscreen',
+        layout: 'centered',
         design: {
             type: 'figspec',
             url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=339-3531&t=mL310kV4x7dAEoiY-4'

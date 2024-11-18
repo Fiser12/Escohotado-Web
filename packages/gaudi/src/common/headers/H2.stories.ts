@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { H2 } from './H2';
 
 const meta = {
-    title: 'Common/Atoms/Typography/H2',
+    title: 'Atoms/Typography/H2',
     component: H2,
     args: {
         label: 'Sample Heading 2',
