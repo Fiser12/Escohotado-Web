@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Tag } from './tag';
 
 const meta: Meta<typeof Tag> = {
-    title: 'Common/Atoms/Tag',
+    title: 'Common/Atoms/Tags',
     component: Tag,
     parameters: {
         layout: 'fullscreen',

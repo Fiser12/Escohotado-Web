@@ -1,33 +1,56 @@
-import { H4 } from "gaudi";
-import { MainButton } from "../../common/main_button/main_button";
+import classNames from "classnames";
+import { H3 } from "gaudi";
+import { Link } from "../../common/links/link";
+import { Tag } from "../../common/tag/tag";
+import { LockIcon } from "../../common/icons/lock_icon";
+import { text } from "stream/consumers";
 
 interface Props {
     title: string;
+    publishedAt: string;
+    textLink: string;
     coverHref: string;
     href: string;
-    publishedAt: string;
-    buttonTitle: string;
-    categories: { id: string; singular_name: string; seed?: string | null}[];
+    categories: {
+        id: string;
+        singular_name: string;
+        seed?: string | null
+    }[];
     hasPermission: boolean;
 }
 export const ArticleCard = (props: Props) => {
+    const cardClass = classNames(
+        'w-[340px] h-[340px] rounded-generic p-1',
+        {
+            'bg-white text-black': props.hasPermission,
+            'bg-gray-light text-gray-dark border-solid border-[0.8px] border-gray-disabled': !props.hasPermission,
+        }
+    );
+
+    const containerTextClass = classNames(
+        'flex flex-col '
+    );
+
     return (
-        <div>
-            <H4 label={props.title} />
-            <img src={props.coverHref} alt={props.title} />
-            <a href={props.href}>
-                {props.hasPermission ? <MainButton text={props.buttonTitle} color="primary" /> : <p>No tienes permisos</p>}
-            </a>
-            <div>
-                {props.categories?.map((category, index) => 
-                    <p
-                        key={index}
-                        className="my-2 block rounded bg-zinc-100 px-4 pb-2.5 pt-3 text-xs font-medium uppercase leading-tight text-neutral-500 data-[twe-nav-active]:!bg-primary-100 data-[twe-nav-active]:text-primary-700 dark:bg-neutral-700 dark:text-white/50 dark:data-[twe-nav-active]:!bg-slate-900 dark:data-[twe-nav-active]:text-primary-500 md:me-4">
-                        {category.singular_name}
-                    </p>
-                )}
+        <div className={cardClass}>
+            <div className="h-[170px] relative">
+                {props.hasPermission ?
+                    <div className="w-full h-full bg-black bg-opacity-40 flex items-center justify-center absolute top-0 left-0">
+                        <LockIcon></LockIcon>
+                    </div>
+                    : null}
+                <img src={props.coverHref} alt={props.title} className="w-full h-full object-cover absolute top-0 left-0" />
             </div>
-            <span></span>
+            <div className={containerTextClass}>
+                <div>
+                    {props.categories?.map((category, index) =>
+                        <Tag key={index} text={category.singular_name}></Tag>
+                    )}
+                </div>
+                <H3 label={props.title} />
+                <p className="font-body text-sm">{props.publishedAt}</p>
+            </div>
+            {props.hasPermission ? <Link href={props.href} text={props.textLink}></Link> : null}
         </div>
     );
 };
