@@ -23,13 +23,23 @@ import * as Sentry from '@sentry/nextjs'
 import { S3_PLUGIN_CONFIG } from '@/plugins/s3'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { articlePDF } from '@/collections/content/articlePDF/articlepdf'
+import { contentCollections } from '@/collections/content'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [users, prices, products, subscriptions, media, taxonomy, articlePDF, permissions],
+  collections: [
+    users, 
+    prices, 
+    products, 
+    subscriptions, 
+    media, 
+    taxonomy, 
+    ...contentCollections, 
+    permissions
+  ],
   db: postgresAdapter({
     idType: 'uuid',
 
