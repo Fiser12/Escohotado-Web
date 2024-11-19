@@ -24,13 +24,43 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
+  collectionsJoins: {
+    users: {
+      subscription: 'subscriptions';
+    };
+    prices: {
+      product: 'products';
+    };
+    taxonomy: {
+      children: 'taxonomy';
+    };
+  };
+  collectionsSelect: {
+    users: UsersSelect<false> | UsersSelect<true>;
+    prices: PricesSelect<false> | PricesSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    taxonomy: TaxonomySelect<false> | TaxonomySelect<true>;
+    article_pdf: ArticlePdfSelect<false> | ArticlePdfSelect<true>;
+    article_web: ArticleWebSelect<false> | ArticleWebSelect<true>;
+    permission: PermissionSelect<false> | PermissionSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+  };
   db: {
     defaultIDType: string;
   };
   globals: {};
+  globalsSelect: {};
   locale: null;
   user: User & {
     collection: 'users';
+  };
+  jobs: {
+    tasks: unknown;
+    workflows: unknown;
   };
 }
 export interface UserAuthOperations {
@@ -314,6 +344,7 @@ export interface ArticleWeb {
     };
     [k: string]: unknown;
   } | null;
+  content_html?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -401,6 +432,256 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  roles?: T;
+  subscription?: T;
+  stripeCustomerId?: T;
+  id?: T;
+  email?: T;
+  image?: T;
+  emailVerified?: T;
+  accounts?:
+    | T
+    | {
+        id?: T;
+        provider?: T;
+        providerAccountId?: T;
+        type?: T;
+      };
+  sessions?:
+    | T
+    | {
+        id?: T;
+        sessionToken?: T;
+        expires?: T;
+      };
+  verificationTokens?:
+    | T
+    | {
+        id?: T;
+        token?: T;
+        expires?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prices_select".
+ */
+export interface PricesSelect<T extends boolean = true> {
+  stripeID?: T;
+  stripeProductId?: T;
+  product?: T;
+  active?: T;
+  description?: T;
+  unitAmount?: T;
+  currency?: T;
+  type?: T;
+  interval?: T;
+  intervalCount?: T;
+  trialPeriodDays?: T;
+  metadata?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  stripeID?: T;
+  type?: T;
+  active?: T;
+  name?: T;
+  description?: T;
+  images?:
+    | T
+    | {
+        url?: T;
+        id?: T;
+      };
+  prices?: T;
+  metadata?: T;
+  features?:
+    | T
+    | {
+        title?: T;
+        id?: T;
+      };
+  permissions?: T;
+  permissions_seeds?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions_select".
+ */
+export interface SubscriptionsSelect<T extends boolean = true> {
+  user?: T;
+  product?: T;
+  status?: T;
+  created?: T;
+  currentPeriodStart?: T;
+  currentPeriodEnd?: T;
+  endedAt?: T;
+  cancelAt?: T;
+  canceledAt?: T;
+  cancelAtPeriodEnd?: T;
+  trialStart?: T;
+  trialEnd?: T;
+  stripeID?: T;
+  stripePriceID?: T;
+  stripeCustomerId?: T;
+  metadata?: T;
+  permissions_seeds?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  title?: T;
+  rawContent?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "taxonomy_select".
+ */
+export interface TaxonomySelect<T extends boolean = true> {
+  id?: T;
+  selectable?: T;
+  slug?: T;
+  singular_name?: T;
+  plural_name?: T;
+  seed?: T;
+  parent?: T;
+  children?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article_pdf_select".
+ */
+export interface ArticlePdfSelect<T extends boolean = true> {
+  cover?: T;
+  title?: T;
+  description?: T;
+  publishedAt?: T;
+  categories?: T;
+  seeds?: T;
+  permissions?: T;
+  permissions_seeds?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article_web_select".
+ */
+export interface ArticleWebSelect<T extends boolean = true> {
+  cover?: T;
+  title?: T;
+  description?: T;
+  publishedAt?: T;
+  categories?: T;
+  seeds?: T;
+  permissions?: T;
+  permissions_seeds?: T;
+  slug?: T;
+  content?: T;
+  content_html?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "permission_select".
+ */
+export interface PermissionSelect<T extends boolean = true> {
+  id?: T;
+  slug?: T;
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-locked-documents_select".
+ */
+export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences_select".
+ */
+export interface PayloadPreferencesSelect<T extends boolean = true> {
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations_select".
+ */
+export interface PayloadMigrationsSelect<T extends boolean = true> {
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

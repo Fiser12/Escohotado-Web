@@ -43,6 +43,9 @@ const Page: NextPage<Props> = async (props) => {
               hasPermission={true}
             />
         </div>
+        <div
+              dangerouslySetInnerHTML={{ __html: article.content_html ?? "<p>Empty</p>" }}
+            />
       </ContentWrapper>
     );
   };

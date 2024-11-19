@@ -3,7 +3,7 @@ import keycloak from 'next-auth/providers/keycloak'
 import jwt from 'jsonwebtoken'
 import { getUserInfo } from './keycloak.service'
 import config from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import { COLLECTION_SLUG_USER } from '@/collections/config'
 
 export const SESSION_STRATEGY = 'database' as 'jwt' | 'database'
@@ -52,7 +52,7 @@ export const authConfig: NextAuthConfig = {
     },
     
     async signIn(data) {
-      const payload = await getPayloadHMR({config})
+      const payload = await getPayload({config})
       const userId = data.user.id;
 
       if (!userId || !data.account?.access_token) {

@@ -1,6 +1,6 @@
 import { COLLECTION_SLUG_ARTICLE_WEB } from '../../config'
 import { contentCollectionBuilder } from '../content_collection_builder'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { HTMLConverterFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 
 export const articleWeb = contentCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
@@ -20,7 +20,13 @@ export const articleWeb = contentCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
-      editor: lexicalEditor({}),
-    }
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          HTMLConverterFeature({}),
+        ],
+      }),
+    },
+    lexicalHTML('content', { name: 'content_html' }),
   ]
 })
