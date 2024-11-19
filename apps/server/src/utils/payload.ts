@@ -1,11 +1,10 @@
 import configPromise from '@payload-config'
-import { getPayloadHMR as getPayloadInstance } from '@payloadcms/next/utilities'
 import { headers as getHeaders } from 'next/headers'
 import type { User } from '@/../payload-types'
-import { BasePayload } from 'payload'
+import { BasePayload, getPayload as getPayloadInstance } from 'payload'
 
 export async function getPayload(): ReturnType<typeof getPayloadInstance> {
-  return getPayloadInstance({ config: await configPromise })
+  return getPayloadInstance({config: await configPromise})
 }
 
 /**
