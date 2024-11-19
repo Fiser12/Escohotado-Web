@@ -30,7 +30,6 @@ export function contentCollectionBuilder(config: Partial<CollectionConfig> & { s
           beforeChange: [categoriesRelationship.hook, populatePermissionSeedsHook],
         },
         fields: [
-            ...config.fields ?? [],
           {
             name: 'cover',
             type: 'upload',
@@ -58,7 +57,8 @@ export function contentCollectionBuilder(config: Partial<CollectionConfig> & { s
             type: 'date'
           },
           ...categoriesRelationship.fields,
-          ...permissionRelationship()
+          ...permissionRelationship(),
+          ...config.fields ?? [],
         ]      
     }
 }

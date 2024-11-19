@@ -290,6 +290,15 @@ export interface ArticlePdf {
  */
 export interface ArticleWeb {
   id: string;
+  cover: string | Media;
+  title?: string | null;
+  description?: string | null;
+  publishedAt: string;
+  categories?: (string | Taxonomy)[] | null;
+  seeds?: string | null;
+  permissions?: (string | Permission)[] | null;
+  permissions_seeds?: string | null;
+  slug: string;
   content?: {
     root: {
       type: string;
@@ -305,14 +314,6 @@ export interface ArticleWeb {
     };
     [k: string]: unknown;
   } | null;
-  cover: string | Media;
-  title?: string | null;
-  description?: string | null;
-  publishedAt: string;
-  categories?: (string | Taxonomy)[] | null;
-  seeds?: string | null;
-  permissions?: (string | Permission)[] | null;
-  permissions_seeds?: string | null;
   updatedAt: string;
   createdAt: string;
 }

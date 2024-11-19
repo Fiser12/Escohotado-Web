@@ -10,6 +10,13 @@ export const articleWeb = contentCollectionBuilder({
   },
   fields: [
     {
+      label: 'Slug',
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+    },
+    {
       label: 'Contenido',
       name: 'content',
       type: 'richText',
