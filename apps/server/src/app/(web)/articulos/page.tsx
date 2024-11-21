@@ -25,7 +25,7 @@ const Page = async () => {
             href={article.url ?? "#"}
             publishedAt={article.publishedAt as string}
             coverHref={(article.cover as Media | null)?.url ?? "#"}
-            buttonTitle="Descargar"
+            textLink="Descargar"
             categories={article.categories as Taxonomy[]}
             hasPermission={true}
           />

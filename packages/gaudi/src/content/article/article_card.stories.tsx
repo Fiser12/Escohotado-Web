@@ -18,7 +18,6 @@ const meta: Meta = {
         title: { control: "text", description: "Title of the article" },
         textLink: { control: "text", description: "Text for the link" },
         coverHref: { control: "text", description: "Image URL for the cover" },
-        href: { control: "text", description: "Link URL" },
         publishedAt: { control: "text", description: "Publication date" },
         hasPermission: {
             control: "boolean",
@@ -39,7 +38,6 @@ export const Article: Story = {
         publishedAt: "2024-11-18",
         textLink: "Leer más",
         coverHref: "https://via.placeholder.com/600x150",
-        href: "",
         hasPermission: false,
         categories: [
             { id: "1", singular_name: "Tecnología" },

@@ -5,9 +5,14 @@ type Args = {
     label: string,
 }
 
-export const H3 = ({ label }: Args) => {
+export const H3 = (args: Args) => {
+    const headerClass = classNames(
+        'text-black text-4xl font-regular font-display',
+        args.className,
+    );
+
     return (
-        <h3 className={"text-black text-4xl font-regular font-display"}>{label}</h3>
+        <h3 className={headerClass}>{args.label}</h3>
     )
 };
 

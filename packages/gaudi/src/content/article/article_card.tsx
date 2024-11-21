@@ -6,6 +6,7 @@ import { LockIcon } from "../../common/icons/lock_icon";
 interface Props {
     title: string;
     publishedAt: string;
+    author?: string;
     textLink: string;
     coverHref: string;
     href: string;

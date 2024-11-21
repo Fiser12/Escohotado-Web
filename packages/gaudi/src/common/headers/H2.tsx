@@ -1,11 +1,18 @@
+import classNames from 'classnames';
+
 type Args = {
     className?: string,
     label: string
 }
 
-export const H2 = ({ label }: Args) => {
+export const H2 = (args: Args) => {
+    const headerClass = classNames(
+        'text-primary-900 text-5xl font-regular font-display',
+        args.className,
+    );
+
     return (
-        <h1 className={"text-primary-900 text-5xl font-regular font-display"}>{label}</h1>
+        <h2 className={headerClass}>{args.label}</h2>
     )
 }
 
