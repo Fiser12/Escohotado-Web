@@ -1,7 +1,7 @@
 import { DataFromCollectionSlug } from "payload";
 import { auth } from "@/plugins/authjs/plugin";
 import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
-import { ContentWrapper } from "gaudi";
+import { ContentWrapper, H3, H4 } from "gaudi";
 import { getPayload } from "@/utils/payload";
 import { COLLECTION_SLUG_MEDIA } from "@/collections/config";
 
@@ -18,11 +18,11 @@ return (
         {JSON.stringify(session?.user, null, 2)}
       </div>
       <br />
-      <h3>Payload CMS</h3>
+      <H3 label={"Payload CMS"}/>
       <div style={{ background: "gray", padding: "5px", borderRadius: "10px" }}>
         {JSON.stringify(payloadUser, null, 2)}
       </div>
-      <h3>Medias</h3>
+      <H4 label={"Medias"}/>
       <div style={{ background: "gray", padding: "5px", borderRadius: "10px" }}>
         {JSON.stringify(medias, null, 2)}
       </div>

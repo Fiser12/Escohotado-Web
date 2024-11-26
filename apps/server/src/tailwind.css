@@ -1,0 +1,25 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@font-face {
+	font-family: 'Yeseva One';
+	src: url('/fonts/YesevaOne.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('/fonts/Montserrat.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Escohotado';
+	src: url('/fonts/Escohotado-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+

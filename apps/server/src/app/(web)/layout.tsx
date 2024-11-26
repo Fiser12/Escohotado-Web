@@ -1,5 +1,5 @@
 import React from "react";
-import "./globals.scss";
+import "../../tailwind.css";
 import { Header } from "gaudi";
 import { signIn, signOut } from "@/plugins/authjs/plugin";
 import { accountMenuBuilder } from "@/domain/accountMenuBuilder";

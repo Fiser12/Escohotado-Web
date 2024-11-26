@@ -11,6 +11,7 @@ function getAbsolutePath(value: string): any {
 }
 const config: StorybookConfig = {
   stories: ['../../../packages/gaudi/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  staticDirs: ['../public'],
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-designs'),
