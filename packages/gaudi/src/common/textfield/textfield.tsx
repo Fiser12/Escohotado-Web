@@ -42,7 +42,7 @@ export const TextField = ({
     );
 
     const inputClass = classNames(
-        'flex-grow min-w-0 bg-transparent outline-none placeholder-gray-500 placeholder-gray-disabled',
+        'grow min-w-0 bg-transparent outline-none placeholder-gray-500 placeholder-gray-disabled',
         className,
     );
 
