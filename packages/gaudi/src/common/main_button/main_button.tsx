@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 interface Args {
     text: string;
+    href: string;
     color?: 'primary' | 'secondary';
     type?: 'fill' | 'line';
     className?: string;
@@ -11,13 +12,14 @@ interface Args {
 
 export const MainButton = ({
     text,
+    href,
     color = 'primary',
     type = 'fill',
     className = '',
     icon,
 }: Args): JSX.Element => {
     const buttonClass = classNames(
-        'px-4 py-1.5 rounded-generic flex justify-center items-center text-center font-body text-sm inline-flex min-w-24 max-w-52',
+        'px-4 py-1.5 rounded flex justify-center items-center text-center font-body text-sm inline-flex min-w-24 max-w-52 cursor-pointer',
         className,
         {
             // Fill
@@ -42,8 +44,10 @@ export const MainButton = ({
 
     return (
         <div className={buttonClass}>
-            {icon && <span className={iconClass}>{icon}</span>}
-            {text}
+            <a href={href}>
+                {icon && <span className={iconClass}>{icon}</span>}
+                {text}
+            </a>
         </div>
     );
 };

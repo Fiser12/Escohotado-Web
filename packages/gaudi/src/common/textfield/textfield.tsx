@@ -31,7 +31,7 @@ export const TextField = ({
     );
 
     const containerClass = classNames(
-        'py-1.5 px-4 flex items-center bg-white rounded-generic border-solid font-normal text-base h-10',
+        'py-1.5 px-4 flex items-center bg-white rounded border-solid font-normal text-base h-10',
         className,
         {
             // Enabled
@@ -51,7 +51,7 @@ export const TextField = ({
         className,
     );
 
-    const errorClass = classNames (
+    const errorClass = classNames(
         'text-red-500 text-xs',
         className,
     );

@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import { Link } from "../../common/links/link";
-import { Tag } from "../../common/tag/tag";
-import { LockIcon } from "../../common/icons/lock_icon";
+import { Link } from "../../../common/links/link";
+import { Tag } from "../../../common/tag/tag";
+import { LockIcon } from "../../../common/icons/lock_icon";
 
 interface Props {
     title: string;
@@ -19,7 +19,7 @@ interface Props {
 }
 export const ArticleCard = (props: Props) => {
     const cardClass = classNames(
-        'w-full sm:w-1/2 md:w-1/3 lg:w-1/4 min-h-[350px] rounded-generic flex flex-col flex-grow m-auto',
+        'w-full sm:w-1/2 md:w-1/3 lg:w-1/4 min-h-[350px] rounded flex flex-col flex-grow m-auto',
         {
             'bg-white text-black': props.hasPermission,
             'bg-gray-light text-gray-dark border-solid border-[0.8px] border-gray-disabled pb-2': !props.hasPermission,
@@ -44,7 +44,7 @@ export const ArticleCard = (props: Props) => {
     return (
         <div className={cardClass}>
             <div className="p-1 flex flex-col gap-3 flex-1">
-                <div className="relative w-full h-[150px] overflow-hidden">
+                <div className="relative w-full h-[150px] overflow-hidden rounded">
                     <img
                         src={props.coverHref}
                         alt={props.title}

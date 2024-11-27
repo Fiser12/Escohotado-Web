@@ -2,10 +2,10 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ArticleCard } from "./article_card";
 
 const meta: Meta = {
-    title: "Components/Card",
+    title: "Articles/Cards/Default",
     component: ArticleCard,
     parameters: {
-        layout: "fullscreen",
+        layout: "padded",
         design: {
             type: "figspec",
             url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=683-1637&t=ywkogyBA7q9g27hy-4",
@@ -37,7 +37,7 @@ export const Article: Story = {
         title: "Sample Article Title",
         publishedAt: "2024-11-18",
         textLink: "Leer más",
-        coverHref: "https://via.placeholder.com/600x150",
+        coverHref: "https://placehold.co/300x150",
         hasPermission: false,
         categories: [
             { id: "1", singular_name: "Tecnología" },

@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { ArticleHighlight } from "./article_highlight";
+import { HeadlineCard } from "./article_headline_card";
 
 const meta: Meta = {
-    title: "Articles/Highlight",
-    component: ArticleHighlight,
+    title: "Articles/Cards/Headline",
+    component: HeadlineCard,
     parameters: {
-        layout: "fullscreen",
+        layout: "padded",
         design: {
             type: "figspec",
             url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=290-2341&t=A6HujXPg3d0OyZpR-4",
@@ -22,7 +22,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Highligh: Story = {
+export const Headline: Story = {
     name: "Highlight",
     args: {
         author: "Sr. John Doe",
