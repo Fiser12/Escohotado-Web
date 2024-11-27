@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { ArticleCard } from "./article_card";
+import { ArticleDetail } from "./article_detail";
 
 const meta: Meta = {
-    title: "Components/Card",
-    component: ArticleCard,
+    title: "Detail/Article",
+    component: ArticleDetail,
     parameters: {
         layout: "fullscreen",
         design: {
@@ -11,7 +11,6 @@ const meta: Meta = {
             url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=683-1637&t=ywkogyBA7q9g27hy-4",
         },
         backgrounds: {
-            default: "dark",
         },
     },
     argTypes: {
@@ -24,6 +23,7 @@ const meta: Meta = {
             defaultValue: true,
             description: "If the user has permission to access",
         },
+        contentHtml: { control: "text", description: "HTML content of the article" },
     },
 };
 
@@ -43,5 +43,6 @@ export const Article: Story = {
             { id: "1", singular_name: "Tecnología" },
             { id: "2", singular_name: "Filosofía" },
         ],
+        contentHtml: `<h1>Prueba Header 1</h1><h2>Prueba Header 2</h2><h3>Prueba Header 3</h3><h4>Prueba Header 4</h4><h5>Prueba Header 5</h5><p>Body text de prueba</p><hr><h6>Prueba Header 6</h6><blockquote>Cita con bloque</blockquote><ul class="list-bullet"><li value="1">Bullet list 1</li><li value="2">Bullet list 2</li></ul><p>Temp</p><ol class="list-number"><li value="1">Number list 1</li><li value="2">Number list 2</li></ol><picture><source srcset="https://via.placeholder.com/600x150" media="(max-width: 300px)" type="image/png"><img src="https://via.placeholder.com/600x150" alt="Image" width="432" height="670"></picture><p></p>`
     },
 };

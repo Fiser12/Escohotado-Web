@@ -1,6 +1,32 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/postcss";
+
+@source "../../../packages/gaudi/src";
+
+@theme {
+    --font-body: "Montserrat", "sans-serif";
+    --font-handwritten: "Escohotado", "cursive";
+    --font-display: "Yeseva One", "serif";
+    --color-primary-50: #D4E4EA;
+    --color-primary-100: #B0CFDB;
+    --color-primary-200: #86B7C8;
+    --color-primary-300: #5D9DB3;
+    --color-primary-400: #3084A0;
+    --color-primary-500: #023350;
+    --color-primary-900: #001827;
+
+    --color-gray-light: #F4F4F4;
+    --color-gray-dark: #939393;
+    --color-gray-disabled: #C2C2C2;
+    --color-bg-light: #F9F9F9;
+
+    --border-width-DEFAULT: "1px";
+    --border-width-0.5: "0.5px";
+    --rounded-DEFAULT: "3px";
+
+    
+}
 
 @font-face {
 	font-family: 'Yeseva One';

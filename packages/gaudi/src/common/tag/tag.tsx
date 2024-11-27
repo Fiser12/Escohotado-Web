@@ -13,7 +13,7 @@ export const Tag = ({
     className = '',
 }: Args): JSX.Element => {
     const tagClass = classNames(
-        'px-3 py-1 rounded-generic flex justify-center items-center text-center font-body text-xs inline-flex min-w-14 text-primary-900',
+        'px-3 py-1 rounded flex justify-center items-center text-center font-body text-xs inline-flex min-w-14 text-primary-900',
         className,
         {
             'bg-white': variant === 'light',

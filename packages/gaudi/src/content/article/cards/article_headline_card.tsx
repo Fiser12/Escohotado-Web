@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { Link } from '../../common/links/link';
-import { H3 } from '../../common/headers/H3';
+import { Link } from '../../../common/links/link';
+import { H3 } from '../../../common/headers/H3';
 
 interface Props {
     title: string;
@@ -8,9 +8,9 @@ interface Props {
     textLink: string;
     href: string;
 }
-export const ArticleHighlight = (props:Props) => {
+export const HeadlineCard = (props:Props) => {
     const containerClass = classNames(
-        'w-full lg:w-1/2 pt-4 border-solid border-b-[1px] border-gray-dark'
+        'w-full pt-4 border-solid border-b-[1px] border-gray-dark'
     );
 
     return(
