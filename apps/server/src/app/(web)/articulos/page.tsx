@@ -2,13 +2,23 @@ import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB } from "@/coll
 import { getCurrentUser, getPayload } from "@/utils/payload";
 import { ContentWrapper, H2, ArticleCard } from "gaudi";
 import { ArticlePdf, ArticleWeb, Media, Taxonomy } from "payload-types";
+import { FilterBarNuqs } from "@/components/FilterBarNuqs";
+import { createSearchParamsCache, parseAsString } from "nuqs/server";
 
+export const searchContentParamsCache = createSearchParamsCache({
+	tags: parseAsString.withDefault('')
+  })
+  
 type CommonArticle = (ArticlePdf | ArticleWeb) & { 
   type: string;
   url?: string | null 
 };
+interface Props {
+	searchParams: Record<string, string>;
+}
 
-const Page = async () => {
+const Page = async ({ searchParams }: Props) => {
+  const { tags } = await searchContentParamsCache.parse(searchParams)
   const payload = await getPayload();
   const [user, articlesPDF, articlesWeb] = await Promise.all([
     getCurrentUser(payload),
@@ -44,6 +54,11 @@ const Page = async () => {
       className=""
       backgroundClassname="bg-white"
     >
+      <FilterBarNuqs 
+        title="Filtros" 
+        tags={{"hola": "hola"}} 
+        selectedTags={[]}
+      />
       <H2 label="Artículos" />
       <div>
         {articles.map((article: CommonArticle, index) => (

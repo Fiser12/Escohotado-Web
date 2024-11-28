@@ -34,7 +34,6 @@ const Page: NextPage<Props> = async (props) => {
         coverHref={(article.cover as Media | null)?.url ?? "#"}
         textLink={"Leer más"}
         categories={article.categories as Taxonomy[]}
-        hasPermission={true}
         contentHtml={article.content_html ?? "<p>Empty</p>"}
       />
     );
