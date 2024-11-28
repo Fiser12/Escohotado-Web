@@ -6,7 +6,7 @@ import handwrittingBg from "../../../assets/images/handwritting-bg.jpg";
 
 export const ArticlePage = () => {
     return (
-        <div className="w-full">
+        <div className="w-full bg-gray-light">
             <div id="headerArticles" className="@container w-full bg-white pt-12.5">
                 <div className="@md:max-w-320 mx-auto flex flex-col gap-7.5">
                     <H2 label="Últimos artículos"></H2>
@@ -21,6 +21,13 @@ export const ArticlePage = () => {
                 </div>
             </div>
             <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="#" coverHref={handwrittingBg.src}></HighlightSection>
+            <div className="@container w-full pt-12.5">
+                <div className="@md:max-w-320 mx-auto flex flex-col gap-7.5">
+                    <H2 label="Artículos"></H2>
+                    <div id="articleFilters" className="flex flex-row gap-2.5"></div>
+                    <div id="articleContainer" className="w-full"></div>
+                </div>
+            </div>
         </div>
     );
 };
