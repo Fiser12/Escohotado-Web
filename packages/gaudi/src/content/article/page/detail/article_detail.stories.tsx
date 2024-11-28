@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ArticleDetail } from "./article_detail";
 
 const meta: Meta = {
-    title: "Detail/Article",
+    title: "Articles/Pages/Detail",
     component: ArticleDetail,
     parameters: {
         layout: "fullscreen",
@@ -31,7 +31,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Article: Story = {
+export const Desktop: Story = {
     name: "Article",
     args: {
         title: "Sample Article Title",

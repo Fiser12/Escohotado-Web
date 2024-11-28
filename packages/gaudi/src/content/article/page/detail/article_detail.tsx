@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { H2 } from "../../common/headers/H2";
+import { H2 } from "../../../../common/headers/H2";
 import "./article-html-content.css";
 
 interface Props {
@@ -34,7 +34,7 @@ export const ArticleDetail = (props: Props) => {
             alt={props.title}
             className="w-full h-full object-cover"
         />
-        <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }}/>
+        <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }} />
     </div>);
 };
 
