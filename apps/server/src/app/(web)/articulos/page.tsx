@@ -41,7 +41,7 @@ const Page = async () => {
 
   return (
     <ContentWrapper
-      className="space-y-6 gap-2 flex flex-col items-center pt-16"
+      className=""
       backgroundClassname="bg-white"
     >
       <H2 label="Artículos" />

@@ -40,7 +40,13 @@ export const ArticleCard = (props: Props) => {
     const categoriesClass = classNames(
         'flex flex-wrap gap-1 px-3'
     );
-
+    const date = new Date(props.publishedAt);
+    const formattedDate = date.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric'
+    });
+    
     return (
         <div className={cardClass}>
             <div className="p-1 flex flex-col gap-3 flex-1">
@@ -61,7 +67,7 @@ export const ArticleCard = (props: Props) => {
                 </div>
                 <div className={containerClass}>
                     <p className="font-display text-lg md:text-xl line-clamp-3 break-words">{props.title}</p>
-                    <p className="font-body text-sm">{props.publishedAt}</p>
+                    <p className="font-body text-sm">{formattedDate}</p>
                 </div>
             </div>
             {props.hasPermission && (

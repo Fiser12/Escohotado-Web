@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { H2 } from "../../../../common/headers/H2";
 import "./article-html-content.css";
+import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 
 interface Props {
     title: string;
@@ -27,17 +28,16 @@ export const ArticleDetail = (props: Props) => {
         }
     );
 
-    return (<div className={cardClass}>
-        <H2 label={props.title ?? "No title"} />
-        <img
-            src={props.coverHref}
-            alt={props.title}
-            className="w-full h-full object-cover"
-        />
-        <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }} />
-    </div>);
+    return (
+    <ContentWrapper>
+        <div className={cardClass}>
+            <H2 label={props.title ?? "No title"} />
+            <img
+                src={props.coverHref}
+                alt={props.title}
+                className="w-full h-full object-cover"
+            />
+            <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }}/>
+        </div>
+    </ContentWrapper>);
 };
-
-/*
-
-*/
