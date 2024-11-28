@@ -3,7 +3,6 @@ import classNames from 'classnames';
 
 interface Args {
     text: string;
-    href: string;
     color?: 'primary' | 'secondary';
     type?: 'fill' | 'line';
     className?: string;
@@ -12,7 +11,6 @@ interface Args {
 
 export const MainButton = ({
     text,
-    href,
     color = 'primary',
     type = 'fill',
     className = '',
@@ -44,10 +42,8 @@ export const MainButton = ({
 
     return (
         <div className={buttonClass}>
-            <a href={href}>
-                {icon && <span className={iconClass}>{icon}</span>}
-                {text}
-            </a>
+            {icon && <span className={iconClass}>{icon}</span>}
+            {text}
         </div>
     );
 };

@@ -28,7 +28,7 @@ export const SubscriptionCard = ({
       )}
     >
       <div className="flex-col justify-start items-center gap-4 flex">
-        <H3 variant={mainCard ? 'tertiary' : 'primary'} label={title} />
+        <H3 label={title} />
         <div className="justify-start items-end gap-2.5 inline-flex">
           <div className="text-[#426578] text-2xl font-bold font-montserrat leading-normal">
             {price}

@@ -19,7 +19,9 @@ export const HighlightSection = (props: Props) => {
             />
             <div className="relative z-10 flex flex-col justify-center items-center gap-7.5">
                 <H4 label={props.description} className="text-white"></H4>
-                <MainButton text={props.textButton} href={props.href} color="secondary" type="line"></MainButton>
+                <a href={props.href}>
+                    <MainButton text={props.textButton} color="secondary" type="line"></MainButton>
+                </a>
             </div>
         </div>
     );
