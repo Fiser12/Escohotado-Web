@@ -1,7 +1,9 @@
 import classNames from "classnames";
-import { H2 } from "../../../../common/headers/H2";
-import "./article-html-content.css";
+import { H1 } from "../../../../common/headers/H1";
+import { H4 } from "../../../../common/headers/H4";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
+import { Tag } from "../../../../common/tag/tag";
+import "./article-html-content.css";
 
 interface Props {
     title: string;
@@ -15,29 +17,46 @@ interface Props {
         singular_name: string;
         seed?: string | null
     }[];
-    hasPermission: boolean;
     contentHtml: string;
 }
 
 export const ArticleDetail = (props: Props) => {
-    const cardClass = classNames(
-        'w-full',
-        {
-            'bg-white text-black': props.hasPermission,
-            'bg-gray-light text-gray-dark border-solid border-[0.8px] border-gray-disabled pb-2': !props.hasPermission,
-        }
+    const containerClass = classNames(
+        'bg-white text-black flex flex-col gap-12 md:gap-16'
+    );
+
+    const tagDateContainerClass = classNames(
+        'flex flex-col md:flex-row gap-3 justify-between'
+    );
+
+    const categoriesClass = classNames(
+        'flex flex-wrap gap-1'
     );
 
     return (
-    <ContentWrapper>
-        <div className={cardClass}>
-            <H2 label={props.title ?? "No title"} />
+        <div className={containerClass}>
             <img
                 src={props.coverHref}
                 alt={props.title}
-                className="w-full h-full object-cover"
+                className="w-full object-cover h-[200px] md:h-[350px]"
             />
-            <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }}/>
+            <ContentWrapper className="flex flex-col gap-12">
+                <div className="border-b-2 border-gray-light pb-9 md:pb-10 flex flex-col gap-6 md:gap-10">
+                    <div className="flex flex-col gap-2">
+                        <H4 label={props.author ?? ""}></H4>
+                        <H1 label={props.title ?? "No title"} />
+                    </div>
+                    <div className={tagDateContainerClass}>
+                        <div className={categoriesClass}>
+                            {props.categories?.map((category, index) =>
+                                <Tag key={index} text={category.singular_name}></Tag>
+                            )}
+                        </div>
+                        <p className="text-gray-disabled">{props.publishedAt}</p>
+                    </div>
+                </div>
+                <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }} />
+            </ContentWrapper>
         </div>
-    </ContentWrapper>);
+    );
 };

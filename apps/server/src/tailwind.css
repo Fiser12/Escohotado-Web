@@ -8,6 +8,7 @@
     --font-body: "Montserrat", "sans-serif";
     --font-handwritten: "Escohotado", "cursive";
     --font-display: "Yeseva One", "serif";
+    
     --color-primary-50: #D4E4EA;
     --color-primary-100: #B0CFDB;
     --color-primary-200: #86B7C8;
@@ -23,8 +24,6 @@
     --border-width-DEFAULT: "1px";
     --border-width-0.5: "0.5px";
     --rounded-DEFAULT: "3px";
-
-    
 }
 
 @font-face {

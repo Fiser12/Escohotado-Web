@@ -7,7 +7,7 @@ type Args = {
 
 export const H1 = (args: Args) => {
     const headerClass = classNames(
-        'text-primary-900 text-6xl font-regular font-display',
+        'text-primary-900 text-4xl md:text-6xl font-regular font-display leading-tight',
         args.className,
     );
 
