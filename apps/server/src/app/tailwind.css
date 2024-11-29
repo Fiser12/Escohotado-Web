@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
-@source "../../../../../packages/gaudi/src";
+@source "../../../../packages/gaudi/src";
 
 @theme {
     --font-body: "Montserrat", "sans-serif";

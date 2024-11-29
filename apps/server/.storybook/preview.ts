@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
-import "../src/tailwind.css"
+import "../src/app/tailwind.css";
 
 const preview: Preview = {
   parameters: {

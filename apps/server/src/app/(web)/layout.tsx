@@ -5,7 +5,7 @@ import { accountMenuBuilder } from "@/domain/accountMenuBuilder";
 import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
 import { DataFromCollectionSlug } from "payload";
 import { NuqsAdapter } from 'nuqs/adapters/next'
-import "./tailwind.css";
+import "../tailwind.css";
 
 const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
   const payloadUser = await getPayloadUser<DataFromCollectionSlug<"users">>();
