@@ -1,6 +1,6 @@
 import { COLLECTION_SLUG_ARTICLE_WEB } from "@/collections/config";
 import { getCurrentUser, getPayload } from "@/utils/payload";
-import { ContentWrapper, H2, ArticleDetail } from "gaudi";
+import { ArticleDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { Media, Taxonomy } from "payload-types";
 

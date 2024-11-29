@@ -2,13 +2,11 @@
   "extends": "config/react-library.json",
   "compilerOptions": {
     "outDir": "dist",
-    "module": "es2022",
-    "moduleResolution": "bundler",
+    "target": "es5",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "noEmit": true
-  },
-  "paths": {
-    "gaudi": ["src/index"],
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

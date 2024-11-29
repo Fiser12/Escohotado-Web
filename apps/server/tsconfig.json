@@ -11,7 +11,8 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "declaration": true,
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -30,7 +31,7 @@
         "./payload.config.ts"
       ]
     },
-    "target": "ES2022"
+    "target": "ESNext"
   },
   "include": [
     "next-env.d.ts",

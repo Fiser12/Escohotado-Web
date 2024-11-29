@@ -1,7 +1,7 @@
 "use client";
 
 import { parseAsString as parseAsStringClient, useQueryState } from "nuqs";
-import { FilterBar } from "./filter_bar";
+import { FilterBar } from "gaudi/client";
 
 interface Props {
 	title: string

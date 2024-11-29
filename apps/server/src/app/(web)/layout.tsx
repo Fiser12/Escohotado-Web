@@ -1,6 +1,6 @@
 import React from "react";
 import "../../tailwind.css";
-import { Header } from "gaudi";
+import { Header } from "gaudi/server";
 import { signIn, signOut } from "@/plugins/authjs/plugin";
 import { accountMenuBuilder } from "@/domain/accountMenuBuilder";
 import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";

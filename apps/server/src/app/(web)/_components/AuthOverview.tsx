@@ -1,7 +1,7 @@
 import { DataFromCollectionSlug } from "payload";
 import { auth } from "@/plugins/authjs/plugin";
 import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
-import { ContentWrapper, H3, H4 } from "gaudi";
+import { ContentWrapper, H3, H4 } from "gaudi/server";
 import { getPayload } from "@/utils/payload";
 import { COLLECTION_SLUG_MEDIA } from "@/collections/config";
 
@@ -26,7 +26,6 @@ return (
       <div style={{ background: "gray", padding: "5px", borderRadius: "10px" }}>
         {JSON.stringify(medias, null, 2)}
       </div>
-
     </ContentWrapper>
   );
 };

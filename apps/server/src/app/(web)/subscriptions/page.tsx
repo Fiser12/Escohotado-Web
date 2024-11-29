@@ -1,5 +1,5 @@
 import { getCurrentUser, getPayload } from "@/utils/payload";
-import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi";
+import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi/server";
 import { IntervalOptions } from "hegel";
 import { Subscription } from "payload-types";
 

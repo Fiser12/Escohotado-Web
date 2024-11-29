@@ -27,7 +27,7 @@ export const FilterBar = (props: Props): JSX.Element => {
 
 	useEffect(() => {
 		onSelectedTagsChange(selectedTags);
-	}, [selectedTags, onSelectedTagsChange]);
+	}, [selectedTags]);
 
 	return (
 		<div>
