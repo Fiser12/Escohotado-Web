@@ -1,6 +1,6 @@
 "use client";
 
-import { parseAsString as parseAsStringClient, useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { FilterBar } from "gaudi/client";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 export function FilterBarNuqs(props: Props) {
 	const [_, setSearch] = useQueryState(
 		"tags",
-		parseAsStringClient
+		parseAsString
 			.withOptions({ shallow: false })
 			.withDefault("")
 	);
@@ -20,7 +20,9 @@ export function FilterBarNuqs(props: Props) {
 	return (
 		<FilterBar
 			{...props}
-			onSelectedTagsChange={(tags) => setSearch(tags.join(","))}
+			onSelectedTagsChange={(tags) => {
+				setSearch(tags.join(","))
+			}}
 		/>
 	);
 }

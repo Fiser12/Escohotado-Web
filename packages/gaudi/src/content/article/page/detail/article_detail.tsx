@@ -32,6 +32,12 @@ export const ArticleDetail = (props: Props) => {
     const categoriesClass = classNames(
         'flex flex-wrap gap-1'
     );
+    const date = new Date(props.publishedAt);
+    const formattedDate = date.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric'
+    });
 
     return (
         <div className={containerClass}>
@@ -52,7 +58,7 @@ export const ArticleDetail = (props: Props) => {
                                 <Tag key={index} text={category.singular_name}></Tag>
                             )}
                         </div>
-                        <p className="text-gray-disabled">{props.publishedAt}</p>
+                        <p className="text-gray-disabled">{formattedDate}</p>
                     </div>
                 </div>
                 <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }} />

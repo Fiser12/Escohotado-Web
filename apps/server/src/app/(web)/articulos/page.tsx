@@ -2,8 +2,8 @@ import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB } from "@/coll
 import { getCurrentUser, getPayload } from "@/utils/payload";
 import { ContentWrapper, H2, ArticleCard } from "gaudi/server";
 import { ArticlePdf, ArticleWeb, Media, Taxonomy } from "payload-types";
-import { FilterBarNuqs } from "@/components/FilterBarNuqs";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
+import { FilterBarSSR } from "@/components/filter_bar_ssr";
 
 export const searchContentParamsCache = createSearchParamsCache({
 	tags: parseAsString.withDefault('')
@@ -19,6 +19,7 @@ interface Props {
 
 const Page = async ({ searchParams }: Props) => {
   const { tags } = await searchContentParamsCache.parse(searchParams)
+  
   const payload = await getPayload();
   const [user, articlesPDF, articlesWeb] = await Promise.all([
     getCurrentUser(payload),
@@ -54,10 +55,9 @@ const Page = async ({ searchParams }: Props) => {
       className=""
       backgroundClassname="bg-white"
     >
-      <FilterBarNuqs 
+      <FilterBarSSR 
         title="Filtros" 
-        tags={{"hola": "hola"}} 
-        selectedTags={[]}
+        selectedTags={tags ? tags.split(',').filter(Boolean) : []}
       />
       <H2 label="Artículos" />
       <div>
