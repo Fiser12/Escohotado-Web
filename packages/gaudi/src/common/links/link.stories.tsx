@@ -11,8 +11,6 @@ const meta: Meta<typeof Link> = {
             url: 'https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=106-1101&t=ywkogyBA7q9g27hy-4'
         }
     },
-    argTypes: {
-    },
 };
 
 export default meta;
