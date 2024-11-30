@@ -10,3 +10,4 @@ export { ToggleButtonGroup } from "./common/toggle_button_group/toggle_button_gr
 export { SubscriptionsGroupCard } from "./subscription/subscriptions_card_group";
 export { ArticleCard } from "./content/article/cards/article_card";
 export { ArticleDetail } from "./content/article/page/detail/article_detail";
+export { ContentGridList } from "./content/common/content_grid_list";

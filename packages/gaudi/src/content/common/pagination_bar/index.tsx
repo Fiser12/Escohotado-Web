@@ -28,7 +28,7 @@ export const PaginationBar = (props: Props): JSX.Element => {
             </button>
 
             <p className="text-slate-600">
-                Page <strong className="text-slate-800">{props.currentPage}</strong> of&nbsp;<strong className="text-slate-800">{props.maxPage}</strong>
+                Página <strong className="text-slate-800">{props.currentPage}</strong> de&nbsp;<strong className="text-slate-800">{props.maxPage}</strong>
             </p>
 
             <button

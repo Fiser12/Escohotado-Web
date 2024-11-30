@@ -6,6 +6,7 @@ import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/components/autor_bar_ssr";
 import { TemaBarSSR } from "@/components/tema_bar_ssr";
 import { PaginationBarNuqs } from "@/components/pagination_bar_nuqs";
+import { ContentGridList } from "gaudi/server";
 
 export const pageSize = 10;
 
@@ -82,18 +83,21 @@ const Page = async ({ searchParams }: Props) => {
         />
       </div>
       <div>
-        {articles.map((article: CommonArticle, index) => (
-          <ArticleCard
-            key={index}
-            title={article.title ?? "No title"}
-            href={article.url ?? "#"}
-            publishedAt={article.publishedAt as string}
-            coverHref={(article.cover as Media | null)?.url ?? "#"}
-            textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
-            categories={article.categories as Taxonomy[]}
-            hasPermission={true}
-          />
-        ))}
+        <ContentGridList
+          items={articles}
+          renderBox={(article: CommonArticle, index) => (
+            <ArticleCard
+              key={index}
+              title={article.title ?? "No title"}
+              href={article.url ?? "#"}
+              publishedAt={article.publishedAt as string}
+              coverHref={(article.cover as Media | null)?.url ?? "#"}
+              textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
+              categories={article.categories as Taxonomy[]}
+              hasPermission={true}
+            />
+          )}
+        />
       </div>
       <PaginationBarNuqs maxPage={maxPage} />
 
