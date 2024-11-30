@@ -4,10 +4,13 @@ import { ContentWrapper, H2, ArticleCard } from "gaudi/server";
 import { ArticlePdf, ArticleWeb, Media, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/components/autor_bar_ssr";
-import { Where } from "payload";
 import { TemaBarSSR } from "@/components/tema_bar_ssr";
+import { PaginationBarNuqs } from "@/components/pagination_bar_nuqs";
+
+export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
+  page: parseAsString.withDefault(''),
 	autor: parseAsString.withDefault(''),
 	temas: parseAsString.withDefault('')
 })
@@ -22,8 +25,7 @@ interface Props {
 
 const Page = async ({ searchParams }: Props) => {
   const payload = await getPayload();
-  const { autor, temas } = await searchContentParamsCache.parse(searchParams)
-  const temasArray = temas.split(',').filter(Boolean)
+  const { autor, temas, page } = await searchContentParamsCache.parse(searchParams)
   const [user, articlesPDF, articlesWeb] = await Promise.all([
     getCurrentUser(payload),
     payload.find({
@@ -35,6 +37,10 @@ const Page = async ({ searchParams }: Props) => {
       sort: "-publishedAt"
     })
   ]);
+  const temasArray = temas.split(',').filter(Boolean)
+
+  const startIndex = (parseInt(page ?? "1") - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
 
   const articlesPDFWithType = articlesPDF.docs.map(article => ({
     ...article,
@@ -46,8 +52,8 @@ const Page = async ({ searchParams }: Props) => {
     type: COLLECTION_SLUG_ARTICLE_WEB,
     url: `/articulos/${article.slug}`
   }));
-  
-  const articles = [...articlesPDFWithType, ...articlesWebWithType]
+
+  let articles = [...articlesPDFWithType, ...articlesWebWithType]
     .sort((a, b) => {
       const dateA = new Date(a.publishedAt).getTime();
       const dateB = new Date(b.publishedAt).getTime();
@@ -58,6 +64,8 @@ const Page = async ({ searchParams }: Props) => {
       const evalTemaFilter = temasArray.length === 0 || temasArray.every(seed => article.seeds?.includes(seed))
       return evalAutorFilter && evalTemaFilter
     });
+  const maxPage = Math.ceil(articles.length / pageSize);
+  articles = articles.slice(startIndex, endIndex);
 
   return (
     <ContentWrapper
@@ -87,6 +95,8 @@ const Page = async ({ searchParams }: Props) => {
           />
         ))}
       </div>
+      <PaginationBarNuqs maxPage={maxPage} />
+
     </ContentWrapper>
   );
 };
