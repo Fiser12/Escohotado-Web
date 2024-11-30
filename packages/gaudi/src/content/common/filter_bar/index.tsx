@@ -5,12 +5,14 @@ import classNames from 'classnames';
 
 type Props = {
 	title: string
+	multiple?: boolean;
 	selectedTags: string[];
 	tags: Record<string, string>;
 	onSelectedTagsChange: (selectedTags: string[]) => void;
 };
 
 export const FilterBar = (props: Props): JSX.Element => {
+	const multiple = props.multiple ?? true;
 	const onSelectedTagsChange = props.onSelectedTagsChange;
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedTags, setSelectedTags] = useState<string[]>(props.selectedTags);
@@ -21,6 +23,7 @@ export const FilterBar = (props: Props): JSX.Element => {
 
 	const handleTagChange = (key: string) => {
 		setSelectedTags((prev) =>
+			!multiple ? [key] :
 			prev.includes(key) ? prev.filter((tag) => tag !== key) : [...prev, key]
 		);
 	};
@@ -40,26 +43,24 @@ export const FilterBar = (props: Props): JSX.Element => {
 				</svg>
 			</button>
 
-			<div
-				className={classNames(
-					"z-10 w-48 bg-white rounded-lg shadow dark:bg-gray-700 absolute mt-2",
-					{ hidden: !isOpen, block: isOpen }
-				)}
-			>
+			<div className={classNames(
+				"z-10 w-48 bg-white rounded-lg shadow dark:bg-gray-700 absolute mt-2 divide-y divide-gray-100",
+				{ hidden: !isOpen, block: isOpen }
+			)}>
 				<ul className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownBgHoverButton">
 					{Object.entries(props.tags).map(([key, value]) => (
 						<li key={key}>
 							<div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
 								<input
-									id={`checkbox-item-${key}`}
-									type="checkbox"
+									id={`item-${key}`}
+									type={multiple ? "checkbox" : "radio"}
 									value={key}
 									checked={selectedTags.includes(key)}
 									onChange={() => handleTagChange(key)}
 									className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 								/>
 								<label
-									htmlFor={`checkbox-item-${key}`}
+									htmlFor={`item-${key}`}
 									className="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
 								>
 									{value}
@@ -68,6 +69,15 @@ export const FilterBar = (props: Props): JSX.Element => {
 						</li>
 					))}
 				</ul>
+				{ !multiple && <div className="py-2">
+					<button 
+						className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" 
+						onClick={() => {setSelectedTags([])}}
+					>
+						Todos
+					</button>
+				</div>
+				}
 			</div>
 		</div>
 	);
