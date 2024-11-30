@@ -12,7 +12,7 @@ export function PaginationBarNuqs(props: Props) {
 		"page",
 		parseAsString
 			.withOptions({ shallow: false })
-			.withDefault("")
+			.withDefault("1")
 	);
 	return (
 		<PaginationBar

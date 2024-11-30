@@ -7,12 +7,11 @@ interface Props {
 	title: string
 	multiple?: boolean;
 	queryKey: string;
-	selectedTags: string[];
 	tags: Record<string, string>;
 }
 
 export function FilterBarNuqs(props: Props) {
-	const [_, setSearch] = useQueryState(
+	const [tags, setSearch] = useQueryState(
 		props.queryKey,
 		parseAsString
 			.withOptions({ shallow: false })
@@ -22,6 +21,7 @@ export function FilterBarNuqs(props: Props) {
 	return (
 		<FilterBar
 			{...props}
+			selectedTags={tags.split(',').filter(Boolean) ?? []}
 			onSelectedTagsChange={(tags) => {
 				setSearch(tags.join(","))
 			}}

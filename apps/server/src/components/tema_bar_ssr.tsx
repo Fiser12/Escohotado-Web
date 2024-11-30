@@ -3,7 +3,6 @@ import { FilterBarNuqs } from "./filter_bar_nuqs";
 import { COLLECTION_SLUG_TAXONOMY } from "@/collections/config";
 
 interface Props {
-	selectedTags: string[];
 }
 
 export async function TemaBarSSR(props: Props) {

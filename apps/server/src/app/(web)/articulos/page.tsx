@@ -7,12 +7,14 @@ import { AutorBarSSR } from "@/components/autor_bar_ssr";
 import { TemaBarSSR } from "@/components/tema_bar_ssr";
 import { PaginationBarNuqs } from "@/components/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
+import { SearchBarNuqs } from "@/components/search_bar_nuqs";
 
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
-  page: parseAsString.withDefault(''),
+  page: parseAsString.withDefault('1'),
 	autor: parseAsString.withDefault(''),
+	query: parseAsString.withDefault(''),
 	temas: parseAsString.withDefault('')
 })
   
@@ -26,7 +28,7 @@ interface Props {
 
 const Page = async ({ searchParams }: Props) => {
   const payload = await getPayload();
-  const { autor, temas, page } = await searchContentParamsCache.parse(searchParams)
+  const { autor, temas, page, query } = await searchContentParamsCache.parse(searchParams)
   const [user, articlesPDF, articlesWeb] = await Promise.all([
     getCurrentUser(payload),
     payload.find({
@@ -39,8 +41,7 @@ const Page = async ({ searchParams }: Props) => {
     })
   ]);
   const temasArray = temas.split(',').filter(Boolean)
-
-  const startIndex = (parseInt(page ?? "1") - 1) * pageSize;
+  const startIndex = (parseInt(page) - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
   const articlesPDFWithType = articlesPDF.docs.map(article => ({
@@ -63,7 +64,8 @@ const Page = async ({ searchParams }: Props) => {
     .filter(article => {
       const evalAutorFilter = autor === null || article.seeds?.includes(autor)
       const evalTemaFilter = temasArray.length === 0 || temasArray.every(seed => article.seeds?.includes(seed))
-      return evalAutorFilter && evalTemaFilter
+      const evalQueryFilter = query === null || query.trim() === '' || article.title?.toLowerCase().includes(query.toLowerCase())
+      return evalAutorFilter && evalTemaFilter && evalQueryFilter
     });
   const maxPage = Math.ceil(articles.length / pageSize);
   articles = articles.slice(startIndex, endIndex);
@@ -75,12 +77,9 @@ const Page = async ({ searchParams }: Props) => {
     >
       <H2 label="Artículos" />
       <div className="flex flex-row gap-x-2">
-        <AutorBarSSR 
-          selectedTags={autor ? autor.split(',').filter(Boolean) : []}
-        />
-        <TemaBarSSR 
-          selectedTags={temas ? temas.split(',').filter(Boolean) : []}
-        />
+        <AutorBarSSR />
+        <TemaBarSSR />
+        <SearchBarNuqs />
       </div>
       <div>
         <ContentGridList
