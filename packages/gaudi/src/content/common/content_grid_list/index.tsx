@@ -8,7 +8,7 @@ interface Props<T> {
 export const ContentGridList = <T,>({ 
     items, 
     renderBox, 
-    gridCols = "grid-cols-2",
+    gridCols = "grid-cols-3",
     gap = "gap-2"
 }: Props<T>): JSX.Element => {
     return (
