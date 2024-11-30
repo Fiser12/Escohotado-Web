@@ -5,6 +5,7 @@ import { ToggleButtonGroup } from "../common/toggle_button_group/toggle_button_g
 import { SubscriptionCard } from "./subscription_card";
 import { Interval, IntervalOptions } from "hegel";
 import { SubscriptionButton } from "./subscription_button";
+import "hegel";
 
 interface Price {
     id: string;
@@ -86,11 +87,6 @@ export const SubscriptionsGroupCard = ({
         </>
     );
 };
-
-Array.prototype.mapNotNull = function <T, U>(callback: (value: T, index: number, array: T[]) => U | null | undefined): U[] {
-	return this.map(callback).filter((item): item is U => item != null);
-};
-
 
 const subscriptionButtonHref: (action: SubscriptionButtonActionType, priceId: string, subscriptionId?: string) => string = (action, priceId, subscriptionId) => {
     if (action === 'cancel') return `/stripe/update?subscriptionId=${subscriptionId}&cancelAtPeriodEnd=true`

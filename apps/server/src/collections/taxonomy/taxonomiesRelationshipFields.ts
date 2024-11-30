@@ -1,5 +1,6 @@
 import { CollectionBeforeChangeHook, Field, FilterOptions } from 'payload'
 import { COLLECTION_SLUG_TAXONOMY } from '../config'
+import "hegel";
 
 interface TaxonomyBuilderProps {
     relationship: {
