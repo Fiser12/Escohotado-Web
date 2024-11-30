@@ -2,10 +2,10 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ContentGridList } from ".";
 import { TagIcon } from "../../../common/icons/tag_icon";
 import { PenIcon } from "../../../common/icons/pen_icon";
-import { ArticleCard } from "../../../server";
+import { ArticleCard, ContentWrapper } from "../../../server";
 
 const meta: Meta<typeof ContentGridList> = {
-    title: "Containers/ContentGridList",
+    title: "Components/Containers/Content Grid",
     component: ContentGridList,
     parameters: {
         layout: "fullscreen",
@@ -20,8 +20,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const ArticlesGridList: Story = {
-    name: "ArticlesGridList",
+export const ArticlesList: Story = {
+    name: "ArticlesList",
     args: {
         items: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
         renderBox: (_, index) => <ArticleCard
@@ -39,6 +39,8 @@ export const ArticlesGridList: Story = {
         />
     },
     render: (args) => (
-        <ContentGridList {...args} />
+        <ContentWrapper>
+            <ContentGridList {...args} />
+        </ContentWrapper>
     ),
 };

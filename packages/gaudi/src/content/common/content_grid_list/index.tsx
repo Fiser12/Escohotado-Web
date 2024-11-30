@@ -8,11 +8,11 @@ interface Props<T> {
 export const ContentGridList = <T,>({ 
     items, 
     renderBox, 
-    gridCols = "grid-cols-3",
-    gap = "gap-2"
+    gridCols = "md:grid-cols-3",
+    gap = "gap-5"
 }: Props<T>): JSX.Element => {
     return (
-        <div className={`grid ${gridCols} ${gap}`}>
+        <div className={`grid grid-cols-1 ${gridCols} ${gap}`}>
             {items.map((item, index) => (
                 <div key={index}>
                     {renderBox(item, index)}
