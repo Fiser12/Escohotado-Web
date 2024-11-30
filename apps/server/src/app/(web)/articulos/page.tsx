@@ -1,29 +1,29 @@
 import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB } from "@/collections/config";
 import { getCurrentUser, getPayload } from "@/utils/payload";
 import { ContentWrapper, H2, ArticleCard } from "gaudi/server";
-import { ArticlePdf, ArticleWeb, Media, Taxonomy } from "payload-types";
+import { ArticlePdf, ArticleWeb, Media, Subscription, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/components/autor_bar_ssr";
 import { TemaBarSSR } from "@/components/tema_bar_ssr";
 import { PaginationBarNuqs } from "@/components/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
 import { SearchBarNuqs } from "@/components/search_bar_nuqs";
-
 export const pageSize = 10;
+import { evalPermission } from "@/domain/eval_content_permissions";
 
 export const searchContentParamsCache = createSearchParamsCache({
   page: parseAsString.withDefault('1'),
-	autor: parseAsString.withDefault(''),
-	query: parseAsString.withDefault(''),
-	temas: parseAsString.withDefault('')
+  autor: parseAsString.withDefault(''),
+  query: parseAsString.withDefault(''),
+  temas: parseAsString.withDefault('')
 })
-  
-type CommonArticle = (ArticlePdf | ArticleWeb) & { 
+
+type CommonArticle = (ArticlePdf | ArticleWeb) & {
   type: string;
-  url?: string | null 
+  url?: string | null
 };
 interface Props {
-	searchParams: Record<string, string>;
+  searchParams: Record<string, string>;
 }
 
 const Page = async ({ searchParams }: Props) => {
@@ -40,6 +40,7 @@ const Page = async ({ searchParams }: Props) => {
       sort: "-publishedAt"
     })
   ]);
+
   const temasArray = temas.split(',').filter(Boolean)
   const startIndex = (parseInt(page) - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -48,7 +49,7 @@ const Page = async ({ searchParams }: Props) => {
     ...article,
     type: COLLECTION_SLUG_ARTICLE_PDF
   }));
-  
+
   const articlesWebWithType = articlesWeb.docs.map(article => ({
     ...article,
     type: COLLECTION_SLUG_ARTICLE_WEB,
@@ -93,7 +94,7 @@ const Page = async ({ searchParams }: Props) => {
               coverHref={(article.cover as Media | null)?.url ?? "#"}
               textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
               categories={article.categories as Taxonomy[]}
-              hasPermission={true}
+              hasPermission={evalPermission(user, article)}
             />
           )}
         />

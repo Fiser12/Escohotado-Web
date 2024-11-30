@@ -30,6 +30,7 @@
     "@types/react-dom": "npm:types-react-dom@rc",
     "autoprefixer": "^10.4.20",
     "config": "workspace:*",
+    "hegel": "workspace:*",
     "eslint": "^8.57.0",
     "eslint-config": "workspace:*",
     "eslint-plugin-storybook": "^0.10.1",
@@ -41,7 +42,6 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.15",
     "classnames": "^2.5.1",
-    "hegel": "workspace:*",
     "react": "rc"
   }
 }

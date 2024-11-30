@@ -2,6 +2,7 @@ import { stripeBuilder, priceUpsert } from '@/plugins/stripe'
 import { Price } from 'payload-types'
 import { COLLECTION_SLUG_PRICES } from '../config'
 import { CollectionBeforeChangeHook } from 'payload'
+import "hegel";
 
 export const populatePricesHook: CollectionBeforeChangeHook = async ({ data, req }) => {
   if (!data.stripeID.startsWith('prod_')) return data
@@ -37,8 +38,4 @@ export const populatePricesHook: CollectionBeforeChangeHook = async ({ data, req
 
   return data
 }
-
-Array.prototype.mapNotNull = function <T, U>(callback: (value: T, index: number, array: T[]) => U | null | undefined): U[] {
-	return this.map(callback).filter((item): item is U => item != null);
-};
 
