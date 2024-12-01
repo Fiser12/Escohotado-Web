@@ -1,7 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { ContentGridList } from ".";
-import { TagIcon } from "../../../common/icons/tag_icon";
-import { PenIcon } from "../../../common/icons/pen_icon";
 import { ArticleCard, ContentWrapper } from "../../../server";
 
 const meta: Meta<typeof ContentGridList> = {

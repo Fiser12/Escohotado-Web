@@ -5,7 +5,7 @@ const meta: Meta = {
     title: "Articles/Cards/Default",
     component: ArticleCard,
     parameters: {
-        layout: "padded",
+        layout: "centered",
         design: {
             type: "figspec",
             url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=683-1637&t=ywkogyBA7q9g27hy-4",
