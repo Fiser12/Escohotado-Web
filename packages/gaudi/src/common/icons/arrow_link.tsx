@@ -19,7 +19,6 @@ export const ArrowLinkIcon = ({
             fill="none"
             className={iconClass}
             xmlns="http://www.w3.org/2000/svg"
-            style={{ width: 'auto', aspectRatio: '1' }}
         >
             <path d="M1.66675 6.89355L13.3334 6.89355" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M8.56055 11.6665L13.3333 6.89378L8.56055 2.12105" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" />

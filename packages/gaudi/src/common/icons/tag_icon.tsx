@@ -18,7 +18,6 @@ export const TagIcon = ({
             fill="none"
             className={iconClass}
             xmlns="http://www.w3.org/2000/svg"
-            style={{ width: 'auto', aspectRatio: '1' }}
         >
             <g clipPath="url(#clip0_421_1257)">
                 <path 

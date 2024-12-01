@@ -19,7 +19,6 @@ export const LockIcon = ({
             className={iconClass}
             fill="none" 
             xmlns="http://www.w3.org/2000/svg"
-            style={{ width: 'auto', aspectRatio: '1' }}
         >
             <circle cx="24" cy="23.6711" r="23.0148" fill="white"/>
             <g clipPath="url(#clip0_683_1862)">

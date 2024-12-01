@@ -18,7 +18,6 @@ export const HamburguerIcon = ({
             viewBox="0 0 29 28"
             className={iconClass}
             xmlns="http://www.w3.org/2000/svg"
-            style={{ width: 'auto', aspectRatio: '1' }}
         >
             <circle cx="2.5" cy="3" r="2.5" />
             <circle cx="14.5" cy="3" r="2.5" />

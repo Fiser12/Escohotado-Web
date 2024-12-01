@@ -18,7 +18,6 @@ export const PenIcon = ({
             fill="none"
             className={iconClass}
             xmlns="http://www.w3.org/2000/svg"
-            style={{ width: 'auto', aspectRatio: '1' }}
         >
             <g clip-path="url(#clip0_544_1658)">
                 <path d="M9.34323 8.0632L8.98997 11.2428C8.94765 11.6234 8.65609 11.9286 8.27789 11.9884L1.42246 13.0708C1.1375 13.1158 0.8915 12.8698 0.936493 12.5848L2.01893 5.7294C2.07864 5.3512 2.38392 5.05964 2.76447 5.01735L5.94409 4.66406" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
