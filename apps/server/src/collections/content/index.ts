@@ -1,7 +1,9 @@
-import { articlePDF } from "./articlePDF/articlepdf";
-import { articleWeb } from "./articleWeb/articleweb";
+import { articlePDF } from "./articlePDF";
+import { articleWeb } from "./articleWeb";
+import { book } from "./book";
 
 export const contentCollections = [
     articlePDF,
-    articleWeb
+    articleWeb,
+    book
 ]

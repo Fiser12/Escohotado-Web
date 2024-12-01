@@ -21,6 +21,7 @@ export function FilterBarNuqs(props: Props) {
 	return (
 		<FilterBar
 			{...props}
+			color="white"
 			selectedTags={tags.split(',').filter(Boolean) ?? []}
 			onSelectedTagsChange={(tags) => {
 				setSearch(tags.join(","))

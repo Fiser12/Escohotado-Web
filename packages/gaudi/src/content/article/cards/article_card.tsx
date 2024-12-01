@@ -19,7 +19,7 @@ interface Props {
 }
 export const ArticleCard = (props: Props) => {
     const cardClass = classNames(
-        'w-full sm:w-1/2 md:w-1/3 lg:w-1/4 min-h-[350px] rounded flex flex-col flex-grow m-auto',
+        'w-full min-h-[350px] rounded flex flex-col flex-grow m-auto',
         {
             'bg-white text-black': props.hasPermission,
             'bg-gray-light text-gray-dark border-solid border-[0.8px] border-gray-disabled pb-2': !props.hasPermission,
@@ -32,8 +32,12 @@ export const ArticleCard = (props: Props) => {
 
     const overlayClass = classNames(
         'absolute inset-0 flex items-center justify-center',
+    );
+
+    const imageClass = classNames(
+        'w-full h-full object-cover',
         {
-            'bg-black bg-opacity-40 z-10': !props.hasPermission,
+            'opacity-50': !props.hasPermission,
         }
     );
 
@@ -43,18 +47,18 @@ export const ArticleCard = (props: Props) => {
     const date = new Date(props.publishedAt);
     const formattedDate = date.toLocaleDateString('es-ES', {
         year: 'numeric',
-        month: 'long', 
+        month: 'long',
         day: 'numeric'
     });
-    
+
     return (
         <div className={cardClass}>
             <div className="p-1 flex flex-col gap-3 flex-1">
-                <div className="relative w-full h-[150px] overflow-hidden rounded">
+                <div className="relative bg-black w-full h-[150px] overflow-hidden rounded">
                     <img
                         src={props.coverHref}
                         alt={props.title}
-                        className="w-full h-full object-cover"
+                        className={imageClass}
                     />
                     <div className={overlayClass}>
                         {!props.hasPermission && <LockIcon />}

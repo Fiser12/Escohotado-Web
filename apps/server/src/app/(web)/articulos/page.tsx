@@ -73,7 +73,7 @@ const Page = async ({ searchParams }: Props) => {
 
   return (
     <ContentWrapper
-      className=""
+      className="flex flex-col gap-y-5"
       backgroundClassname="bg-white"
     >
       <H2 label="Artículos" />
