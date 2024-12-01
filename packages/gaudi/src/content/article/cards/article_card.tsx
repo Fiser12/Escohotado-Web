@@ -17,6 +17,7 @@ interface Props {
     }[];
     hasPermission: boolean;
 }
+
 export const ArticleCard = (props: Props) => {
     const cardClass = classNames(
         'w-full min-h-[350px] rounded flex flex-col flex-grow m-auto',
