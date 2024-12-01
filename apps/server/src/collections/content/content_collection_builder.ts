@@ -12,11 +12,31 @@ const categoriesRelationship = taxonomiesRelationshipBuilder({
   seeds: { name: 'seeds', label: 'Semillas de categorías' }
 })
 
+export function contentWithPermissionsCollectionBuilder(config: Partial<CollectionConfig> & { slug: string }): CollectionConfig {
+  const contentCollection = contentCollectionBuilder(config)
+    return {
+        ...contentCollection,
+        access: {
+          read: checkReadPermissions,
+          create: isAdmin,
+          update: isAdmin,
+          delete: isAdmin
+        },
+        hooks: {
+          ...contentCollection.hooks,
+          beforeChange: [...contentCollection.hooks!.beforeChange!, populatePermissionSeedsHook],
+        },
+        fields: [
+          ...permissionRelationship(),
+          ...contentCollection.fields ?? [],
+        ]      
+    }
+}
+
 export function contentCollectionBuilder(config: Partial<CollectionConfig> & { slug: string }): CollectionConfig {
     return {
         ...config,
         access: {
-          read: checkReadPermissions,
           create: isAdmin,
           update: isAdmin,
           delete: isAdmin
@@ -27,7 +47,7 @@ export function contentCollectionBuilder(config: Partial<CollectionConfig> & { s
         },
         hooks: {
           ...config.hooks,
-          beforeChange: [categoriesRelationship.hook, populatePermissionSeedsHook],
+          beforeChange: [categoriesRelationship.hook],
         },
         fields: [
           {
@@ -57,8 +77,8 @@ export function contentCollectionBuilder(config: Partial<CollectionConfig> & { s
             type: 'date'
           },
           ...categoriesRelationship.fields,
-          ...permissionRelationship(),
           ...config.fields ?? [],
         ]      
     }
 }
+

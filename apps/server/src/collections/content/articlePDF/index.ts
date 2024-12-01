@@ -1,8 +1,8 @@
 import { addContentHashToFile } from '../../media/addContentHashToFileHook'
 import { COLLECTION_SLUG_ARTICLE_PDF } from '../../config'
-import { contentCollectionBuilder } from '../content_collection_builder'
+import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 
-export const articlePDF = contentCollectionBuilder({
+export const articlePDF = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_PDF,
   labels: {
     singular: 'Articulo PDF',

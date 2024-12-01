@@ -295,14 +295,14 @@ export interface Taxonomy {
  */
 export interface ArticlePdf {
   id: string;
+  permissions?: (string | Permission)[] | null;
+  permissions_seeds?: string | null;
   cover: string | Media;
   title?: string | null;
   description?: string | null;
   publishedAt: string;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
-  permissions?: (string | Permission)[] | null;
-  permissions_seeds?: string | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -322,14 +322,14 @@ export interface ArticlePdf {
  */
 export interface ArticleWeb {
   id: string;
+  permissions?: (string | Permission)[] | null;
+  permissions_seeds?: string | null;
   cover: string | Media;
   title?: string | null;
   description?: string | null;
   publishedAt: string;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
-  permissions?: (string | Permission)[] | null;
-  permissions_seeds?: string | null;
   slug: string;
   content?: {
     root: {
@@ -362,8 +362,7 @@ export interface Book {
   publishedAt: string;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
-  permissions?: (string | Permission)[] | null;
-  permissions_seeds?: string | null;
+  slug: string;
   Ediciones?:
     | {
         link?: string | null;
@@ -631,14 +630,14 @@ export interface TaxonomySelect<T extends boolean = true> {
  * via the `definition` "article_pdf_select".
  */
 export interface ArticlePdfSelect<T extends boolean = true> {
+  permissions?: T;
+  permissions_seeds?: T;
   cover?: T;
   title?: T;
   description?: T;
   publishedAt?: T;
   categories?: T;
   seeds?: T;
-  permissions?: T;
-  permissions_seeds?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -657,14 +656,14 @@ export interface ArticlePdfSelect<T extends boolean = true> {
  * via the `definition` "article_web_select".
  */
 export interface ArticleWebSelect<T extends boolean = true> {
+  permissions?: T;
+  permissions_seeds?: T;
   cover?: T;
   title?: T;
   description?: T;
   publishedAt?: T;
   categories?: T;
   seeds?: T;
-  permissions?: T;
-  permissions_seeds?: T;
   slug?: T;
   content?: T;
   content_html?: T;
@@ -682,8 +681,7 @@ export interface BookSelect<T extends boolean = true> {
   publishedAt?: T;
   categories?: T;
   seeds?: T;
-  permissions?: T;
-  permissions_seeds?: T;
+  slug?: T;
   Ediciones?:
     | T
     | {
