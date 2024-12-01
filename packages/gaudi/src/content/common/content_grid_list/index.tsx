@@ -19,11 +19,9 @@ export const ContentGridList = <T,>({
 }: Props<T>): JSX.Element => {
     return (
         <div className={`grid ${gridCols} ${gridColsSm} ${gridColsMd} ${gridColsLg} ${gap}`}>
-            {items.map((item, index) => (
-                <div key={index}>
-                    {renderBox(item, index)}
-                </div>
-            ))}
+            {items.map((item, index) => <div key={index}>
+                { renderBox(item, index) }
+            </div>)}
         </div>
     );
 };

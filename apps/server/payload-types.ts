@@ -19,6 +19,7 @@ export interface Config {
     taxonomy: Taxonomy;
     article_pdf: ArticlePdf;
     article_web: ArticleWeb;
+    book: Book;
     permission: Permission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -44,6 +45,7 @@ export interface Config {
     taxonomy: TaxonomySelect<false> | TaxonomySelect<true>;
     article_pdf: ArticlePdfSelect<false> | ArticlePdfSelect<true>;
     article_web: ArticleWebSelect<false> | ArticleWebSelect<true>;
+    book: BookSelect<false> | BookSelect<true>;
     permission: PermissionSelect<false> | PermissionSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -350,6 +352,31 @@ export interface ArticleWeb {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "book".
+ */
+export interface Book {
+  id: string;
+  cover: string | Media;
+  title?: string | null;
+  description?: string | null;
+  publishedAt: string;
+  categories?: (string | Taxonomy)[] | null;
+  seeds?: string | null;
+  permissions?: (string | Permission)[] | null;
+  permissions_seeds?: string | null;
+  Ediciones?:
+    | {
+        link?: string | null;
+        variant?: ('audiobook' | 'ebook' | 'book') | null;
+        language?: ('es' | 'en') | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -386,6 +413,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'article_web';
         value: string | ArticleWeb;
+      } | null)
+    | ({
+        relationTo: 'book';
+        value: string | Book;
       } | null)
     | ({
         relationTo: 'permission';
@@ -637,6 +668,30 @@ export interface ArticleWebSelect<T extends boolean = true> {
   slug?: T;
   content?: T;
   content_html?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "book_select".
+ */
+export interface BookSelect<T extends boolean = true> {
+  cover?: T;
+  title?: T;
+  description?: T;
+  publishedAt?: T;
+  categories?: T;
+  seeds?: T;
+  permissions?: T;
+  permissions_seeds?: T;
+  Ediciones?:
+    | T
+    | {
+        link?: T;
+        variant?: T;
+        language?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
