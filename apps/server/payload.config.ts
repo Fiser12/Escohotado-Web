@@ -23,6 +23,7 @@ import * as Sentry from '@sentry/nextjs'
 import { S3_PLUGIN_CONFIG } from '@/plugins/s3'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { contentCollections } from '@/collections/content'
+import { migrations } from '@/migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -41,6 +42,7 @@ export default buildConfig({
   ],
   db: postgresAdapter({
     idType: 'uuid',
+    prodMigrations: migrations,
     pool: {
       connectionString: process.env.DATABASE_URL,
     },
