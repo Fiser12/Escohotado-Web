@@ -6,6 +6,8 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_prices_interval" AS ENUM('day', 'week', 'month', 'year');
   CREATE TYPE "public"."enum_products_type" AS ENUM('good', 'service');
   CREATE TYPE "public"."enum_subscriptions_status" AS ENUM('trialing', 'active', 'canceled', 'incomplete', 'incomplete_expired', 'past_due', 'unpaid', 'paused');
+  CREATE TYPE "public"."enum_book_ediciones_variant" AS ENUM('audiobook', 'ebook', 'book');
+  CREATE TYPE "public"."enum_book_ediciones_language" AS ENUM('es', 'en');
   CREATE TABLE IF NOT EXISTS "users_accounts" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
@@ -157,12 +159,12 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "article_pdf" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"permissions_seeds" varchar DEFAULT '',
   	"cover_id" uuid NOT NULL,
   	"title" varchar,
   	"description" varchar,
   	"published_at" timestamp(3) with time zone NOT NULL,
   	"seeds" varchar DEFAULT '',
-  	"permissions_seeds" varchar DEFAULT '',
   	"prefix" varchar DEFAULT 'article_pdf',
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -182,18 +184,18 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"order" integer,
   	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"taxonomy_id" varchar,
-  	"permission_id" varchar
+  	"permission_id" varchar,
+  	"taxonomy_id" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "article_web" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"permissions_seeds" varchar DEFAULT '',
   	"cover_id" uuid NOT NULL,
   	"title" varchar,
   	"description" varchar,
   	"published_at" timestamp(3) with time zone NOT NULL,
   	"seeds" varchar DEFAULT '',
-  	"permissions_seeds" varchar DEFAULT '',
   	"slug" varchar NOT NULL,
   	"content" jsonb,
   	"content_html" varchar,
@@ -206,8 +208,58 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"order" integer,
   	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"taxonomy_id" varchar,
-  	"permission_id" varchar
+  	"permission_id" varchar,
+  	"taxonomy_id" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "book_ediciones" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"link" varchar,
+  	"variant" "enum_book_ediciones_variant",
+  	"language" "enum_book_ediciones_language"
+  );
+  
+  CREATE TABLE IF NOT EXISTS "book" (
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"cover_id" uuid NOT NULL,
+  	"title" varchar,
+  	"description" varchar,
+  	"published_at" timestamp(3) with time zone NOT NULL,
+  	"seeds" varchar DEFAULT '',
+  	"slug" varchar NOT NULL,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "book_rels" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"order" integer,
+  	"parent_id" uuid NOT NULL,
+  	"path" varchar NOT NULL,
+  	"taxonomy_id" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "video" (
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"url" varchar NOT NULL,
+  	"tags" jsonb,
+  	"thumbnail_url" varchar,
+  	"title" varchar,
+  	"description" varchar,
+  	"published_at" timestamp(3) with time zone,
+  	"seeds" varchar DEFAULT '',
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "video_rels" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"order" integer,
+  	"parent_id" uuid NOT NULL,
+  	"path" varchar NOT NULL,
+  	"taxonomy_id" varchar
   );
   
   CREATE TABLE IF NOT EXISTS "permission" (
@@ -238,6 +290,8 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"taxonomy_id" varchar,
   	"article_pdf_id" uuid,
   	"article_web_id" uuid,
+  	"book_id" uuid,
+  	"video_id" uuid,
   	"permission_id" varchar
   );
   
@@ -344,13 +398,13 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "article_pdf_rels" ADD CONSTRAINT "article_pdf_rels_taxonomy_fk" FOREIGN KEY ("taxonomy_id") REFERENCES "public"."taxonomy"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "article_pdf_rels" ADD CONSTRAINT "article_pdf_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "article_pdf_rels" ADD CONSTRAINT "article_pdf_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "article_pdf_rels" ADD CONSTRAINT "article_pdf_rels_taxonomy_fk" FOREIGN KEY ("taxonomy_id") REFERENCES "public"."taxonomy"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -368,13 +422,49 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
+   ALTER TABLE "article_web_rels" ADD CONSTRAINT "article_web_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
    ALTER TABLE "article_web_rels" ADD CONSTRAINT "article_web_rels_taxonomy_fk" FOREIGN KEY ("taxonomy_id") REFERENCES "public"."taxonomy"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "article_web_rels" ADD CONSTRAINT "article_web_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "book_ediciones" ADD CONSTRAINT "book_ediciones_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."book"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "book" ADD CONSTRAINT "book_cover_id_media_id_fk" FOREIGN KEY ("cover_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "book_rels" ADD CONSTRAINT "book_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."book"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "book_rels" ADD CONSTRAINT "book_rels_taxonomy_fk" FOREIGN KEY ("taxonomy_id") REFERENCES "public"."taxonomy"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "video_rels" ADD CONSTRAINT "video_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."video"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "video_rels" ADD CONSTRAINT "video_rels_taxonomy_fk" FOREIGN KEY ("taxonomy_id") REFERENCES "public"."taxonomy"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -429,6 +519,18 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_article_web_fk" FOREIGN KEY ("article_web_id") REFERENCES "public"."article_web"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_book_fk" FOREIGN KEY ("book_id") REFERENCES "public"."book"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_video_fk" FOREIGN KEY ("video_id") REFERENCES "public"."video"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -491,8 +593,8 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "article_pdf_rels_order_idx" ON "article_pdf_rels" USING btree ("order");
   CREATE INDEX IF NOT EXISTS "article_pdf_rels_parent_idx" ON "article_pdf_rels" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "article_pdf_rels_path_idx" ON "article_pdf_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "article_pdf_rels_taxonomy_id_idx" ON "article_pdf_rels" USING btree ("taxonomy_id");
   CREATE INDEX IF NOT EXISTS "article_pdf_rels_permission_id_idx" ON "article_pdf_rels" USING btree ("permission_id");
+  CREATE INDEX IF NOT EXISTS "article_pdf_rels_taxonomy_id_idx" ON "article_pdf_rels" USING btree ("taxonomy_id");
   CREATE INDEX IF NOT EXISTS "article_web_cover_idx" ON "article_web" USING btree ("cover_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "article_web_slug_idx" ON "article_web" USING btree ("slug");
   CREATE INDEX IF NOT EXISTS "article_web_updated_at_idx" ON "article_web" USING btree ("updated_at");
@@ -500,8 +602,25 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "article_web_rels_order_idx" ON "article_web_rels" USING btree ("order");
   CREATE INDEX IF NOT EXISTS "article_web_rels_parent_idx" ON "article_web_rels" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "article_web_rels_path_idx" ON "article_web_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "article_web_rels_taxonomy_id_idx" ON "article_web_rels" USING btree ("taxonomy_id");
   CREATE INDEX IF NOT EXISTS "article_web_rels_permission_id_idx" ON "article_web_rels" USING btree ("permission_id");
+  CREATE INDEX IF NOT EXISTS "article_web_rels_taxonomy_id_idx" ON "article_web_rels" USING btree ("taxonomy_id");
+  CREATE INDEX IF NOT EXISTS "book_ediciones_order_idx" ON "book_ediciones" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "book_ediciones_parent_id_idx" ON "book_ediciones" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "book_cover_idx" ON "book" USING btree ("cover_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "book_slug_idx" ON "book" USING btree ("slug");
+  CREATE INDEX IF NOT EXISTS "book_updated_at_idx" ON "book" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "book_created_at_idx" ON "book" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "book_rels_order_idx" ON "book_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "book_rels_parent_idx" ON "book_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "book_rels_path_idx" ON "book_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "book_rels_taxonomy_id_idx" ON "book_rels" USING btree ("taxonomy_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "video_url_idx" ON "video" USING btree ("url");
+  CREATE INDEX IF NOT EXISTS "video_updated_at_idx" ON "video" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "video_created_at_idx" ON "video" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "video_rels_order_idx" ON "video_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "video_rels_parent_idx" ON "video_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "video_rels_path_idx" ON "video_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "video_rels_taxonomy_id_idx" ON "video_rels" USING btree ("taxonomy_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "permission_slug_idx" ON "permission" USING btree ("slug");
   CREATE INDEX IF NOT EXISTS "permission_updated_at_idx" ON "permission" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "permission_created_at_idx" ON "permission" USING btree ("created_at");
@@ -519,6 +638,8 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_taxonomy_id_idx" ON "payload_locked_documents_rels" USING btree ("taxonomy_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_article_pdf_id_idx" ON "payload_locked_documents_rels" USING btree ("article_pdf_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_article_web_id_idx" ON "payload_locked_documents_rels" USING btree ("article_web_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_book_id_idx" ON "payload_locked_documents_rels" USING btree ("book_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_video_id_idx" ON "payload_locked_documents_rels" USING btree ("video_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_permission_id_idx" ON "payload_locked_documents_rels" USING btree ("permission_id");
   CREATE INDEX IF NOT EXISTS "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
   CREATE INDEX IF NOT EXISTS "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
@@ -549,6 +670,11 @@ export async function down({ payload, req }: MigrateDownArgs): Promise<void> {
   DROP TABLE "article_pdf_rels" CASCADE;
   DROP TABLE "article_web" CASCADE;
   DROP TABLE "article_web_rels" CASCADE;
+  DROP TABLE "book_ediciones" CASCADE;
+  DROP TABLE "book" CASCADE;
+  DROP TABLE "book_rels" CASCADE;
+  DROP TABLE "video" CASCADE;
+  DROP TABLE "video_rels" CASCADE;
   DROP TABLE "permission" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
   DROP TABLE "payload_locked_documents_rels" CASCADE;
@@ -558,5 +684,7 @@ export async function down({ payload, req }: MigrateDownArgs): Promise<void> {
   DROP TYPE "public"."enum_prices_type";
   DROP TYPE "public"."enum_prices_interval";
   DROP TYPE "public"."enum_products_type";
-  DROP TYPE "public"."enum_subscriptions_status";`)
+  DROP TYPE "public"."enum_subscriptions_status";
+  DROP TYPE "public"."enum_book_ediciones_variant";
+  DROP TYPE "public"."enum_book_ediciones_language";`)
 }

@@ -1,5 +1,5 @@
 {
-  "id": "20e0654b-3c0c-4c7c-8eba-80dbd6103404",
+  "id": "8adf01a3-7ec7-4ca8-b34d-fb298798bb48",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1533,6 +1533,13 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "permissions_seeds": {
+          "name": "permissions_seeds",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
         "cover_id": {
           "name": "cover_id",
           "type": "uuid",
@@ -1559,13 +1566,6 @@
         },
         "seeds": {
           "name": "seeds",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "''"
-        },
-        "permissions_seeds": {
-          "name": "permissions_seeds",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false,
@@ -1758,14 +1758,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "taxonomy_id": {
-          "name": "taxonomy_id",
+        "permission_id": {
+          "name": "permission_id",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
-        "permission_id": {
-          "name": "permission_id",
+        "taxonomy_id": {
+          "name": "taxonomy_id",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
@@ -1817,11 +1817,11 @@
           "method": "btree",
           "with": {}
         },
-        "article_pdf_rels_taxonomy_id_idx": {
-          "name": "article_pdf_rels_taxonomy_id_idx",
+        "article_pdf_rels_permission_id_idx": {
+          "name": "article_pdf_rels_permission_id_idx",
           "columns": [
             {
-              "expression": "taxonomy_id",
+              "expression": "permission_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1832,11 +1832,11 @@
           "method": "btree",
           "with": {}
         },
-        "article_pdf_rels_permission_id_idx": {
-          "name": "article_pdf_rels_permission_id_idx",
+        "article_pdf_rels_taxonomy_id_idx": {
+          "name": "article_pdf_rels_taxonomy_id_idx",
           "columns": [
             {
-              "expression": "permission_id",
+              "expression": "taxonomy_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1862,12 +1862,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "article_pdf_rels_taxonomy_fk": {
-          "name": "article_pdf_rels_taxonomy_fk",
+        "article_pdf_rels_permission_fk": {
+          "name": "article_pdf_rels_permission_fk",
           "tableFrom": "article_pdf_rels",
-          "tableTo": "taxonomy",
+          "tableTo": "permission",
           "columnsFrom": [
-            "taxonomy_id"
+            "permission_id"
           ],
           "columnsTo": [
             "id"
@@ -1875,12 +1875,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "article_pdf_rels_permission_fk": {
-          "name": "article_pdf_rels_permission_fk",
+        "article_pdf_rels_taxonomy_fk": {
+          "name": "article_pdf_rels_taxonomy_fk",
           "tableFrom": "article_pdf_rels",
-          "tableTo": "permission",
+          "tableTo": "taxonomy",
           "columnsFrom": [
-            "permission_id"
+            "taxonomy_id"
           ],
           "columnsTo": [
             "id"
@@ -1905,6 +1905,13 @@
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "permissions_seeds": {
+          "name": "permissions_seeds",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
         },
         "cover_id": {
           "name": "cover_id",
@@ -1932,13 +1939,6 @@
         },
         "seeds": {
           "name": "seeds",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "''"
-        },
-        "permissions_seeds": {
-          "name": "permissions_seeds",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false,
@@ -2088,14 +2088,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "taxonomy_id": {
-          "name": "taxonomy_id",
+        "permission_id": {
+          "name": "permission_id",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
-        "permission_id": {
-          "name": "permission_id",
+        "taxonomy_id": {
+          "name": "taxonomy_id",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
@@ -2147,11 +2147,11 @@
           "method": "btree",
           "with": {}
         },
-        "article_web_rels_taxonomy_id_idx": {
-          "name": "article_web_rels_taxonomy_id_idx",
+        "article_web_rels_permission_id_idx": {
+          "name": "article_web_rels_permission_id_idx",
           "columns": [
             {
-              "expression": "taxonomy_id",
+              "expression": "permission_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -2162,11 +2162,11 @@
           "method": "btree",
           "with": {}
         },
-        "article_web_rels_permission_id_idx": {
-          "name": "article_web_rels_permission_id_idx",
+        "article_web_rels_taxonomy_id_idx": {
+          "name": "article_web_rels_taxonomy_id_idx",
           "columns": [
             {
-              "expression": "permission_id",
+              "expression": "taxonomy_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -2192,12 +2192,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "article_web_rels_taxonomy_fk": {
-          "name": "article_web_rels_taxonomy_fk",
+        "article_web_rels_permission_fk": {
+          "name": "article_web_rels_permission_fk",
           "tableFrom": "article_web_rels",
-          "tableTo": "taxonomy",
+          "tableTo": "permission",
           "columnsFrom": [
-            "taxonomy_id"
+            "permission_id"
           ],
           "columnsTo": [
             "id"
@@ -2205,12 +2205,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "article_web_rels_permission_fk": {
-          "name": "article_web_rels_permission_fk",
+        "article_web_rels_taxonomy_fk": {
+          "name": "article_web_rels_taxonomy_fk",
           "tableFrom": "article_web_rels",
-          "tableTo": "permission",
+          "tableTo": "taxonomy",
           "columnsFrom": [
-            "permission_id"
+            "taxonomy_id"
           ],
           "columnsTo": [
             "id"
@@ -2363,12 +2363,11 @@
           "notNull": false,
           "default": "''"
         },
-        "permissions_seeds": {
-          "name": "permissions_seeds",
+        "slug": {
+          "name": "slug",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "''"
+          "notNull": true
         },
         "updated_at": {
           "name": "updated_at",
@@ -2397,6 +2396,21 @@
             }
           ],
           "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "book_slug_idx": {
+          "name": "book_slug_idx",
+          "columns": [
+            {
+              "expression": "slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
           "concurrently": false,
           "method": "btree",
           "with": {}
@@ -2486,12 +2500,6 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
-        },
-        "permission_id": {
-          "name": "permission_id",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {
@@ -2554,21 +2562,6 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
-        },
-        "book_rels_permission_id_idx": {
-          "name": "book_rels_permission_id_idx",
-          "columns": [
-            {
-              "expression": "permission_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
         }
       },
       "foreignKeys": {
@@ -2597,13 +2590,254 @@
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.video": {
+      "name": "video",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
-        "book_rels_permission_fk": {
-          "name": "book_rels_permission_fk",
-          "tableFrom": "book_rels",
-          "tableTo": "permission",
+        "url": {
+          "name": "url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tags": {
+          "name": "tags",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "thumbnail_url": {
+          "name": "thumbnail_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "published_at": {
+          "name": "published_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seeds": {
+          "name": "seeds",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "video_url_idx": {
+          "name": "video_url_idx",
+          "columns": [
+            {
+              "expression": "url",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "video_updated_at_idx": {
+          "name": "video_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "video_created_at_idx": {
+          "name": "video_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.video_rels": {
+      "name": "video_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxonomy_id": {
+          "name": "taxonomy_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "video_rels_order_idx": {
+          "name": "video_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "video_rels_parent_idx": {
+          "name": "video_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "video_rels_path_idx": {
+          "name": "video_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "video_rels_taxonomy_id_idx": {
+          "name": "video_rels_taxonomy_id_idx",
+          "columns": [
+            {
+              "expression": "taxonomy_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "video_rels_parent_fk": {
+          "name": "video_rels_parent_fk",
+          "tableFrom": "video_rels",
+          "tableTo": "video",
           "columnsFrom": [
-            "permission_id"
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "video_rels_taxonomy_fk": {
+          "name": "video_rels_taxonomy_fk",
+          "tableFrom": "video_rels",
+          "tableTo": "taxonomy",
+          "columnsFrom": [
+            "taxonomy_id"
           ],
           "columnsTo": [
             "id"
@@ -2877,6 +3111,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "video_id": {
+          "name": "video_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
         "permission_id": {
           "name": "permission_id",
           "type": "varchar",
@@ -3065,6 +3305,21 @@
           "method": "btree",
           "with": {}
         },
+        "payload_locked_documents_rels_video_id_idx": {
+          "name": "payload_locked_documents_rels_video_id_idx",
+          "columns": [
+            {
+              "expression": "video_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "payload_locked_documents_rels_permission_id_idx": {
           "name": "payload_locked_documents_rels_permission_id_idx",
           "columns": [
@@ -3205,6 +3460,19 @@
           "tableTo": "book",
           "columnsFrom": [
             "book_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_video_fk": {
+          "name": "payload_locked_documents_rels_video_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "video",
+          "columnsFrom": [
+            "video_id"
           ],
           "columnsTo": [
             "id"
