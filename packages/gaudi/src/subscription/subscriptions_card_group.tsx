@@ -68,6 +68,7 @@ export const SubscriptionsGroupCard = ({
                         <SubscriptionCard
                             key={product.id}
                             title={product.name}
+                            interval={price.interval ?? 'month'}
                             price={`${price.unitAmount / 100} ${price.currency}`}
                             features={product.features?.mapNotNull((feature) => feature.title) ?? []}
                             mainCard={product.metadata?.prominent === 'true'}

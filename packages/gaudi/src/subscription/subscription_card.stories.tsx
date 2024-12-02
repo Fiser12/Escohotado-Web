@@ -8,6 +8,7 @@ const meta = {
   args: {
     price: '49.99€',
     title: 'Plan Básico',
+    interval: 'month',
     features: [
       'Acceso a la newsletter',
       'Acceso anticipado a los vídeos',

@@ -5,6 +5,7 @@ import { H3 } from '../common/headers/H3';
 type Args = {
   title: string;
   price: string;
+  interval: 'day' | 'week' | 'month' | 'year';
   features: string[];
   mainCard?: boolean;
   children?: React.ReactNode;
@@ -13,6 +14,7 @@ type Args = {
 export const SubscriptionCard = ({
   title,
   price,
+  interval,
   features,
   mainCard = false,
   children,
@@ -34,7 +36,14 @@ export const SubscriptionCard = ({
             {price}
           </div>
           <div className="text-neutral-400 text-base font-normal font-montserrat leading-normal">
-            al año
+            {
+              {
+                day: 'al día',
+                week: 'a la semana',
+                month: 'al mes',
+                year: 'al año',
+              }[interval]
+            }
           </div>
         </div>
       </div>
