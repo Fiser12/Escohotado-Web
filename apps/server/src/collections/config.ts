@@ -8,3 +8,4 @@ export const COLLECTION_SLUG_SUBSCRIPTIONS = 'subscriptions' as const
 export const COLLECTION_SLUG_ARTICLE_PDF = 'article_pdf' as const
 export const COLLECTION_SLUG_ARTICLE_WEB = 'article_web' as const
 export const COLLECTION_SLUG_BOOK = 'book' as const
+export const COLLECTION_SLUG_VIDEO = 'video' as const

@@ -58,7 +58,7 @@ const populateSeedArrayHook: (props: TaxonomyBuilderProps) => CollectionBeforeCh
   }
 }
 
-interface TaxonomyBuilderResult {
+export interface TaxonomyBuilderResult {
     fields: Field[]
     hook: CollectionBeforeChangeHook
 }

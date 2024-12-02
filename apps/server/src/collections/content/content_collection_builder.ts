@@ -1,10 +1,10 @@
-import type { Access, CollectionConfig } from 'payload'
+import type { Access, CollectionConfig, Field } from 'payload'
 import { checkReadPermissions, isAdmin } from '@/utils/access'
 import { taxonomiesRelationshipBuilder } from '@/collections/taxonomy/taxonomiesRelationshipFields'
 import { permissionRelationship, populatePermissionSeedsHook } from '@/collections/permissions/permissionsRelationshipFields'
 import { COLLECTION_SLUG_MEDIA } from '../config'
 
-const categoriesRelationship = taxonomiesRelationshipBuilder({
+export const categoriesRelationship = taxonomiesRelationshipBuilder({
   relationship: { 
     name: 'categories', 
     label: 'Categorías'
