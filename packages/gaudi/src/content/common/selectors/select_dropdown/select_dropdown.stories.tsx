@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { SelectBox } from ".";
-import { TagIcon } from "../../../common/icons/tag_icon";
-import { PenIcon } from "../../../common/icons/pen_icon";
-import { ESFlag } from "../../../common/icons/flags/ES";
-import { ENFlag } from "../../../common/icons/flags/EN";
+import { SelectDropdown } from ".";
+import { TagIcon } from "../../../../common/icons/tag_icon";
+import { PenIcon } from "../../../../common/icons/pen_icon";
+import { ESFlag } from "../../../../common/icons/flags/ES";
+import { ENFlag } from "../../../../common/icons/flags/EN";
 
-const meta: Meta<typeof SelectBox> = {
+const meta: Meta<typeof SelectDropdown> = {
     title: "Atoms/Selectors",
-    component: SelectBox,
+    component: SelectDropdown,
     parameters: {
         layout: "fullscreen",
         design: {
@@ -16,7 +16,7 @@ const meta: Meta<typeof SelectBox> = {
         },
     },
     argTypes: {
-        title: { control: "text", description: "Title of the filter" },
+        title: { control: "text", description: "Title of the selector" },
         onSelectedTagsChange: () => { },
         color: {
             control: {
@@ -68,7 +68,7 @@ export const Categories: Story = {
         multiple: true,
     },
     render: (args) => (
-        <SelectBox {...args}
+        <SelectDropdown {...args}
             iconButton={args.iconButton ? <TagIcon /> : null}
         />
     ),
@@ -95,7 +95,7 @@ export const Language: Story = {
         multiple: false,
     },
     render: (args) => (
-        <SelectBox {...args}
+        <SelectDropdown {...args}
             className="min-w-[190px]"
         />
     ),
