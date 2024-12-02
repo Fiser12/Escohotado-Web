@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { H4 } from "../../../server";
 import { ImageParallax } from "./image_parallax";
+import { H4 } from "../../../common/headers/H4";
 
 interface Props {
     title: string;

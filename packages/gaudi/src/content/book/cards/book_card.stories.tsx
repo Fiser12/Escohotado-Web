@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { BookCard } from ".";
-import { title } from "process";
 
 const meta: Meta = {
     title: "Books/Cards",
