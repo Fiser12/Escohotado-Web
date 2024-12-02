@@ -1,13 +1,17 @@
 "use client";
 
 import { parseAsString, useQueryState } from "nuqs";
-import { FilterBar } from "gaudi/client";
+import { SelectBox } from "gaudi/client";
 
 interface Props {
 	title: string
 	multiple?: boolean;
 	queryKey: string;
-	tags: Record<string, string>;
+	tags: Record<string, {
+		label: string,
+		icon?: React.ReactNode
+	}
+	>;
 }
 
 export function FilterBarNuqs(props: Props) {
@@ -19,8 +23,9 @@ export function FilterBarNuqs(props: Props) {
 	);
 
 	return (
-		<FilterBar
+		<SelectBox
 			{...props}
+			showSelectionAtLabel={false}
 			color="white"
 			selectedTags={tags.split(',').filter(Boolean) ?? []}
 			onSelectedTagsChange={(tags) => {
@@ -29,4 +34,3 @@ export function FilterBarNuqs(props: Props) {
 		/>
 	);
 }
-

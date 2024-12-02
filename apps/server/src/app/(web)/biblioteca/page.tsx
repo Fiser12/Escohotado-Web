@@ -2,6 +2,7 @@ import { COLLECTION_SLUG_BOOK } from "@/collections/config";
 import { getCurrentUser, getPayload } from "@/utils/payload";
 import { ContentWrapper, H2, BookCard } from "gaudi/server";
 import { ContentGridList } from "gaudi/server";
+import { Media } from "payload-types";
 export const pageSize = 10;
 
 const Page = async () => {
@@ -13,7 +14,7 @@ const Page = async () => {
       sort: "-publishedAt"
     })
   ]);
-
+  
   return (
     <ContentWrapper
       className="flex flex-col gap-y-5"
@@ -27,7 +28,8 @@ const Page = async () => {
             <BookCard
               key={index}
               title={book.title ?? "No title"}
-              bookHref={book.slug ?? "#"}
+              link={`/biblioteca/${book.slug}`}
+              coverHref={(book.cover as Media).url ?? "#"}
             />
           )}
         />

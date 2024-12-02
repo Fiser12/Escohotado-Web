@@ -3,22 +3,23 @@ import { H4 } from "../../../server";
 
 interface Props {
     title: string;
-    bookHref: string;
+    coverHref: string;
+    link: string;
 }
 
 export const BookCard = (props: Props) => {
     const containerClass = classNames(
-        'flex flex-col gap-5 max-w-[200px]'
+        'flex flex-col gap-5'
     );
 
     return (
-        <div className={containerClass}>
+        <a className={containerClass} href={props.link}>
             <img
-                src={props.bookHref}
+                src={props.coverHref}
                 alt={props.title}
-                className="max-h-[307px]"
+                className="max-h-[507px]"
             />
             <H4 label={props.title} className="line-clamp-3"></H4>
-        </div>
+        </a>
     );
 };

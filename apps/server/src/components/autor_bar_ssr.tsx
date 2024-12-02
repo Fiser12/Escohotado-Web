@@ -16,10 +16,10 @@ export async function AutorBarSSR(props: Props) {
 			]
 		}  
 	})
-	const tagsAsRecord: Record<string, string> = {};
+	const tagsAsRecord: Record<string, { label: string }> = {};
 	taxonomies.docs.forEach((taxonomy) => {
 		if (taxonomy.seed)
-		tagsAsRecord[taxonomy.seed] = taxonomy.singular_name;
+		tagsAsRecord[taxonomy.seed] = {label: taxonomy.singular_name};
 	});
 
 	return (
