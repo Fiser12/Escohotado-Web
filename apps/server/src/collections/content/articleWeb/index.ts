@@ -1,8 +1,8 @@
 import { COLLECTION_SLUG_ARTICLE_WEB } from '../../config'
-import { contentCollectionBuilder } from '../content_collection_builder'
+import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 import { HTMLConverterFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 
-export const articleWeb = contentCollectionBuilder({
+export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
   labels: {
     singular: 'Articulo Web',

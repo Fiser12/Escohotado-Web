@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import 'atropos/scss';
+
 @plugin "@tailwindcss/typography";
 @source "../../../../packages/gaudi/src";
 

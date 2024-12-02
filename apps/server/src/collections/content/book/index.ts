@@ -9,6 +9,13 @@ export const book = contentCollectionBuilder({
   },
   fields: [
     {
+      label: 'Slug',
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+    },
+    {
       type: "array",
       name: "Ediciones",
       fields: [

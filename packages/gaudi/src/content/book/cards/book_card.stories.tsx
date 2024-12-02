@@ -14,7 +14,7 @@ const meta: Meta = {
     },
     argTypes: {
         title: { control: "text", description: "Title of the book" },
-        bookHref: { control: "text", description: "Image URL for the book" },
+        coverHref: { control: "text", description: "Image URL for the book" },
     },
 };
 
@@ -26,6 +26,6 @@ export const Book: Story = {
     name: "Book",
     args: {
         title: "Sample Book Title",
-        bookHref: "https://placehold.co/200x307",
+        coverHref: "https://placehold.co/200x307",
     },
 };
