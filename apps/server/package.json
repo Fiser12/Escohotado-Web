@@ -33,6 +33,7 @@
     "@payloadcms/storage-s3": "3.0.0",
     "@payloadcms/ui": "3.0.0",
     "@sentry/nextjs": "^8.37.1",
+    "atropos": "^2.0.2",
     "babel-plugin-react-compiler": "0.0.0-experimental-48eb8f4-20240822",
     "classnames": "^2.5.1",
     "config": "workspace:*",

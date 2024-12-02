@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import { H4 } from "../../../server";
+import { ImageParallax } from "./image_parallax";
+import { H4 } from "../../../common/headers/H4";
 
 interface Props {
     title: string;
@@ -14,11 +15,13 @@ export const BookCard = (props: Props) => {
 
     return (
         <a className={containerClass} href={props.link}>
-            <img
-                src={props.coverHref}
-                alt={props.title}
+            <ImageParallax
                 className="max-h-[507px]"
-            />
+                shadow={false}
+            >
+                <img src={props.coverHref} alt={props.title} />
+            </ImageParallax>
+
             <H4 label={props.title} className="line-clamp-3"></H4>
         </a>
     );

@@ -1,7 +1,7 @@
 "use client";
 
 import { parseAsString, useQueryState } from "nuqs";
-import { SelectBox } from "gaudi/client";
+import { SelectDropdown } from "gaudi/client";
 
 interface Props {
 	title: string
@@ -23,7 +23,7 @@ export function FilterBarNuqs(props: Props) {
 	);
 
 	return (
-		<SelectBox
+		<SelectDropdown
 			{...props}
 			showSelectionAtLabel={false}
 			color="white"

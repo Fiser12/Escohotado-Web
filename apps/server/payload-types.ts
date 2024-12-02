@@ -20,6 +20,7 @@ export interface Config {
     article_pdf: ArticlePdf;
     article_web: ArticleWeb;
     book: Book;
+    video: Video;
     permission: Permission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -46,6 +47,7 @@ export interface Config {
     article_pdf: ArticlePdfSelect<false> | ArticlePdfSelect<true>;
     article_web: ArticleWebSelect<false> | ArticleWebSelect<true>;
     book: BookSelect<false> | BookSelect<true>;
+    video: VideoSelect<false> | VideoSelect<true>;
     permission: PermissionSelect<false> | PermissionSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -376,6 +378,31 @@ export interface Book {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video".
+ */
+export interface Video {
+  id: string;
+  url: string;
+  tags?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  thumbnailUrl?: string | null;
+  title?: string | null;
+  description?: string | null;
+  publishedAt?: string | null;
+  categories?: (string | Taxonomy)[] | null;
+  seeds?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -416,6 +443,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'book';
         value: string | Book;
+      } | null)
+    | ({
+        relationTo: 'video';
+        value: string | Video;
       } | null)
     | ({
         relationTo: 'permission';
@@ -690,6 +721,22 @@ export interface BookSelect<T extends boolean = true> {
         language?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video_select".
+ */
+export interface VideoSelect<T extends boolean = true> {
+  url?: T;
+  tags?: T;
+  thumbnailUrl?: T;
+  title?: T;
+  description?: T;
+  publishedAt?: T;
+  categories?: T;
+  seeds?: T;
   updatedAt?: T;
   createdAt?: T;
 }

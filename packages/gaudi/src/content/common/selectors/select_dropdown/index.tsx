@@ -19,7 +19,7 @@ type Props = {
 	className?: string;
 };
 
-export const SelectBox = (props: Props): JSX.Element => {
+export const SelectDropdown = (props: Props): JSX.Element => {
 	const multiple = props.multiple ?? true;
 	const onSelectedTagsChange = props.onSelectedTagsChange;
 	const [isOpen, setIsOpen] = useState(false);
