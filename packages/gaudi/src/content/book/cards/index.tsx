@@ -16,13 +16,13 @@ export const BookCard = (props: Props) => {
     return (
         <a className={containerClass} href={props.link}>
             <ImageParallax
-                className="max-h-[507px]"
+                className="max-h-[550px]"
                 shadow={false}
             >
                 <img src={props.coverHref} alt={props.title} />
             </ImageParallax>
 
-            <H4 label={props.title} className="line-clamp-3"></H4>
+            <H4 label={props.title} className="line-clamp-3 text-center pb-3 px-4"></H4>
         </a>
     );
 };
