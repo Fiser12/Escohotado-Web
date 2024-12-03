@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { BookDetail } from ".";
+import { BookMain } from ".";
 
 const meta: Meta = {
-    title: "Books/Pages/Detail",
-    component: BookDetail,
+    title: "Books/Pages/Main",
+    component: BookMain,
     parameters: {
         layout: "fullscreen",
         design: {
             type: "figspec",
-            url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=672-2292&t=IbC3J7bF5FGU0FcI-4",
+            url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=166-568&t=SR06bJEJulQ61GKV-4",
         },
     },
 };

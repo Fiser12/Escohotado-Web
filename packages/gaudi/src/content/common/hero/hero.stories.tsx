@@ -45,7 +45,7 @@ export const Book: Story = {
             {...(args as any)}
             image={
                 <ImageParallax
-                    className="max-h-[550px]"
+                    className="max-h-[550px] px-2 sm:px-20 md:px-8 lg:px-10"
                     shadow={false}
                 >
                     <img src="https://placehold.co/350x500" alt="Sample image" />

@@ -3,26 +3,26 @@ import classNames from 'classnames';
 type Props = {
     title: string;
     isSelected: boolean;
-    onClick: () => void
+    onClick: () => void;
     className?: string;
 };
 
 export const SelectBox = (props: Props): JSX.Element => {
     const buttonClass = classNames(
-        'relative w-[200px] h-[80px] flex flex-col justify-center items-center rounded border-2 font-body px-8 hover:bg-gray-light focus:bg-primary-50',
+        'relative min-[439px]:max-w-[200px] w-full h-[80px] flex flex-col justify-center items-center rounded border-[1.5px] font-body px-8 hover:bg-gray-light hover:border-primary-50 focus:bg-primary-50',
         props.className,
         {
-            'border-primary-100 bg-primary-50 font-bold text-primary-400': props.isSelected,
-            'border-gray-light bg-white': !props.isSelected,
+            'border-primary-200 bg-primary-50 font-bold text-primary-400': props.isSelected,
+            'border-primary-100 bg-transparent': !props.isSelected,
         },
     );
 
     const checkboxClass = classNames(
-        'absolute bottom-0 right-0 w-6 h-6 flex items-center justify-center p-1 m-2 rounded border-2 text-primary-400  bg-white',
+        'absolute bottom-0 right-0 w-6 h-6 flex items-center justify-center p-1 m-2 rounded border-[1.5px] text-primary-400 bg-white',
         props.className,
         {
             'border-primary-100': props.isSelected,
-            'border-gray-light': !props.isSelected,
+            'border-gray-disabled': !props.isSelected,
         },
     );
 
