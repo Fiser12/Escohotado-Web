@@ -7,17 +7,14 @@ import { SelectDropdown } from "../../../common/selectors/select_dropdown";
 import { ESFlag } from "../../../../common/icons/flags/ES";
 import { ENFlag } from "../../../../common/icons/flags/EN";
 import { useState } from "react";
-import { H3 } from "../../../../common/headers/H3";
-import { ContentGridList } from "../../../common/content_grid_list";
-import { BookCard } from "../../cards";
+import { H4 } from "../../../../common/headers/H4";
 
-interface Props {
-    title: string;
-    description: string;
-    coverHref: string;
-}
+export const BookDetail = () => {
+    const subtitle = "Cuatro mitos sobre sexo y deber"
+    const summary = `Los ensayos manejan ideas, las novelas personajes. En cambio, los mitos describen ánimos, sentimientos recurrentes de la vida. El discurso mítico cuenta nuestra historia desde la de otros, con un procedimiento parecido al desenvolverse de las muñecas rusas. Cada presente descubre nuevas relecturas, proyectando distintas luces y sombras sobre los conceptos eternos que cada mito dramatiza. Propio y ajeno, dentro y fuera, ayer y mañana pierden así su recíproca extrañeza: lo particular de cada caso expresa también algo constante y general.
 
-export const BookDetail = (props: Props) => {
+    Este libro rememora cuatro leyendas que podrían decirse ocho, pues los mitos de Ishtar, Hera, Deyanira y María son también los de Gilgamesh, Zeus, Hércules y José. Sucesivas en el tiempo, mediterráneas en sentido amplio, iluminan modos distintos de asumir el destino «varón» y el destino «hembra» en el proceloso juego de las relaciones humanas. Exponen etapas de una larga guerra, repleta de equívocos, con razones y cláusulas para diversos armisticios que se van estableciendo entre géneros.`
+
     const options = [
         { id: '1', label: 'eBook', },
         { id: '2', label: 'Tapa blanda', },
@@ -50,10 +47,10 @@ export const BookDetail = (props: Props) => {
     ];
 
     return (
-        <div className="w-full h-auto md:h-screen bg-gray-light">
+        <div className="w-full bg-white">
             <MainHero
                 title="Rameras y Esposas"
-                description="Este libro rememora cuatro leyendas que podrían decirse ocho, pues los mitos de Ishtar, Hera, Deyanira y María son también los de Gilgamesh, Zeus, Hércules y José. Sucesivas en el tiempo, mediterráneas en sentido amplio, iluminan modos distintos de asumir el destino «varón» y el destino «hembra» en el proceloso juego de las relaciones humanas. Exponen etapas de una larga guerra, repleta de equívocos, con razones y cláusulas para diversos armisticios que se van estableciendo entre géneros."
+                description="Reedición de «Rameras y Esposas» (1993) de Antonio Escohotado, en formato impreso, con cuadernillo a color de 20 páginas."
                 children={
                     <div className="flex flex-col gap-8 w-full">
                         <SelectBoxes options={options}></SelectBoxes>
@@ -76,11 +73,16 @@ export const BookDetail = (props: Props) => {
                         className="px-2 sm:px-20 md:px-0 lg:px-8"
                         shadow={false}
                     >
-                        <img src="https://laemboscadura.com/wp-content/uploads/Rameras-y-esposas.png" alt={props.title} />
+                        <img src="https://laemboscadura.com/wp-content/uploads/Rameras-y-esposas.png" alt="Portada libro" />
                     </ImageParallax>
                 }
-                className="h-full"
             />
+            <ContentWrapper>
+                <div className="w-full md:max-w-[900px] flex flex-col mx-auto gap-4 pb-14 md:pb-18 px-0 md:px-10">
+                    <H4 label={subtitle} />
+                    <p className="font-body">{summary}</p>
+                </div>
+            </ContentWrapper>
         </div>
     );
 };

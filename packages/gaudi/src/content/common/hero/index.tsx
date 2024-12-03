@@ -13,7 +13,7 @@ interface Props {
 
 export const MainHero = (props: Props) => {
     const heroClass = classNames(
-        'w-full min-h-[600px] bg-white flex items-center justify-center font-body boder-[1.5px] border-gray-disabled',
+        'w-full min-h-[600px] flex items-center justify-center font-body',
         props.className,
     );
 
