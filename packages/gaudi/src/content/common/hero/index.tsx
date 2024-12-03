@@ -8,11 +8,13 @@ interface Props {
     quote?: string;
     image?: React.ReactNode;
     children?: React.ReactNode;
+    className?: string;
 }
 
 export const MainHero = (props: Props) => {
     const heroClass = classNames(
-        'w-full min-h-[600px] bg-gray-light flex items-center justify-center font-body'
+        'w-full min-h-[600px] bg-white flex items-center justify-center font-body boder-[1.5px] border-gray-disabled',
+        props.className,
     );
 
     const containerClass = classNames(
@@ -20,20 +22,24 @@ export const MainHero = (props: Props) => {
     );
 
     const quoteClass = classNames(
-        'text-primary-500 text-sm pb-2'
+        'text-primary-500 text-sm'
     );
 
     return (
         <div className={heroClass}>
             <ContentWrapper className={containerClass}>
-                <div className="flex justify-center items-center  px-8 lg:px-4">
+                <div className="flex justify-center items-center">
                     {props.image}
                 </div>
-                <div className="w-full flex flex-col gap-5" >
-                    <H2 label={props.title} />
-                    <p className="line-clamp-6">{props.description}</p>
-                    <p className={quoteClass}>{props.quote}</p>
-                    {props.children}
+                <div className="w-full flex flex-col gap-3" >
+                    <div className="flex flex-col gap-5">
+                        <H2 label={props.title} />
+                        <p className="line-clamp-6">{props.description}</p>
+                        <p className={quoteClass}>{props.quote}</p>
+                    </div>
+                    <div className="w-full">
+                        {props.children}
+                    </div>
                 </div>
             </ContentWrapper>
         </div>

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 type Props = {
     options: {
         label: string, 
-        id: string
+        id: string,
     }[]
 }
 
@@ -15,7 +15,7 @@ export const SelectBoxes = ({options}: Props): JSX.Element => {
     const [activeId, setActiveId] = useState(null as string | null)
 
     const gridClass = classNames(
-        'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
+        'w-full flex flex-col min-[469px]:flex-row gap-4'
     );
 
     return (
