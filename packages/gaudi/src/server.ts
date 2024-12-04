@@ -12,3 +12,5 @@ export { ArticleCard } from "./content/article/cards/article_card";
 export { BookCard } from "./content/book/cards";
 export { ArticleDetail } from "./content/article/page/detail/article_detail";
 export { ContentGridList } from "./content/common/content_grid_list";
+export { ESFlag } from "./common/icons/flags/ES";
+export { ENFlag } from "./common/icons/flags/EN";
