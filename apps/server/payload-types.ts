@@ -364,6 +364,22 @@ export interface Book {
   publishedAt: string;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  content_html?: string | null;
   slug: string;
   Ediciones?:
     | {
@@ -712,6 +728,8 @@ export interface BookSelect<T extends boolean = true> {
   publishedAt?: T;
   categories?: T;
   seeds?: T;
+  content?: T;
+  content_html?: T;
   slug?: T;
   Ediciones?:
     | T

@@ -40,6 +40,7 @@ export const SelectDropdown = (props: Props): JSX.Element => {
         ? prev.filter((tag) => tag !== key)
         : [...prev, key]
     );
+    setIsOpen(false);
   };
 
   useEffect(() => {

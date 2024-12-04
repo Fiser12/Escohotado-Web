@@ -17,7 +17,7 @@ export const MainButton = ({
     icon,
 }: Args): JSX.Element => {
     const buttonClass = classNames(
-        'px-4 py-2.5 rounded flex justify-center items-center text-center font-body text-sm inline-flex min-w-24 max-w-52 cursor-pointer',
+        'px-4 py-1.5 rounded flex justify-center items-center text-center font-body text-sm inline-flex min-w-24 max-w-52 cursor-pointer',
         className,
         {
             // Fill
