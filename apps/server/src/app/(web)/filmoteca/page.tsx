@@ -1,15 +1,12 @@
 import { COLLECTION_SLUG_VIDEO } from "@/collections/config";
 import { getCurrentUser, getPayload } from "@/utils/payload";
 import { ContentWrapper, H2, ArticleCard } from "gaudi/server";
-import { ArticlePdf, ArticleWeb, Media, Subscription, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { AutorBarSSR } from "@/components/autor_bar_ssr";
-import { TemaBarSSR } from "@/components/tema_bar_ssr";
+import { YTTagsBarSSR } from "@/components/yt_tags_bar_ssr";
 import { PaginationBarNuqs } from "@/components/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
 import { SearchBarNuqs } from "@/components/search_bar_nuqs";
 export const pageSize = 10;
-import { evalPermission } from "@/domain/eval_content_permissions";
 
 export const searchContentParamsCache = createSearchParamsCache({
   page: parseAsString.withDefault('1'),
@@ -43,9 +40,9 @@ const Page = async ({ searchParams }: Props) => {
       const dateB = new Date(b.publishedAt ?? defaultDate).getTime();
       return dateB - dateA;
     })
-    .filter(article => {
-      const evalTemaFilter = temasArray.length === 0 || temasArray.every(seed => article.seeds?.includes(seed))
-      const evalQueryFilter = query === null || query.trim() === '' || article.title?.toLowerCase().includes(query.toLowerCase())
+    .filter(video => {
+      const evalTemaFilter = temasArray.length === 0 || temasArray.every(seed => (video.tags as string[])?.includes(seed))
+      const evalQueryFilter = query === null || query.trim() === '' || video.title?.toLowerCase().includes(query.toLowerCase())
       return evalTemaFilter && evalQueryFilter
     });
   const maxPage = Math.ceil(videos.length / pageSize);
@@ -58,7 +55,7 @@ const Page = async ({ searchParams }: Props) => {
     >
       <H2 label="Vídeos" />
       <div className="flex flex-row gap-x-2">
-        <TemaBarSSR />
+        <YTTagsBarSSR />
         <SearchBarNuqs />
       </div>
       <div>
@@ -72,7 +69,7 @@ const Page = async ({ searchParams }: Props) => {
               publishedAt={video.publishedAt as string}
               coverHref={video.thumbnailUrl ?? "#"}
               textLink={"Ver vídeo"}
-              categories={video.categories as Taxonomy[]}
+              categories={[]}
               hasPermission={true}
             />
           )}

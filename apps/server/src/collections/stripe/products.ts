@@ -2,7 +2,7 @@ import { isAdminOrStripeActive, isAdmin } from '@/utils/access'
 import { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES } from '../config'
 import { populatePricesHook } from './populatePricesHook'
-import { permissionRelationship, populatePermissionSeedsHook } from '../permissions/permissionsRelationshipFields'
+import { permissionRelationship, cachePermissionSeedsHook } from '../permissions/permissionsRelationshipFields'
 
 export const products: CollectionConfig = {
   slug: COLLECTION_SLUG_PRODUCTS,
@@ -18,7 +18,7 @@ export const products: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
-      populatePermissionSeedsHook, 
+      cachePermissionSeedsHook(), 
       populatePricesHook
     ],
   },

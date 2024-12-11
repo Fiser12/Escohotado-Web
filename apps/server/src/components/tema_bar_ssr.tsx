@@ -16,10 +16,10 @@ export async function TemaBarSSR(props: Props) {
 			]
 		}  
 	})
-	const tagsAsRecord: Record<string, string> = {};
+	const tagsAsRecord: Record<string, {label: string}> = {};
 	taxonomies.docs.forEach((taxonomy) => {
 		if (taxonomy.seed)
-		tagsAsRecord[taxonomy.seed] = taxonomy.plural_name ?? taxonomy.singular_name;
+		tagsAsRecord[taxonomy.seed] = {label: taxonomy.plural_name ?? taxonomy.singular_name};
 	});
 
 	return (
