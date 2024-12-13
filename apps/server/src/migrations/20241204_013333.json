@@ -1,5 +1,5 @@
 {
-  "id": "8adf01a3-7ec7-4ca8-b34d-fb298798bb48",
+  "id": "d12d3a7d-fd05-4ea9-b141-e24f856b3c31",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -2362,6 +2362,18 @@
           "primaryKey": false,
           "notNull": false,
           "default": "''"
+        },
+        "content": {
+          "name": "content",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "content_html": {
+          "name": "content_html",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "slug": {
           "name": "slug",

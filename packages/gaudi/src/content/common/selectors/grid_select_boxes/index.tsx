@@ -20,8 +20,9 @@ export const SelectBoxes = ({options}: Props): JSX.Element => {
 
     return (
         <div className={gridClass}>
-        { options.map(option => (
+        { options.map((option, index) => (
             <SelectBox
+                key={index}
                 title={option.label}
                 isSelected={option.id === activeId}
                 onClick={() => setActiveId(option.id)}

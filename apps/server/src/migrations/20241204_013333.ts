@@ -228,6 +228,8 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"description" varchar,
   	"published_at" timestamp(3) with time zone NOT NULL,
   	"seeds" varchar DEFAULT '',
+  	"content" jsonb,
+  	"content_html" varchar,
   	"slug" varchar NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL

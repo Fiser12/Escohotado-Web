@@ -17,13 +17,14 @@ import { prices } from '@/collections/stripe/prices'
 import permissions from '@/collections/permissions'
 import { products } from '@/collections/stripe/products'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
-import { COLLECTION_SLUG_MEDIA, COLLECTION_SLUG_ARTICLE_PDF } from '@/collections/config'
+import { COLLECTION_SLUG_MEDIA, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_WEB } from '@/collections/config'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
 import * as Sentry from '@sentry/nextjs'
 import { S3_PLUGIN_CONFIG } from '@/plugins/s3'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { contentCollections } from '@/collections/content'
 import { migrations } from '@/migrations'
+import { searchPlugin } from '@payloadcms/plugin-search'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,9 +54,35 @@ export default buildConfig({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
     }),
-    authjsPlugin({ authjsConfig: authConfig }),
+    authjsPlugin({ authjsConfig: authConfig }) as any,
     sentryPlugin({
-      Sentry,
+      Sentry
+    }),
+    searchPlugin({
+      collections: [COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_ARTICLE_PDF],
+      searchOverrides: {
+        slug: "search-results",
+        fields: ({defaultFields}) => [
+          ...defaultFields,
+          {
+            name: "tags",
+            type: "text",
+            admin: {
+              readOnly: true
+            },
+          },
+        ]
+      },
+      defaultPriorities: {
+        [COLLECTION_SLUG_VIDEO]: (doc) => doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
+        [COLLECTION_SLUG_ARTICLE_WEB]: (doc) => doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
+        [COLLECTION_SLUG_ARTICLE_PDF]: (doc) => doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
+      },
+      beforeSync: ({ originalDoc, searchDoc }) => { 
+        return {
+        ...searchDoc,
+        tags: originalDoc.tags?.join(", ") ?? originalDoc.seeds
+      }},
     }),
     s3StoragePlugin({
       ...S3_PLUGIN_CONFIG,

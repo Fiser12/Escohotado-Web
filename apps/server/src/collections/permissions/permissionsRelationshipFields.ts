@@ -1,19 +1,26 @@
-import { CollectionBeforeChangeHook, Field } from 'payload'
+import { CollectionBeforeChangeHook, Field, FieldHook } from 'payload'
 import { COLLECTION_SLUG_PERMISSION, COLLECTION_SLUG_TAXONOMY } from '../config'
 
-export const permissionRelationship: () => Field[] = () => {
+export function permissionRelationship (
+  permissionsName: string =  'permissions',
+  permissionsSeedsName: string = 'permissions_seeds',
+  beforeChangeHook: FieldHook | null = null
+): Field[] {
   return [
     {
-      name: 'permissions',
+      name: permissionsName,
       label: 'Permissions',
       type: 'relationship',
+      hooks: {
+        beforeValidate: [beforeChangeHook].mapNotNull((hook) => hook),
+      },
       relationTo: COLLECTION_SLUG_PERMISSION,
       defaultValue: [],
       hasMany: true,
       required: false,
     },
     {
-      name: 'permissions_seeds',
+      name: permissionsSeedsName,
       label: "Permission Seeds",
       type: 'text',
       defaultValue: "",
@@ -22,23 +29,28 @@ export const permissionRelationship: () => Field[] = () => {
   ]
 }
 
-export const populatePermissionSeedsHook: CollectionBeforeChangeHook = async ({ data, req }) => {
-  if (data['permissions'].length === 0)
+export function cachePermissionSeedsHook (
+  permissionsName: string =  'permissions',
+  permissionsSeedsName: string = 'permissions_seeds'
+): CollectionBeforeChangeHook {
+  return async ({ data, req }) => {
+    if (data[permissionsName].length === 0)
+      return {
+        ...data,
+        [permissionsSeedsName]: "",
+      }
+    const taxonomies = await req.payload.find({
+      collection: COLLECTION_SLUG_PERMISSION,
+      where: { id: { in: data[permissionsName] } },
+    })
+  
+    const seeds = taxonomies.docs
+      .mapNotNull((taxonomy) => taxonomy.slug)
+  
     return {
       ...data,
-      ['permissions_seeds']: "",
+      [permissionsSeedsName]: seeds.join(' '),
     }
-  const taxonomies = await req.payload.find({
-    collection: COLLECTION_SLUG_PERMISSION,
-    where: { id: { in: data['permissions'] } },
-  })
-
-  const seeds = taxonomies.docs
-    .mapNotNull((taxonomy) => taxonomy.slug)
-
-  return {
-    ...data,
-    ['permissions_seeds']: seeds.join(' '),
   }
 }
 

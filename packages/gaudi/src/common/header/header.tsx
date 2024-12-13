@@ -30,7 +30,7 @@ export const Header = ({
                         <NavItem href="/ad-memoriam" text="Ad Memoriam" tabindex={1} />
                         <NavItem href="/biblioteca" text="Biblioteca" tabindex={2} />
                         <NavItem href="/articulos" text="Artículos" tabindex={3} />
-                        <NavItem href="/videos" text="Filmoteca" tabindex={4} />
+                        <NavItem href="/filmoteca" text="Filmoteca" tabindex={4} />
                         <NavItem href="/eventos" text="Eventos" tabindex={5} />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">

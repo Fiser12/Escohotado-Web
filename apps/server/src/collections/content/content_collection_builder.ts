@@ -1,7 +1,7 @@
 import type { Access, CollectionConfig, Field } from 'payload'
 import { checkReadPermissions, isAdmin } from '@/utils/access'
 import { taxonomiesRelationshipBuilder } from '@/collections/taxonomy/taxonomiesRelationshipFields'
-import { permissionRelationship, populatePermissionSeedsHook } from '@/collections/permissions/permissionsRelationshipFields'
+import { permissionRelationship, cachePermissionSeedsHook } from '@/collections/permissions/permissionsRelationshipFields'
 import { COLLECTION_SLUG_MEDIA } from '../config'
 
 export const categoriesRelationship = taxonomiesRelationshipBuilder({
@@ -24,7 +24,7 @@ export function contentWithPermissionsCollectionBuilder(config: Partial<Collecti
         },
         hooks: {
           ...contentCollection.hooks,
-          beforeChange: [...contentCollection.hooks!.beforeChange!, populatePermissionSeedsHook],
+          beforeChange: [...contentCollection.hooks!.beforeChange!, cachePermissionSeedsHook()],
         },
         fields: [
           ...permissionRelationship(),

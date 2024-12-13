@@ -1,9 +1,10 @@
 import { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_VIDEO } from '../../config'
-import { categoriesRelationship } from '../content_collection_builder'
 import { isAdmin, isAnyone } from '@/utils/access'
-import { getYouTubeVideoMetadata } from './getYoutubeMetadata'
+import { getYoutubeVideoMetadataHook } from './getYoutubeMetadata'
+import { cachePermissionSeedsHook, permissionRelationship } from '@/collections/permissions/permissionsRelationshipFields'
 
+const [permissionRelationshipField, permissionSeedField] = permissionRelationship()
 export const video: CollectionConfig = {
   slug: COLLECTION_SLUG_VIDEO,
   labels: {
@@ -22,23 +23,30 @@ export const video: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
-      categoriesRelationship.hook,
-      async ({ data }) => {
-        return { 
-            ...data, 
-            ...await getYouTubeVideoMetadata(data.url)
-        }
-      },
+      cachePermissionSeedsHook(),
+      getYoutubeVideoMetadataHook,
     ],
   },
   fields: [
     {
-      label: 'URL Vídeo YT',
-      name: 'url',
-      type: 'text',
-      required: true,
-      unique: true
+      type: 'row',
+      fields: [
+        {
+          label: 'URL Vídeo YT',
+          name: 'url',
+          type: 'text',
+          required: true,
+          unique: true
+        },
+        permissionRelationshipField,
+      ]
     },
+    {
+      label: 'URL Vídeo YT (free, sin permisos)',
+      name: 'url_free',
+      type: 'text'
+    },
+    permissionSeedField,
     {
         label: 'Youtube Tags',
         name: 'tags',
@@ -79,7 +87,6 @@ export const video: CollectionConfig = {
       admin: {
         readOnly: true,
       }
-    },
-    ...categoriesRelationship.fields,
+    }
   ],
 }

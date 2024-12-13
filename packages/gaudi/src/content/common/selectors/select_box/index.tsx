@@ -38,11 +38,11 @@ export const SelectBox = (props: Props): JSX.Element => {
                         viewBox="0 0 14 14"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className='stroke-current'
+                        className='stroke-current w-full'
                     >
                         <path d="M2 8.19232L4.1 10.8923C4.17086 10.9844 4.26166 11.0592 4.36558 11.1112C4.46949 11.1631 4.58383 11.1909 4.7 11.1923C4.8143 11.1937 4.92746 11.1694 5.03125 11.1216C5.13504 11.0737 5.22685 11.0032 5.3 10.9154L12 2.80771"
                             strokeWidth="2"
-                            stroke-linecap="round" stroke-linejoin="round" />
+                            strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 )}
             </div>

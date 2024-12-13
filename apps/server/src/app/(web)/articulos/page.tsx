@@ -100,7 +100,6 @@ const Page = async ({ searchParams }: Props) => {
         />
       </div>
       <PaginationBarNuqs maxPage={maxPage} />
-
     </ContentWrapper>
   );
 };

@@ -22,6 +22,7 @@ export interface Config {
     book: Book;
     video: Video;
     permission: Permission;
+    'search-results': SearchResult;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -49,6 +50,7 @@ export interface Config {
     book: BookSelect<false> | BookSelect<true>;
     video: VideoSelect<false> | VideoSelect<true>;
     permission: PermissionSelect<false> | PermissionSelect<true>;
+    'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -364,6 +366,22 @@ export interface Book {
   publishedAt: string;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  content_html?: string | null;
   slug: string;
   Ediciones?:
     | {
@@ -383,6 +401,9 @@ export interface Book {
 export interface Video {
   id: string;
   url: string;
+  permissions?: (string | Permission)[] | null;
+  url_free?: string | null;
+  permissions_seeds?: string | null;
   tags?:
     | {
         [k: string]: unknown;
@@ -396,8 +417,31 @@ export interface Video {
   title?: string | null;
   description?: string | null;
   publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
-  seeds?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search-results".
+ */
+export interface SearchResult {
+  id: string;
+  title?: string | null;
+  priority?: number | null;
+  doc:
+    | {
+        relationTo: 'video';
+        value: string | Video;
+      }
+    | {
+        relationTo: 'article_web';
+        value: string | ArticleWeb;
+      }
+    | {
+        relationTo: 'article_pdf';
+        value: string | ArticlePdf;
+      };
+  tags?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -451,6 +495,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'permission';
         value: string | Permission;
+      } | null)
+    | ({
+        relationTo: 'search-results';
+        value: string | SearchResult;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -712,6 +760,8 @@ export interface BookSelect<T extends boolean = true> {
   publishedAt?: T;
   categories?: T;
   seeds?: T;
+  content?: T;
+  content_html?: T;
   slug?: T;
   Ediciones?:
     | T
@@ -730,13 +780,14 @@ export interface BookSelect<T extends boolean = true> {
  */
 export interface VideoSelect<T extends boolean = true> {
   url?: T;
+  permissions?: T;
+  url_free?: T;
+  permissions_seeds?: T;
   tags?: T;
   thumbnailUrl?: T;
   title?: T;
   description?: T;
   publishedAt?: T;
-  categories?: T;
-  seeds?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -748,6 +799,18 @@ export interface PermissionSelect<T extends boolean = true> {
   id?: T;
   slug?: T;
   title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search-results_select".
+ */
+export interface SearchResultsSelect<T extends boolean = true> {
+  title?: T;
+  priority?: T;
+  doc?: T;
+  tags?: T;
   updatedAt?: T;
   createdAt?: T;
 }
