@@ -6,25 +6,27 @@ interface Props {
     title: string;
     coverHref: string;
     link: string;
-    className?: string; 
+    className?: string;
 }
 
 export const BookCard = (props: Props) => {
     const containerClass = classNames(
-        'min-w-[250px] flex flex-col gap-2'
+        'flex flex-col items-center gap-3 h-full'
     );
 
     return (
-        <a href={props.link}>
+        <a href={props.link} className="h-full w-full">
             <div className={containerClass}>
-                <ImageParallax
-                    shadow={false}
-                    className="h-full w-full"
-                >
-                    <img src={props.coverHref} alt={props.title} className="h-full object-cover mx-auto"/>
+                <ImageParallax shadow={false} className="w-auto h-full">
+                    <img
+                        src={props.coverHref}
+                        alt={props.title}
+                        className="w-auto h-full max-h-[300px]"
+                    />
                 </ImageParallax>
-                <H4 label={props.title} className="line-clamp-3 text-center pb-3 px-4 w-full"></H4>
+                <H4 label={props.title} className="line-clamp-2 text-center px-4 w-full md:max-w-[80%]"></H4>
             </div>
         </a>
     );
 };
+
