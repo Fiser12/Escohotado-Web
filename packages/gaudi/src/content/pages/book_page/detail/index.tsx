@@ -5,7 +5,7 @@ import { MainButton } from "../../../../common/main_button/main_button";
 import { SelectBoxes } from "../../../common/selectors/grid_select_boxes";
 import { SelectDropdown } from "../../../common/selectors/select_dropdown";
 import { useState } from "react";
-import "../../../pages/lecturas_page/detail/article-html-content.css";
+import "../../article_page/article-html-content.css";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { ESFlag } from "../../../../common/icons/flags/ES";
 import { ENFlag } from "../../../../common/icons/flags/EN";

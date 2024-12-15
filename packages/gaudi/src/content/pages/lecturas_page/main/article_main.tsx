@@ -10,6 +10,7 @@ import { PenIcon } from "../../../../common/icons/pen_icon";
 import { HeadlineCard } from "../../../article/cards/article_headline_card";
 import { HighlightSection } from "../../../article/highlight/section_highlight";
 import { ArticleCard } from "../../../article/cards/article_card";
+import { CarouselBook } from "../../../book/carousel";
 
 export const ArticlePage = () => {
 
@@ -97,6 +98,20 @@ export const ArticlePage = () => {
     console.log("Etiquetas seleccionadas:", tags);
   };
 
+  //Books
+  const booksExample = [
+    { title: 'La conciencia infeliz', coverHref: 'https://laemboscadura.com/wp-content/uploads/La-conciencia-infeliz-300x300.png', link: '/book1' },
+    { title: 'El espíritu de la comedia', coverHref: 'https://laemboscadura.com/wp-content/uploads/El-espiritu-de-la-comedia-300x300.png', link: '/book2' },
+    { title: 'De Physis a Polis', coverHref: 'https://laemboscadura.com/wp-content/uploads/De-Physis-a-Polis.webp', link: '/book3' },
+    { title: 'Majestades, crímenes y víctimas', coverHref: 'https://laemboscadura.com/wp-content/uploads/Majestades-Crimenes-y-Victimas-300x300.png', link: '/book4' },
+    { title: 'Realidad y substancia', coverHref: 'https://laemboscadura.com/wp-content/uploads/Realidad-y-Substancia-300x300.png', link: '/book5' },
+    { title: 'La conciencia infeliz', coverHref: 'https://laemboscadura.com/wp-content/uploads/La-conciencia-infeliz-300x300.png', link: '/book6' },
+    { title: 'El espíritu de la comedia', coverHref: 'https://laemboscadura.com/wp-content/uploads/El-espiritu-de-la-comedia-300x300.png', link: '/book7' },
+    { title: 'De Physis a Polis', coverHref: 'https://laemboscadura.com/wp-content/uploads/De-Physis-a-Polis.webp', link: '/book8' },
+    { title: 'Majestades, crímenes y víctimas', coverHref: 'https://laemboscadura.com/wp-content/uploads/Majestades-Crimenes-y-Victimas-300x300.png', link: '/book9' },
+    { title: 'Realidad y substancia', coverHref: 'https://laemboscadura.com/wp-content/uploads/Realidad-y-Substancia-300x300.png', link: '/book10' },
+  ];
+
   return (
     <div className="w-full bg-gray-light">
       <div id="headerArticles" className="@container w-full bg-white pt-12.5">
@@ -114,6 +129,7 @@ export const ArticlePage = () => {
       </div>
       <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="#" coverHref={handwrittingBg.src}></HighlightSection>
       <div className="@container w-full pt-12.5">
+        <CarouselBook books={booksExample} />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
           <H2 label="Artículos"></H2>
           <div className="flex gap-3">

@@ -3,6 +3,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import classNames from 'classnames';
 import { BookCard } from '../cards';
 import { H2 } from '../../../common/headers/H2';
+import { ContentWrapper } from '../../../common/content_wrapper/content_wrapper';
 
 interface Props {
   books: Array<{
@@ -31,8 +32,10 @@ export const CarouselBook = (props: Props) => {
   );
 
   return (
-    <div className='w-full flex flex-col'>
-      <H2 label='Biblioteca'/>
+    <div className='w-full flex flex-col pb-5'>
+      <ContentWrapper>
+        <H2 label='Biblioteca'/>
+      </ContentWrapper>
       <div className={carouselClass} ref={emblaRef}>
         <div className={containerClass}>
             {props.books.map((book, index) => (

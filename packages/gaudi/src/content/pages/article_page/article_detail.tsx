@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import { H1 } from "../../../../common/headers/H1";
-import { H4 } from "../../../../common/headers/H4";
-import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
-import { Tag } from "../../../../common/tag/tag";
+import { H1 } from "../../../common/headers/H1";
+import { H4 } from "../../../common/headers/H4";
+import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
+import { Tag } from "../../../common/tag/tag";
 import "./article-html-content.css";
 
 interface Props {
