@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { HighlightSection } from "./section_highlight";
 
 const meta: Meta = {
-    title: "Articles/Section",
+    title: "Organism",
     component: HighlightSection,
     parameters: {
         layout: "fullscreen",

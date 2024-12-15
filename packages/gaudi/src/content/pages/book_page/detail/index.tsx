@@ -1,15 +1,15 @@
 "use client";
 
-import { ImageParallax } from "../../cards/image_parallax";
 import { MainHero } from "../../../common/hero";
 import { MainButton } from "../../../../common/main_button/main_button";
 import { SelectBoxes } from "../../../common/selectors/grid_select_boxes";
 import { SelectDropdown } from "../../../common/selectors/select_dropdown";
 import { useState } from "react";
-import "../../../article/page/detail/article-html-content.css";
+import "../../../pages/lecturas_page/detail/article-html-content.css";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { ESFlag } from "../../../../common/icons/flags/ES";
 import { ENFlag } from "../../../../common/icons/flags/EN";
+import { ImageParallax } from "../../../book/cards/image_parallax";
 
 interface Props {
     title: string;
@@ -17,7 +17,7 @@ interface Props {
     description: string;
     contentHtml: string;
     options: { id: string, label: string }[];
-    langs: ('es'|'en')[];
+    langs: ('es' | 'en')[];
     link: string;
 }
 const titleMap = { "es": "Español", "en": "Inglés" };
@@ -31,12 +31,12 @@ export const BookDetail = (props: Props) => {
     };
     const langsTags: Record<string, { label: string, icon: JSX.Element }> = props.langs.reduce((acc, lang) => {
         acc[lang] = {
-          label: titleMap[lang],
-          icon: flagMap[lang],
+            label: titleMap[lang],
+            icon: flagMap[lang],
         };
         return acc;
-      }, {} as Record<string, { label: string, icon: JSX.Element }>);
-      
+    }, {} as Record<string, { label: string, icon: JSX.Element }>);
+
     return (
         <div className="w-full bg-white">
             <MainHero

@@ -15,7 +15,7 @@ const booksExample = [
 ];
 
 const meta: Meta = {
-    title: "Books/Carousel",
+    title: "Organism/Carousel/Book",
     component: CarouselBook,
     args: {
         books: booksExample,

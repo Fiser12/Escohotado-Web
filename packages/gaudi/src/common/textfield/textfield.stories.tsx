@@ -3,7 +3,7 @@ import { TextField } from './textfield';
 import { EmailIcon } from '../icons/email_icon';
 
 const meta: Meta<typeof TextField> = {
-    title: 'Atoms/Inputs',
+    title: 'Molecules/Inputs',
     component: TextField,
     argTypes: {
         state: {

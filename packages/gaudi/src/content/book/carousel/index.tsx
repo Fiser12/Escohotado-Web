@@ -1,10 +1,8 @@
-import React from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import classNames from 'classnames';
 import { BookCard } from '../cards';
 import { H2 } from '../../../common/headers/H2';
-import { ContentWrapper } from '../../../common/content_wrapper/content_wrapper';
 
 interface Props {
   books: Array<{

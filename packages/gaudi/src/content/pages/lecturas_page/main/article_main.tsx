@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { H2 } from "../../../../common/headers/H2";
-import { HeadlineCard } from "../../cards/article_headline_card";
-import { HighlightSection } from "../../highlight/section_highlight";
 import smokeEscohotado from "../../../../assets/images/escohotado-articles-portada.png";
 import handwrittingBg from "../../../../assets/images/handwritting-bg.jpg";
 import { ContentGridList } from "../../../common/content_grid_list";
-import { ArticleCard } from "../../cards/article_card";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { SelectDropdown } from "../../../common/selectors/select_dropdown";
 import { TagIcon } from "../../../../common/icons/tag_icon";
 import { PenIcon } from "../../../../common/icons/pen_icon";
+import { HeadlineCard } from "../../../article/cards/article_headline_card";
+import { HighlightSection } from "../../../article/highlight/section_highlight";
+import { ArticleCard } from "../../../article/cards/article_card";
 
 export const ArticlePage = () => {
 

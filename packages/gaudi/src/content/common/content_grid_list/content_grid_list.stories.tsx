@@ -3,7 +3,7 @@ import { ContentGridList } from ".";
 import { ArticleCard, BookCard, ContentWrapper } from "../../../server";
 
 const meta: Meta<typeof ContentGridList> = {
-    title: "Components/Containers/Content Grid",
+    title: "Organism/Content Grid",
     component: ContentGridList,
     parameters: {
         layout: "fullscreen",

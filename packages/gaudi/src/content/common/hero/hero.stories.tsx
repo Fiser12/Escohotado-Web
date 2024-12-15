@@ -4,7 +4,7 @@ import { MainButton } from "../../../common/main_button/main_button";
 import { ImageParallax } from "../../book/cards/image_parallax";
 
 const meta: Meta = {
-    title: "Components/Hero",
+    title: "Organism/Hero",
     component: MainHero,
     parameters: {
         layout: "fullscreen",

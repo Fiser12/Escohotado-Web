@@ -1,10 +1,10 @@
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { H2 } from "../../../../common/headers/H2";
 import { MainButton } from "../../../../common/main_button/main_button";
+import { BookCard } from "../../../book/cards";
+import { ImageParallax } from "../../../book/cards/image_parallax";
 import { ContentGridList } from "../../../common/content_grid_list";
 import { MainHero } from "../../../common/hero";
-import { BookCard } from "../../cards";
-import { ImageParallax } from "../../cards/image_parallax";
 
 export const BookMain = () => {
     const items = [

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { SearchBar } from '.';
 
 const meta: Meta<typeof SearchBar> = {
-    title: "Atoms/Inputs",
+    title: "Molecules/Inputs",
     component: SearchBar,
     parameters: {
         layout: "fullscreen",

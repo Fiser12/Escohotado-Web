@@ -4,7 +4,7 @@ import { HeaderMenuUser } from "./header_menu_user";
 import storybookHelpers from "../../../storybook-helpers";
 
 const meta = {
-  title: "Components/Header/MenuUser",
+  title: "Molecules/MenuUser",
   component: HeaderMenuUser,
   args: {
     menuSections: menuSectionsLoaderMock(mockAdminUser),

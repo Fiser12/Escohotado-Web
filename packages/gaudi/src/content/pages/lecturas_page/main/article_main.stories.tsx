@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ArticlePage } from "./article_main";
 
 const meta: Meta = {
-    title:"Articles/Pages/Main",
+    title:"Pages/Lecturas/Main",
     component: ArticlePage,
     parameters: {
         layout: 'fullscreen',

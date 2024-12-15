@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { HeadlineCard } from "./article_headline_card";
 
 const meta: Meta = {
-    title: "Articles/Cards/Headline",
+    title: "Molecules",
     component: HeadlineCard,
     parameters: {
         layout: "padded",
@@ -22,8 +22,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Headline: Story = {
-    name: "Highlight",
+export const Default: Story = {
+    name: "Headline",
     args: {
         author: "Sr. John Doe",
         title: "Sample Article Title",

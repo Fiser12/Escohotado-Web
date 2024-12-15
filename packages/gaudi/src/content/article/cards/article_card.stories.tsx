@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ArticleCard } from "./article_card";
 
 const meta: Meta = {
-    title: "Articles/Cards/Default",
+    title: "Molecules/Cards",
     component: ArticleCard,
     parameters: {
         layout: "centered",
@@ -31,8 +31,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Article: Story = {
-    name: "Article",
+export const Default: Story = {
+    name: "Article Card",
     args: {
         title: "Sample Article Title",
         publishedAt: "2024-11-18",

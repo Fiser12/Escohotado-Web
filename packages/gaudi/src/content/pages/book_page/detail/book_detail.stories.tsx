@@ -4,7 +4,7 @@ import { ESFlag } from "../../../../common/icons/flags/ES";
 import { ENFlag } from "../../../../common/icons/flags/EN";
 
 const meta: Meta = {
-    title: "Books/Pages/Detail",
+    title: "Pages/Book/Detail",
     component: BookDetail,
     parameters: {
         layout: "fullscreen",
