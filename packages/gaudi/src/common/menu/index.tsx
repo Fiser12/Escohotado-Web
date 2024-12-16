@@ -7,7 +7,7 @@ type Args = {
     toggleMenu: (changeTo?: boolean) => void
     menuSections: MenuSection[]
 }
-export const HeaderMenuUser = ({
+export const BasicMenu = ({
     toggleMenu,
     menuSections
 }: Args): JSX.Element => {

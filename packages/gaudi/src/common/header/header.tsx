@@ -2,7 +2,7 @@ import { ContentWrapper } from "../content_wrapper/content_wrapper"
 import { Logo } from "./logo"
 import type { MenuSection, UserModel, Optional } from 'hegel';
 import { NavItem } from "./nav_item";
-import { UserMenu } from "./user_menu/user_menu";
+import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
 import { HamburguerIcon } from "../icons/hamburguer_icon";
 
@@ -37,7 +37,7 @@ export const Header = ({
                         <a href="https://laemboscadura.com/" tabIndex={6}>
                             <MainButton text="La emboscadura" icon="" />
                         </a>
-                        {user ? <UserMenu
+                        {user ? <UserDropdown
                             user={user}
                             menuSections={[
                                 ...menuSections,

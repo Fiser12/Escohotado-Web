@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { mockAdminUser, menuSectionsLoaderMock } from "hegel";
-import { HeaderMenuUser } from "./header_menu_user";
-import storybookHelpers from "../../../storybook-helpers";
+import { BasicMenu } from ".";
+import storybookHelpers from "../../storybook-helpers";
 
 const meta = {
-  title: "Molecules/MenuUser",
-  component: HeaderMenuUser,
+  title: "Molecules/Menu",
+  component: BasicMenu,
   args: {
     menuSections: menuSectionsLoaderMock(mockAdminUser),
     toggleMenu: () => {},
@@ -17,7 +17,7 @@ const meta = {
       url: "https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=440-6646&m=dev",
     },
   },
-} satisfies Meta<typeof HeaderMenuUser>;
+} satisfies Meta<typeof BasicMenu>;
 type Story = StoryObj<typeof meta>;
 
 export default meta;
