@@ -12,6 +12,12 @@ function getAbsolutePath(value: string): any {
 const config: StorybookConfig = {
   stories: ['../../../packages/gaudi/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   staticDirs: ['../public'],
+  managerHead: (head) => {
+    if (process.env.NODE_ENV === 'production') {
+      return `${head}<base href="/Escohotado-Web/">`;
+    }
+    return head;
+  },
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-designs'),
