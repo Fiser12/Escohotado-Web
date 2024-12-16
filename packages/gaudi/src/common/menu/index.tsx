@@ -34,7 +34,7 @@ export const BasicMenu = ({
                         return (
                             <div
                                 key={j}
-                                className="h-8 w-full px-5 py-2.5 flex flex-col justify-start items-center gap-2.5 hover:bg-gray-light active:bg-primary-50 focus:bg-primary-50"
+                                className="w-full px-5 py-3 flex flex-col justify-start items-center gap-2.5 hover:bg-gray-light active:bg-primary-50 focus:bg-primary-50"
                             >
                                 <div className="flex self-stretch h-3.5 justify-start items-center gap-1">
                                     {action ? (

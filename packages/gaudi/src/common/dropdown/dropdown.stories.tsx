@@ -27,7 +27,7 @@ const meta: Meta<typeof BasicDropdown> = {
                 ],
             },
         ],
-        icon: true, // Default: icon visible
+        icon: false,
     },
     render: ({ icon, ...args }) => (
         <BasicDropdown

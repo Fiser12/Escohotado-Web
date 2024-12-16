@@ -5,6 +5,7 @@ import { NavItem } from "./nav_item";
 import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
 import { HamburguerIcon } from "../icons/hamburguer_icon";
+import { BasicDropdown } from "../dropdown";
 
 export interface Props {
     className?: string
@@ -20,6 +21,14 @@ export const Header = ({
     signOut,
     menuSections
 }: Props): JSX.Element => {
+    const catalogoSections: MenuSection[] = [
+        {
+            items: [
+                { text: "La Emboscadura", href:"https://laemboscadura.com/" },
+                { text: "Políticamente Incorrecto", href:"#" },
+            ],
+        },
+    ];
 
     return (
         <header>
@@ -30,11 +39,9 @@ export const Header = ({
                         <NavItem href="/ad-memoriam" text="Ad Memoriam" tabindex={1} />
                         <NavItem href="/articulos" text="Lecturas" tabindex={2} />
                         <NavItem href="/filmoteca" text="Filmoteca" tabindex={3} />
+                        <BasicDropdown menuSections={catalogoSections} text="Catálogo" />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <a href="https://laemboscadura.com/" tabIndex={4}>
-                            <MainButton text="La emboscadura" icon="" />
-                        </a>
                         {user ? <UserDropdown
                             user={user}
                             menuSections={[
