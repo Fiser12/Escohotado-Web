@@ -21,7 +21,7 @@ export const BookCard = (props: Props) => {
                     <img
                         src={props.coverHref}
                         alt={props.title}
-                        className="w-auto h-full max-h-[300px]"
+                        className="w-auto max-h-[300px]"
                     />
                 </ImageParallax>
                 <H4 label={props.title} className="line-clamp-2 text-center px-4 w-full md:max-w-[80%]"></H4>
