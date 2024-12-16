@@ -2,6 +2,7 @@ import { COLLECTION_SLUG_USER, COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_SUBSCRI
 import { getPayload } from '@/utils/payload'
 import { payloadUpsert } from '@/utils/upsert'
 import type Stripe from 'stripe'
+import { deleteForumPremiumRole, addForumPremiumRole } from '../authjs/update_forum_premium_role'
 
 const logs = false
 
@@ -49,7 +50,7 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
       stripeCustomerId: customer as string,
       stripePriceID: subscriptionItem.price.id,
       product: product.id,
-      seeds: product.seeds,
+      seeds: product.permissions_seeds,
       user: userID,
       status,
       metadata,
@@ -72,6 +73,9 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
       }
     })
 
+    if (['active', 'trialing'].includes(status)) {
+      await addForumPremiumRole(metadata.keycloakUserId ?? "ERROR")
+    }
     if (logs) {
       payload.logger.info(`✅ Successfully updated subscription with Stripe ID: ${stripeID}`)
     }

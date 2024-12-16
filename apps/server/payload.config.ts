@@ -54,7 +54,7 @@ export default buildConfig({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
     }),
-    authjsPlugin({ authjsConfig: authConfig }) as any,
+    authjsPlugin({ authjsConfig: authConfig }),
     sentryPlugin({
       Sentry
     }),

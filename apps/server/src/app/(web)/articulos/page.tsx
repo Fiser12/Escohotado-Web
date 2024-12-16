@@ -1,7 +1,7 @@
 import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB } from "@/collections/config";
 import { getCurrentUser, getPayload } from "@/utils/payload";
 import { ContentWrapper, H2, ArticleCard } from "gaudi/server";
-import { ArticlePdf, ArticleWeb, Media, Subscription, Taxonomy } from "payload-types";
+import { ArticlePdf, ArticleWeb, Media, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/components/autor_bar_ssr";
 import { TemaBarSSR } from "@/components/tema_bar_ssr";
