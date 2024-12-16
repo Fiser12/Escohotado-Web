@@ -28,13 +28,11 @@ export const Header = ({
                     <Logo tabindex={0} />
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
                         <NavItem href="/ad-memoriam" text="Ad Memoriam" tabindex={1} />
-                        <NavItem href="/biblioteca" text="Biblioteca" tabindex={2} />
-                        <NavItem href="/articulos" text="Artículos" tabindex={3} />
-                        <NavItem href="/filmoteca" text="Filmoteca" tabindex={4} />
-                        <NavItem href="/eventos" text="Eventos" tabindex={5} />
+                        <NavItem href="/articulos" text="Lecturas" tabindex={2} />
+                        <NavItem href="/filmoteca" text="Filmoteca" tabindex={3} />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <a href="https://laemboscadura.com/" tabIndex={6}>
+                        <a href="https://laemboscadura.com/" tabIndex={4}>
                             <MainButton text="La emboscadura" icon="" />
                         </a>
                         {user ? <UserDropdown
