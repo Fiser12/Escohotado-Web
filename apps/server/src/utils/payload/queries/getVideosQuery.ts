@@ -18,8 +18,8 @@ export const getVideosQuery = async (
     collection: COLLECTION_SLUG_VIDEO,
     sort: '-publishedAt',
     where: {
-        id: { in: results}
-    }
+      id: { in: results },
+    },
   })
   const startIndex = page * pageSize
   const endIndex = startIndex + pageSize
