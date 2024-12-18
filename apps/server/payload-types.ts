@@ -440,6 +440,10 @@ export interface SearchResult {
     | {
         relationTo: 'article_pdf';
         value: string | ArticlePdf;
+      }
+    | {
+        relationTo: 'book';
+        value: string | Book;
       };
   tags?: string | null;
   updatedAt: string;

@@ -17,7 +17,7 @@ import { prices } from '@/collections/stripe/prices'
 import permissions from '@/collections/permissions'
 import { products } from '@/collections/stripe/products'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
-import { COLLECTION_SLUG_MEDIA, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_WEB } from '@/collections/config'
+import { COLLECTION_SLUG_MEDIA, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK } from '@/collections/config'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
 import * as Sentry from '@sentry/nextjs'
 import { S3_PLUGIN_CONFIG } from '@/plugins/s3'
@@ -55,11 +55,9 @@ export default buildConfig({
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
     }),
     authjsPlugin({ authjsConfig: authConfig }),
-    sentryPlugin({
-      Sentry
-    }),
+    sentryPlugin({ Sentry }),
     searchPlugin({
-      collections: [COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_ARTICLE_PDF],
+      collections: [COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_BOOK],
       searchOverrides: {
         slug: "search-results",
         fields: ({defaultFields}) => [
@@ -75,6 +73,7 @@ export default buildConfig({
       },
       defaultPriorities: {
         [COLLECTION_SLUG_VIDEO]: (doc) => doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
+        [COLLECTION_SLUG_BOOK]: (doc) => doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
         [COLLECTION_SLUG_ARTICLE_WEB]: (doc) => doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
         [COLLECTION_SLUG_ARTICLE_PDF]: (doc) => doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
       },
