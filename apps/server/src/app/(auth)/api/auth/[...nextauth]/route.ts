@@ -1,3 +1,3 @@
-import { handlers } from "@/plugins/authjs/plugin";
+import { handlers } from '@/core/infrastructure/payload/plugins/authjs/plugin'
 
-export const { GET, POST } = handlers;
+export const { GET, POST } = handlers

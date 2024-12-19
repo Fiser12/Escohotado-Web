@@ -1,11 +1,12 @@
-import { COLLECTION_SLUG_VIDEO } from "@/collections/config";
-import { getCurrentUser, getPayload } from "@/utils/payload";
+import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, ArticleCard } from "gaudi/server";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { PaginationBarNuqs } from "@/components/pagination_bar_nuqs";
+import { PaginationBarNuqs } from "@/ui/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
-import { SearchBarNuqs } from "@/components/search_bar_nuqs";
-import { getVideosQuery } from "@/utils/payload/queries/getVideosQuery";
+import { SearchBarNuqs } from "@/ui/search_bar_nuqs";
+import { getVideosQuery } from "@/core/content/getVideosQuery";
+
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
@@ -22,7 +23,7 @@ const Page = async ({ searchParams }: Props) => {
   const payload = await getPayload();
   const { page, query } = await searchContentParamsCache.parse(searchParams)
   const [user, videosResult] = await Promise.all([
-    getCurrentUser(payload),
+    getCurrentUserQuery(payload),
     getVideosQuery(query, parseInt(page) - 1)
   ]);
 

@@ -1,14 +1,13 @@
 import React from "react";
 import { Header } from "gaudi/server";
-import { signIn, signOut } from "@/plugins/authjs/plugin";
-import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
-import { DataFromCollectionSlug } from "payload";
+import { signIn, signOut } from "@/core/infrastructure/payload/plugins/authjs/plugin";
 import { NuqsAdapter } from 'nuqs/adapters/next'
 import "../tailwind.css";
-import { getAccountMenuQuery } from "@/utils/payload/queries/getAccounMenuQuery";
+import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery";
+import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 
 const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
-  const payloadUser = await getPayloadUser<DataFromCollectionSlug<"users">>();
+  const payloadUser = await getCurrentUserQuery()
 
   return (
     <html>

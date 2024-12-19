@@ -1,28 +1,27 @@
-import { DataFromCollectionSlug } from "payload";
-import { auth } from "@/plugins/authjs/plugin";
-import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
+import { auth } from "@/core/infrastructure/payload/plugins/authjs/plugin";
 import { ContentWrapper, H3, H4 } from "gaudi/server";
-import { getPayload } from "@/utils/payload";
-import { COLLECTION_SLUG_MEDIA } from "@/collections/config";
+import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { COLLECTION_SLUG_MEDIA } from "@/core/infrastructure/payload/collections/config";
+import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 
 const AuthOverview = async () => {
   const session = await auth();
-  const payloadUser = await getPayloadUser<DataFromCollectionSlug<"users">>();
+  const payloadUser = await getCurrentUserQuery()
   const payload = await getPayload();
   const medias = await payload.find({
     collection: COLLECTION_SLUG_MEDIA,
   })
-return (
+  return (
     <ContentWrapper>
       <div style={{ background: "gray", padding: "5px", borderRadius: "10px" }}>
         {JSON.stringify(session?.user, null, 2)}
       </div>
       <br />
-      <H3 label={"Payload CMS"}/>
+      <H3 label={"Payload CMS"} />
       <div style={{ background: "gray", padding: "5px", borderRadius: "10px" }}>
         {JSON.stringify(payloadUser, null, 2)}
       </div>
-      <H4 label={"Medias"}/>
+      <H4 label={"Medias"} />
       <div style={{ background: "gray", padding: "5px", borderRadius: "10px" }}>
         {JSON.stringify(medias, null, 2)}
       </div>

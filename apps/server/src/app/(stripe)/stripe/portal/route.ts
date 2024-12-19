@@ -1,51 +1,51 @@
-import { stripeBuilder } from "@/plugins/stripe";
-import { NextResponse } from "next/server";
-import { DataFromCollectionSlug } from "payload";
-import { getPayloadUser } from "@/plugins/authjs/getPayloadUser";
-import { User } from "payload-types";
-import Stripe from "stripe";
+import { stripeBuilder } from '@/core/infrastructure/payload/plugins/stripe'
+import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { NextResponse } from 'next/server'
+import { User } from 'payload-types'
+import Stripe from 'stripe'
 
 export async function GET(request: Request) {
-    const payloadUser = await getPayloadUser<DataFromCollectionSlug<"users">>();
-    if (!payloadUser) throw new Error('You must be logged in to access this page');
-    const url = new URL(request.url);
-    const cancelSubscriptionId = url.searchParams.get('cancelSubscriptionId');
-	const updateSubscriptionId = url.searchParams.get('updateSubscriptionId');
+  const payloadUser = await getCurrentUserQuery()
+  if (!payloadUser) throw new Error('You must be logged in to access this page')
+  const url = new URL(request.url)
+  const cancelSubscriptionId = url.searchParams.get('cancelSubscriptionId')
+  const updateSubscriptionId = url.searchParams.get('updateSubscriptionId')
 
-	let flowData: Stripe.BillingPortal.SessionCreateParams.FlowData | undefined;
-	if (cancelSubscriptionId) flowData = {
-		type: 'subscription_cancel',
-		subscription_cancel: { subscription: cancelSubscriptionId }
-	};
-	else if (updateSubscriptionId) flowData = {
-		type: 'subscription_update',
-		subscription_update: { subscription: updateSubscriptionId }
-	};
+  let flowData: Stripe.BillingPortal.SessionCreateParams.FlowData | undefined
+  if (cancelSubscriptionId)
+    flowData = {
+      type: 'subscription_cancel',
+      subscription_cancel: { subscription: cancelSubscriptionId },
+    }
+  else if (updateSubscriptionId)
+    flowData = {
+      type: 'subscription_update',
+      subscription_update: { subscription: updateSubscriptionId },
+    }
 
-    const session = await createPortalSession(url, payloadUser, flowData);
-    return NextResponse.redirect(session.url, 303);
+  const session = await createPortalSession(url, payloadUser, flowData)
+  return NextResponse.redirect(session.url, 303)
 }
 
-
 async function createPortalSession(
-	url: URL,
-	user: User,
-	flowData?: Stripe.BillingPortal.SessionCreateParams.FlowData
+  url: URL,
+  user: User,
+  flowData?: Stripe.BillingPortal.SessionCreateParams.FlowData,
 ) {
-    const stripe = stripeBuilder()
+  const stripe = stripeBuilder()
 
-	const customers = await stripe.customers.list({
-		email: user.email
-	});
-	const customer = customers.data.length ? customers.data[0] : null;
+  const customers = await stripe.customers.list({
+    email: user.email,
+  })
+  const customer = customers.data.length ? customers.data[0] : null
 
-	if (!customer) {
-		throw new Error(`No customer found with email: ${user.email}`);
-	}
+  if (!customer) {
+    throw new Error(`No customer found with email: ${user.email}`)
+  }
 
-	return await stripe.billingPortal.sessions.create({
-		flow_data: flowData,
-		customer: customer.id,
-		return_url: `${url.origin}/subscriptions`
-	});
+  return await stripe.billingPortal.sessions.create({
+    flow_data: flowData,
+    customer: customer.id,
+    return_url: `${url.origin}/subscriptions`,
+  })
 }
