@@ -9,8 +9,8 @@ import { PaginationBarNuqs } from "@/components/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
 import { SearchBarNuqs } from "@/components/search_bar_nuqs";
 export const pageSize = 10;
-import { evalPermission } from "@/domain/eval_content_permissions";
 import { getArticlesQuery } from "@/utils/payload/queries/getArticlesQuery";
+import { evalPermissionQuery } from "@/utils/payload/queries/evalPermissionQuery";
 
 export const searchContentParamsCache = createSearchParamsCache({
   page: parseAsString.withDefault('1'),
@@ -57,7 +57,7 @@ const Page = async ({ searchParams }: Props) => {
               coverHref={(article.cover as Media | null)?.url ?? "#"}
               textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
               categories={article.categories as Taxonomy[]}
-              hasPermission={evalPermission(user, article)}
+              hasPermission={evalPermissionQuery(user, article.permissions_seeds?.trim() ?? "")}
             />
           )}
         />

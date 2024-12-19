@@ -1,6 +1,6 @@
 import { UserModel, MenuSection } from "hegel";
 
-export const accountMenuBuilder: (user?: UserModel | null) => MenuSection[] = (user) => {
+export const getAccountMenuQuery: (user?: UserModel | null) => MenuSection[] = (user) => {
     if (!user) {
         return [];
     }

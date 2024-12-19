@@ -5,7 +5,6 @@ import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { PaginationBarNuqs } from "@/components/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
 import { SearchBarNuqs } from "@/components/search_bar_nuqs";
-import { searchElementsQuery } from "@/utils/payload/queries/searchElementsQuery";
 import { getVideosQuery } from "@/utils/payload/queries/getVideosQuery";
 export const pageSize = 10;
 
