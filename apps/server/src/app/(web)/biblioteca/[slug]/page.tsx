@@ -1,6 +1,7 @@
-import { COLLECTION_SLUG_BOOK } from "@/collections/config";
-import { getCurrentUser, getPayload } from "@/utils/payload";
-import { ContentWrapper, ENFlag, ESFlag } from "gaudi/server";
+import { COLLECTION_SLUG_BOOK } from "@/core/infrastructure/payload/collections/config";
+import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { ContentWrapper } from "gaudi/server";
 import { BookDetail } from "gaudi/client";
 import { Media } from "payload-types";
 export const pageSize = 10;
@@ -16,7 +17,7 @@ const Page = async (props: Props) => {
     const { slug } = await props.params;
 
     const [user, books] = await Promise.all([
-        getCurrentUser(payload),
+        getCurrentUserQuery(payload),
         payload.find({
             collection: COLLECTION_SLUG_BOOK,
             sort: "-publishedAt",

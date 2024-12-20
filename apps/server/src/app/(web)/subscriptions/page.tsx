@@ -1,11 +1,12 @@
-import { getCurrentUser, getPayload } from "@/utils/payload";
+import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi/server";
 import { IntervalOptions } from "hegel";
 import { Subscription } from "payload-types";
 
 const Page = async () => {
   const payload = await getPayload();
-  const user = await getCurrentUser(payload);
+  const user = await getCurrentUserQuery(payload);
   const products = await payload.find({
     collection: "products",
     where: {
