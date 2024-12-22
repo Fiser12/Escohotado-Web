@@ -38,7 +38,7 @@ export async function getYouTubeVideoMetadata(
         thumbnails.high?.url ??
         thumbnails.medium?.url ??
         thumbnails.default?.url
-      
+
       return {
         title: videoData.snippet.title,
         description: videoData.snippet.description,
