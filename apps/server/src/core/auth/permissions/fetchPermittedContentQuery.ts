@@ -9,7 +9,11 @@ export const fetchPermittedContentQuery = <T>(
 ): T | null => {
   const isFreeContent = permissions_seeds == ''
   const hasPermission = evalPermissionQuery(user, permissions_seeds)
-  if (isFreeContent) return content
-  if (hasPermission) return content
+  if (isFreeContent) {
+    return content
+  }
+  if (hasPermission) {
+    return content
+  }
   return freeContent
 }

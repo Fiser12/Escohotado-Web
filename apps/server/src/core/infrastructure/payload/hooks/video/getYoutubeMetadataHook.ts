@@ -11,7 +11,7 @@ export interface YouTubeVideoMetadata {
 export const getYoutubeVideoMetadataHook: CollectionBeforeChangeHook = async ({ data }) => {
   return {
     ...data,
-    ...(await getYouTubeVideoMetadata(data.url)),
+    ...(await getYouTubeVideoMetadata(data.url_free ?? data.url)),
   }
 }
 

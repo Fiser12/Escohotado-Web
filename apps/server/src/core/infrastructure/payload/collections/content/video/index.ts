@@ -5,6 +5,7 @@ import {
   permissionRelationship,
 } from '@/core/infrastructure/payload/fields/permissions/permissionsRelationshipFields'
 import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations'
+
 import { getYoutubeVideoMetadataHook } from '../../../hooks/video/getYoutubeMetadataHook'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()

@@ -6,6 +6,7 @@ import { PaginationBarNuqs } from "@/ui/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
 import { SearchBarNuqs } from "@/ui/search_bar_nuqs";
 import { getVideosQuery } from "@/core/content/getVideosQuery";
+import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery';
 
 export const pageSize = 10;
 
@@ -39,22 +40,28 @@ const Page = async ({ searchParams }: Props) => {
       <div>
         <ContentGridList
           items={videosResult.results}
-          renderBox={(video, index) => (
-            <ArticleCard
+          renderBox={(video, index) => {
+            const content = fetchPermittedContentQuery(
+              user, 
+              video.permissions_seeds ?? "",
+              video.url,
+              video.url_free
+            )
+
+            return <ArticleCard
               key={index}
               title={video.title ?? "No title"}
-              href={video.url ?? "#"}
+              href={content ?? "#"}
               publishedAt={video.publishedAt as string}
               coverHref={video.thumbnailUrl ?? "#"}
               textLink={"Ver vídeo"}
               categories={[]}
-              hasPermission={true}
+              hasPermission={content != null && content != ""}
             />
-          )}
+          }}
         />
       </div>
       <PaginationBarNuqs maxPage={videosResult.maxPage} />
-
     </ContentWrapper>
   );
 };
