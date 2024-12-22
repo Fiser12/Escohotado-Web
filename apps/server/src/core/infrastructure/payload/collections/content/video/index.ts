@@ -24,6 +24,13 @@ export const video: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Contenido',
+    components: {
+      beforeListTable: [
+        { 
+          path: '/src/ui/refresh_yt_collection_button',
+        }
+      ]
+    }
   },
   hooks: {
     beforeChange: [cachePermissionSeedsHook(), getYoutubeVideoMetadataHook],
