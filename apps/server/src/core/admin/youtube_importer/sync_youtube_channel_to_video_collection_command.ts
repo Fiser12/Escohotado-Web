@@ -18,7 +18,7 @@ const getYoutubeVideosByPage = async (
     throw new Error('No API Key found in environment variables.')
   }
 
-  const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?key=${apiKey}&playlistId=${playlistId}${pageToken ? `&pageToken=${pageToken}` : ''}&maxResults=50&part=snippet`
+  const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?key=${apiKey}&playlistId=${playlistId}${pageToken ? `&pageToken=${pageToken}` : ''}&maxResults=50&part=snippet,contentDetails,status`
 
   const response = await fetch(apiUrl)
   if (!response.ok) {
@@ -49,7 +49,7 @@ const getYoutubeVideos = async (
       allVideos = [...allVideos, ...videos]
       nextPageToken = newPageToken
     } while (nextPageToken)
-    payload.logger.error(`Videos loaded from api: ${allVideos.length}`)
+    payload.logger.warn(`Videos loaded from api: ${allVideos.length}`)
 
     return allVideos
   } catch (error) {
@@ -65,7 +65,7 @@ const getVideoURLsFromDatabase = async (payload: BasePayload): Promise<string[]>
     pagination: false,
     select: { url_free: true },
   })
-  payload.logger.error(`Videos loaded from database: ${videos.docs.length}`)
+  payload.logger.warn(`Videos loaded from database: ${videos.docs.length}`)
 
   return videos.docs.mapNotNull((video) => video.url_free)
 }
@@ -92,7 +92,7 @@ export const youtubeVideoUpsert = async (
         .where(eq(videoSchema.url, video.url))
         .execute()
 
-      payload.logger.error(`Video updated: ${video.id}: ${video.title}`)
+      payload.logger.warn(`Video updated: ${video.id}: ${video.title}`)
       return
     }
     if (existingUrls.includes(video.url)) return
@@ -112,7 +112,7 @@ export const youtubeVideoUpsert = async (
       )
       .execute()
   
-    payload.logger.error(`Video created: ${video.id}: ${video.title}`)
+    payload.logger.warn(`Video created: ${video.id}: ${video.title}`)
   } catch (error) {
     payload.logger.error(`Error in payloadUpsert: ${error}`)
   }
@@ -120,7 +120,7 @@ export const youtubeVideoUpsert = async (
 
 const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
   const payload = await getPayload()
-  payload.logger.error(`Starting sync of Youtube channel to video collection`)
+  payload.logger.warn(`Starting sync of Youtube channel to video collection`)
 
   const videos = await getYoutubeVideos(payload)
   const existingUrls = await getVideoURLsFromDatabase(payload)
@@ -129,7 +129,7 @@ const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
   )
   upsertPromises.forEach((promise) => promise.catch((error) => payload.logger.error('Error en el upsert: ', error)))
   await Promise.all(upsertPromises)
-  payload.logger.error('Sincronización completada.')
+  payload.logger.warn('Sincronización completada.')
 }
 
 export default syncYoutubeChannelToVideoCollectionCommand
