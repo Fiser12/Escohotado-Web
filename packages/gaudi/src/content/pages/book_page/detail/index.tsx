@@ -40,6 +40,7 @@ export const BookDetail = (props: Props) => {
     return (
         <div className="w-full bg-white">
             <MainHero
+                topHeader={true}
                 title={props.title}
                 description={props.description}
                 children={

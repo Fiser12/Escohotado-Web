@@ -26,6 +26,7 @@ export const BookMain = () => {
     return (
         <div className="w-full h-auto md:h-screen bg-white">
             <MainHero
+                topHeader={true}
                 title="Rameras y Esposas"
                 description="Reedición de «Rameras y Esposas» (1993) de Antonio Escohotado, en formato impreso, con cuadernillo a color de 20 páginas."
                 children={

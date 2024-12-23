@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { MainHero } from "../../common/hero";
 import { MainButton } from "../../../common/main_button/main_button";
 import { ContentWrapper } from "../../../server";
@@ -14,7 +13,9 @@ export const HomePage = (props: Props) => {
         description="Filósofo y ensayista español, dedicó su vida a explorar y desafiar las convenciones sociales."
         title="Antonio Escohotado"
         image={<img src="https://placehold.co/300x300?text=Antonio+Escohotado" alt="Antonio Escohotado" />}
-        direction={false} topHeader={true}      >
+        direction={false} 
+        topHeader={true}      
+        >
         <MainButton text="Conócelo mejor" type="line" />
       </MainHero>
       <div id='gridContentHome' className="bg-gray-light py-10">
