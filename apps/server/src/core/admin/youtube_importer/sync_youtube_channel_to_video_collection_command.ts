@@ -5,7 +5,7 @@ import { COLLECTION_SLUG_VIDEO } from '../../infrastructure/payload/collections/
 import { getPayload } from '../../infrastructure/payload/utils/getPayload'
 import { mapApiYoutubeVideoToModel } from './mapApiYoutubeVideoToModel'
 import { YoutubeVideo, YoutubeVideosResult } from './youtube_video_model'
-import "hegel"
+import 'hegel'
 
 const getYoutubeVideosByPage = async (
   playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',
@@ -32,23 +32,28 @@ const getYoutubeVideosByPage = async (
 }
 
 const getYoutubeVideos = async (
+  payload: BasePayload,
   playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',
 ): Promise<YoutubeVideo[]> => {
-  let nextPageToken: string | null = null
-  let allVideos: YoutubeVideo[] = []
+  try {
+    let nextPageToken: string | null = null
+    let allVideos: YoutubeVideo[] = []
 
-  do {
-    const { nextPageToken: newPageToken, videos } = await getYoutubeVideosByPage(
-      playlistId,
-      nextPageToken,
-    )
-    allVideos = [...allVideos, ...videos]
-    nextPageToken = newPageToken
-  } while (nextPageToken)
+    do {
+      const { nextPageToken: newPageToken, videos } = await getYoutubeVideosByPage(
+        playlistId,
+        nextPageToken,
+      )
+      allVideos = [...allVideos, ...videos]
+      nextPageToken = newPageToken
+    } while (nextPageToken)
+    payload.logger.error(`Videos loaded from api: ${allVideos.length}`)
 
-  console.error(allVideos.map((video) => video.url))
-  console.log('Videos sincronizados:', allVideos.length)
-  return allVideos
+    return allVideos
+  } catch (error) {
+    payload.logger.error(`Error loading : ${error}`)
+    throw error
+  }
 }
 
 const getVideoURLsFromDatabase = async (payload: BasePayload): Promise<string[]> => {
@@ -58,11 +63,17 @@ const getVideoURLsFromDatabase = async (payload: BasePayload): Promise<string[]>
     pagination: false,
     select: { url_free: true },
   })
+  payload.logger.error(`Videos loaded from database: ${videos.docs.length}`)
 
   return videos.docs.mapNotNull((video) => video.url_free)
 }
 
-export const youtubeVideoUpsert = async (payload: BasePayload, video: YoutubeVideo, existingUrls: string[], upsert: boolean): Promise<void> => {
+export const youtubeVideoUpsert = async (
+  payload: BasePayload,
+  video: YoutubeVideo,
+  existingUrls: string[],
+  upsert: boolean,
+): Promise<void> => {
   const collection = COLLECTION_SLUG_VIDEO
   try {
     if (upsert && existingUrls.includes(video.url)) {
@@ -80,10 +91,10 @@ export const youtubeVideoUpsert = async (payload: BasePayload, video: YoutubeVid
           triggerAfterChange: false,
         },
       })
-      payload.logger.info(`Video updated: ${video.id}: ${video.title}`)
+      payload.logger.error(`Video updated: ${video.id}: ${video.title}`)
       return
     }
-    if(existingUrls.includes(video.url)) return
+    if (existingUrls.includes(video.url)) return
 
     await payload.create({
       collection,
@@ -100,7 +111,7 @@ export const youtubeVideoUpsert = async (payload: BasePayload, video: YoutubeVid
         triggerAfterChange: false,
       },
     })
-    payload.logger.info(`Video created: ${video.id}: ${video.title}`)
+    payload.logger.error(`Video created: ${video.id}: ${video.title}`)
   } catch (error) {
     payload.logger.error(`Error in payloadUpsert: ${error}`)
   }
@@ -108,14 +119,16 @@ export const youtubeVideoUpsert = async (payload: BasePayload, video: YoutubeVid
 
 const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
   const payload = await getPayload()
-  const videos = await getYoutubeVideos()
+  payload.logger.error(`Starting sync of Youtube channel to video collection`)
+
+  const videos = await getYoutubeVideos(payload)
   const existingUrls = await getVideoURLsFromDatabase(payload)
   const upsertPromises = videos.map((video) =>
-    youtubeVideoUpsert(payload, video, existingUrls, upsert)
+    youtubeVideoUpsert(payload, video, existingUrls, upsert),
   )
+  upsertPromises.forEach((promise) => promise.catch((error) => payload.logger.error('Error en el upsert: ', error)))
   await Promise.all(upsertPromises)
-  payload.logger.info('Sincronización completada.')
+  payload.logger.error('Sincronización completada.')
 }
 
 export default syncYoutubeChannelToVideoCollectionCommand
-
