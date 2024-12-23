@@ -60,7 +60,7 @@ export default buildConfig({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
     }),
-    authjsPlugin({ authjsConfig: authConfig }),
+    authjsPlugin({ authjsConfig: authConfig }) as any,
     sentryPlugin({ Sentry }),
     searchPlugin({
       collections: [
@@ -71,7 +71,7 @@ export default buildConfig({
       ],
       searchOverrides: {
         slug: 'search-results',
-        fields: ({ defaultFields }) => [
+        fields: ({ defaultFields }: any) => [
           ...defaultFields,
           {
             name: 'tags',
@@ -83,16 +83,16 @@ export default buildConfig({
         ],
       },
       defaultPriorities: {
-        [COLLECTION_SLUG_VIDEO]: (doc) =>
+        [COLLECTION_SLUG_VIDEO]: (doc: any) =>
           doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
-        [COLLECTION_SLUG_BOOK]: (doc) =>
+        [COLLECTION_SLUG_BOOK]: (doc: any) =>
           doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
-        [COLLECTION_SLUG_ARTICLE_WEB]: (doc) =>
+        [COLLECTION_SLUG_ARTICLE_WEB]: (doc: any) =>
           doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
-        [COLLECTION_SLUG_ARTICLE_PDF]: (doc) =>
+        [COLLECTION_SLUG_ARTICLE_PDF]: (doc: any) =>
           doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
       },
-      beforeSync: ({ originalDoc, searchDoc }) => {
+      beforeSync: ({ originalDoc, searchDoc }: any) => {
         return {
           ...searchDoc,
           tags: originalDoc.tags?.join(', ') ?? originalDoc.seeds,

@@ -6,6 +6,8 @@ import { getPayload } from '../../infrastructure/payload/utils/getPayload'
 import { mapApiYoutubeVideoToModel } from './mapApiYoutubeVideoToModel'
 import { YoutubeVideo, YoutubeVideosResult } from './youtube_video_model'
 import 'hegel'
+import { video as videoSchema } from '@/payload-generated-schema'
+import { eq } from '@payloadcms/db-postgres/drizzle'
 
 const getYoutubeVideosByPage = async (
   playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',
@@ -73,44 +75,43 @@ export const youtubeVideoUpsert = async (
   video: YoutubeVideo,
   existingUrls: string[],
   upsert: boolean,
-): Promise<void> => {
-  const collection = COLLECTION_SLUG_VIDEO
+): Promise<void> => {  
   try {
     if (upsert && existingUrls.includes(video.url)) {
-      await payload.update({
-        collection,
-        data: {
-          title: video.title,
-          description: video.description,
-          publishedAt: video.publishedAt,
-          tags: video.tags,
-          thumbnailUrl: video.thumbnailUrl,
-        },
-        where: { url_free: { equals: video.url } },
-        context: {
-          triggerAfterChange: false,
-        },
-      })
+      await payload.db.drizzle
+        .update(videoSchema)
+        .set(
+          {
+            title: video.title,
+            description: video.description,
+            publishedAt: video.publishedAt,
+            tags: video.tags,
+            thumbnailUrl: video.thumbnailUrl,
+          }
+        )
+        .where(eq(videoSchema.url, video.url))
+        .execute()
+
       payload.logger.error(`Video updated: ${video.id}: ${video.title}`)
       return
     }
     if (existingUrls.includes(video.url)) return
 
-    await payload.create({
-      collection,
-      data: {
-        url: video.url,
-        url_free: video.url,
-        title: video.title,
-        description: video.description,
-        publishedAt: video.publishedAt,
-        tags: video.tags,
-        thumbnailUrl: video.thumbnailUrl,
-      },
-      context: {
-        triggerAfterChange: false,
-      },
-    })
+    await payload.db.drizzle
+      .insert(videoSchema)
+      .values(
+        {
+          url: video.url,
+          url_free: video.url,
+          title: video.title,
+          description: video.description,
+          publishedAt: video.publishedAt,
+          tags: video.tags,
+          thumbnailUrl: video.thumbnailUrl,
+        }
+      )
+      .execute()
+  
     payload.logger.error(`Video created: ${video.id}: ${video.title}`)
   } catch (error) {
     payload.logger.error(`Error in payloadUpsert: ${error}`)
