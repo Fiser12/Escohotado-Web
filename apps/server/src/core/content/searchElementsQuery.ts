@@ -27,6 +27,6 @@ export const searchElementsQuery = async (
       : {}),
   })
   return results.docs
-    .filter((result) => collections.includes(result.doc.relationTo))
+    .filter((result) => collections.includes(result.doc?.relationTo))
     .map((result) => ({ collection: result.doc.relationTo, id: result.doc.value as string }))
 }

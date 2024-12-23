@@ -17,6 +17,7 @@ export const getVideosQuery = async (
   const videosDocs = await payload.find({
     collection: COLLECTION_SLUG_VIDEO,
     sort: '-publishedAt',
+    pagination: false,
     where: {
       id: { in: results },
     },

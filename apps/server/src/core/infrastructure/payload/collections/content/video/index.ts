@@ -24,6 +24,13 @@ export const video: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Contenido',
+    components: {
+      beforeListTable: [
+        { 
+          path: '/src/ui/refresh_yt_collection_button',
+        }
+      ]
+    }
   },
   hooks: {
     beforeChange: [cachePermissionSeedsHook(), getYoutubeVideoMetadataHook],
@@ -33,7 +40,7 @@ export const video: CollectionConfig = {
       type: 'row',
       fields: [
         {
-          label: 'URL Vídeo YT',
+          label: 'URL Vídeo (Privada)',
           name: 'url',
           type: 'text',
           required: true,
@@ -43,9 +50,12 @@ export const video: CollectionConfig = {
       ],
     },
     {
-      label: 'URL Vídeo YT (free, sin permisos)',
+      label: 'URL Vídeo YT (Pública)',
       name: 'url_free',
       type: 'text',
+      admin: {
+        readOnly: true,
+      }
     },
     permissionSeedField,
     {
