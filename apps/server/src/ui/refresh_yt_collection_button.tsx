@@ -1,4 +1,4 @@
-import syncYoutubeChannelToVideoCollection from "@/core/admin/sync_youtube_channel_to_video_collection";
+import syncYoutubeChannelToVideoCollection from "@/core/admin/youtube_importer/sync_youtube_channel_to_video_collection_command";
 import { AdminViewProps } from "payload";
 
 const refreshYtCollectionButton: React.FC<AdminViewProps> = async () => {
