@@ -1,9 +1,11 @@
 'use server'
 
+import { BasePayload } from 'payload'
 import { COLLECTION_SLUG_VIDEO } from '../../infrastructure/payload/collections/config'
 import { getPayload } from '../../infrastructure/payload/utils/getPayload'
 import { mapApiYoutubeVideoToModel } from './mapApiYoutubeVideoToModel'
 import { YoutubeVideo, YoutubeVideosResult } from './youtube_video_model'
+import "hegel"
 
 const getYoutubeVideosByPage = async (
   playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',
@@ -49,20 +51,21 @@ const getYoutubeVideos = async (
   return allVideos
 }
 
-export const youtubeVideoUpsert = async (video: YoutubeVideo): Promise<void> => {
-  const payload = await getPayload()
+const getVideoURLsFromDatabase = async (payload: BasePayload): Promise<string[]> => {
   const collection = COLLECTION_SLUG_VIDEO
-  let existingDocId: string | undefined
-  try {
-    const existingDocs = await payload.find({
-      collection,
-      where: { url_free: { equals: video.url } },
-      pagination: false,
-      limit: 1,
-    })
+  const videos = await payload.find({
+    collection,
+    pagination: false,
+    select: { url_free: true },
+  })
 
-    existingDocId = existingDocs.docs?.at(0)?.id
-    if (existingDocId) {
+  return videos.docs.mapNotNull((video) => video.url_free)
+}
+
+export const youtubeVideoUpsert = async (payload: BasePayload, video: YoutubeVideo, existingUrls: string[], upsert: boolean): Promise<void> => {
+  const collection = COLLECTION_SLUG_VIDEO
+  try {
+    if (upsert && existingUrls.includes(video.url)) {
       await payload.update({
         collection,
         data: {
@@ -77,8 +80,10 @@ export const youtubeVideoUpsert = async (video: YoutubeVideo): Promise<void> => 
           triggerAfterChange: false,
         },
       })
+      payload.logger.info(`Video updated: ${video.id}: ${video.title}`)
       return
     }
+    if(existingUrls.includes(video.url)) return
 
     await payload.create({
       collection,
@@ -95,22 +100,21 @@ export const youtubeVideoUpsert = async (video: YoutubeVideo): Promise<void> => 
         triggerAfterChange: false,
       },
     })
+    payload.logger.info(`Video created: ${video.id}: ${video.title}`)
   } catch (error) {
-    console.error(`Existing previous doc id: ${existingDocId ?? "No previous doc"}`)
-    console.error(`Error in payloadUpsert: ${error}`)
+    payload.logger.error(`Error in payloadUpsert: ${error}`)
   }
 }
 
-const syncYoutubeChannelToVideoCollectionCommand = async () => {
+const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
+  const payload = await getPayload()
   const videos = await getYoutubeVideos()
+  const existingUrls = await getVideoURLsFromDatabase(payload)
   const upsertPromises = videos.map((video) =>
-    youtubeVideoUpsert(video).catch((error) => {
-      console.error(`Error upserting video: ${video.title}`, error)
-    }),
+    youtubeVideoUpsert(payload, video, existingUrls, upsert)
   )
   await Promise.all(upsertPromises)
-
-  console.error('Sincronización completada.')
+  payload.logger.info('Sincronización completada.')
 }
 
 export default syncYoutubeChannelToVideoCollectionCommand
