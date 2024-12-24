@@ -3,6 +3,8 @@ import { MainHero } from "../../common/hero";
 import { MainButton } from "../../../common/main_button/main_button";
 import { ContentWrapper } from "../../../server";
 import { ImageParallax } from "../../book/cards/image_parallax";
+import { NewsletterSubscription } from "../../common/newsletterSubscription";
+import { Footer } from "../../common/footer";
 
 interface Props { }
 
@@ -14,7 +16,7 @@ export const HomePage = (props: Props) => {
         description="Filósofo y ensayista español, dedicó su vida a explorar y desafiar las convenciones sociales."
         title="Antonio Escohotado"
         image={<img src="https://placehold.co/300x300?text=Antonio+Escohotado" alt="Antonio Escohotado" />}
-        direction={false} topHeader={true}      >
+        changeDirection={false} topHeader={true}      >
         <MainButton text="Conócelo mejor" type="line" />
       </MainHero>
       <div id='gridContentHome' className="bg-gray-light py-10">
@@ -32,9 +34,11 @@ export const HomePage = (props: Props) => {
                         >
                             <img src="https://placehold.co/350x500" alt="Sample image" />
                         </ImageParallax>}
-        direction={true} topHeader={false}      >
+        changeDirection={true} topHeader={false}      >
         <MainButton text="Sumérgete en la lectura" color="secondary" className="mt-5" />
       </MainHero>
+      <NewsletterSubscription />
+      <Footer />
     </div>
   );
 };
