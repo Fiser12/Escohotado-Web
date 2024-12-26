@@ -10,13 +10,13 @@ interface Props {
     image?: React.ReactNode;
     children?: React.ReactNode;
     className?: string;
-    direction?: boolean; 
+    changeDirection?: boolean;
     topHeader: boolean;
 }
 
 export const MainHero = ({
     topHeader = false,
-    direction = true,
+    changeDirection = true,
     ...props
 }: Props) => {
 
@@ -34,16 +34,16 @@ export const MainHero = ({
     const imageContainerClass = classNames(
         'flex justify-center items-center',
         {
-            'md:order-1': direction, 
-            'md:order-2': !direction, 
+            'md:order-1': changeDirection,
+            'md:order-2': !changeDirection,
         }
     );
 
     const contentClass = classNames(
         'w-full flex flex-col gap-3',
         {
-            'md:order-2': direction, 
-            'md:order-1': !direction, 
+            'md:order-2': changeDirection,
+            'md:order-1': !changeDirection,
         }
     );
 
