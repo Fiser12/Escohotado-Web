@@ -3,11 +3,13 @@ import classNames from "classnames";
 interface Props {
       quote: string;
       author: string;
+      className?: string;
 }
 
 export const FeaturedQuote = (props: Props) => {
       const containerClass = classNames(
-            'bg-primary-100 w-full h-full flex flex-col gap-5 justify-center p-5'
+            props.className,
+            'bg-primary-100 w-full h-full max-h-[300px] flex flex-col gap-5 justify-center p-5'
       );
 
       const quoteClass = classNames(
