@@ -42,7 +42,7 @@ export const FeaturedArticle = (props: Props) => {
 
   const containerClass = classNames(
     props.className,
-    "w-full h-full max-h-[400px] grid gap-2 bg-white p-1 rounded",
+    "w-full h-full min-h-[200px] max-h-[400px] grid gap-2 bg-white p-1 rounded",
     {
       "grid-cols-1": isVertical || window.innerWidth < 640,
       "grid-cols-2": !isVertical && window.innerWidth >= 640,
@@ -50,7 +50,7 @@ export const FeaturedArticle = (props: Props) => {
   );
 
   const imageClass = classNames(
-    "w-full h-full object-cover rounded hidden sm:block"
+    "w-full h-full max-h-full max-w-full object-cover rounded hidden sm:block"
   );
 
   const contentClass = classNames("flex flex-col justify-between p-2 gap-2");

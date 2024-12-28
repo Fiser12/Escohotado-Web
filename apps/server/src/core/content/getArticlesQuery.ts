@@ -15,7 +15,7 @@ type CommonArticle = (ArticlePdf | ArticleWeb) & {
 export const getArticlesQuery = async (
   query: string,
   autor: string | null,
-  temas: string[],
+  medios: string[],
   page: number,
 ): Promise<{
   results: CommonArticle[]
@@ -31,6 +31,7 @@ export const getArticlesQuery = async (
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_PDF,
       sort: '-publishedAt',
+      pagination: false,
       where: {
         id: {
           in: results
@@ -42,6 +43,7 @@ export const getArticlesQuery = async (
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_WEB,
       sort: '-publishedAt',
+      pagination: false,
       where: {
         id: {
           in: results
@@ -73,14 +75,20 @@ export const getArticlesQuery = async (
     })
     .filter((article) => {
       const evalAutorFilter = autor === null || article.seeds?.includes(autor)
-      const evalTemaFilter =
-        temas.length === 0 || temas.every((seed) => article.seeds?.includes(seed))
+      const evalMedioFilter =
+        medios.length === 0 || medios.every((seed) => article.seeds?.includes(seed))
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||
         article.title?.toLowerCase().includes(query.toLowerCase())
-      return evalAutorFilter && evalTemaFilter && evalQueryFilter
+      return evalAutorFilter && evalMedioFilter && evalQueryFilter
     })
+    .map((article) => (
+      {
+        ...article,
+        title: article.title?.replace('.pdf', '')
+      }
+    ))
 
   return {
     results: articles.slice(startIndex, endIndex),

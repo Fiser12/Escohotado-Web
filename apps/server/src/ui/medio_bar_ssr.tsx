@@ -5,14 +5,14 @@ import { COLLECTION_SLUG_TAXONOMY } from "@/core/infrastructure/payload/collecti
 interface Props {
 }
 
-export async function TemaBarSSR(props: Props) {
+export async function MedioBarSSR(props: Props) {
 	const payload = await getPayload();
 	const taxonomies = await payload.find({
 		collection: COLLECTION_SLUG_TAXONOMY,
 		where: {
 			and: [
 				{ selectable: { equals: true } },
-				{ seed: { contains: 'tema' } }
+				{ seed: { contains: 'medio' } }
 			]
 		}
 	})
@@ -24,9 +24,9 @@ export async function TemaBarSSR(props: Props) {
 
 	return (
 		<FilterBarNuqs
-			title="Temas"
-			queryKey="temas"
-			multiple={true}
+			title="Medio"
+			queryKey="medio"
+			multiple={false}
 			{...props}
 			tags={tagsAsRecord}
 		/>
