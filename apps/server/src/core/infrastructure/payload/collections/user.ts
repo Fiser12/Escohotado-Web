@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from './config'
 import { ADMIN_ACCESS_ROLES } from '@/core/infrastructure/payload/plugins/authjs/auth.config'
-import { revalidateUser } from '../hooks/user/revalidateUserHook'
 import { isAdminOrCurrentUser, isAdmin } from '../fields/permissions/accessEvaluations'
 
 const ADMIN_AUTH_GROUP = 'Auth'
@@ -11,13 +10,6 @@ export const users: CollectionConfig = {
   admin: {
     group: ADMIN_AUTH_GROUP,
     useAsTitle: 'email',
-  },
-  hooks: {
-    afterChange: [
-      async ({ doc, req }) => {
-        await revalidateUser(doc, req.payload)
-      },
-    ],
   },
   access: {
     admin: async ({ req }) => {
