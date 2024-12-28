@@ -5,7 +5,7 @@ import { ContentWrapper, H2, ArticleCard } from "gaudi/server";
 import { ArticlePdf, ArticleWeb, Media, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/ui/autor_bar_ssr";
-import { TemaBarSSR } from "@/ui/tema_bar_ssr";
+import { MedioBarSSR } from "@/ui/medio_bar_ssr";
 import { PaginationBarNuqs } from "@/ui/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
 import { SearchBarNuqs } from "@/ui/search_bar_nuqs";
@@ -17,7 +17,7 @@ export const searchContentParamsCache = createSearchParamsCache({
   page: parseAsString.withDefault('1'),
   autor: parseAsString.withDefault(''),
   query: parseAsString.withDefault(''),
-  temas: parseAsString.withDefault('')
+  medio: parseAsString.withDefault('')
 })
 
 type CommonArticle = (ArticlePdf | ArticleWeb) & {
@@ -29,11 +29,11 @@ interface Props {
 }
 
 const Page = async ({ searchParams }: Props) => {
-  const { autor, temas, page, query } = await searchContentParamsCache.parse(searchParams)
+  const { autor, medio, page, query } = await searchContentParamsCache.parse(searchParams)
   const payload = await getPayload();
   const user = await getCurrentUserQuery(payload);
-  const temasArray = temas.split(',').filter(Boolean)
-  const result = await getArticlesQuery(query, autor, temasArray, parseInt(page) - 1)
+  const medioArray = medio.split(',').filter(Boolean)
+  const result = await getArticlesQuery(query, autor, medioArray, parseInt(page) - 1)
 
   return (
     <ContentWrapper
@@ -43,7 +43,7 @@ const Page = async ({ searchParams }: Props) => {
       <H2 label="Artículos" />
       <div className="flex flex-row gap-x-2">
         <AutorBarSSR />
-        <TemaBarSSR />
+        <MedioBarSSR />
         <SearchBarNuqs />
       </div>
       <div>

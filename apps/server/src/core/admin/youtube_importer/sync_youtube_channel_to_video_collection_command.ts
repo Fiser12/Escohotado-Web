@@ -10,7 +10,7 @@ import { video as videoSchema } from '@/payload-generated-schema'
 import { eq } from '@payloadcms/db-postgres/drizzle'
 
 const getYoutubeVideosByPage = async (
-  playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',
+  playlistId: string = 'PLggf90VSN9KOwkevFKymkO4tsS2LeZl6O',
   pageToken: string | null = null,
 ): Promise<YoutubeVideosResult> => {
   const apiKey = process.env.YOUTUBE_API_KEY
