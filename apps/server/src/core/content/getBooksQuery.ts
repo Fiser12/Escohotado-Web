@@ -15,6 +15,7 @@ export const getBooksQuery = async (query: string, page: number): Promise<BookDt
   const books = await payload.find({
     collection: COLLECTION_SLUG_BOOK,
     sort: '-publishedAt',
+    pagination: false,
     where: {
       id: { in: results },
     },
