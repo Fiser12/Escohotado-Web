@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { H2 } from "../../../../common/headers/H2";
 import smokeEscohotado from "../../../../assets/images/escohotado-articles-portada.png";
-import handwrittingBg from "../../../../assets/images/handwritting-bg.jpg";
 import { ContentGridList } from "../../../common/content_grid_list";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { SelectDropdown } from "../../../common/selectors/select_dropdown";
@@ -11,6 +10,8 @@ import { HeadlineCard } from "../../../article/cards/article_headline_card";
 import { HighlightSection } from "../../../article/highlight/section_highlight";
 import { ArticleCard } from "../../../article/cards/article_card";
 import { CarouselBook } from "../../../book/carousel";
+import handwrittenBackground from "../../../../assets/images/handwritting-bg.jpg";
+import { EscohotadoArticlesPortada } from "../../../../assets/images/escohotado-articles-portada";
 
 export const ArticlePage = () => {
 
@@ -118,7 +119,7 @@ export const ArticlePage = () => {
         <ContentWrapper className="mx-auto flex flex-col gap-7.5">
           <H2 label="Últimos artículos"></H2>
           <div className="grid grid-cols-3 @max-md:grid-cols-1 items-center gap-4 md:gap-10">
-            <img src={smokeEscohotado.src} alt="Escohotado image" className="order-2 md:order-none" />
+            <EscohotadoArticlesPortada />
             <div className="w-full col-span-2 order-1 md:order-none">
               <HeadlineCard author="Daniel Pedrero Rodríguez" href="#" title="Más de 700 días sin la figura de Antonio Escohotado" textLink="Leer más"></HeadlineCard>
               <HeadlineCard author="Juan Manuel Ortiz" href="#" title="A propósito de la vigencia actual de «El espíritu de la comedia», ensayo de Antonio Escohotado" textLink="Leer más"></HeadlineCard>
@@ -127,7 +128,7 @@ export const ArticlePage = () => {
           </div>
         </ContentWrapper>
       </div>
-      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="#" coverHref={handwrittingBg.src}></HighlightSection>
+      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="#" coverHref={handwrittenBackground.src}></HighlightSection>
       <div className="@container w-full pt-12.5">
         <CarouselBook books={booksExample} />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">

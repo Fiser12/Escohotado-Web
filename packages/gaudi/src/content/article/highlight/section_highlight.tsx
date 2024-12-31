@@ -1,6 +1,6 @@
-import classNames from "classnames";
 import { H4 } from "../../../common/headers/H4";
 import { MainButton } from "../../../common/main_button/main_button";
+import Image from "next/image";
 
 interface Props {
     description: string;
@@ -12,7 +12,8 @@ interface Props {
 export const HighlightSection = (props: Props) => {
     return (
         <div className="w-full bg-black py-12.5 px-5 text-white relative overflow-hidden">
-            <img
+            <Image
+                fill
                 src={props.coverHref}
                 alt="Background"
                 className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-20"

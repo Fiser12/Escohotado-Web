@@ -12,9 +12,9 @@ export const users: CollectionConfig = {
     useAsTitle: 'email',
   },
   access: {
-    admin: async ({ req }) => {
-      return req?.user?.roles?.includes(ADMIN_ACCESS_ROLES) == true
-    },
+    admin: async ({ req }) => (
+      req?.user?.roles?.includes(ADMIN_ACCESS_ROLES) == true
+    ),
     read: isAdminOrCurrentUser,
     create: isAdmin,
     update: isAdminOrCurrentUser,
