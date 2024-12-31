@@ -68,11 +68,9 @@ export const getArticlesQuery = async (
   const endIndex = startIndex + pageSize
 
   const articles = [...articlesPDFWithType, ...articlesWebWithType]
-    .sort((a, b) => {
-      const dateA = new Date(a.publishedAt).getTime()
-      const dateB = new Date(b.publishedAt).getTime()
-      return dateB - dateA
-    })
+    .sort((a, b) => (
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    ))
     .filter((article) => {
       const evalAutorFilter = autor === null || article.seeds?.includes(autor)
       const evalMedioFilter =
