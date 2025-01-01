@@ -58,7 +58,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
           </div>
         </ContentWrapper>
       </div>
-      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="#" coverHref={handwrittenBackground.src}></HighlightSection>
+      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="/subscriptions" coverHref={handwrittenBackground.src}></HighlightSection>
       <div className="@container w-full pt-12.5">
         <CarouselBook books={books} />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
@@ -70,9 +70,9 @@ export const ArticlePage = async ({ searchParams }: Props) => {
             </div>
           <ContentGridList
             items={articles.results}
-            renderBox={(article, index) => (
+            renderBox={(article) => (
               <ArticleCard
-                key={index}
+                key={article.id}
                 title={article.title ?? "No title"}
                 href={article.url ?? "#"}
                 publishedAt={article.publishedAt as string}

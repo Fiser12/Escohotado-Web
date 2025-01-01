@@ -41,7 +41,7 @@ export const CarouselBook = (props: Props) => {
       <div className={carouselClass} ref={emblaRef}>
         <div className={containerClass}>
             {props.books.map((book, index) => (
-              <div key={index} className="flex-none w-[50%] md:w-[30%] xl:w-[20%] 2xl:w-[14%]">
+              <div key={index} className="flex-none w-[60%] sm:w-[50%] md:w-[30%] xl:w-[20%] 2xl:w-[14%]">
                 <BookCard title={book.title} coverHref={book.coverHref} link={book.link} />
               </div>
             ))}
