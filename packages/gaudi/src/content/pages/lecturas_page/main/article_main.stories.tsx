@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { ArticlePage } from "./article_main";
+import { ArticlePage } from ".";
 
 const meta: Meta = {
     title:"Pages/Lecturas/Main",

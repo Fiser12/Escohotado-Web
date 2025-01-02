@@ -8,6 +8,7 @@ import { Footer } from "../../common/footer";
 import { FeaturedArticle } from "../../featured_grid_home/article";
 import { FeaturedQuote } from "../../featured_grid_home/quote";
 import { FeaturedBook } from "../../featured_grid_home/book";
+import { FeaturedVideo } from "../../featured_grid_home/video";
 
 interface Props { }
 
@@ -53,11 +54,10 @@ export const HomePage = (props: Props) => {
               author="Antonio Escohotado"
               coverHref="https://placehold.co/150x200"
             />
-            <FeaturedArticle
+            <FeaturedVideo
               className="col-span-1 md:col-span-2"
-              title="El origen de la civilización"
-              author="Antonio Escohotado"
-              coverHref="https://placehold.co/150x150"
+              title=" 250.000 agradecimientos escohotadianos a todos los emboscados "
+              coverHref="https://placehold.co/300x200"
               href="/"
               categories={[
                 { id: "1", singular_name: "Historia" },
