@@ -1,10 +1,13 @@
+"use server";
+
 import { COLLECTION_SLUG_BOOK } from "@/core/infrastructure/payload/collections/config";
 import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper } from "gaudi/server";
-import { BookDetail } from "gaudi/client";
+import { MainButton, BookDetail } from "gaudi/server";
+
 import { Media } from "payload-types";
-export const pageSize = 10;
+import { BookVariantsSelectorNuqs } from "@/ui/book_variants_selector_nuqs";
+import { url } from "inspector";
 
 interface Props {
     params: {
@@ -34,24 +37,20 @@ const Page = async (props: Props) => {
     };
     const options = book.Ediciones?.map((edition) => ({
         label: variants[edition.variant ?? "book"] ?? "Libro",
-        id: edition.variant ?? ""
+        id: edition.variant ?? "",
+        url: edition.link ?? "#"
     })) ?? [];
     return (
-        <ContentWrapper
-            className="flex flex-col gap-y-5"
-            backgroundClassname="bg-white"
+        <BookDetail
+            title={book.title ?? "No title"}
+            description={book.description ?? "Empty"}
+            contentHtml={book.content_html ?? "<p>Empty</p>"}
+            coverHref={(book.cover as Media)?.url ?? "#"}
+            langs={['es', 'en']}
+            link={book.Ediciones?.[0].link ?? "#"}
         >
-            <BookDetail
-                title={book.title ?? "No title"}
-                description={book.description ?? "Empty"}
-                contentHtml={book.content_html ?? "<p>Empty</p>"}
-                coverHref={(book.cover as Media)?.url ?? "#"}
-                langs={['es', 'en']}
-                options={options}
-                link={book.Ediciones?.[0].link ?? "#"}
-            />
-
-        </ContentWrapper>
+            <BookVariantsSelectorNuqs options={options}/>
+        </BookDetail>
     );
 };
 

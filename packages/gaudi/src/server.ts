@@ -20,5 +20,7 @@ export { HeadlineCard } from "./content/article/cards/article_headline_card";
 export { HighlightSection } from "./content/article/highlight/section_highlight";
 export { CarouselBook } from "./content/book/carousel";
 export { EscohotadoArticlesPortada } from "./assets/images/escohotado-articles-portada";
+export { MainButton } from "./common/main_button/main_button";
+export { BookDetail } from "./content/pages/book_page/detail";
 import handwrittenBackground from "./assets/images/handwritting-bg.jpg";
 export { handwrittenBackground };

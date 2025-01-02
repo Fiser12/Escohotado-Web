@@ -1,41 +1,20 @@
-"use client";
-
 import { MainHero } from "../../../common/hero";
-import { MainButton } from "../../../../common/main_button/main_button";
-import { SelectBoxes } from "../../../common/selectors/grid_select_boxes";
-import { SelectDropdown } from "../../../common/selectors/select_dropdown";
-import { useState } from "react";
-import "../../article_page/article-html-content.css";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
-import { ESFlag } from "../../../../common/icons/flags/ES";
-import { ENFlag } from "../../../../common/icons/flags/EN";
 import { ImageParallax } from "../../../book/cards/image_parallax";
+import Image from "next/image";
+import "../../article_page/article-html-content.css";
 
 interface Props {
     title: string;
     coverHref: string;
     description: string;
     contentHtml: string;
-    options: { id: string, label: string }[];
     langs: ('es' | 'en')[];
     link: string;
+    children: React.ReactNode;
 }
-const titleMap = { "es": "Español", "en": "Inglés" };
-const flagMap = { "es": <ESFlag />, "en": <ENFlag /> };
 
 export const BookDetail = (props: Props) => {
-
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
-    const handleTagChange = (tag: string[]) => {
-        setSelectedTags(tag);
-    };
-    const langsTags: Record<string, { label: string, icon: JSX.Element }> = props.langs.reduce((acc, lang) => {
-        acc[lang] = {
-            label: titleMap[lang],
-            icon: flagMap[lang],
-        };
-        return acc;
-    }, {} as Record<string, { label: string, icon: JSX.Element }>);
 
     return (
         <div className="w-full bg-white">
@@ -43,33 +22,15 @@ export const BookDetail = (props: Props) => {
                 topHeader={true}
                 title={props.title}
                 description={props.description}
-                children={
-                    <div className="flex flex-col gap-8 w-full">
-                        <SelectBoxes options={props.options} />
-                        {Object.values(props.langs).length > 1 &&
-                            <SelectDropdown
-                                title="Selecciona idioma"
-                                multiple={false}
-                                showSelectionAtLabel={true}
-                                showClearButton={false}
-                                selectedTags={selectedTags}
-                                tags={langsTags}
-                                onSelectedTagsChange={handleTagChange}
-                                color="white"
-                                className="min-w-[190px]"
-                            />
-                        }
-                        <a href={props.link}>
-                            <MainButton text="Comprar" />
-                        </a>
-                    </div>
-                }
+                children={props.children}
                 image={
-                    <ImageParallax
-                        className="px-2 sm:px-20 md:px-0 lg:px-8"
-                        shadow={false}
-                    >
-                        <img src={props.coverHref} alt="Portada libro" />
+                    <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[366px] min-[469px]:h-[550px]" shadow={false}>
+                        <Image
+                            fill
+                            src={props.coverHref}
+                            alt={props.title}
+                            className="object-cover"
+                        />
                     </ImageParallax>
                 }
             />
