@@ -15,12 +15,11 @@ export const getLastArticlesQuery = async (): Promise<CommonArticle[]> => {
   const [articlesPDF, articlesWeb] = await Promise.all([
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_PDF,
-      sort: '-publishedAt',
-      
+      sort: '-created_at'
     }),
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_WEB,
-      sort: '-publishedAt'
+      sort: '-created_at'
     }),
   ])
 
@@ -37,7 +36,7 @@ export const getLastArticlesQuery = async (): Promise<CommonArticle[]> => {
 
   const articles = [...articlesPDFWithType, ...articlesWebWithType]
     .sort((a, b) => (
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     ))
     .map((article) => (
       {
