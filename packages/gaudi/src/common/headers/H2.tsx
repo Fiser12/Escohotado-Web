@@ -1,18 +1,23 @@
 import classNames from 'classnames';
+import React from 'react';
 
-type Args = {
-    className?: string,
-    label: string
-}
+type Props = React.HTMLAttributes<HTMLHeadingElement> & {
+  label: string;
+};
 
-export const H2 = (args: Args) => {
-    const headerClass = classNames(
-        'text-primary-900 text-3xl md:text-5xl font-regular font-display',
-        args.className,
-    );
+/**
+ * Componente H2 tipado para aceptar cualquier prop de un <h2> nativo
+ * y, además, tu prop `label` personalizada.
+ */
+export const H2: React.FC<Props> = ({ label, className, ...props }) => {
+  const headerClass = classNames(
+    'text-primary-900 text-3xl md:text-5xl font-regular font-display',
+    className
+  );
 
-    return (
-        <h2 className={headerClass}>{args.label}</h2>
-    )
-}
-
+  return (
+    <h2 className={headerClass} {...props}>
+      {label}
+    </h2>
+  );
+};

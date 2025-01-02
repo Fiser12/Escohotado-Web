@@ -67,6 +67,7 @@ export function contentCollectionBuilder(
       {
         name: 'title',
         type: 'text',
+        required: true,
         localized: true,
       },
       {
@@ -77,7 +78,6 @@ export function contentCollectionBuilder(
       {
         name: 'publishedAt',
         label: 'Fecha de publicación',
-        required: true,
         type: 'date',
       },
       ...categoriesRelationship.fields,
