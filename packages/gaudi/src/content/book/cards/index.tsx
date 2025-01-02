@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { ImageParallax } from "./image_parallax";
 import { H4 } from "../../../common/headers/H4";
+import Image from "next/image";
 
 interface Props {
     title: string;
@@ -15,16 +16,17 @@ export const BookCard = (props: Props) => {
     );
 
     return (
-        <a href={props.link} className="h-full w-full">
+        <a href={props.link}>
             <div className={containerClass}>
-                <ImageParallax shadow={false} className="w-auto h-full">
-                    <img
+                <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[200px] min-[469px]:h-[300px]" shadow={false}>
+                    <Image
+                        fill
                         src={props.coverHref}
                         alt={props.title}
-                        className="w-auto max-h-[300px]"
+                        className="object-cover"
                     />
                 </ImageParallax>
-                <H4 label={props.title} className="line-clamp-2 text-center px-4 w-full md:max-w-[80%]"></H4>
+                <H4 label={props.title} className="line-clamp-3 text-center px-4 w-full md:max-w-[80%]"></H4>
             </div>
         </a>
     );

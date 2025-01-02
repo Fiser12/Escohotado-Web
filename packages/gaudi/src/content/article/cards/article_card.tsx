@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { Link } from "../../../common/links/link";
 import { Tag } from "../../../common/tag/tag";
 import { LockIcon } from "../../../common/icons/lock_icon";
+import Image from "next/image";
 
 interface Props {
     title: string;
@@ -56,11 +57,13 @@ export const ArticleCard = (props: Props) => {
         <div className={cardClass}>
             <div className="p-1 flex flex-col gap-3 flex-1">
                 <div className="relative bg-black w-full h-[150px] overflow-hidden rounded">
-                    <img
+                    <Image
+                        fill
                         src={props.coverHref}
                         alt={props.title}
                         className={imageClass}
                     />
+                    
                     <div className={overlayClass}>
                         {!props.hasPermission && <LockIcon />}
                     </div>
