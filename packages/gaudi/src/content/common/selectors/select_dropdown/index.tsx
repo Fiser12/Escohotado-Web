@@ -64,7 +64,7 @@ export const SelectDropdown = (props: Props): JSX.Element => {
   );
 
   const menuContainerClass = classNames(
-    "z-10 absolute bg-white rounded shadow-md mt-2 divide-y divide-gray-100 max-w-[300px] w-full",
+    "z-10 absolute left-0 bg-white rounded shadow-md mt-2 divide-y divide-gray-100 min-w-max max-w-[300px]",
     { hidden: !isOpen, block: isOpen }
   );
 
@@ -100,7 +100,7 @@ export const SelectDropdown = (props: Props): JSX.Element => {
       </button>
       <div className={menuContainerClass}>
         <ul
-          className="max-h-[150px] overflow-scroll space-y-0.5 text-sm font-body"
+          className="max-h-[150px] overflow-scroll space-y-0.5 text-sm font-body w-full"
           aria-labelledby="dropdownBgHoverButton"
         >
           {Object.entries(props.tags).map(([key, { label, icon }]) => (
@@ -112,7 +112,7 @@ export const SelectDropdown = (props: Props): JSX.Element => {
                 )}
               >
                 {icon && <span className="text-primary-900">{icon}</span>}
-                <div className="w-full flex justify-between items-center">
+                <div className="w-full flex justify-between items-center gap-2">
                   <label
                     htmlFor={`item-${key}`}
                     className="w-full ms-2 text-sm font-medium text-black rounded"

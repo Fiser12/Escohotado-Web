@@ -38,7 +38,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
     <div className="w-full bg-gray-light">
       <div id="headerArticles" className="@container w-full bg-white pt-12.5">
         <ContentWrapper className="mx-auto flex flex-col gap-7.5">
-          <H2 label="Últimos artículos"></H2>
+          <H2 label="Últimos artículos" id="last-articles"/>
           <div className="grid grid-cols-3 @max-md:grid-cols-1 items-center gap-4 md:gap-10">
             <EscohotadoArticlesPortada />
             <div className="w-full col-span-2 order-1 md:order-none">
@@ -62,7 +62,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
       <div className="@container w-full pt-12.5">
         <CarouselBook books={books} />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
-          <H2 label="Artículos"></H2>
+          <H2 label="Artículos" id="h2-articles"/>
           <div className="flex gap-3">
             <AutorBarSSR />
             <MedioBarSSR />

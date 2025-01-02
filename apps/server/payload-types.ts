@@ -302,9 +302,9 @@ export interface ArticlePdf {
   permissions?: (string | Permission)[] | null;
   permissions_seeds?: string | null;
   cover: string | Media;
-  title?: string | null;
+  title: string;
   description?: string | null;
-  publishedAt: string;
+  publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
   prefix?: string | null;
@@ -329,9 +329,9 @@ export interface ArticleWeb {
   permissions?: (string | Permission)[] | null;
   permissions_seeds?: string | null;
   cover: string | Media;
-  title?: string | null;
+  title: string;
   description?: string | null;
-  publishedAt: string;
+  publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
   slug: string;
@@ -361,9 +361,9 @@ export interface ArticleWeb {
 export interface Book {
   id: string;
   cover: string | Media;
-  title?: string | null;
+  title: string;
   description?: string | null;
-  publishedAt: string;
+  publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
   content?: {

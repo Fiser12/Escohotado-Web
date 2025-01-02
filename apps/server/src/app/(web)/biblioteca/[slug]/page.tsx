@@ -3,11 +3,10 @@
 import { COLLECTION_SLUG_BOOK } from "@/core/infrastructure/payload/collections/config";
 import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { MainButton, BookDetail } from "gaudi/server";
+import { BookDetail } from "gaudi/server";
 
 import { Media } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/ui/book_variants_selector_nuqs";
-import { url } from "inspector";
 
 interface Props {
     params: {
