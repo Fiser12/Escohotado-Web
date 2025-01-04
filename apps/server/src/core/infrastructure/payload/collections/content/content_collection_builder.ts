@@ -6,6 +6,7 @@ import {
 import { COLLECTION_SLUG_MEDIA } from '../config'
 import { checkReadPermissions, isAdmin } from '../../fields/permissions/accessEvaluations'
 import { taxonomiesRelationshipBuilder } from '../../fields/taxonomies/taxonomiesRelationshipFields'
+import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
 
 export const categoriesRelationship = taxonomiesRelationshipBuilder({
   relationship: {
@@ -51,12 +52,12 @@ export function contentCollectionBuilder(
       components: {
         views: {
           list: {
-            actions: [ { path: "/src/ui/payload_admin/sync_forum_posts_button" } ]
-          }
+            actions: [{ path: '/src/ui/payload_admin/sync_forum_posts_button' }],
+          },
         },
-      }
+      },
     },
-    
+
     hooks: {
       ...config.hooks,
       beforeChange: [categoriesRelationship.hook],
@@ -90,38 +91,7 @@ export function contentCollectionBuilder(
       },
       ...categoriesRelationship.fields,
       ...(config.fields ?? []),
-      {
-        type: 'collapsible',
-        label: 'Datos relacinados con el foro',
-        fields: [
-          {
-            type: 'row',
-            fields: [
-              {
-                name: 'forum_post_id',
-                label: 'ID del post en el foro',
-                type: 'text'
-              },
-              {
-                name: 'last_forum_sync',
-                label: 'Fecha de sincronización con el foro',
-                type: 'date',
-                admin: {
-                  readOnly: true
-                }
-              },
-            ]
-          },
-          {
-            name: 'last_forum_posts',
-            label: 'Posts del foro',
-            type: 'json',
-            admin: {
-              readOnly: true,
-            }
-          }
-        ]
-      },
+      forumPostsCacheField
     ],
   }
 }

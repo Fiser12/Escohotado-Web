@@ -634,6 +634,13 @@ export const video = pgTable(
     title: varchar('title'),
     description: varchar('description'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    forum_post_id: varchar('forum_post_id'),
+    last_forum_sync: timestamp('last_forum_sync', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    last_forum_posts: jsonb('last_forum_posts'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),

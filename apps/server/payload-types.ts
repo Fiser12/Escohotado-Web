@@ -450,6 +450,17 @@ export interface Video {
   title?: string | null;
   description?: string | null;
   publishedAt?: string | null;
+  forum_post_id?: string | null;
+  last_forum_sync?: string | null;
+  last_forum_posts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -836,6 +847,9 @@ export interface VideoSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   publishedAt?: T;
+  forum_post_id?: T;
+  last_forum_sync?: T;
+  last_forum_posts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
