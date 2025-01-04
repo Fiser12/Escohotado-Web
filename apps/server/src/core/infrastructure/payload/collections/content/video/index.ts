@@ -27,7 +27,10 @@ export const video: CollectionConfig = {
     components: {
       views: {
         list: {
-          actions: [ { path: "/src/ui/payload_admin/refresh_yt_collection_button" } ]
+          actions: [ 
+            { path: "/src/ui/payload_admin/refresh_yt_collection_button" },
+            { path: "/src/ui/payload_admin/sync_forum_posts_button" }
+          ]
         }
       },
     }

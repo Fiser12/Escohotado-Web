@@ -2,14 +2,13 @@ import { BasePayload } from 'payload'
 import { PostsResult } from './forum_sync_models'
 
 const getPostsFromTopicPagination = async (
-  payload: BasePayload,
   topicId: string = '17',
 ): Promise<string | null> => {
-  const apiUrl = `https://foro.laemboscadura.com/api/topic/pagination/${topicId}`
+  const apiUrl = `${process.env.FORUM_URL}/api/topic/pagination/${topicId}`
 
   const response = await fetch(apiUrl)
   if (!response.ok) {
-    throw new Error(`Error fetching post from topic at forum: ${response.statusText}`)
+    throw new Error(`Error fetching post from topic at forum: ${response.statusText} topicId: ${topicId}`)
   }
 
   const data = await response.json()
@@ -17,15 +16,14 @@ const getPostsFromTopicPagination = async (
 }
 
 export const getPostsAtTopicFromForum = async (
-  payload: BasePayload,
-  topicId: string = '17',
+  topicId: string,
 ): Promise<PostsResult[]> => {
-  const page = await getPostsFromTopicPagination(payload, topicId)
-  const apiUrl = `https://foro.laemboscadura.com/api/topic/${topicId}?${page}`
+  const page = await getPostsFromTopicPagination(topicId)
+  const apiUrl = `${process.env.FORUM_URL}/api/topic/${topicId}?${page}`
 
   const response = await fetch(apiUrl)
   if (!response.ok) {
-    throw new Error(`Error fetching pagination from topic from forum: ${response.statusText}`)
+    throw new Error(`Error fetching pagination from topic from forum: ${response.statusText} topicId: ${topicId}`)
   }
 
   const data = await response.json()

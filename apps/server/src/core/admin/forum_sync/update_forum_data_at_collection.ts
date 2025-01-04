@@ -1,21 +1,27 @@
 import { BasePayload, CollectionSlug } from 'payload'
 import { TopicsResult, PostsResult } from './forum_sync_models'
 import { getPostsAtTopicFromForum } from './get_posts_at_topic_from_forum_api'
-import { getTopicsFromForum } from './get_topics_from_forum'
+import { createTopicAtForumCommand } from './create_topic_at_forum_command'
 
 export const updateForumDataAtCollection = async (
   payload: BasePayload,
   collection: CollectionSlug,
   id: string,
   forumPostId: string | null,
+  title: string,
+  categoryId: string
 ) => {
   let databaseContent: TopicsResult[] | PostsResult[] = []
-  if (forumPostId?.startsWith('topic_')) {
-    databaseContent = await getPostsAtTopicFromForum(payload, forumPostId.replace('topic_', ''))
-  } else if (forumPostId?.startsWith('category_')) {
-    databaseContent = await getTopicsFromForum(payload, id.replace('category_', ''))
-  } else if (!forumPostId) {
-    return
+  if (!forumPostId) {
+    forumPostId = await createTopicAtForumCommand(
+      `Debate sobre: ${title}`,
+      categoryId, 
+      [collection]
+    )
+  }
+  
+  if (forumPostId && forumPostId != "") {
+    databaseContent = await getPostsAtTopicFromForum(forumPostId)
   }
 
   await payload.update({

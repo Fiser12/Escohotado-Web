@@ -8,7 +8,7 @@ const syncForumPostButton: React.FC<EditViewProps> = async (data) => {
             syncForumWithDatabase("book")
         }}>
             <button type="submit" className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup">
-                <span className="btn__label">Actualizar</span>
+                <span className="btn__label">Actualizar posts</span>
             </button>
         </form>
 );

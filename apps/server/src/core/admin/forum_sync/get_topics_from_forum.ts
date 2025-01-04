@@ -1,11 +1,9 @@
-import { BasePayload } from 'payload'
 import { TopicsResult } from './forum_sync_models'
 
 export const getTopicsFromForum = async (
-  payload: BasePayload,
-  categoryId: string = '6',
+  categoryId: string,
 ): Promise<TopicsResult[]> => {
-  const apiUrl = `https://foro.laemboscadura.com/api/category/${categoryId}`
+  const apiUrl = `${process.env.FORUM_URL}/api/category/${categoryId}`
 
   const response = await fetch(apiUrl)
   if (!response.ok) {
@@ -16,6 +14,7 @@ export const getTopicsFromForum = async (
   return (
     data?.topics?.map((topic: any) => {
       return {
+        tid: topic.tid,
         slug: topic.slug,
         title: topic.title,
         timestamp: topic.timestamp,

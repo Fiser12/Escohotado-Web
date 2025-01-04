@@ -1,4 +1,5 @@
 export interface TopicsResult {
+  tid: number
   slug: string
   title: string
   timestamp: number
