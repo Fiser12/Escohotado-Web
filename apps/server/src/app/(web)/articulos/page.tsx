@@ -75,7 +75,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
                 key={article.id}
                 title={article.title ?? "No title"}
                 href={article.url ?? "#"}
-                publishedAt={article.publishedAt}
+                publishedAt={article.publishedAt ?? ""}
                 coverHref={(article.cover as Media | null)?.url ?? "#"}
                 textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
                 categories={article.categories as Taxonomy[]}
