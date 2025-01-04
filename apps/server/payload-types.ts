@@ -307,6 +307,17 @@ export interface ArticlePdf {
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
+  forum_post_id?: string | null;
+  last_forum_sync?: string | null;
+  last_forum_posts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -351,6 +362,17 @@ export interface ArticleWeb {
     [k: string]: unknown;
   } | null;
   content_html?: string | null;
+  forum_post_id?: string | null;
+  last_forum_sync?: string | null;
+  last_forum_posts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -390,6 +412,17 @@ export interface Book {
         language?: ('es' | 'en') | null;
         id?: string | null;
       }[]
+    | null;
+  forum_post_id?: string | null;
+  last_forum_sync?: string | null;
+  last_forum_posts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
   updatedAt: string;
   createdAt: string;
@@ -723,6 +756,9 @@ export interface ArticlePdfSelect<T extends boolean = true> {
   publishedAt?: T;
   categories?: T;
   seeds?: T;
+  forum_post_id?: T;
+  last_forum_sync?: T;
+  last_forum_posts?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -752,6 +788,9 @@ export interface ArticleWebSelect<T extends boolean = true> {
   slug?: T;
   content?: T;
   content_html?: T;
+  forum_post_id?: T;
+  last_forum_sync?: T;
+  last_forum_posts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -777,6 +816,9 @@ export interface BookSelect<T extends boolean = true> {
         language?: T;
         id?: T;
       };
+  forum_post_id?: T;
+  last_forum_sync?: T;
+  last_forum_posts?: T;
   updatedAt?: T;
   createdAt?: T;
 }
