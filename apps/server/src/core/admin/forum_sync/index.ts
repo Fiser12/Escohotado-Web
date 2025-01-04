@@ -25,7 +25,7 @@ const syncForumWithDatabase = async (collection: CollectionSlug) => {
       try {
         const newForumPostId = await createTopicAtForumCommand(
           payload,
-          `Debate sobre: ${title} - Test`,
+          `Debate sobre: ${title.replace(".pdf", "")}`,
           categoryId,
         )
         if (newForumPostId) {
