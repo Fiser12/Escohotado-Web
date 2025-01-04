@@ -124,8 +124,8 @@ const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
 
   const videos = await getYoutubeVideos(payload)
   const existingUrls = await getVideoURLsFromDatabase(payload)
-  const upsertPromises = videos.map((video) =>
-    youtubeVideoUpsert(payload, video, existingUrls, upsert),
+  const upsertPromises = videos.map(async (video) =>
+    await youtubeVideoUpsert(payload, video, existingUrls, upsert),
   )
   upsertPromises.forEach((promise) => promise.catch((error) => payload.logger.error('Error en el upsert: ', error)))
   await Promise.all(upsertPromises)

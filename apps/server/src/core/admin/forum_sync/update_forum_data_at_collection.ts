@@ -1,36 +1,23 @@
 import { BasePayload, CollectionSlug } from 'payload'
-import { TopicsResult, PostsResult } from './forum_sync_models'
 import { getPostsAtTopicFromForum } from './get_posts_at_topic_from_forum_api'
-import { createTopicAtForumCommand } from './create_topic_at_forum_command'
+import { getDrizzleSchemaFromCollection } from '../drizzle/get_drizzle_schema_from_collection'
+import { eq } from '@payloadcms/db-postgres/drizzle'
+import { video, article_pdf, article_web, book } from '@/payload-generated-schema'
 
 export const updateForumDataAtCollection = async (
   payload: BasePayload,
   collection: CollectionSlug,
   id: string,
-  forumPostId: string | null,
-  title: string,
-  categoryId: string
-) => {
-  let databaseContent: TopicsResult[] | PostsResult[] = []
-  if (!forumPostId) {
-    forumPostId = await createTopicAtForumCommand(
-      `Debate sobre: ${title}`,
-      categoryId, 
-      [collection]
-    )
-  }
-  
-  if (forumPostId && forumPostId != "") {
-    databaseContent = await getPostsAtTopicFromForum(forumPostId)
-  }
-
-  await payload.update({
-    collection,
-    id,
-    data: {
+  forumPostId: string,
+) => { 
+  const schema = getDrizzleSchemaFromCollection(collection) as any
+  await payload.db.drizzle
+    .update(book)
+    .set({
       forum_post_id: forumPostId,
-      last_forum_posts: databaseContent,
+      last_forum_posts: await getPostsAtTopicFromForum(payload, forumPostId),
       last_forum_sync: new Date().toISOString(),
-    },
-  })
+    })
+    .where(eq(book.id, id))
+    .execute()
 }
