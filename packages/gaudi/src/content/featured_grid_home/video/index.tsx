@@ -41,10 +41,10 @@ export const FeaturedVideo = (props: Props) => {
 
   const containerClass = classNames(
     props.className,
-    "w-full h-full min-h-[200px] max-h-[400px] grid gap-2 bg-white p-1 rounded");
+    "w-full h-full min-h-[200px] grid gap-2 bg-white p-1 rounded");
 
-  const imageClass = classNames(
-    "w-full h-full object-cover"
+  const containerImageClass = classNames(
+    "relative w-full h-full min-h-[240px] rounded overflow-hidden"
   );
 
   const contentClass = classNames("flex flex-col justify-between p-2 gap-2");
@@ -55,12 +55,12 @@ export const FeaturedVideo = (props: Props) => {
 
   return (
     <div className={containerClass} ref={containerRef}>
-      <div className="relative w-full h-[240px] rounded overflow-hidden">
+      <div className={containerImageClass}>
         <Image
           fill
           src={props.coverHref}
           alt={props.title}
-          className={imageClass}
+          className="object-cover"
         />
         <div className="absolute inset-0 flex items-center justify-center text-white hover:text-primary-100 ">
           <svg

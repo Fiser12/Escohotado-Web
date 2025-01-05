@@ -23,8 +23,8 @@ export const HomePage = (props: Props) => {
         description="Filósofo y ensayista español, dedicó su vida a explorar y desafiar las convenciones sociales."
         title="Antonio Escohotado"
         image={<img src="https://placehold.co/300x300?text=Antonio+Escohotado" alt="Antonio Escohotado" />}
-        topHeader={true}      
-        changeDirection={false} 
+        topHeader={true}
+        changeDirection={false}
       >
         <MainButton text="Conócelo mejor" type="line" />
       </MainHero>
