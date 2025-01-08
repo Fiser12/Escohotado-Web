@@ -5,7 +5,7 @@ const meta: Meta = {
       title: "Molecules/Featured Home",
       component: FeaturedArticle,
       parameters: {
-            layout: "centered",
+            layout: "padded",
             design: {
                   type: "figspec",
                   url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=7-378&t=cXsMNPXvpF6IKIkc-4"

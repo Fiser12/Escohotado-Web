@@ -25,7 +25,7 @@ const meta: Meta = {
       },
       decorators: [
             (Story) => (
-                  <div style={{ maxWidth: '300px', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ maxWidth: '300px', height: '300px' }}>
                         <Story />
                   </div>
             ),

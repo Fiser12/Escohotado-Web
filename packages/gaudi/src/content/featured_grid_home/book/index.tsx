@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { H3 } from "../../../common/headers/H3";
 import { ImageParallax } from "../../book/cards/image_parallax";
+import Image from "next/image";
 
 interface Props {
       title: string;
@@ -13,7 +14,7 @@ interface Props {
 export const FeaturedBook = (props: Props) => {
       const containerClass = classNames(
             props.className,
-            'w-full h-full p-6 bg-white rounded p-4 flex flex-col gap-4 justify-center items-center'
+            'w-full h-full p-8 bg-white rounded p-4 flex flex-col gap-6 justify-center items-center'
       );
 
       const contentClass = classNames(
@@ -22,11 +23,12 @@ export const FeaturedBook = (props: Props) => {
 
       return (
             <div className={containerClass}>
-                  <ImageParallax shadow={false} className="w-auto h-full py-2">
-                        <img
+                  <ImageParallax shadow={false} className="relative h-[260px] w-[160px]">
+                        <Image
+                              fill
                               src={props.coverHref}
                               alt={props.title}
-                              className="w-auto max-h-[300px]"
+                              className="object-cover"
                         />
                   </ImageParallax>
                   <div className={contentClass}>

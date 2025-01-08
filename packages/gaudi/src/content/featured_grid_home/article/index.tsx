@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { Tag } from "../../../common/tag/tag";
 import { H3 } from "../../../common/headers/H3";
 import { Link } from "../../../common/links/link";
+import Image from "next/image";
 
 interface Props {
   title: string;
@@ -42,7 +43,7 @@ export const FeaturedArticle = (props: Props) => {
 
   const containerClass = classNames(
     props.className,
-    "w-full h-full min-h-[200px] max-h-[400px] grid gap-2 bg-white p-1 rounded",
+    "w-full h-full md:min-h-[360px] max-h-[500px] grid gap-2 bg-white p-1 rounded",
     {
       "grid-cols-1": isVertical || window.innerWidth < 640,
       "grid-cols-2": !isVertical && window.innerWidth >= 640,
@@ -50,7 +51,7 @@ export const FeaturedArticle = (props: Props) => {
   );
 
   const imageClass = classNames(
-    "w-full h-full max-h-full max-w-full object-cover rounded hidden sm:block"
+    "w-full h-full object-cover"
   );
 
   const contentClass = classNames("flex flex-col justify-between p-2 gap-2");
@@ -63,11 +64,14 @@ export const FeaturedArticle = (props: Props) => {
 
   return (
     <div className={containerClass} ref={containerRef}>
-      <img
-        src={props.coverHref}
-        alt={props.title}
-        className={imageClass}
-      />
+      <div className="relative w-full rounded overflow-hidden hidden sm:block">
+        <Image
+          fill
+          src={props.coverHref}
+          alt={props.title}
+          className={imageClass}
+        />
+      </div>
       <div className={contentClass}>
         <div className={textareaClass}>
           <div className={categoriesClass}>
@@ -82,4 +86,5 @@ export const FeaturedArticle = (props: Props) => {
       </div>
     </div>
   );
+
 };

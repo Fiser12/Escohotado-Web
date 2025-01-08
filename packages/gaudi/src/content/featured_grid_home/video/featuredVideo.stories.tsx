@@ -5,10 +5,10 @@ const meta: Meta = {
       title: "Molecules/Featured Home",
       component: FeaturedVideo,
       parameters: {
-            layout: "centered",
+            layout: "padded",
             design: {
                   type: "figspec",
-                  url: ""
+                  url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=3-131&t=GjytMCl0EqfNmyGe-4"
             },
             backgrounds: {
                   default: "dark",
@@ -34,6 +34,13 @@ const meta: Meta = {
                   { id: "2", singular_name: "Filosofía" },
             ],
       },
+      decorators: [
+            (Story) => (
+                  <div style={{ maxWidth: '600px', margin: 'auto' }}>
+                        <Story />
+                  </div>
+            ),
+      ],
 };
 
 export default meta;
