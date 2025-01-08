@@ -1,9 +1,9 @@
 import { CollectionSlug } from 'payload'
 import { getPayload } from '../../infrastructure/payload/utils/getPayload'
-import { updateForumDataAtCollection } from './update_forum_data_at_collection'
 import { getCategoryByCollection } from './get_category_by_collection'
 import 'hegel'
-import { createTopicAtForumCommand } from './create_topic_at_forum_command'
+import { syncTopicsAtForumCommand } from './sync_topics_at_forum_command'
+import { updateForumDataAtCollection } from './update_forum_data_at_collection'
 
 const syncForumWithDatabase = async (collection: CollectionSlug) => {
   const payload = await getPayload()
@@ -12,44 +12,31 @@ const syncForumWithDatabase = async (collection: CollectionSlug) => {
   const datas = await payload.find({
     collection,
     pagination: false,
-    select: { id: true, forum_post_id: true, title: true, slug: true },
+    select: { 
+      id: true, 
+      forum_post_id: true, 
+      title: true,
+      slug: true ,
+      url_free: true,
+      url: true,
+    },
   })
 
-  const idAssociations: Record<string, { id: string; forumId: string }> = {}
-
-  for (const doc of datas.docs) {
-    const { forum_post_id, id, title, slug } = doc as any
-    const categoryId = getCategoryByCollection(collection, slug)
-
-    if (!forum_post_id) {
-      try {
-        const newForumPostId = await createTopicAtForumCommand(
-          payload,
-          `Debate sobre: ${title.replace(".pdf", "")}`,
-          categoryId,
-        )
-        if (newForumPostId) {
-          idAssociations[id] = { id, forumId: newForumPostId }
-        } else {
-          payload.logger.error(`Error obteniendo el id para el tema en el foro ${title}`)
-        }
-      } catch (error) {
-        payload.logger.error(`Error en la creación del topic: ${error}`)
-      }
-    } else {
-      idAssociations[id] = { id, forumId: forum_post_id }
-    }
-  }
-
-  const promises = Object.values(idAssociations).map(async ({ forumId, id }) => {
-    try {
-      await updateForumDataAtCollection(payload, collection, id, forumId)
-      payload.logger.info(`Actualizado correctamente: ${id}`)
-    } catch (error) {
-      payload.logger.error(`Error actualizando ${id}: ${error}`)
+  const items = datas.docs.map((doc) => {
+    const { forum_post_id, id, title, slug, url_free } = doc as any
+    const cid = getCategoryByCollection(collection, slug)
+    return { 
+      id,
+      title: `Debate sobre: ${title.replace(".pdf", "")}`,
+      content: url_free || '',
+      cid,
+      tid: forum_post_id,
     }
   })
-
+  const response = await syncTopicsAtForumCommand(items)
+  const promises = response.map(async (item) => {
+    await updateForumDataAtCollection(payload, collection, item.itemId, item.tid, item.lastPosts)
+  })
   await Promise.all(promises)
   payload.logger.warn('Sincronización completada.')
 }
