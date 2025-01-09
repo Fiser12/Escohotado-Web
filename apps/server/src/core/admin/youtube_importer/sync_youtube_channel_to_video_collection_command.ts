@@ -3,59 +3,39 @@
 import { BasePayload } from 'payload'
 import { COLLECTION_SLUG_VIDEO } from '../../infrastructure/payload/collections/config'
 import { getPayload } from '../../infrastructure/payload/utils/getPayload'
-import { mapApiYoutubeVideoToModel } from './mapApiYoutubeVideoToModel'
-import { YoutubeVideo, YoutubeVideosResult } from './youtube_video_model'
+import { YoutubeVideo } from './youtube_video_model'
 import 'hegel'
 import { video as videoSchema } from '@/payload-generated-schema'
 import { eq } from '@payloadcms/db-postgres/drizzle'
 
-const getYoutubeVideosByPage = async (
-  playlistId: string = 'PLggf90VSN9KOwkevFKymkO4tsS2LeZl6O',
-  pageToken: string | null = null,
-): Promise<YoutubeVideosResult> => {
-  const apiKey = process.env.YOUTUBE_API_KEY
-  if (!apiKey) {
-    throw new Error('No API Key found in environment variables.')
-  }
-
-  const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?key=${apiKey}&playlistId=${playlistId}${pageToken ? `&pageToken=${pageToken}` : ''}&maxResults=50&part=snippet,contentDetails,status`
-
-  const response = await fetch(apiUrl)
-  if (!response.ok) {
-    throw new Error(`Error fetching YouTube videos: ${response.statusText}`)
-  }
-
-  const data = await response.json()
-
-  return {
-    nextPageToken: data.nextPageToken || null,
-    videos: data.items.map(mapApiYoutubeVideoToModel),
-  }
-}
-
 const getYoutubeVideos = async (
-  payload: BasePayload,
   playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',
+  uid: string = "19"
 ): Promise<YoutubeVideo[]> => {
-  try {
-    let nextPageToken: string | null = null
-    let allVideos: YoutubeVideo[] = []
+  const apiUrl = new URL(`/api/v3/get-youtube-videos/${playlistId}`, process.env.FORUM_URL)
+  const token = process.env.NODEBB_TOKEN
+  const body = JSON.stringify({
+    _uid: uid
+  })
 
-    do {
-      const { nextPageToken: newPageToken, videos } = await getYoutubeVideosByPage(
-        playlistId,
-        nextPageToken,
-      )
-      allVideos = [...allVideos, ...videos]
-      nextPageToken = newPageToken
-    } while (nextPageToken)
-    payload.logger.warn(`Videos loaded from api: ${allVideos.length}`)
+  const response = await fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body
+  })
 
-    return allVideos
-  } catch (error) {
-    payload.logger.error(`Error loading : ${error}`)
-    throw error
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(
+      `Error creating topic: ${response.status} ${response.statusText} - ${errorText}`,
+    )
   }
+  console.log(`Request success`)
+
+  return await response.json() as YoutubeVideo[]
 }
 
 const getVideoURLsFromDatabase = async (payload: BasePayload): Promise<string[]> => {
@@ -122,7 +102,8 @@ const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
   const payload = await getPayload()
   payload.logger.warn(`Starting sync of Youtube channel to video collection`)
 
-  const videos = await getYoutubeVideos(payload)
+  const videos = await getYoutubeVideos()
+  console.error('Videos: ', videos.length)
   const existingUrls = await getVideoURLsFromDatabase(payload)
   const upsertPromises = videos.map(async (video) =>
     await youtubeVideoUpsert(payload, video, existingUrls, upsert),
