@@ -1,19 +1,37 @@
-import { updatePrices } from "@/core/infrastructure/payload/plugins/stripe/price";
-import { updateProducts } from "@/core/infrastructure/payload/plugins/stripe/product";
-import { EditViewProps } from "payload";
+"use client";
 
-const updateProductsButton: React.FC<EditViewProps> = async (data: any) => {
+import { EditViewProps } from "payload";
+import { useState } from "react";
+import { updateProductsAndPrices } from "./actions";
+
+const UpdateProductsButton: React.FC<EditViewProps> = (data: any) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const handleSubmit = async () => {
+        setIsLoading(true);
+        try {
+            await updateProductsAndPrices();
+            window.location.reload(); 
+        } catch (error) {
+            console.error("Error updating products and prices:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
-        <form action={async () => {
-            "use server";
-            await updateProducts();
-            await updatePrices();
-        }}>
-            <button type="submit" className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup">
-                <span className="btn__label">Actualizar productos</span>
+        <div>
+            <button
+                type="button"
+                onClick={handleSubmit}
+                className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+                disabled={isLoading}
+            >
+                <span className="btn__label">
+                    {isLoading ? "Actualizando..." : "Actualizar productos"}
+                </span>
             </button>
-        </form>
-);
+        </div>
+    );
 }
 
-export default updateProductsButton;
+export default UpdateProductsButton;

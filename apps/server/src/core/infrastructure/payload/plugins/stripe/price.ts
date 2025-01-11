@@ -23,7 +23,6 @@ export const updatePrices = async () => {
 
   Object.entries(pricesByProductId).map(async ([productId, prices]) => {
     const payload = await getPayload()
-    console.error("HERE: ", productId, prices)
     await payload.update({
       collection: COLLECTION_SLUG_PRODUCTS,
       data: {

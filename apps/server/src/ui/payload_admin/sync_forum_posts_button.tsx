@@ -1,20 +1,36 @@
-import syncForumWithDatabase from "@/core/admin/forum_sync";
-import { EditViewProps } from "payload";
+"use client";
 
-const validCollections = ["book", "video", "article_pdf", "article_web"];
+import React, { useState } from "react";
+import { syncForumPosts } from "./actions";
+import { CollectionSlug } from "payload";
 
-const syncForumPostButton: React.FC<EditViewProps> = async (data: any) => {
-    const collectionSlug = data?.params?.segments?.[1] ?? "book"
+const SyncForumPostButton: React.FC<{ collectionSlug: string }> = ({ collectionSlug }) => {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSync = async () => {
+        setIsLoading(true);
+        try {
+            await syncForumPosts(collectionSlug as CollectionSlug);
+            window.location.reload();
+        } catch (error) {
+            console.error("Error syncing forum posts:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
-        <form action={async () => {
-            "use server";
-            syncForumWithDatabase(validCollections.includes(collectionSlug) ? collectionSlug : "book");
-        }}>
-            <button type="submit" className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup">
-                <span className="btn__label">Actualizar posts</span>
-            </button>
-        </form>
-);
-}
+        <button
+            type="button"
+            onClick={handleSync}
+            className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+            disabled={isLoading}
+        >
+            <span className="btn__label">
+                {isLoading ? "Actualizando..." : "Actualizar posts"}
+            </span>
+        </button>
+    );
+};
 
-export default syncForumPostButton;
+export default SyncForumPostButton;
