@@ -2,13 +2,19 @@ import { COLLECTION_SLUG_PRODUCTS } from '@/core/infrastructure/payload/collecti
 import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import type Stripe from 'stripe'
 import { payloadUpsert } from '../../utils/upsert'
+import { stripeBuilder } from '.'
 
 const logs = false
+
+export const updateProducts = async () => {
+    const stripe = await stripeBuilder()
+    const products = await stripe.products.list({ limit: 100, active: true })
+    products.data.forEach(productSync)
+}
 
 export const productSync = async (object: Stripe.Product) => {
   const { id: stripeProductID, name, description, images } = object
   if (object.deleted) return productDeleted(object)
-
   try {
     await payloadUpsert({
       collection: COLLECTION_SLUG_PRODUCTS,

@@ -1,5 +1,6 @@
 import { CollectionBeforeChangeHook, Field, FieldHook } from 'payload'
 import { COLLECTION_SLUG_PERMISSION } from '../../collections/config'
+import "hegel"
 
 export function permissionRelationship(
   permissionsName: string = 'permissions',

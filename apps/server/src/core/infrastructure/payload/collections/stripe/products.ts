@@ -4,7 +4,6 @@ import {
   permissionRelationship,
   cachePermissionSeedsHook,
 } from '../../fields/permissions/permissionsRelationshipFields'
-import { populatePricesHook } from '../../hooks/stripe/populatePricesHook'
 import { isAdminOrStripeActive, isAdmin } from '../../fields/permissions/accessEvaluations'
 
 export const products: CollectionConfig = {
@@ -12,15 +11,24 @@ export const products: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Stripe',
+    components: {
+      views: {
+        list: {
+          actions: [ 
+            { path: "/src/ui/payload_admin/update_products_button" }
+          ]
+        }
+      },
+    }
   },
   access: {
     read: isAdminOrStripeActive,
-    create: isAdmin,
+    create: () => false,
     update: isAdmin,
     delete: isAdmin,
   },
   hooks: {
-    beforeChange: [cachePermissionSeedsHook(), populatePricesHook],
+    beforeChange: [cachePermissionSeedsHook()],
   },
   fields: [
     {

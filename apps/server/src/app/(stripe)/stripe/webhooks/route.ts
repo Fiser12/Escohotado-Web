@@ -24,10 +24,10 @@ export async function POST(request: Request) {
   try {
     const event: Stripe.Event = stripe.webhooks.constructEvent(body, signature, whSecret)
     switch (event.type) {
-      case 'price.created':
-      case 'price.updated':
-        await priceUpsert(event.data.object)
-        break
+//      case 'price.created':
+//      case 'price.updated':
+//        await priceUpsert(event.data.object)
+//        break
       case 'price.deleted':
         await priceDeleted(event.data.object)
         break
@@ -39,10 +39,10 @@ export async function POST(request: Request) {
       case 'customer.subscription.deleted':
         await subscriptionDeleted(event.data.object)
         break
-      case 'product.created':
-      case 'product.updated':
-        await productSync(event.data.object)
-        break
+//      case 'product.created':
+//      case 'product.updated':
+//        await productSync(event.data.object)
+//        break
       case 'product.deleted':
         await productDeleted(event.data.object)
         break

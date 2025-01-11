@@ -5,19 +5,50 @@ import {
 import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import type Stripe from 'stripe'
 import { payloadUpsert } from '../../utils/upsert'
+import { stripeBuilder } from '.'
 
-export async function priceUpsert(price: Stripe.Price) {
-  const stripeProductID = typeof price.product === 'string' ? price.product : price.product.id
-  const payload = await getPayload()
-  const productsQuery = await payload.find({
-    collection: COLLECTION_SLUG_PRODUCTS,
-    where: {
-      stripeID: { equals: stripeProductID },
-    },
+export const updatePrices = async () => {
+  const stripe = await stripeBuilder()
+  const prices = await stripe.prices.list({ limit: 100, active: true })
+  const promises = prices.data.map(priceUpsert)
+  const pricesUpserted = await Promise.all(promises)
+
+  const pricesByProductId = pricesUpserted.mapNotNull(t => t).reduce((acc, { productId, priceId }) => {
+    if (!acc[productId]) {
+      acc[productId] = [];
+    }
+    acc[productId].push(priceId);
+    return acc;
+  }, {} as Record<string, string[]>)
+
+  Object.entries(pricesByProductId).map(async ([productId, prices]) => {
+    const payload = await getPayload()
+    console.error("HERE: ", productId, prices)
+    await payload.update({
+      collection: COLLECTION_SLUG_PRODUCTS,
+      data: {
+        prices
+      },
+      where: {
+        stripeID: { equals: productId },
+      },
+    })
   })
+}
 
-  if (price.deleted) return priceDeleted(price)
-  await payloadUpsert({
+interface PriceUpserted {
+  productId: string
+  priceId: string
+}
+
+export async function priceUpsert(price: Stripe.Price): Promise<PriceUpserted | null> {
+  const stripeProductID = typeof price.product === 'string' ? price.product : price.product.id
+
+  if (price.deleted) {
+    priceDeleted(price)
+    return null
+  }
+  const priceUpserted = await payloadUpsert({
     collection: COLLECTION_SLUG_PRICES,
     data: {
       stripeID: price.id,
@@ -33,16 +64,8 @@ export async function priceUpsert(price: Stripe.Price) {
       stripeID: { equals: price.id },
     },
   })
-
-  await payload.update({
-    collection: COLLECTION_SLUG_PRODUCTS,
-    data: {
-      prices: productsQuery.docs?.[0]?.prices?.concat(price.id),
-    },
-    where: {
-      stripeID: { equals: stripeProductID },
-    },
-  })
+  if (!priceUpserted) return null
+  return { productId: stripeProductID, priceId: priceUpserted.id }
 }
 
 export const priceDeleted = async (price: Stripe.Price) => {
