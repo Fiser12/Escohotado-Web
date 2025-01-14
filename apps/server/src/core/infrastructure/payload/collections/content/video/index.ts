@@ -7,6 +7,7 @@ import {
 import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations'
 
 import { getYoutubeVideoMetadataHook } from '../../../hooks/video/getYoutubeMetadataHook'
+import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()
 export const video: CollectionConfig = {
@@ -25,11 +26,14 @@ export const video: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Contenido',
     components: {
-      beforeListTable: [
-        { 
-          path: '/src/ui/refresh_yt_collection_button',
+      views: {
+        list: {
+          actions: [ 
+            { path: "/src/ui/payload_admin/refresh_yt_collection_button" },
+            { path: "/src/ui/payload_admin/sync_forum_posts_button" }
+          ]
         }
-      ]
+      },
     }
   },
   hooks: {
@@ -99,5 +103,6 @@ export const video: CollectionConfig = {
         readOnly: true,
       },
     },
+    forumPostsCacheField
   ],
 }

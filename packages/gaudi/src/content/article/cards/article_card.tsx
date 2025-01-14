@@ -6,7 +6,7 @@ import Image from "next/image";
 
 interface Props {
     title: string;
-    publishedAt: string;
+    publishedAt?: string | null;
     author?: string;
     textLink: string;
     coverHref: string;
@@ -46,8 +46,8 @@ export const ArticleCard = (props: Props) => {
     const categoriesClass = classNames(
         'flex flex-wrap gap-1 px-3'
     );
-    const date = new Date(props.publishedAt);
-    const formattedDate = date.toLocaleDateString('es-ES', {
+    const date = props.publishedAt ? new Date(props.publishedAt) : null;
+    const formattedDate = date?.toLocaleDateString('es-ES', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'

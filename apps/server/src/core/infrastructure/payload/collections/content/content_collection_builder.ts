@@ -1,4 +1,4 @@
-import type { Access, CollectionConfig, Field } from 'payload'
+import type { CollectionConfig } from 'payload'
 import {
   permissionRelationship,
   cachePermissionSeedsHook,
@@ -6,6 +6,7 @@ import {
 import { COLLECTION_SLUG_MEDIA } from '../config'
 import { checkReadPermissions, isAdmin } from '../../fields/permissions/accessEvaluations'
 import { taxonomiesRelationshipBuilder } from '../../fields/taxonomies/taxonomiesRelationshipFields'
+import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
 
 export const categoriesRelationship = taxonomiesRelationshipBuilder({
   relationship: {
@@ -48,7 +49,15 @@ export function contentCollectionBuilder(
     admin: {
       useAsTitle: 'title',
       group: 'Contenido',
+      components: {
+        views: {
+          list: {
+            actions: [{ path: '/src/ui/payload_admin/sync_forum_posts_button' }],
+          },
+        },
+      },
     },
+
     hooks: {
       ...config.hooks,
       beforeChange: [categoriesRelationship.hook],
@@ -82,6 +91,7 @@ export function contentCollectionBuilder(
       },
       ...categoriesRelationship.fields,
       ...(config.fields ?? []),
+      forumPostsCacheField
     ],
   }
 }

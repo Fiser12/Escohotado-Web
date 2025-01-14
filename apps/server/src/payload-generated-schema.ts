@@ -385,14 +385,17 @@ export const article_pdf = pgTable(
       .references(() => media.id, {
         onDelete: 'set null',
       }),
-    title: varchar('title'),
+    title: varchar('title').notNull(),
     description: varchar('description'),
-    publishedAt: timestamp('published_at', {
+    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    seeds: varchar('seeds').default(''),
+    forum_post_id: varchar('forum_post_id'),
+    last_forum_sync: timestamp('last_forum_sync', {
       mode: 'string',
       withTimezone: true,
       precision: 3,
-    }).notNull(),
-    seeds: varchar('seeds').default(''),
+    }),
+    last_forum_posts: jsonb('last_forum_posts'),
     prefix: varchar('prefix').default('article_pdf'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
@@ -466,17 +469,20 @@ export const article_web = pgTable(
       .references(() => media.id, {
         onDelete: 'set null',
       }),
-    title: varchar('title'),
+    title: varchar('title').notNull(),
     description: varchar('description'),
-    publishedAt: timestamp('published_at', {
-      mode: 'string',
-      withTimezone: true,
-      precision: 3,
-    }).notNull(),
+    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     seeds: varchar('seeds').default(''),
     slug: varchar('slug').notNull(),
     content: jsonb('content'),
     content_html: varchar('content_html'),
+    forum_post_id: varchar('forum_post_id'),
+    last_forum_sync: timestamp('last_forum_sync', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    last_forum_posts: jsonb('last_forum_posts'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -560,17 +566,20 @@ export const book = pgTable(
       .references(() => media.id, {
         onDelete: 'set null',
       }),
-    title: varchar('title'),
+    title: varchar('title').notNull(),
     description: varchar('description'),
-    publishedAt: timestamp('published_at', {
-      mode: 'string',
-      withTimezone: true,
-      precision: 3,
-    }).notNull(),
+    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     seeds: varchar('seeds').default(''),
     content: jsonb('content'),
     content_html: varchar('content_html'),
     slug: varchar('slug').notNull(),
+    forum_post_id: varchar('forum_post_id'),
+    last_forum_sync: timestamp('last_forum_sync', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    last_forum_posts: jsonb('last_forum_posts'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -625,6 +634,13 @@ export const video = pgTable(
     title: varchar('title'),
     description: varchar('description'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    forum_post_id: varchar('forum_post_id'),
+    last_forum_sync: timestamp('last_forum_sync', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    last_forum_posts: jsonb('last_forum_posts'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),

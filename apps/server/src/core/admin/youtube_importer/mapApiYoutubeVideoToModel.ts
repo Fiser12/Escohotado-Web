@@ -1,5 +1,5 @@
 import { YoutubeVideo } from './youtube_video_model'
-let temp = true
+
 export const mapApiYoutubeVideoToModel: (video: any) => YoutubeVideo = (video) => {
   const snippet = video.snippet
   const thumbnailUrl =
