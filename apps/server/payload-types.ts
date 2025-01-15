@@ -58,8 +58,12 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    home_page: HomePage;
+  };
+  globalsSelect: {
+    home_page: HomePageSelect<false> | HomePageSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -907,6 +911,67 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_page".
+ */
+export interface HomePage {
+  id: string;
+  hero?: {
+    description?: string | null;
+    buttons?:
+      | {
+          title: string;
+          link: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cards?:
+    | (
+        | {
+            relationTo: 'article_web';
+            value: string | ArticleWeb;
+          }
+        | {
+            relationTo: 'article_pdf';
+            value: string | ArticlePdf;
+          }
+        | {
+            relationTo: 'book';
+            value: string | Book;
+          }
+        | {
+            relationTo: 'video';
+            value: string | Video;
+          }
+      )[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        description?: T;
+        buttons?:
+          | T
+          | {
+              title?: T;
+              link?: T;
+              id?: T;
+            };
+      };
+  cards?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

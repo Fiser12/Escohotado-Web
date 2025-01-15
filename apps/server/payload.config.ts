@@ -31,6 +31,7 @@ import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { contentCollections } from '@/core/infrastructure/payload/collections/content'
 import { migrations } from '@/migrations'
 import { searchPlugin } from '@payloadcms/plugin-search'
+import { HomePage } from '@/core/infrastructure/globals/pages/home'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -47,9 +48,11 @@ export default buildConfig({
     ...contentCollections,
     permissions,
   ],
+  globals: [
+    HomePage
+  ],
   db: postgresAdapter({
     idType: 'uuid',
-    prodMigrations: migrations,
     pool: {
       connectionString: process.env.DATABASE_URL,
     },
