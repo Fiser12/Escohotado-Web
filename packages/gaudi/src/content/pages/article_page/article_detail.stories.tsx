@@ -23,6 +23,18 @@ const meta: Meta = {
         publishedAt: { control: "text", description: "Publication date" },
         contentHtml: { control: "text", description: "HTML content of the article" },
     },
+    args: {
+        title: "Sample Article Title",
+        author: "Sample Article Author",
+        publishedAt: "2024-11-18",
+        textLink: "Leer más",
+        coverHref: "https://placehold.co/600x150",
+        categories: [
+            { id: "1", singular_name: "Tecnología" },
+            { id: "2", singular_name: "Filosofía" },
+        ],
+        contentHtml: content,
+    },
 };
 
 export default meta;
@@ -30,18 +42,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
-    args: {
-        title: "Sample Article Title",
-        author: "Sample Article Author",
-        publishedAt: "2024-11-18",
-        textLink: "Leer más",
-        coverHref: "https://via.placeholder.com/600x150",
-        categories: [
-            { id: "1", singular_name: "Tecnología" },
-            { id: "2", singular_name: "Filosofía" },
-        ],
-        contentHtml: content,
-    },
 };
 
 export const Mobile: Story = {
@@ -49,18 +49,6 @@ export const Mobile: Story = {
         viewport: {
             defaultViewport: 'iphonex',
         },
-    },
-    args: {
-        title: "Sample Article Title",
-        author: "Sample Article Author",
-        publishedAt: "2024-11-18",
-        textLink: "Leer más",
-        coverHref: "https://via.placeholder.com/600x150",
-        categories: [
-            { id: "1", singular_name: "Tecnología" },
-            { id: "2", singular_name: "Filosofía" },
-        ],
-        contentHtml: content,
     },
 };
 
