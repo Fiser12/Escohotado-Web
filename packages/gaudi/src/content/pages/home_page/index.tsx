@@ -9,7 +9,7 @@ import { FeaturedQuote } from "../../featured_grid_home/quote";
 import { FeaturedBook } from "../../featured_grid_home/book";
 import { FeaturedVideo } from "../../featured_grid_home/video";
 import heroHome from "../../../assets/images/hero-home.png";
-
+import Image from "next/image";
 
 type FeaturedType = "article" | "quote" | "book" | "video";
 
@@ -56,7 +56,6 @@ export type Featured = FeaturedArticleProps | FeaturedQuoteProps | FeaturedBookP
 interface Props {
   featuredItems: Featured[];
   description: string;
-  imageSrc: string;
   buttons: Array<{ title: string; link: string }>;
 }
 
@@ -111,7 +110,7 @@ const renderFeatured = (item: Featured) => {
 };
 
 
-export const HomePage = ({ featuredItems, imageSrc, description, buttons }: Props) => {
+export const HomePage = ({ featuredItems, description, buttons }: Props) => {
   const featuredGridClass = classNames(
     '@container w-full grid grid-cols-1 md:grid-cols-4 gap-4 gap-4 p-4'
   );
@@ -121,7 +120,14 @@ export const HomePage = ({ featuredItems, imageSrc, description, buttons }: Prop
       <MainHero
         description={description}
         title="Antonio Escohotado"
-        image={<img src={heroHome.src} alt="Antonio Escohotado" />}
+        image={
+            <Image
+              width={2610}
+              height={3036}
+              src={heroHome.src}
+              alt={"Antonio Escohotado"}
+            />
+        }
         topHeader={true}
         changeDirection={false}
       >
