@@ -21,7 +21,7 @@ export const FeaturedArticle = (props: Props) => {
 
   const containerClass = classNames(
     props.className,
-    "w-full h-full md:min-h-[360px] max-h-[500px] grid gap-2 bg-white p-1 rounded @sm:grid-cols-1 @lg:grid-cols-2",
+    "w-full h-full md:min-h-[360px] max-h-[500px] grid gap-2 bg-white p-1 rounded @md:grid-cols-1 @lg:grid-cols-2",
   );
 
   const imageClass = classNames(
@@ -37,28 +37,26 @@ export const FeaturedArticle = (props: Props) => {
   const authorClass = classNames("text-xs text-gray-dark");
 
   return (
-    <div className="@container">
-      <div className={containerClass}>
-        <div className="relative w-full rounded overflow-hidden hidden sm:block">
-          <Image
-            fill
-            src={props.coverHref}
-            alt={props.title}
-            className={imageClass}
-          />
-        </div>
-        <div className={contentClass}>
-          <div className={textareaClass}>
-            <div className={categoriesClass}>
-              {props.categories?.map((category, index) => (
-                <Tag key={index} text={category.singular_name}></Tag>
-              ))}
-            </div>
-            <H3 label={props.title} className="line-clamp-3" />
-            <p className={authorClass}>{props.author}</p>
+    <div className={containerClass}>
+      <div className="relative w-full rounded overflow-hidden">
+        <Image
+          fill
+          src={props.coverHref}
+          alt={props.title}
+          className={imageClass}
+        />
+      </div>
+      <div className={contentClass}>
+        <div className={textareaClass}>
+          <div className={categoriesClass}>
+            {props.categories?.map((category, index) => (
+              <Tag key={index} text={category.singular_name}></Tag>
+            ))}
           </div>
-          <Link text="Leer más" href={props.href} />
+          <H3 label={props.title} className="line-clamp-3" />
+          <p className={authorClass}>{props.author}</p>
         </div>
+        <Link text="Leer más" href={props.href} />
       </div>
     </div>
   );

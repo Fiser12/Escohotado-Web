@@ -14,7 +14,7 @@ interface Props { }
 
 export const HomePage = (props: Props) => {
   const featuredGridClass = classNames(
-    'w-full grid grid-cols-1 md:grid-cols-4 gap-4 gap-4 p-4'
+    '@container w-full grid grid-cols-1 md:grid-cols-4 gap-4 gap-4 p-4'
   );
 
   return (
@@ -32,7 +32,7 @@ export const HomePage = (props: Props) => {
         <ContentWrapper>
           <div className={featuredGridClass}>
             <FeaturedArticle
-              className="col-span-1 md:col-span-2 lg:col-span-3"
+              className="col-span-1 md:col-span-3"
               title="El origen de la civilización"
               author="Antonio Escohotado"
               coverHref="https://placehold.co/150x150"
@@ -43,7 +43,7 @@ export const HomePage = (props: Props) => {
               ]}
             />
             <FeaturedQuote
-              className="col-span-1 md:col-span-2 lg:col-span-1"
+              className="col-span-1"
               quote="La libertad no es algo que se nos dé, sino algo que conquistamos; no es una gracia ni un privilegio, sino una responsabilidad. Ser libre significa asumir la propia vida con todas sus consecuencias, sin delegar en otros las decisiones fundamentales, y sin buscar excusas en el destino o en la sociedad. Solo quien es capaz de enfrentarse a sus miedos y contradicciones puede aspirar a la libertad, porque esta no es un estado de comodidad, sino un proceso de aprendizaje continuo en el que cuestionamos nuestras certezas y ampliamos nuestros horizontes."
               author="Antonio Escohotado"
             />
