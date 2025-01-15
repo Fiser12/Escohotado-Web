@@ -1,4 +1,3 @@
-import { useRef, useState, useEffect } from "react";
 import classNames from "classnames";
 import { Tag } from "../../../common/tag/tag";
 import { H3 } from "../../../common/headers/H3";
@@ -19,35 +18,10 @@ interface Props {
 }
 
 export const FeaturedArticle = (props: Props) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [isVertical, setIsVertical] = useState(false);
-
-  useEffect(() => {
-    const container = containerRef.current;
-
-    if (!container) return;
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const width = entry.contentRect.width;
-        setIsVertical(width <= 300);
-      }
-    });
-
-    resizeObserver.observe(container);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
 
   const containerClass = classNames(
     props.className,
-    "w-full h-full md:min-h-[360px] max-h-[500px] grid gap-2 bg-white p-1 rounded",
-    {
-      "grid-cols-1": isVertical || window.innerWidth < 640,
-      "grid-cols-2": !isVertical && window.innerWidth >= 640,
-    }
+    "w-full h-full md:min-h-[360px] max-h-[500px] grid gap-2 bg-white p-1 rounded @md:grid-cols-1 @lg:grid-cols-2",
   );
 
   const imageClass = classNames(
@@ -63,8 +37,8 @@ export const FeaturedArticle = (props: Props) => {
   const authorClass = classNames("text-xs text-gray-dark");
 
   return (
-    <div className={containerClass} ref={containerRef}>
-      <div className="relative w-full rounded overflow-hidden hidden sm:block">
+    <div className={containerClass}>
+      <div className="relative w-full rounded overflow-hidden">
         <Image
           fill
           src={props.coverHref}
