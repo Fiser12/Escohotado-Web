@@ -28,11 +28,11 @@ export const MainHero = ({
     );
 
     const containerClass = classNames(
-        'h-full grid grid-rows-1 md:grid-cols-2 items-center gap-10 lg:gap-0 py-12 pr-0 md:pr-8'
+        'h-full grid grid-rows-1 md:grid-cols-2 items-center'
     );
 
     const imageContainerClass = classNames(
-        'flex justify-center items-center',
+        'w-full flex justify-center items-center',
         {
             'md:order-1': changeDirection,
             'md:order-2': !changeDirection,
@@ -40,7 +40,7 @@ export const MainHero = ({
     );
 
     const contentClass = classNames(
-        'w-full flex flex-col gap-3',
+        'w-full flex flex-col gap-3 pb-12',
         {
             'md:order-2': changeDirection,
             'md:order-1': !changeDirection,

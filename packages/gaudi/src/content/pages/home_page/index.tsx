@@ -9,6 +9,7 @@ import { FeaturedArticle } from "../../featured_grid_home/article";
 import { FeaturedQuote } from "../../featured_grid_home/quote";
 import { FeaturedBook } from "../../featured_grid_home/book";
 import { FeaturedVideo } from "../../featured_grid_home/video";
+import heroHome from "../../../assets/images/hero-home.png";
 
 interface Props { }
 
@@ -22,7 +23,7 @@ export const HomePage = (props: Props) => {
       <MainHero
         description="Filósofo y ensayista español, dedicó su vida a explorar y desafiar las convenciones sociales."
         title="Antonio Escohotado"
-        image={<img src="https://placehold.co/300x300?text=Antonio+Escohotado" alt="Antonio Escohotado" />}
+        image={<img src={heroHome.src} alt="Antonio Escohotado" />}
         topHeader={true}
         changeDirection={false}
       >
@@ -67,19 +68,6 @@ export const HomePage = (props: Props) => {
           </div>
         </ContentWrapper>
       </div>
-      <MainHero
-        description="Una exploración profunda y provocadora de la mente humana. Filosofía y psicodelia se entrelazan magistralmente."
-        title="Confesiones de un opiófilo"
-        quote='- Javier López, autor de "Pensamientos de un Alquimista"'
-        image={<ImageParallax
-          className="max-h-[550px] px-2 sm:px-20 md:px-8 lg:px-10"
-          shadow={false}
-        >
-          <img src="https://placehold.co/350x500" alt="Sample image" />
-        </ImageParallax>}
-        changeDirection={true} topHeader={false}      >
-        <MainButton text="Sumérgete en la lectura" color="secondary" className="mt-5" />
-      </MainHero>
       <NewsletterSubscription />
       <Footer />
     </div>
