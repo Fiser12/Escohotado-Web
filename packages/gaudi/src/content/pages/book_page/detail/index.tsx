@@ -49,7 +49,7 @@ export const BookDetail = (props: Props) => {
                 description={props.description}
                 children={props.children}
                 image={
-                    <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[366px] min-[469px]:h-[550px]" shadow={false}>
+                    <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[366px] min-[469px]:h-[550px] my-6" shadow={false}>
                         <Image
                             fill
                             src={props.coverHref}
