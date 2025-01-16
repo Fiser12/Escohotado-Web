@@ -5,10 +5,10 @@ import { SelectBoxes, MainButton } from "gaudi/client";
 
 interface Props {
 	options: {
-        label: string, 
+		label: string,
 		url: string,
-        id: string,
-    }[]
+		id: string,
+	}[]
 }
 
 export function BookVariantsSelectorNuqs(props: Props) {
@@ -28,10 +28,10 @@ export function BookVariantsSelectorNuqs(props: Props) {
 					setPage(page.toString());
 				}}
 			/>
-			
+
 			<a href={currentUrl ?? "#"} target="_blank">
-                <MainButton text="Comprar" />
-            </a>
+				<MainButton text="Comprar" />
+			</a>
 		</div>
 	);
 }

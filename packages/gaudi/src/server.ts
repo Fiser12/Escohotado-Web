@@ -10,7 +10,7 @@ export { ToggleButtonGroup } from "./common/toggle_button_group/toggle_button_gr
 export { SubscriptionsGroupCard } from "./subscription/subscriptions_card_group";
 export { ArticleCard } from "./content/article/cards/article_card";
 export { BookCard } from "./content/book/cards";
-export { ArticleDetail } from "./content/pages/article_page/article_detail";
+export { ArticleDetail } from "./content/pages/article_page/detalle_web";
 export { ContentGridList } from "./content/common/content_grid_list";
 export { ESFlag } from "./common/icons/flags/ES";
 export { ENFlag } from "./common/icons/flags/EN";
@@ -19,7 +19,6 @@ export { PenIcon } from "./common/icons/pen_icon";
 export { HeadlineCard } from "./content/article/cards/article_headline_card";
 export { HighlightSection } from "./content/article/highlight/section_highlight";
 export { CarouselBook } from "./content/book/carousel";
-export { EscohotadoArticlesPortada } from "./assets/images/escohotado-articles-portada";
 export { MainButton } from "./common/main_button/main_button";
 export { BookDetail } from "./content/pages/book_page/detail";
 export { HomePage, type Featured } from "./content/pages/home_page"

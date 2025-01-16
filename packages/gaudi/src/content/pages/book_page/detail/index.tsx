@@ -2,9 +2,9 @@ import { MainHero } from "../../../common/hero";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { ImageParallax } from "../../../book/cards/image_parallax";
 import Image from "next/image";
+import "../../article_page/detalle_web/article-html-content.css";
 import { GridComments } from "../../../../common/comments/grid_comments";
 import { Comment } from "../../../../common/comments";
-import "../../article_page/article-html-content.css";
 
 interface Props {
     title: string;
