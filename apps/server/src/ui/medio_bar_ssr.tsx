@@ -9,6 +9,7 @@ export async function MedioBarSSR(props: Props) {
 	const payload = await getPayload();
 	const taxonomies = await payload.find({
 		collection: COLLECTION_SLUG_TAXONOMY,
+		pagination: false,
 		where: {
 			and: [
 				{ selectable: { equals: true } },

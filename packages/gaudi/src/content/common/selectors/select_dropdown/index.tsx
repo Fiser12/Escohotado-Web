@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 
 type Props = {
@@ -58,6 +58,20 @@ export const SelectDropdown = (props: Props): JSX.Element => {
         props.color === "white",
     }
   );
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const contentButton = classNames(
     "w-full flex items-center justify-between gap-2"
@@ -73,7 +87,7 @@ export const SelectDropdown = (props: Props): JSX.Element => {
     props.showSelectionAtLabel && !multiple && selectedTags.length === 1;
 
   return (
-    <div className="relative w-auto">
+    <div ref={dropdownRef} className="relative w-auto">
       <button onClick={toggleDropdown} className={buttonClass}>
         {(props.iconButton || (showCustomTitle && selectedTag?.icon)) && (
           <span className="text-primary-900">
@@ -137,6 +151,7 @@ export const SelectDropdown = (props: Props): JSX.Element => {
             className="w-full px-6 py-4 hover:bg-gray-100 text-sm text-left text-gray-700"
             onClick={() => {
               setSelectedTags([]);
+              setIsOpen(false);
             }}
           >
             Ver todos

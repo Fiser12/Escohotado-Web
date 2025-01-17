@@ -54,9 +54,8 @@ export interface FeaturedVideoProps extends FeaturedBase {
 export type Featured = FeaturedArticleProps | FeaturedQuoteProps | FeaturedBookProps | FeaturedVideoProps;
 
 interface Props {
-  featuredItems: Featured[];
+  featuredItems: { gridClassname: string, features: Featured[] }[];
   description: string;
-  gridClassnames?: string;
   buttons: Array<{ title: string; link: string }>;
 }
 
@@ -111,12 +110,11 @@ const renderFeatured = (item: Featured) => {
 };
 
 
-export const HomePage = ({ featuredItems, description, buttons, gridClassnames }: Props) => {
-  const featuredGridClass = classNames(
+export const HomePage = ({ featuredItems, description, buttons }: Props) => {
+  const featuredGridClass = (gridClassname: string) =>  classNames(
     '@container w-full grid gap-4 gap-4 p-4',
-    gridClassnames ?? 'grid-cols-1 md:grid-cols-4'
+    gridClassname ?? 'grid-cols-1 md:grid-cols-4'
   );
-
   return (
     <div>
       <MainHero
@@ -140,10 +138,12 @@ export const HomePage = ({ featuredItems, description, buttons, gridClassnames }
         )) }
       </MainHero>
       <div id="gridContentHome" className="bg-gray-light py-10">
-        <ContentWrapper>
-          <div className={featuredGridClass}>
-            {featuredItems.map(renderFeatured)}
-          </div>
+        <ContentWrapper className="flex flex-col gap-4">
+          { featuredItems.map(({ gridClassname, features }, index) => (
+              <div key={index} className={featuredGridClass(gridClassname)}>
+                {features.map(renderFeatured)}
+              </div>
+          )) }
         </ContentWrapper>
       </div>
       <NewsletterSubscription />
