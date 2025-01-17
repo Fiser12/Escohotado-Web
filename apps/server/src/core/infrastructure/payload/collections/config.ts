@@ -9,3 +9,4 @@ export const COLLECTION_SLUG_ARTICLE_PDF = 'article_pdf' as const
 export const COLLECTION_SLUG_ARTICLE_WEB = 'article_web' as const
 export const COLLECTION_SLUG_BOOK = 'book' as const
 export const COLLECTION_SLUG_VIDEO = 'video' as const
+export const COLLECTION_SLUG_UI_GRID_CARDS = 'ui_grid_cards' as const

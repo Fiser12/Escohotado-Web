@@ -36,7 +36,6 @@ export const Header = ({
                 <nav className="h-16 py-5 bg-white flex justify-between items-center">
                     <Logo tabindex={0} />
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <NavItem href="/ad-memoriam" text="Ad Memoriam" tabindex={1} />
                         <NavItem href="/articulos" text="Lecturas" tabindex={2} />
                         <NavItem href="/filmoteca" text="Filmoteca" tabindex={3} />
                         <BasicDropdown menuSections={catalogoSections} text="Catálogo" />

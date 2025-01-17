@@ -1,10 +1,10 @@
-import { COLLECTION_SLUG_MEDIA } from "@/core/infrastructure/payload/collections/config";
+import { COLLECTION_SLUG_UI_GRID_CARDS } from "@/core/infrastructure/payload/collections/config";
 import { GlobalConfig } from "payload";
 
 export const HomePage: GlobalConfig = {
     slug: 'home_page',
     label: 'Página de inicio',
-    versions: true,
+    versions: false,
     fields: [
       {
         label: 'Hero panel',
@@ -40,31 +40,10 @@ export const HomePage: GlobalConfig = {
         ]
       },
       {
-        type: 'text',
-        name: 'tailwindGridClassNames',
-        label: 'Clases de Tailwind del grid',
-        defaultValue: "grid-cols-1 md:grid-cols-4"
-      },
-      {
-        type: 'array',
-        name: 'cards',
-        fields: [
-          {
-            type: 'relationship',
-            name: 'value',
-            relationTo: ['article_web', 'article_pdf', 'book', 'video'],
-            required: true,
-            hasMany: false,
-            admin: {
-              allowCreate: false
-            }   
-          },
-          {
-            type: 'text',
-            name: 'tailwindClassNames',
-            label: 'Clases de Tailwind del card'
-          }
-        ]
+        name: "cards",
+        type: 'relationship',
+        relationTo: COLLECTION_SLUG_UI_GRID_CARDS,
+        hasMany: true
       }
     ]
   }

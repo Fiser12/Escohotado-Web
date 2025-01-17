@@ -1,7 +1,7 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
-  await payload.db.drizzle.execute(sql`
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  await db.execute(sql`
    CREATE TYPE "public"."enum_prices_type" AS ENUM('one_time', 'recurring');
   CREATE TYPE "public"."enum_prices_interval" AS ENUM('day', 'week', 'month', 'year');
   CREATE TYPE "public"."enum_products_type" AS ENUM('good', 'service');
@@ -161,10 +161,13 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"permissions_seeds" varchar DEFAULT '',
   	"cover_id" uuid NOT NULL,
-  	"title" varchar,
+  	"title" varchar NOT NULL,
   	"description" varchar,
-  	"published_at" timestamp(3) with time zone NOT NULL,
+  	"published_at" timestamp(3) with time zone,
   	"seeds" varchar DEFAULT '',
+  	"forum_post_id" varchar,
+  	"last_forum_sync" timestamp(3) with time zone,
+  	"last_forum_posts" jsonb,
   	"prefix" varchar DEFAULT 'article_pdf',
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -192,13 +195,16 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"permissions_seeds" varchar DEFAULT '',
   	"cover_id" uuid NOT NULL,
-  	"title" varchar,
+  	"title" varchar NOT NULL,
   	"description" varchar,
-  	"published_at" timestamp(3) with time zone NOT NULL,
+  	"published_at" timestamp(3) with time zone,
   	"seeds" varchar DEFAULT '',
   	"slug" varchar NOT NULL,
   	"content" jsonb,
   	"content_html" varchar,
+  	"forum_post_id" varchar,
+  	"last_forum_sync" timestamp(3) with time zone,
+  	"last_forum_posts" jsonb,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -224,13 +230,16 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "book" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"cover_id" uuid NOT NULL,
-  	"title" varchar,
+  	"title" varchar NOT NULL,
   	"description" varchar,
-  	"published_at" timestamp(3) with time zone NOT NULL,
+  	"published_at" timestamp(3) with time zone,
   	"seeds" varchar DEFAULT '',
   	"content" jsonb,
   	"content_html" varchar,
   	"slug" varchar NOT NULL,
+  	"forum_post_id" varchar,
+  	"last_forum_sync" timestamp(3) with time zone,
+  	"last_forum_posts" jsonb,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -246,12 +255,16 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "video" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"url" varchar NOT NULL,
+  	"url_free" varchar,
+  	"permissions_seeds" varchar DEFAULT '',
   	"tags" jsonb,
   	"thumbnail_url" varchar,
   	"title" varchar,
   	"description" varchar,
   	"published_at" timestamp(3) with time zone,
-  	"seeds" varchar DEFAULT '',
+  	"forum_post_id" varchar,
+  	"last_forum_sync" timestamp(3) with time zone,
+  	"last_forum_posts" jsonb,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -261,7 +274,33 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"order" integer,
   	"parent_id" uuid NOT NULL,
   	"path" varchar NOT NULL,
-  	"taxonomy_id" varchar
+  	"permission_id" varchar
+  );
+  
+  CREATE TABLE IF NOT EXISTS "ui_grid_cards_cards" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"tailwind_class_names" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "ui_grid_cards" (
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"title" varchar,
+  	"tailwind_grid_class_names" varchar DEFAULT 'grid-cols-1 md:grid-cols-4',
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "ui_grid_cards_rels" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"order" integer,
+  	"parent_id" uuid NOT NULL,
+  	"path" varchar NOT NULL,
+  	"article_web_id" uuid,
+  	"article_pdf_id" uuid,
+  	"book_id" uuid,
+  	"video_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "permission" (
@@ -270,6 +309,26 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"title" varchar NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "search_results" (
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"title" varchar,
+  	"priority" numeric,
+  	"tags" varchar,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "search_results_rels" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"order" integer,
+  	"parent_id" uuid NOT NULL,
+  	"path" varchar NOT NULL,
+  	"video_id" uuid,
+  	"article_web_id" uuid,
+  	"article_pdf_id" uuid,
+  	"book_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "payload_locked_documents" (
@@ -294,7 +353,9 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"article_web_id" uuid,
   	"book_id" uuid,
   	"video_id" uuid,
-  	"permission_id" varchar
+  	"ui_grid_cards_id" uuid,
+  	"permission_id" varchar,
+  	"search_results_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "payload_preferences" (
@@ -319,6 +380,29 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   	"batch" numeric,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "home_page_hero_buttons" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" uuid NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"link" varchar NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "home_page" (
+  	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  	"hero_description" varchar,
+  	"updated_at" timestamp(3) with time zone,
+  	"created_at" timestamp(3) with time zone
+  );
+  
+  CREATE TABLE IF NOT EXISTS "home_page_rels" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"order" integer,
+  	"parent_id" uuid NOT NULL,
+  	"path" varchar NOT NULL,
+  	"ui_grid_cards_id" uuid
   );
   
   DO $$ BEGIN
@@ -466,7 +550,73 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "video_rels" ADD CONSTRAINT "video_rels_taxonomy_fk" FOREIGN KEY ("taxonomy_id") REFERENCES "public"."taxonomy"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "video_rels" ADD CONSTRAINT "video_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "ui_grid_cards_cards" ADD CONSTRAINT "ui_grid_cards_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."ui_grid_cards"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "ui_grid_cards_rels" ADD CONSTRAINT "ui_grid_cards_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."ui_grid_cards"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "ui_grid_cards_rels" ADD CONSTRAINT "ui_grid_cards_rels_article_web_fk" FOREIGN KEY ("article_web_id") REFERENCES "public"."article_web"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "ui_grid_cards_rels" ADD CONSTRAINT "ui_grid_cards_rels_article_pdf_fk" FOREIGN KEY ("article_pdf_id") REFERENCES "public"."article_pdf"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "ui_grid_cards_rels" ADD CONSTRAINT "ui_grid_cards_rels_book_fk" FOREIGN KEY ("book_id") REFERENCES "public"."book"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "ui_grid_cards_rels" ADD CONSTRAINT "ui_grid_cards_rels_video_fk" FOREIGN KEY ("video_id") REFERENCES "public"."video"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "search_results_rels" ADD CONSTRAINT "search_results_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."search_results"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "search_results_rels" ADD CONSTRAINT "search_results_rels_video_fk" FOREIGN KEY ("video_id") REFERENCES "public"."video"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "search_results_rels" ADD CONSTRAINT "search_results_rels_article_web_fk" FOREIGN KEY ("article_web_id") REFERENCES "public"."article_web"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "search_results_rels" ADD CONSTRAINT "search_results_rels_article_pdf_fk" FOREIGN KEY ("article_pdf_id") REFERENCES "public"."article_pdf"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "search_results_rels" ADD CONSTRAINT "search_results_rels_book_fk" FOREIGN KEY ("book_id") REFERENCES "public"."book"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -538,7 +688,19 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
+   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_ui_grid_cards_fk" FOREIGN KEY ("ui_grid_cards_id") REFERENCES "public"."ui_grid_cards"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_search_results_fk" FOREIGN KEY ("search_results_id") REFERENCES "public"."search_results"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -551,6 +713,24 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "home_page_hero_buttons" ADD CONSTRAINT "home_page_hero_buttons_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."home_page"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "home_page_rels" ADD CONSTRAINT "home_page_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."home_page"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "home_page_rels" ADD CONSTRAINT "home_page_rels_ui_grid_cards_fk" FOREIGN KEY ("ui_grid_cards_id") REFERENCES "public"."ui_grid_cards"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -622,10 +802,30 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "video_rels_order_idx" ON "video_rels" USING btree ("order");
   CREATE INDEX IF NOT EXISTS "video_rels_parent_idx" ON "video_rels" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "video_rels_path_idx" ON "video_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "video_rels_taxonomy_id_idx" ON "video_rels" USING btree ("taxonomy_id");
+  CREATE INDEX IF NOT EXISTS "video_rels_permission_id_idx" ON "video_rels" USING btree ("permission_id");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_cards_order_idx" ON "ui_grid_cards_cards" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_cards_parent_id_idx" ON "ui_grid_cards_cards" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_updated_at_idx" ON "ui_grid_cards" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_created_at_idx" ON "ui_grid_cards" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_rels_order_idx" ON "ui_grid_cards_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_rels_parent_idx" ON "ui_grid_cards_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_rels_path_idx" ON "ui_grid_cards_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_rels_article_web_id_idx" ON "ui_grid_cards_rels" USING btree ("article_web_id");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_rels_article_pdf_id_idx" ON "ui_grid_cards_rels" USING btree ("article_pdf_id");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_rels_book_id_idx" ON "ui_grid_cards_rels" USING btree ("book_id");
+  CREATE INDEX IF NOT EXISTS "ui_grid_cards_rels_video_id_idx" ON "ui_grid_cards_rels" USING btree ("video_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "permission_slug_idx" ON "permission" USING btree ("slug");
   CREATE INDEX IF NOT EXISTS "permission_updated_at_idx" ON "permission" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "permission_created_at_idx" ON "permission" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "search_results_updated_at_idx" ON "search_results" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "search_results_created_at_idx" ON "search_results" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "search_results_rels_order_idx" ON "search_results_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "search_results_rels_parent_idx" ON "search_results_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "search_results_rels_path_idx" ON "search_results_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "search_results_rels_video_id_idx" ON "search_results_rels" USING btree ("video_id");
+  CREATE INDEX IF NOT EXISTS "search_results_rels_article_web_id_idx" ON "search_results_rels" USING btree ("article_web_id");
+  CREATE INDEX IF NOT EXISTS "search_results_rels_article_pdf_id_idx" ON "search_results_rels" USING btree ("article_pdf_id");
+  CREATE INDEX IF NOT EXISTS "search_results_rels_book_id_idx" ON "search_results_rels" USING btree ("book_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_created_at_idx" ON "payload_locked_documents" USING btree ("created_at");
@@ -642,7 +842,9 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_article_web_id_idx" ON "payload_locked_documents_rels" USING btree ("article_web_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_book_id_idx" ON "payload_locked_documents_rels" USING btree ("book_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_video_id_idx" ON "payload_locked_documents_rels" USING btree ("video_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_ui_grid_cards_id_idx" ON "payload_locked_documents_rels" USING btree ("ui_grid_cards_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_permission_id_idx" ON "payload_locked_documents_rels" USING btree ("permission_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_search_results_id_idx" ON "payload_locked_documents_rels" USING btree ("search_results_id");
   CREATE INDEX IF NOT EXISTS "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
   CREATE INDEX IF NOT EXISTS "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "payload_preferences_created_at_idx" ON "payload_preferences" USING btree ("created_at");
@@ -651,11 +853,17 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
   CREATE INDEX IF NOT EXISTS "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
   CREATE INDEX IF NOT EXISTS "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`)
+  CREATE INDEX IF NOT EXISTS "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "home_page_hero_buttons_order_idx" ON "home_page_hero_buttons" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "home_page_hero_buttons_parent_id_idx" ON "home_page_hero_buttons" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "home_page_rels_order_idx" ON "home_page_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "home_page_rels_parent_idx" ON "home_page_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "home_page_rels_path_idx" ON "home_page_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "home_page_rels_ui_grid_cards_id_idx" ON "home_page_rels" USING btree ("ui_grid_cards_id");`)
 }
 
-export async function down({ payload, req }: MigrateDownArgs): Promise<void> {
-  await payload.db.drizzle.execute(sql`
+export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+  await db.execute(sql`
    DROP TABLE "users_accounts" CASCADE;
   DROP TABLE "users_sessions" CASCADE;
   DROP TABLE "users_verification_tokens" CASCADE;
@@ -677,12 +885,20 @@ export async function down({ payload, req }: MigrateDownArgs): Promise<void> {
   DROP TABLE "book_rels" CASCADE;
   DROP TABLE "video" CASCADE;
   DROP TABLE "video_rels" CASCADE;
+  DROP TABLE "ui_grid_cards_cards" CASCADE;
+  DROP TABLE "ui_grid_cards" CASCADE;
+  DROP TABLE "ui_grid_cards_rels" CASCADE;
   DROP TABLE "permission" CASCADE;
+  DROP TABLE "search_results" CASCADE;
+  DROP TABLE "search_results_rels" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
   DROP TABLE "payload_locked_documents_rels" CASCADE;
   DROP TABLE "payload_preferences" CASCADE;
   DROP TABLE "payload_preferences_rels" CASCADE;
   DROP TABLE "payload_migrations" CASCADE;
+  DROP TABLE "home_page_hero_buttons" CASCADE;
+  DROP TABLE "home_page" CASCADE;
+  DROP TABLE "home_page_rels" CASCADE;
   DROP TYPE "public"."enum_prices_type";
   DROP TYPE "public"."enum_prices_interval";
   DROP TYPE "public"."enum_products_type";

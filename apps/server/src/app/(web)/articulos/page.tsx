@@ -1,6 +1,6 @@
 import { COLLECTION_SLUG_ARTICLE_PDF } from "@/core/infrastructure/payload/collections/config";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2, ArticleCard, ContentGridList, EscohotadoArticlesPortada, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook } from "gaudi/server";
+import { ContentWrapper, H2, ArticleCard, ContentGridList, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
 import { Media, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/ui/autor_bar_ssr";
@@ -11,6 +11,7 @@ import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery
 import { getArticlesQuery } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
 import { getLastArticlesQuery } from "@/core/content/getLastArticlesQuery";
+import Image from "next/image";
 
 export const pageSize = 10;
 
@@ -40,7 +41,14 @@ export const ArticlePage = async ({ searchParams }: Props) => {
         <ContentWrapper className="mx-auto flex flex-col gap-7.5">
           <H2 label="Últimos artículos" id="last-articles"/>
           <div className="grid grid-cols-3 @max-md:grid-cols-1 items-center gap-4 md:gap-10">
-            <EscohotadoArticlesPortada />
+            <Image
+              src={escohotadoArticlesPortada.src}
+              alt="Escohotado image"
+              className="order-2 md:order-none"
+              layout="responsive"
+              width={650}
+              height={1080}
+            />
             <div className="w-full col-span-2 order-1 md:order-none">
             { lastArticles.map((article, index) => {
               const categories = article.categories as Taxonomy[]
@@ -63,10 +71,10 @@ export const ArticlePage = async ({ searchParams }: Props) => {
         <CarouselBook books={books} />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
           <H2 label="Artículos" id="h2-articles"/>
-          <div className="flex gap-3">
-            <AutorBarSSR />
-            <MedioBarSSR />
-            <SearchBarNuqs />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <AutorBarSSR />
+              <MedioBarSSR />
+              <SearchBarNuqs />
             </div>
           <ContentGridList
             items={articles.results}
@@ -78,7 +86,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
                 publishedAt={article.publishedAt ?? ""}
                 coverHref={(article.cover as Media | null)?.url ?? "#"}
                 textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
-                categories={article.categories as Taxonomy[]}
+                categories={(article.categories ?? []) as Taxonomy[]}
                 hasPermission={evalPermissionQuery(user, article.permissions_seeds?.trim() ?? "")}
               />
             )}

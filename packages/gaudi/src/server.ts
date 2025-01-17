@@ -22,5 +22,7 @@ export { CarouselBook } from "./content/book/carousel";
 export { MainButton } from "./common/main_button/main_button";
 export { BookDetail } from "./content/pages/book_page/detail";
 export { HomePage, type Featured } from "./content/pages/home_page"
+
 import handwrittenBackground from "./assets/images/handwritting-bg.jpg";
-export { handwrittenBackground };
+import escohotadoArticlesPortada from "./assets/images/escohotado-articles-portada.png";
+export { handwrittenBackground, escohotadoArticlesPortada };
