@@ -40,14 +40,31 @@ export const HomePage: GlobalConfig = {
         ]
       },
       {
-        label: 'Cards',
+        type: 'text',
+        name: 'tailwindGridClassNames',
+        label: 'Clases de Tailwind del grid',
+        defaultValue: "grid-cols-1 md:grid-cols-4"
+      },
+      {
+        type: 'array',
         name: 'cards',
-        type: 'relationship',
-        relationTo: ['article_web', 'article_pdf', 'book', 'video'],
-        hasMany: true,
-        admin: {
-          allowCreate: false
-        }
+        fields: [
+          {
+            type: 'relationship',
+            name: 'value',
+            relationTo: ['article_web', 'article_pdf', 'book', 'video'],
+            required: true,
+            hasMany: false,
+            admin: {
+              allowCreate: false
+            }   
+          },
+          {
+            type: 'text',
+            name: 'tailwindClassNames',
+            label: 'Clases de Tailwind del card'
+          }
+        ]
       }
     ]
   }

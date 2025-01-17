@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { MainHero } from "../../common/hero";
 import { MainButton } from "../../../common/main_button/main_button";
-import { ContentWrapper } from "../../../server";
 import { NewsletterSubscription } from "../../common/newsletterSubscription";
 import { Footer } from "../../common/footer";
 import { FeaturedArticle } from "../../featured_grid_home/article";
@@ -10,6 +9,7 @@ import { FeaturedBook } from "../../featured_grid_home/book";
 import { FeaturedVideo } from "../../featured_grid_home/video";
 import heroHome from "../../../assets/images/hero-home.png";
 import Image from "next/image";
+import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 
 type FeaturedType = "article" | "quote" | "book" | "video";
 
@@ -56,6 +56,7 @@ export type Featured = FeaturedArticleProps | FeaturedQuoteProps | FeaturedBookP
 interface Props {
   featuredItems: Featured[];
   description: string;
+  gridClassnames?: string;
   buttons: Array<{ title: string; link: string }>;
 }
 
@@ -110,9 +111,10 @@ const renderFeatured = (item: Featured) => {
 };
 
 
-export const HomePage = ({ featuredItems, description, buttons }: Props) => {
+export const HomePage = ({ featuredItems, description, buttons, gridClassnames }: Props) => {
   const featuredGridClass = classNames(
-    '@container w-full grid grid-cols-1 md:grid-cols-4 gap-4 gap-4 p-4'
+    '@container w-full grid gap-4 gap-4 p-4',
+    gridClassnames ?? 'grid-cols-1 md:grid-cols-4'
   );
 
   return (

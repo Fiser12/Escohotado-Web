@@ -58,6 +58,7 @@ const meta: Meta = {
         },
         args: {
             featuredItems,
+            gridClassnames: "grid-cols-1 md:grid-cols-4",
             buttons: [
               { title: "Ver más", link: "/libros" },
             ],

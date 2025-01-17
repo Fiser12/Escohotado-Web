@@ -928,25 +928,29 @@ export interface HomePage {
         }[]
       | null;
   };
+  tailwindGridClassNames?: string | null;
   cards?:
-    | (
-        | {
-            relationTo: 'article_web';
-            value: string | ArticleWeb;
-          }
-        | {
-            relationTo: 'article_pdf';
-            value: string | ArticlePdf;
-          }
-        | {
-            relationTo: 'book';
-            value: string | Book;
-          }
-        | {
-            relationTo: 'video';
-            value: string | Video;
-          }
-      )[]
+    | {
+        value:
+          | {
+              relationTo: 'article_web';
+              value: string | ArticleWeb;
+            }
+          | {
+              relationTo: 'article_pdf';
+              value: string | ArticlePdf;
+            }
+          | {
+              relationTo: 'book';
+              value: string | Book;
+            }
+          | {
+              relationTo: 'video';
+              value: string | Video;
+            };
+        tailwindClassNames?: string | null;
+        id?: string | null;
+      }[]
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -968,7 +972,14 @@ export interface HomePageSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  cards?: T;
+  tailwindGridClassNames?: T;
+  cards?:
+    | T
+    | {
+        value?: T;
+        tailwindClassNames?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

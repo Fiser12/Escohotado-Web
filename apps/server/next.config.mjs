@@ -18,6 +18,13 @@ const nextConfig = {
         port: '',
         pathname: '/vi/**',
         search: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+        search: '',
       }
     ] 
   }

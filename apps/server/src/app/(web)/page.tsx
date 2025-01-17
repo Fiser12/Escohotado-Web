@@ -1,5 +1,5 @@
 import { getPayload } from "@/core/infrastructure/payload/utils/getPayload";
-import { HomePage, Featured } from "gaudi/server";
+import { Featured, HomePage } from "gaudi/server";
 import { ArticlePdf, ArticleWeb, Book, Media, Taxonomy, Video } from "payload-types";
 
 const getAuthorFromTaxonomies = (taxonomies: Taxonomy[]): string => {
@@ -8,7 +8,7 @@ const getAuthorFromTaxonomies = (taxonomies: Taxonomy[]): string => {
   .map((taxonomy) => taxonomy.singular_name).join(", ");
 }
 
-const mapArticlePdfCard = (item: ArticlePdf | ArticleWeb): Featured => {
+const mapArticlePdfCard = (item: ArticlePdf | ArticleWeb, classNames?: string | null): Featured => {
   return {
     type: "article",
     id: item.id,
@@ -17,10 +17,10 @@ const mapArticlePdfCard = (item: ArticlePdf | ArticleWeb): Featured => {
     categories: [],
     coverHref: (item.cover as Media)?.url ?? "#",
     href: "#",
-    className: ""
+    className: classNames ?? "col-span-1 md:col-span-2 lg:col-span-3"
   }
 }
-const mapVideoCard = (item: Video): Featured => {
+const mapVideoCard = (item: Video, classNames?: string | null): Featured => {
   return {
     type: "video",
     id: item.id,
@@ -28,10 +28,10 @@ const mapVideoCard = (item: Video): Featured => {
     categories: [],
     coverHref: item.thumbnailUrl ?? "#",
     href: "#",
-    className: ""
+    className: classNames ?? "col-span-1 md:col-span-2"
   }
 }
-const mapBookCard = (item: Book): Featured => {
+const mapBookCard = (item: Book, classNames?: string | null): Featured => {
   return {
     type: "book",
     id: item.id,
@@ -40,7 +40,7 @@ const mapBookCard = (item: Book): Featured => {
     href: "#",
     quote: item.description ?? "No description",
     title: item.title ?? "No title",
-    className: ""
+    className: classNames ?? "col-span-1 md:col-span-2"
   }
 }
 
@@ -52,14 +52,14 @@ const Page = async () => {
   
   const mapCards = (cards: typeof homePageData.cards): Featured[] => {
     return cards?.map((card) => {
-      switch (card.relationTo) {
+      switch (card.value?.relationTo) {
         case "article_web":
         case "article_pdf":
-          return mapArticlePdfCard(card.value as ArticlePdf | ArticleWeb);
+          return mapArticlePdfCard(card.value?.value as ArticlePdf | ArticleWeb, card.tailwindClassNames);
         case "video":
-          return mapVideoCard(card.value as Video);
+          return mapVideoCard(card.value?.value as Video, card.tailwindClassNames);
         case "book":
-          return mapBookCard(card.value as Book);
+          return mapBookCard(card.value?.value as Book, card.tailwindClassNames);
     }}) ?? []
   }
   return (

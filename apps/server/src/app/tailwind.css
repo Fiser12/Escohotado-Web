@@ -3,6 +3,7 @@
 
 @plugin "@tailwindcss/typography";
 @source "../../../../packages/gaudi/src";
+@config "./tailwind.config.js";
 
 @theme {
     --font-body: "Montserrat", "sans-serif";
