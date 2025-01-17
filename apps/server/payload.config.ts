@@ -32,6 +32,7 @@ import { contentCollections } from '@/core/infrastructure/payload/collections/co
 import { migrations } from '@/migrations'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { HomePage } from '@/core/infrastructure/payload/globals/pages/home'
+import { uiCollections } from '@/core/infrastructure/payload/collections/ui'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -46,6 +47,7 @@ export default buildConfig({
     media,
     taxonomy,
     ...contentCollections,
+    ...uiCollections,
     permissions,
   ],
   globals: [

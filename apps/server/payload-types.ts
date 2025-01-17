@@ -21,6 +21,7 @@ export interface Config {
     article_web: ArticleWeb;
     book: Book;
     video: Video;
+    ui_grid_cards: UiGridCard;
     permission: Permission;
     'search-results': SearchResult;
     'payload-locked-documents': PayloadLockedDocument;
@@ -49,6 +50,7 @@ export interface Config {
     article_web: ArticleWebSelect<false> | ArticleWebSelect<true>;
     book: BookSelect<false> | BookSelect<true>;
     video: VideoSelect<false> | VideoSelect<true>;
+    ui_grid_cards: UiGridCardsSelect<false> | UiGridCardsSelect<true>;
     permission: PermissionSelect<false> | PermissionSelect<true>;
     'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -469,6 +471,40 @@ export interface Video {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ui_grid_cards".
+ */
+export interface UiGridCard {
+  id: string;
+  title?: string | null;
+  tailwindGridClassNames?: string | null;
+  cards?:
+    | {
+        value:
+          | {
+              relationTo: 'article_web';
+              value: string | ArticleWeb;
+            }
+          | {
+              relationTo: 'article_pdf';
+              value: string | ArticlePdf;
+            }
+          | {
+              relationTo: 'book';
+              value: string | Book;
+            }
+          | {
+              relationTo: 'video';
+              value: string | Video;
+            };
+        tailwindClassNames: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -545,6 +581,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'video';
         value: string | Video;
+      } | null)
+    | ({
+        relationTo: 'ui_grid_cards';
+        value: string | UiGridCard;
       } | null)
     | ({
         relationTo: 'permission';
@@ -859,6 +899,23 @@ export interface VideoSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ui_grid_cards_select".
+ */
+export interface UiGridCardsSelect<T extends boolean = true> {
+  title?: T;
+  tailwindGridClassNames?: T;
+  cards?:
+    | T
+    | {
+        value?: T;
+        tailwindClassNames?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "permission_select".
  */
 export interface PermissionSelect<T extends boolean = true> {
@@ -928,30 +985,7 @@ export interface HomePage {
         }[]
       | null;
   };
-  tailwindGridClassNames?: string | null;
-  cards?:
-    | {
-        value:
-          | {
-              relationTo: 'article_web';
-              value: string | ArticleWeb;
-            }
-          | {
-              relationTo: 'article_pdf';
-              value: string | ArticlePdf;
-            }
-          | {
-              relationTo: 'book';
-              value: string | Book;
-            }
-          | {
-              relationTo: 'video';
-              value: string | Video;
-            };
-        tailwindClassNames?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  cards?: (string | UiGridCard)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -972,14 +1006,7 @@ export interface HomePageSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  tailwindGridClassNames?: T;
-  cards?:
-    | T
-    | {
-        value?: T;
-        tailwindClassNames?: T;
-        id?: T;
-      };
+  cards?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
