@@ -1,6 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { HomePage } from ".";
-const featuredItems = [
+const featuredItem = {
+  gridClassname: "grid-cols-1 md:grid-cols-4",
+  features: [
     {
       id: "1",
       type: "article",
@@ -44,7 +46,8 @@ const featuredItems = [
         { id: "2", singular_name: "Filosofía" },
       ],
     }
-  ];
+  ]
+};
   
 const meta: Meta = {
         title: "Pages/Home",
@@ -57,8 +60,7 @@ const meta: Meta = {
                 },
         },
         args: {
-            featuredItems,
-            gridClassnames: "grid-cols-1 md:grid-cols-4",
+            featuredItems: [featuredItem],
             buttons: [
               { title: "Ver más", link: "/libros" },
             ],
