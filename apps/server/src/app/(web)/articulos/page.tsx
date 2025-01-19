@@ -5,18 +5,17 @@ import { Media, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/ui/autor_bar_ssr";
 import { MedioBarSSR } from "@/ui/medio_bar_ssr";
-import { PaginationBarNuqs } from "@/ui/pagination_bar_nuqs";
 import { SearchBarNuqs } from "@/ui/search_bar_nuqs";
 import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
 import { getArticlesQuery } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
 import { getLastArticlesQuery } from "@/core/content/getLastArticlesQuery";
 import Image from "next/image";
+import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
 
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
-  page: parseAsString.withDefault('1'),
   autor: parseAsString.withDefault(''),
   query: parseAsString.withDefault(''),
   medio: parseAsString.withDefault('')
@@ -27,11 +26,11 @@ interface Props {
 }
 
 export const ArticlePage = async ({ searchParams }: Props) => {
-  const { autor, medio, page, query } = await searchContentParamsCache.parse(searchParams)
+  const { autor, medio, query } = await searchContentParamsCache.parse(searchParams)
   const medioArray = medio.split(',').filter(Boolean)
 
   const user = await getCurrentUserQuery();
-  const articles = await getArticlesQuery(query, autor, medioArray, parseInt(page) - 1)
+  const articles = await getArticlesQuery(query, autor, medioArray, 0)
   const lastArticles = await getLastArticlesQuery();
   const books = await getBooksQuery(query, 0)
 
@@ -93,7 +92,12 @@ export const ArticlePage = async ({ searchParams }: Props) => {
             gridCols="md:grid-cols-2 lg:grid-cols-3"
             gap="gap-6"
           />
-          <PaginationBarNuqs maxPage={articles.maxPage} />
+          <DynamicLoadingArticles 
+            autor={autor}
+            medioArray={medioArray}
+            query={query}
+            maxPage={articles.maxPage}
+          />
         </ContentWrapper>
       </div>
     </div>

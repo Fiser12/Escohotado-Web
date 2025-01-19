@@ -2,16 +2,15 @@ import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, ArticleCard } from "gaudi/server";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { PaginationBarNuqs } from "@/ui/pagination_bar_nuqs";
 import { ContentGridList } from "gaudi/server";
 import { SearchBarNuqs } from "@/ui/search_bar_nuqs";
 import { getVideosQuery } from "@/core/content/getVideosQuery";
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery';
+import { DynamicLoadingVideos } from '@/ui/dynamic-loading-lists/dynamic-loading-videos';
 
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
-  page: parseAsString.withDefault('1'),
   query: parseAsString.withDefault(''),
   temas: parseAsString.withDefault('')
 })
@@ -22,10 +21,10 @@ interface Props {
 
 const Page = async ({ searchParams }: Props) => {
   const payload = await getPayload();
-  const { page, query } = await searchContentParamsCache.parse(searchParams)
+  const { query } = await searchContentParamsCache.parse(searchParams)
   const [user, videosResult] = await Promise.all([
     getCurrentUserQuery(payload),
-    getVideosQuery(query, parseInt(page) - 1)
+    getVideosQuery(query, 0)
   ]);
 
   return (
@@ -37,31 +36,25 @@ const Page = async ({ searchParams }: Props) => {
       <div className="flex flex-row gap-x-2">
         <SearchBarNuqs />
       </div>
-      <div>
-        <ContentGridList
-          items={videosResult.results}
-          renderBox={(video, index) => {
-            const content = fetchPermittedContentQuery(
-              user, 
-              video.permissions_seeds ?? "",
-              video.url,
-              video.url_free
-            )
-
-            return <ArticleCard
-              key={index}
-              title={video.title ?? "No title"}
-              href={content ?? "#"}
-              publishedAt={video.publishedAt as string}
-              coverHref={video.thumbnailUrl ?? "#"}
-              textLink={"Ver vídeo"}
-              categories={[]}
-              hasPermission={content != null && content != ""}
-            />
-          }}
-        />
-      </div>
-      <PaginationBarNuqs maxPage={videosResult.maxPage} />
+      <ContentGridList
+        items={videosResult.results}
+        renderBox={(video, index) => {
+          return <ArticleCard
+            key={index}
+            title={video.title ?? "No title"}
+            href={video.allowedHref ?? "#"}
+            publishedAt={video.publishedAt as string}
+            coverHref={video.thumbnailUrl ?? "#"}
+            textLink={"Ver vídeo"}
+            categories={[]}
+            hasPermission={video.allowedHref != null && video.allowedHref != ""}
+          />
+        }}
+      />
+      <DynamicLoadingVideos
+        query={query}
+        maxPage={videosResult.maxPage}
+      />
     </ContentWrapper>
   );
 };

@@ -38,13 +38,6 @@ export const getLastArticlesQuery = async (): Promise<CommonArticle[]> => {
     .sort((a, b) => (
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     ))
-    .map((article) => (
-      {
-        ...article,
-        title: article.title?.replace('.pdf', '')
-      }
-    )
-  )
 
   return articles.slice(0, 3)
 }
