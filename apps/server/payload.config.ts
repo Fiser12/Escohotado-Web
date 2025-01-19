@@ -2,7 +2,6 @@ import path from 'path'
 import { en } from 'payload/i18n/en'
 import { es } from 'payload/i18n/es'
 
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -33,12 +32,13 @@ import { migrations } from '@/migrations'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { HomePage } from '@/core/infrastructure/payload/globals/pages/home'
 import { uiCollections } from '@/core/infrastructure/payload/collections/ui'
+import { defaultLexical } from '@/core/infrastructure/payload/fields/defaultLexical'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  editor: lexicalEditor(),
+  editor: defaultLexical,
   collections: [
     users,
     prices,

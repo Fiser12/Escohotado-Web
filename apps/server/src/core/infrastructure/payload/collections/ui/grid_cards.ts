@@ -10,7 +10,7 @@ export const gridCards: CollectionConfig = {
   },
   admin: {
     group: 'UI',
-    useAsTitle: "title"
+    useAsTitle: 'title',
   },
   access: {
     read: isAnyone,
@@ -20,9 +20,9 @@ export const gridCards: CollectionConfig = {
   },
   fields: [
     {
-        type: 'text',
-        name: 'title',
-        label: 'Descripción',
+      type: 'text',
+      name: 'title',
+      label: 'Descripción',
     },
     {
       type: 'text',
@@ -35,21 +35,11 @@ export const gridCards: CollectionConfig = {
       name: 'cards',
       fields: [
         {
-          type: 'relationship',
-          name: 'value',
-          relationTo: ['article_web', 'article_pdf', 'book', 'video'],
-          required: true,
-          hasMany: false,
-          admin: {
-            allowCreate: false,
-          }
-        },
-        {
           type: 'text',
           name: 'tailwindClassNames',
           label: 'Clases de Tailwind del card',
-          required: true
-        }
+          required: true,
+        },
       ],
     },
   ],

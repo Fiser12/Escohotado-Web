@@ -11,6 +11,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -24,10 +25,9 @@ const nextConfig = {
         hostname: 'placehold.co',
         port: '',
         pathname: '/**',
-        search: '',
-      }
-    ] 
-  }
+      },
+    ],
+  },
 }
 
 const sentryConfig = {
