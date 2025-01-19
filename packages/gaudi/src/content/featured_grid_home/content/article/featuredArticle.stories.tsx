@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { FeaturedArticle } from ".";
 
 const meta: Meta = {
-      title: "Molecules/Featured Home",
+      title: "Molecules/Featured Home/Article",
       component: FeaturedArticle,
       parameters: {
             layout: "padded",
@@ -30,15 +30,21 @@ const meta: Meta = {
                   description: "Image URL for the cover",
                   type: { name: "string", required: true },
             },
+            hasPermission: {
+                  control: "boolean",
+                  defaultValue: true,
+                  description: "If the user has permission to access",
+            },
       },
       args: {
             title: "Sample Article Title",
             author: "Sample Author",
-            coverHref: "https://placehold.co/200x200",
+            coverHref: "https://placehold.co/400x400",
             categories: [
                   { id: "1", singular_name: "Tecnología" },
                   { id: "2", singular_name: "Filosofía" },
             ],
+            hasPermission: true,
       },
 };
 
@@ -46,5 +52,22 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Article: Story = {
+export const Horizontal: Story = {
+      decorators: [
+            (Story) => (
+                  <div style={{ height: '300px', overflow: 'auto' }}>
+                        <Story />
+                  </div>
+            ),
+      ],
+};
+
+export const Vertical: Story = {
+      decorators: [
+            (Story) => (
+                  <div style={{ width: '300px', height:'400px', overflow: 'auto' }}>
+                        <Story />
+                  </div>
+            ),
+      ],
 };

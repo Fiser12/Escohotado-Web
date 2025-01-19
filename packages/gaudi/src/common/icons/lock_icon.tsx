@@ -9,27 +9,25 @@ export const LockIcon = ({
     className = '',
 }: Args): JSX.Element => {
     const iconClass = classNames(
-        'h-[48px]',
         className,
     );
 
-    return(
+    return (
         <svg
-            viewBox="0 0 48 47" 
+            viewBox="0 0 23 24"
             className={iconClass}
-            fill="none" 
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <circle cx="24" cy="23.6711" r="23.0148" fill="white"/>
-            <g clipPath="url(#clip0_683_1862)">
-            <path d="M30.4569 21.2496H17.543C16.6515 21.2496 15.9288 21.9724 15.9288 22.8639V32.5493C15.9288 33.4408 16.6515 34.1635 17.543 34.1635H30.4569C31.3485 34.1635 32.0712 33.4408 32.0712 32.5493V22.8639C32.0712 21.9724 31.3485 21.2496 30.4569 21.2496Z" stroke="#C2C2C2" strokeWidth="1.61424" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M29.6498 21.2497V18.8283C29.6498 17.3299 29.0546 15.8928 27.995 14.8333C26.9355 13.7737 25.4984 13.1785 24 13.1785C22.5015 13.1785 21.0645 13.7737 20.005 14.8333C18.9454 15.8928 18.3501 17.3299 18.3501 18.8283V21.2497" stroke="#C2C2C2" strokeWidth="1.61424" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M24 28.5137C24.4457 28.5137 24.8071 28.1523 24.8071 27.7065C24.8071 27.2608 24.4457 26.8994 24 26.8994C23.5542 26.8994 23.1929 27.2608 23.1929 27.7065C23.1929 28.1523 23.5542 28.5137 24 28.5137Z" stroke="#C2C2C2" strokeWidth="1.61424" strokeLinecap="round" strokeLinejoin="round"/>
+            <g clip-path="url(#clip0_915_1659)">
+                <path d="M17.7817 9.65112H4.86778C3.97627 9.65112 3.25354 10.3738 3.25354 11.2654V20.9508C3.25354 21.8423 3.97627 22.565 4.86778 22.565H17.7817C18.6732 22.565 19.3959 21.8423 19.3959 20.9508V11.2654C19.3959 10.3738 18.6732 9.65112 17.7817 9.65112Z" stroke="currentColor" stroke-width="1.61424" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M16.9746 9.65127V7.22991C16.9746 5.73148 16.3794 4.29442 15.3198 3.23488C14.2602 2.17533 12.8232 1.58008 11.3247 1.58008C9.8263 1.58008 8.38924 2.17533 7.3297 3.23488C6.27015 4.29442 5.6749 5.73148 5.6749 7.22991V9.65127" stroke="currentColor" stroke-width="1.61424" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M11.3247 16.9153C11.7705 16.9153 12.1318 16.5539 12.1318 16.1081C12.1318 15.6624 11.7705 15.301 11.3247 15.301C10.879 15.301 10.5176 15.6624 10.5176 16.1081C10.5176 16.5539 10.879 16.9153 11.3247 16.9153Z" stroke="currentColor" stroke-width="1.61424" stroke-linecap="round" stroke-linejoin="round" />
             </g>
             <defs>
-            <clipPath id="clip0_683_1862">
-            <rect width="22.5993" height="22.5993" fill="white" transform="translate(12.7003 12.3713)"/>
-            </clipPath>
+                <clipPath id="clip0_915_1659">
+                    <rect width="22.5993" height="22.5993" fill="white" transform="translate(0.0250549 0.772949)" />
+                </clipPath>
             </defs>
         </svg>
     );

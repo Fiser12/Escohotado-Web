@@ -24,6 +24,7 @@ export interface FeaturedArticleProps extends FeaturedBase {
   title: string;
   author: string;
   coverHref: string;
+  hasPermission: boolean;
   href: string;
   categories: Array<{ id: string; singular_name: string }>;
 }
@@ -68,6 +69,7 @@ const renderFeatured = (item: Featured) => {
           className={item.className}
           title={item.title}
           author={item.author}
+          hasPermission={item.hasPermission}
           coverHref={item.coverHref}
           href={item.href}
           categories={item.categories}

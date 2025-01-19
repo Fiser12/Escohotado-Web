@@ -15,6 +15,7 @@ const featuredItem = {
         { id: "1", singular_name: "Historia" },
         { id: "2", singular_name: "Filosofía" },
       ],
+      hasPermission: true,
     },
     {
       id: "2",

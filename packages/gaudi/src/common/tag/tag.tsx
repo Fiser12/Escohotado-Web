@@ -1,10 +1,9 @@
-import React from 'react';
 import classNames from 'classnames';
 
 interface Args {
     text: string;
     className?: string;
-    variant?: 'light' | 'primary';
+    variant?: 'light' | 'primary' | 'disabled';
 }
 
 export const Tag = ({
@@ -18,6 +17,7 @@ export const Tag = ({
         {
             'bg-white': variant === 'light',
             'bg-primary-50': variant === 'primary',
+            'bg-gray-200': variant === 'disabled',
         }
     );
 

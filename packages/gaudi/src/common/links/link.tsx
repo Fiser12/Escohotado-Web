@@ -14,15 +14,15 @@ export const Link = ({
     className,
 }: Args): JSX.Element => {
     const linkClass = classNames(
-        'font-normal font-body text-sm text-primary-400 flex flex-row-reverse gap-1 items-center',
+        'w-auto font-normal font-body text-sm text-primary-400 flex flex-row justify-end gap-1 items-center',
         className,
     );
 
-    return(
-        <a href={href}>
+    return (
+        <a href={href} className='hover: cursor-pointer'>
             <div className={linkClass}>
-                <ArrowLinkIcon></ArrowLinkIcon>
                 {text}
+                <ArrowLinkIcon />
             </div>
         </a>
     );
