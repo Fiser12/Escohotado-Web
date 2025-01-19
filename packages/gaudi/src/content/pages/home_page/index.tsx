@@ -3,13 +3,10 @@ import { MainHero } from "../../common/hero";
 import { MainButton } from "../../../common/main_button/main_button";
 import { NewsletterSubscription } from "../../common/newsletterSubscription";
 import { Footer } from "../../common/footer";
-import { FeaturedArticle } from "../../featured_grid_home/content/article";
-import { FeaturedQuote } from "../../featured_grid_home/content/quote";
-import { FeaturedBook } from "../../featured_grid_home/content/book";
-import { FeaturedVideo } from "../../featured_grid_home/content/video";
 import heroHome from "../../../assets/images/hero-home.png";
 import Image from "next/image";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
+import { GridCardsBlock } from "../../featured_grid_home/GridCardsBlock";
 
 type FeaturedType = "article" | "quote" | "book" | "video";
 
@@ -60,63 +57,8 @@ interface Props {
   buttons: Array<{ title: string; link: string }>;
 }
 
-const renderFeatured = (item: Featured) => {
-  switch (item.type) {
-    case "article":
-      return (
-        <FeaturedArticle
-          key={item.id}
-          className={item.className}
-          title={item.title}
-          author={item.author}
-          hasPermission={item.hasPermission}
-          coverHref={item.coverHref}
-          href={item.href}
-          categories={item.categories}
-        />
-      );
-    case "quote":
-      return (
-        <FeaturedQuote
-          key={item.id}
-          className={item.className}
-          quote={item.quote}
-          author={item.author}
-        />
-      );
-    case "book":
-      return (
-        <FeaturedBook
-          key={item.id}
-          className={item.className}
-          title={item.title}
-          quote={item.quote}
-          author={item.author}
-          coverHref={item.coverHref}
-        />
-      );
-    case "video":
-      return (
-        <FeaturedVideo
-          key={item.id}
-          className={item.className}
-          title={item.title}
-          coverHref={item.coverHref}
-          href={item.href}
-          categories={item.categories}
-        />
-      );
-    default:
-      return null;
-  }
-};
-
 
 export const HomePage = ({ featuredItems, description, buttons }: Props) => {
-  const featuredGridClass = (gridClassname: string) => classNames(
-    'w-full grid gap-4 gap-4 p-4',
-    gridClassname ?? 'grid-cols-1 md:grid-cols-4'
-  );
   return (
     <div>
       <MainHero
@@ -142,9 +84,7 @@ export const HomePage = ({ featuredItems, description, buttons }: Props) => {
       <div id="gridContentHome" className="bg-gray-light py-10">
         <ContentWrapper className="flex flex-col gap-4">
           {featuredItems.map(({ gridClassname, features }, index) => (
-            <div key={index} className={featuredGridClass(gridClassname)}>
-              {features.map(renderFeatured)}
-            </div>
+            <GridCardsBlock features={features} gridClassname={gridClassname} key={index} />
           ))}
         </ContentWrapper>
       </div>
@@ -153,3 +93,4 @@ export const HomePage = ({ featuredItems, description, buttons }: Props) => {
     </div>
   );
 };
+

@@ -20,7 +20,7 @@ interface Props {
         singular_name: string;
         seed?: string | null
     }[];
-    contentHtml: string;
+    children: React.ReactNode;
 }
 
 export const ArticleDetail = (props: Props) => {
@@ -91,7 +91,9 @@ export const ArticleDetail = (props: Props) => {
                         <p className="text-gray-disabled">{formattedDate}</p>
                     </div>
                 </div>
-                <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }} />
+                <div className="article-html-content" >
+                    {props.children}
+                </div>
                 <GridComments
                     items={comments}
                     renderBox={(comment) => (
