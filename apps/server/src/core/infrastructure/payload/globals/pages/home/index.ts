@@ -1,4 +1,5 @@
 import { COLLECTION_SLUG_UI_GRID_CARDS } from "@/core/infrastructure/payload/collections/config";
+import { GridCardsBlock } from "@/ui/lexical/blocks/grid_cards";
 import { GlobalConfig } from "payload";
 
 export const HomePage: GlobalConfig = {
@@ -41,9 +42,10 @@ export const HomePage: GlobalConfig = {
       },
       {
         name: "cards",
-        type: 'relationship',
-        relationTo: COLLECTION_SLUG_UI_GRID_CARDS,
-        hasMany: true
+        type: 'blocks',
+        blocks: [
+          GridCardsBlock
+        ]
       }
     ]
   }

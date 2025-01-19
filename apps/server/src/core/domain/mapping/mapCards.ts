@@ -1,5 +1,5 @@
 import { Featured } from 'gaudi/server'
-import { Taxonomy, ArticlePdf, ArticleWeb, Media, Video, Book, UiGridCard } from 'payload-types'
+import { Taxonomy, ArticlePdf, ArticleWeb, Media, Video, Book, GridCardsBlock, UiGridCard } from 'payload-types'
 
 const getAuthorFromTaxonomies = (taxonomies: Taxonomy[]): string => {
   return taxonomies
@@ -63,24 +63,39 @@ const mapBookCard = (item: Book, classNames?: string | null): Featured => {
 }
 
 export const mapCards = (
-  gridCards: UiGridCard,
+  gridCardsBlock: GridCardsBlock,
 ): { gridClassname: string; features: Featured[] } => {
+  const { tailwindGridClassNames, cards } = gridCardsBlock.gridCards as UiGridCard
+  const gridClassname = tailwindGridClassNames || 'grid-cols-1 md:grid-cols-4'
+
+  const items = gridCardsBlock.value
+  const cardCount = (cards ?? []).length
+  for (let start = 0; start < items.length; start += cardCount) {
+    const chunk = items.slice(start, start + cardCount)
+  }
+  const features: Featured[] = []
+  for (let start = 0; start < items.length; start += cardCount) {
+    const chunk = items.slice(start, start + cardCount)
+
+    const newFeatures = chunk.map((item, idx) => {
+      const cardTailwind = cards?.[idx]?.tailwindClassNames ?? ''
+
+      switch (item.relationTo) {
+        case 'article_web':
+        case 'article_pdf':
+          return mapArticlePdfCard(item.value as ArticlePdf | ArticleWeb, cardTailwind)
+        case 'video':
+          return mapVideoCard(item.value as Video, cardTailwind)
+        case 'book':
+          return mapBookCard(item.value as Book, cardTailwind)
+      }
+    }).filter(Boolean) as Featured[]
+
+    features.push(...newFeatures)
+  }
   return {
-    gridClassname: gridCards.tailwindGridClassNames ?? 'grid-cols-1 md:grid-cols-4',
-    features: gridCards.cards?.map((card) => {
-        switch (card.value?.relationTo) {
-          case 'article_web':
-          case 'article_pdf':
-            return mapArticlePdfCard(
-              card.value?.value as ArticlePdf | ArticleWeb,
-              card.tailwindClassNames,
-            )
-          case 'video':
-            return mapVideoCard(card.value?.value as Video, card.tailwindClassNames)
-          case 'book':
-            return mapBookCard(card.value?.value as Book, card.tailwindClassNames)
-        }
-      }) ?? [],
+    gridClassname,
+    features,
   }
 }
 

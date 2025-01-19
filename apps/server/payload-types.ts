@@ -478,23 +478,6 @@ export interface UiGridCard {
   tailwindGridClassNames?: string | null;
   cards?:
     | {
-        value:
-          | {
-              relationTo: 'article_web';
-              value: string | ArticleWeb;
-            }
-          | {
-              relationTo: 'article_pdf';
-              value: string | ArticlePdf;
-            }
-          | {
-              relationTo: 'book';
-              value: string | Book;
-            }
-          | {
-              relationTo: 'video';
-              value: string | Video;
-            };
         tailwindClassNames: string;
         id?: string | null;
       }[]
@@ -903,7 +886,6 @@ export interface UiGridCardsSelect<T extends boolean = true> {
   cards?:
     | T
     | {
-        value?: T;
         tailwindClassNames?: T;
         id?: T;
       };
@@ -981,9 +963,37 @@ export interface HomePage {
         }[]
       | null;
   };
-  cards?: (string | UiGridCard)[] | null;
+  cards?: GridCardsBlock[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GridCardsBlock".
+ */
+export interface GridCardsBlock {
+  value: (
+    | {
+        relationTo: 'article_web';
+        value: string | ArticleWeb;
+      }
+    | {
+        relationTo: 'article_pdf';
+        value: string | ArticlePdf;
+      }
+    | {
+        relationTo: 'book';
+        value: string | Book;
+      }
+    | {
+        relationTo: 'video';
+        value: string | Video;
+      }
+  )[];
+  gridCards: string | UiGridCard;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'grid_cards';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1002,20 +1012,24 @@ export interface HomePageSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  cards?: T;
+  cards?:
+    | T
+    | {
+        grid_cards?: T | GridCardsBlockSelect<T>;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "GridCardsBlock".
+ * via the `definition` "GridCardsBlock_select".
  */
-export interface GridCardsBlock {
-  gridCards: string | UiGridCard;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'grid_cards';
+export interface GridCardsBlockSelect<T extends boolean = true> {
+  value?: T;
+  gridCards?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -39,7 +39,7 @@ const Page: NextPage<Props> = async (props) => {
       categories={article.categories as Taxonomy[]}
     >
       {article.content && 
-        <RichTextRenderer className="max-w-[48rem] mx-auto" data={article.content} enableGutter={false} />
+        <RichTextRenderer className="max-w-[48rem] mx-auto" data={article.content} enableGutter={false}  />
       }
     </ArticleDetail>
     </div>

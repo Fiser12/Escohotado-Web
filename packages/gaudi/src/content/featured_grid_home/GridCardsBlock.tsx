@@ -65,7 +65,7 @@ const renderFeatured = (item: Featured) => {
 
 export const GridCardsBlock: React.FC<Props> = (props) => {
   const featuredGridClass = (gridClassname: string) => classNames(
-    '@container w-full grid gap-4 gap-4 p-4',
+    '@container w-full grid gap-4 gap-4',
     gridClassname ?? 'grid-cols-1 md:grid-cols-4'
   );
 

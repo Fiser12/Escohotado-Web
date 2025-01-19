@@ -13,7 +13,8 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 import classNames from 'classnames'
-import { GridCardsBlock } from 'gaudi/server'
+import { ContentWrapper, GridCardsBlock as GridCardsBlockUI } from 'gaudi/server'
+import { GridCardsBlock } from 'payload-types'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -32,15 +33,11 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   ...LinkJSXConverter({ internalDocToHref }),
   blocks: {
     grid_cards: async ({ node }: any) => {
-      const id = node?.fields?.gridCards?.id
-      const gridCards = await (await getPayload()).findByID({
-        id,
-        collection: 'ui_grid_cards',
-        depth: 3,
-      })
-      return <GridCardsBlock
-        {...mapCards(gridCards)}
-      />
+      const gridCards = node?.fields as GridCardsBlock
+      const result = mapCards(gridCards)
+      return <GridCardsBlockUI features={result.features} gridClassname={result.gridClassname} />
+
+
     },
     two_columns_block: async ({ node }: any) => {
       const type = node?.fields?.type
@@ -74,11 +71,10 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
 type Props = {
   data: SerializedEditorState
   enableGutter?: boolean
-  enableProse?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
 export function RichTextRenderer(props: Props) {
-  const { className, enableProse = true, enableGutter = true, ...rest } = props
+  const { className, enableGutter = true, ...rest } = props
   return (
     <RichTextWithoutBlocks
       converters={jsxConverters}
@@ -86,7 +82,6 @@ export function RichTextRenderer(props: Props) {
         {
           'container ': enableGutter,
           'max-w-none': !enableGutter,
-          'mx-auto prose md:prose-md dark:prose-invert ': enableProse,
         },
         className,
       )}
