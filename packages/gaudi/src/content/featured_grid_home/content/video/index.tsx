@@ -2,8 +2,8 @@
 
 import classNames from "classnames";
 import { useRef, useState, useEffect } from "react";
-import { Tag } from "../../../common/tag/tag";
-import { H4 } from "../../../common/headers/H4";
+import { Tag } from "../../../../common/tag/tag";
+import { H4 } from "../../../../common/headers/H4";
 import Image from "next/image";
 
 interface Props {

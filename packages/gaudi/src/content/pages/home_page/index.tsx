@@ -3,10 +3,10 @@ import { MainHero } from "../../common/hero";
 import { MainButton } from "../../../common/main_button/main_button";
 import { NewsletterSubscription } from "../../common/newsletterSubscription";
 import { Footer } from "../../common/footer";
-import { FeaturedArticle } from "../../featured_grid_home/article";
-import { FeaturedQuote } from "../../featured_grid_home/quote";
-import { FeaturedBook } from "../../featured_grid_home/book";
-import { FeaturedVideo } from "../../featured_grid_home/video";
+import { FeaturedArticle } from "../../featured_grid_home/content/article";
+import { FeaturedQuote } from "../../featured_grid_home/content/quote";
+import { FeaturedBook } from "../../featured_grid_home/content/book";
+import { FeaturedVideo } from "../../featured_grid_home/content/video";
 import heroHome from "../../../assets/images/hero-home.png";
 import Image from "next/image";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
@@ -111,8 +111,8 @@ const renderFeatured = (item: Featured) => {
 
 
 export const HomePage = ({ featuredItems, description, buttons }: Props) => {
-  const featuredGridClass = (gridClassname: string) =>  classNames(
-    '@container w-full grid gap-4 gap-4 p-4',
+  const featuredGridClass = (gridClassname: string) => classNames(
+    'w-full grid gap-4 gap-4 p-4',
     gridClassname ?? 'grid-cols-1 md:grid-cols-4'
   );
   return (
@@ -121,29 +121,29 @@ export const HomePage = ({ featuredItems, description, buttons }: Props) => {
         description={description}
         title="Antonio Escohotado"
         image={
-            <Image
-              width={2610}
-              height={3036}
-              src={heroHome.src}
-              alt={"Antonio Escohotado"}
-            />
+          <Image
+            width={2610}
+            height={3036}
+            src={heroHome.src}
+            alt={"Antonio Escohotado"}
+          />
         }
         topHeader={true}
         changeDirection={false}
       >
-        { buttons.map((button, index) => (
+        {buttons.map((button, index) => (
           <a key={index} href={button.link}>
             <MainButton text={button.title} type="line" />
           </a>
-        )) }
+        ))}
       </MainHero>
       <div id="gridContentHome" className="bg-gray-light py-10">
         <ContentWrapper className="flex flex-col gap-4">
-          { featuredItems.map(({ gridClassname, features }, index) => (
-              <div key={index} className={featuredGridClass(gridClassname)}>
-                {features.map(renderFeatured)}
-              </div>
-          )) }
+          {featuredItems.map(({ gridClassname, features }, index) => (
+            <div key={index} className={featuredGridClass(gridClassname)}>
+              {features.map(renderFeatured)}
+            </div>
+          ))}
         </ContentWrapper>
       </div>
       <NewsletterSubscription />

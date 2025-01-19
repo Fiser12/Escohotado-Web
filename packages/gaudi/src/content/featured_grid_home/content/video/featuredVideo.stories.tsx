@@ -34,13 +34,6 @@ const meta: Meta = {
                   { id: "2", singular_name: "Filosofía" },
             ],
       },
-      decorators: [
-            (Story) => (
-                  <div style={{ maxWidth: '600px', margin: 'auto' }}>
-                        <Story />
-                  </div>
-            ),
-      ],
 };
 
 export default meta;
