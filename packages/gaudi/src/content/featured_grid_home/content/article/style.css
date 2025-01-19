@@ -1,0 +1,29 @@
+.base-container-axis-article {
+  container-type: inline-size;
+}
+.image-control-article {
+  display: block;
+  height: 100%;
+}
+.grid-axis-control-content-article {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+.text-content-position-article {
+  margin-top: 1rem;
+  justify-content: start;
+}
+@container (min-width: 350px) {
+  .grid-axis-control-content-article {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .text-content-position-article {
+    justify-content: center;
+  }
+}
+@container (max-width: 350px) {
+  .image-control-article {
+    display: none;
+  }
+}

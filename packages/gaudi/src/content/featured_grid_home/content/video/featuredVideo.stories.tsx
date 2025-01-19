@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { FeaturedVideo } from ".";
 
 const meta: Meta = {
-      title: "Molecules/Featured Home",
+      title: "Molecules/Featured Home/Video",
       component: FeaturedVideo,
       parameters: {
             layout: "padded",
@@ -25,6 +25,11 @@ const meta: Meta = {
                   description: "Image URL for the cover",
                   type: { name: "string", required: true },
             },
+            hasPermission: {
+                  control: "boolean",
+                  defaultValue: true,
+                  description: "If the user has permission to access",
+            },
       },
       args: {
             title: "Sample Article Title",
@@ -33,6 +38,7 @@ const meta: Meta = {
                   { id: "1", singular_name: "Tecnología" },
                   { id: "2", singular_name: "Filosofía" },
             ],
+            hasPermission: true,
       },
 };
 
@@ -40,5 +46,22 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Video: Story = {
+export const Horizontal: Story = {
+      decorators: [
+            (Story) => (
+                  <div style={{ height: '400px', overflow: 'auto' }}>
+                        <Story />
+                  </div>
+            ),
+      ],
+};
+
+export const Vertical: Story = {
+      decorators: [
+            (Story) => (
+                  <div style={{ width: '300px', overflow: 'auto' }}>
+                        <Story />
+                  </div>
+            ),
+      ],
 };

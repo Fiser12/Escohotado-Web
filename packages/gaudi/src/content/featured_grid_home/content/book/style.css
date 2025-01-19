@@ -1,0 +1,13 @@
+.base-container-axis-book {
+      container-type: inline-size;
+}
+.grid-axis-control-content-book {
+      display: flex;
+      flex-direction: row;
+}
+@container (max-width: 300px) {
+      .grid-axis-control-content-book {
+            flex-direction: column;
+            text-align: center;
+      }
+}
