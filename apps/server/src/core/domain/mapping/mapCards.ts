@@ -45,6 +45,7 @@ const mapVideoCard = (item: Video, classNames?: string | null): Featured => {
     id: item.id,
     title: item.title ?? 'No title',
     categories: [],
+    hasPermission: true, //TODO: check permissions
     coverHref: item.thumbnailUrl ?? imageError,
     href: '/video/' + item.id,
     className: classNames ?? 'col-span-1 md:col-span-2',
@@ -71,9 +72,6 @@ export const mapCards = (
 
   const items = gridCardsBlock.value
   const cardCount = (cards ?? []).length
-  for (let start = 0; start < items.length; start += cardCount) {
-    const chunk = items.slice(start, start + cardCount)
-  }
   const features: Featured[] = []
   for (let start = 0; start < items.length; start += cardCount) {
     const chunk = items.slice(start, start + cardCount)
