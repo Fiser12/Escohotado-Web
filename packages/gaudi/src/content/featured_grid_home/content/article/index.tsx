@@ -36,7 +36,7 @@ export const FeaturedArticle = (props: Props) => {
   const categoriesClass = classNames("flex flex-wrap gap-1");
   const authorClass = classNames("text-xs text-gray-dark");
   const titleClass = classNames(
-    "line-clamp-4 font-display",
+    "line-clamp-3 font-display",
     {
       'text-black': props.hasPermission,
       'text-gray-dark border-solid': !props.hasPermission,
