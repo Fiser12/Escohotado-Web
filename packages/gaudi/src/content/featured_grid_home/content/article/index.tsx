@@ -36,6 +36,7 @@ export const FeaturedArticle = (props: Props) => {
   const categoriesClass = classNames("flex flex-wrap gap-1");
   const authorClass = classNames("text-xs text-gray-dark");
   const titleClass = classNames(
+    "line-clamp-4 font-display",
     {
       'text-black': props.hasPermission,
       'text-gray-dark border-solid': !props.hasPermission,
@@ -60,7 +61,7 @@ export const FeaturedArticle = (props: Props) => {
                 <Tag key={index} text={category.singular_name} variant={props.hasPermission ? 'primary' : 'disabled'}></Tag>
               ))}
             </div>
-            <H3 label={props.title} className={`${titleClass} line-clamp-3`} />
+            <p className={`dynamic-text ${titleClass}`}>{props.title}</p>
             <p className={authorClass}>{props.author}</p>
           </div>
           <div className={`flex justify-end gap-1 text-primary-400 pt-4`}>
