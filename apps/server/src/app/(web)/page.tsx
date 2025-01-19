@@ -9,7 +9,7 @@ const Page = async () => {
     slug: 'home_page',
     depth: 3
   })
-  const gridItems = mapCards((homePageData.cards ?? []) as UiGridCard[])
+  const gridItems = ((homePageData.cards ?? []) as UiGridCard[]).map(mapCards)
 
   return (
     <HomePage

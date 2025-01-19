@@ -367,7 +367,6 @@ export interface ArticleWeb {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -409,7 +408,6 @@ export interface Book {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
   slug: string;
   Ediciones?:
     | {
@@ -842,7 +840,6 @@ export interface ArticleWebSelect<T extends boolean = true> {
   seeds?: T;
   slug?: T;
   content?: T;
-  content_html?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;
@@ -861,7 +858,6 @@ export interface BookSelect<T extends boolean = true> {
   categories?: T;
   seeds?: T;
   content?: T;
-  content_html?: T;
   slug?: T;
   Ediciones?:
     | T
@@ -1010,6 +1006,56 @@ export interface HomePageSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GridCardsBlock".
+ */
+export interface GridCardsBlock {
+  gridCards: string | UiGridCard;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'grid_cards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwoColumnsBlock".
+ */
+export interface TwoColumnsBlock {
+  type: '1x3' | '2x2' | '3x1';
+  left: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  right: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'two_columns_block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

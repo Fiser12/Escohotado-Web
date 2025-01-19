@@ -14,6 +14,7 @@ const getMediasFromTaxonomies = (
     .filter((taxonomy) => taxonomy.seed?.includes('medio'))
     .map((taxonomy) => ({ id: taxonomy.id, singular_name: taxonomy.singular_name }))
 }
+
 const getTopicsFromTaxonomies = (
   taxonomies: Taxonomy[],
 ): { id: string; singular_name: string }[] => {
@@ -62,27 +63,25 @@ const mapBookCard = (item: Book, classNames?: string | null): Featured => {
 }
 
 export const mapCards = (
-  gridCards: UiGridCard[],
-): { gridClassname: string; features: Featured[] }[] => {
-  return (
-    gridCards?.map((gridCard) => {
-      return {
-        gridClassname: gridCard.tailwindGridClassNames ?? 'grid-cols-1 md:grid-cols-4',
-        features: gridCard.cards?.map((card) => {
-            switch (card.value?.relationTo) {
-              case 'article_web':
-              case 'article_pdf':
-                return mapArticlePdfCard(
-                  card.value?.value as ArticlePdf | ArticleWeb,
-                  card.tailwindClassNames,
-                )
-              case 'video':
-                return mapVideoCard(card.value?.value as Video, card.tailwindClassNames)
-              case 'book':
-                return mapBookCard(card.value?.value as Book, card.tailwindClassNames)
-            }
-          }) ?? [],
-      }
-    }) ?? []
-  )
+  gridCards: UiGridCard,
+): { gridClassname: string; features: Featured[] } => {
+  return {
+    gridClassname: gridCards.tailwindGridClassNames ?? 'grid-cols-1 md:grid-cols-4',
+    features: gridCards.cards?.map((card) => {
+        switch (card.value?.relationTo) {
+          case 'article_web':
+          case 'article_pdf':
+            return mapArticlePdfCard(
+              card.value?.value as ArticlePdf | ArticleWeb,
+              card.tailwindClassNames,
+            )
+          case 'video':
+            return mapVideoCard(card.value?.value as Video, card.tailwindClassNames)
+          case 'book':
+            return mapBookCard(card.value?.value as Book, card.tailwindClassNames)
+        }
+      }) ?? [],
+  }
 }
+
+

@@ -1,4 +1,4 @@
-import { lexicalEditor, HTMLConverterFeature, lexicalHTML } from '@payloadcms/richtext-lexical'
+import { lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical'
 import { COLLECTION_SLUG_BOOK } from '../../config'
 import { contentCollectionBuilder } from '../content_collection_builder'
 
@@ -13,14 +13,8 @@ export const book = contentCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          ...defaultFeatures,
-          HTMLConverterFeature({}),
-        ],
-      }),
+      editor: lexicalEditor(),
     },
-    lexicalHTML('content', { name: 'content_html' }),
     {
       label: 'Slug',
       name: 'slug',

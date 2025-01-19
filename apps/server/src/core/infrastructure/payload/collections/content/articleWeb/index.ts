@@ -1,6 +1,6 @@
 import { COLLECTION_SLUG_ARTICLE_WEB } from '../../config'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
-import { HTMLConverterFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
@@ -20,13 +20,15 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          ...defaultFeatures,
-          HTMLConverterFeature({}),
-        ],
-      }),
+      editor: lexicalEditor(
+        {
+          features: ({rootFeatures}) => {
+            return [
+              ...rootFeatures,
+            ]
+          }
+        }
+      ),
     },
-    lexicalHTML('content', { name: 'content_html' }),
   ]
 })

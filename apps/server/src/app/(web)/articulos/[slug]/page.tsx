@@ -4,6 +4,7 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { ArticleDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { Media, Taxonomy } from "payload-types";
+import { RichTextRenderer } from "@/ui/lexical/RichTextRenderer";
 
 interface Props {
   params: {
@@ -26,8 +27,9 @@ const Page: NextPage<Props> = async (props) => {
   ]);
 
   const article = articles.docs[0];
-
+  article?.content
   return (
+    <div>
     <ArticleDetail
       title={article.title ?? "No title"}
       href={`/articulos/${article.slug}`}
@@ -35,8 +37,12 @@ const Page: NextPage<Props> = async (props) => {
       coverHref={(article.cover as Media | null)?.url ?? "#"}
       textLink={"Leer más"}
       categories={article.categories as Taxonomy[]}
-      contentHtml={article.content_html ?? "<p>Empty</p>"}
-    />
+    >
+      {article.content && 
+        <RichTextRenderer className="max-w-[48rem] mx-auto" data={article.content} enableGutter={false} />
+      }
+    </ArticleDetail>
+    </div>
   );
 };
 
