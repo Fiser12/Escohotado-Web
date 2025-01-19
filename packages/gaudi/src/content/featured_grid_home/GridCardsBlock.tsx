@@ -53,6 +53,7 @@ const renderFeatured = (item: Featured) => {
           key={item.id}
           className={item.className}
           title={item.title}
+          hasPermission={item.hasPermission}
           coverHref={item.coverHref}
           href={item.href}
           categories={item.categories}
