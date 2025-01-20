@@ -14,7 +14,8 @@ interface Props {
   title: string;
   coverHref: string;
   href: string;
-  categories: {
+  publishedAt?: string | null;
+  categories?: {
     id: string;
     singular_name: string;
     seed?: string | null;
@@ -25,7 +26,7 @@ interface Props {
 
 export const FeaturedVideo = (props: Props) => {
 
-  const containerClass = classNames("w-full h-full min-h-[300px]");
+  const containerClass = classNames("w-full h-full min-h-[300px] gap-1");
   const containerImageClass = classNames("w-full rounded overflow-hidden relative");
   const imageClass = classNames(
     "w-full h-full object-cover",
@@ -35,11 +36,7 @@ export const FeaturedVideo = (props: Props) => {
     }
   );
   const contentClass = classNames(
-    "flex flex-col justify-between p-2 gap-2",
-    {
-      'pb-2': props.hasPermission,
-      'pb-1': !props.hasPermission,
-    }
+    "flex flex-col justify-between px-2 py-4 gap-2"
   );
   const textareaClass = classNames("h-full flex flex-col justify-center gap-2.5");
   const titleClass = classNames(
@@ -50,6 +47,13 @@ export const FeaturedVideo = (props: Props) => {
     }
   );
   const categoriesClass = classNames("flex flex-wrap gap-1");
+
+  const date = props.publishedAt ? new Date(props.publishedAt) : null;
+  const formattedDate = date?.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   return (
     <BaseCardContainer className={`base-container-axis-video ${props.className}`}>
@@ -67,13 +71,20 @@ export const FeaturedVideo = (props: Props) => {
           </div>
         </div>
         <div className={contentClass}>
-          <div className={`text-content-position-article ${textareaClass}`}>
-            <div className={categoriesClass}>
-              {props.categories?.map((category, index) => (
-                <Tag key={index} text={category.singular_name} variant={props.hasPermission ? 'primary' : 'disabled'}></Tag>
-              ))}
-            </div>
+          <div className={`text-content-position-video ${textareaClass}`}>
+            {props.categories && props.categories.length > 0 && (
+              <div className={categoriesClass}>
+                {props.categories.map((category) => (
+                  <Tag
+                    key={category.id}
+                    text={category.singular_name}
+                    variant={props.hasPermission ? 'primary' : 'disabled'}
+                  />
+                ))}
+              </div>
+            )}
             <p className={`dynamic-text-video ${titleClass}`}>{props.title}</p>
+            <p className="font-body text-xs text-gray-dark mt-1">{formattedDate}</p>
           </div>
           {!props.hasPermission &&
             <div className="group flex justify-end items-center gap-1.5 text-primary-400 pt-4">

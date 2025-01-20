@@ -40,6 +40,7 @@ const featuredItem = {
       type: "video",
       className: "col-span-1 md:col-span-1",
       title: "250.000 agradecimientos escohotadianos a todos los emboscados",
+      publishedAt: "2024-11-18",
       coverHref: "https://placehold.co/300x200",
       href: "/",
       categories: [

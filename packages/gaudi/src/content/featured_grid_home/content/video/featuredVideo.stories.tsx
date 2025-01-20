@@ -20,6 +20,7 @@ const meta: Meta = {
                   description: "Title of the article",
                   type: { name: "string", required: true },
             },
+            publishedAt: { control: "text", description: "Publication date" },
             coverHref: {
                   control: "text",
                   description: "Image URL for the cover",
@@ -33,6 +34,7 @@ const meta: Meta = {
       },
       args: {
             title: "Sample Article Title",
+            publishedAt: "2024-11-18",
             coverHref: "https://placehold.co/300x200",
             categories: [
                   { id: "1", singular_name: "Tecnología" },
