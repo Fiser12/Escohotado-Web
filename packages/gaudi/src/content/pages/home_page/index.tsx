@@ -49,6 +49,7 @@ export interface FeaturedVideoProps extends FeaturedBase {
   hasPermission: boolean;
   href: string | null;
   detailHref: string;
+  publishedAt: string | null | undefined;
   categories: Array<{ id: string; singular_name: string }>;
 }
 

@@ -56,6 +56,7 @@ const renderFeatured = (item: Featured) => {
           hasPermission={item.hasPermission}
           coverHref={item.coverHref}
           href={item.detailHref}
+          publishedAt={item.publishedAt}
           categories={item.categories}
         />
       );
