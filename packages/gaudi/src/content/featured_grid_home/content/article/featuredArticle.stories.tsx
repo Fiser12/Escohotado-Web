@@ -35,6 +35,11 @@ const meta: Meta = {
                   defaultValue: true,
                   description: "If the user has permission to access",
             },
+            isPdf: {
+                  control: "boolean",
+                  defaultValue: true,
+                  description: "If the content is a PDF",
+            },
       },
       args: {
             title: "Sample Article Title",
@@ -45,6 +50,7 @@ const meta: Meta = {
                   { id: "2", singular_name: "Filosofía" },
             ],
             hasPermission: true,
+            isPdf: false,
       },
 };
 
@@ -65,7 +71,7 @@ export const Horizontal: Story = {
 export const Vertical: Story = {
       decorators: [
             (Story) => (
-                  <div style={{ width: '300px', height:'400px', overflow: 'auto' }}>
+                  <div style={{ width: '300px', height: '400px', overflow: 'auto' }}>
                         <Story />
                   </div>
             ),

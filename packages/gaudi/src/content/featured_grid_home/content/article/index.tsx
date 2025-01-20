@@ -18,6 +18,7 @@ interface Props {
   }[];
   hasPermission: boolean;
   className?: string;
+  isPdf: boolean;
 }
 
 export const FeaturedArticle = (props: Props) => {
@@ -44,15 +45,17 @@ export const FeaturedArticle = (props: Props) => {
 
   return (
     <BaseCardContainer className={`base-container-axis-article ${props.className}`}>
-      <div className={`grid-axis-control-content-article ${containerClass}`}>
-        <div className={`image-control-article ${containerImageClass}`}>
-          <Image
-            fill
-            src={props.coverHref}
-            alt={props.title}
-            className={imageClass}
-          />
-        </div>
+      <div className={`${!props.isPdf && 'grid-axis-control-content-article'} ${containerClass}`}>
+        {!props.isPdf &&
+          <div className={`image-control-article ${containerImageClass}`}>
+            <Image
+              fill
+              src={props.coverHref}
+              alt={props.title}
+              className={imageClass}
+            />
+          </div>
+        }
         <div className={contentClass}>
           <div className={`text-content-position-article ${textareaClass}`}>
             <div className={categoriesClass}>
