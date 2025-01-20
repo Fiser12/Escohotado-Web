@@ -58,7 +58,7 @@ export const FeaturedVideo = (props: Props) => {
   return (
     <BaseCardContainer className={`base-container-axis-video ${props.className}`}>
       <div className={`grid-axis-control-content-video ${containerClass}`}>
-        <div className={containerImageClass}>
+        <div className={`image-container-video ${containerImageClass}`}>
           <Image
             width={1280}
             height={720}

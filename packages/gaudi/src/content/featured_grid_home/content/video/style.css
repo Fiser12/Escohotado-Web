@@ -13,6 +13,7 @@
   line-height: clamp(1.2rem, 1.4rem, 2rem);
   overflow: hidden;
 }
+
 @container (min-width: 600px) {
   .grid-axis-control-content-video {
     grid-template-columns: repeat(2, 1fr);
@@ -20,6 +21,15 @@
   }
   .text-content-position-video {
     justify-content: center;
+  }
+}
+
+@container (max-width: 599px) {
+  .image-container-video {
+    aspect-ratio: 16 / 9;
+  }
+  .image-container-video img {
+    object-fit: cover;
   }
 }
 
