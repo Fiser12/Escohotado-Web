@@ -1,3 +1,4 @@
+import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery'
 import { mapCards } from '@/core/domain/mapping/mapCards'
 import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import {
@@ -33,8 +34,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   ...LinkJSXConverter({ internalDocToHref }),
   blocks: {
     grid_cards: async ({ node }: any) => {
+      const user = await getCurrentUserQuery();
       const gridCards = node?.fields as GridCardsBlock
-      const result = mapCards(gridCards)
+      const result = mapCards(user)(gridCards)
       return <GridCardsBlockUI features={result.features} gridClassname={result.gridClassname} />
 
 

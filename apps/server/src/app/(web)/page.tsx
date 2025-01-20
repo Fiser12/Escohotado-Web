@@ -1,7 +1,7 @@
 import { getPayload } from "@/core/infrastructure/payload/utils/getPayload";
 import { HomePage } from "gaudi/server";
-import { GridCardsBlock, UiGridCard } from "payload-types";
 import { mapCards } from "../../core/domain/mapping/mapCards";
+import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 
 const Page = async () => {
   const payload = await getPayload();
@@ -9,7 +9,9 @@ const Page = async () => {
     slug: 'home_page',
     depth: 3
   })
-  const gridItems = (homePageData.cards ?? []).map(mapCards)
+  const user = await getCurrentUserQuery(payload);
+  
+  const gridItems = (homePageData.cards ?? []).map(mapCards(user))
 
   return (
     <HomePage

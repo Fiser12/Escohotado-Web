@@ -23,7 +23,7 @@ const renderFeatured = (item: Featured) => {
           hasPermission={item.hasPermission}
           author={item.author}
           coverHref={item.coverHref}
-          href={item.href}
+          href={item.detailHref}
           categories={item.categories}
         />
       );
@@ -55,7 +55,7 @@ const renderFeatured = (item: Featured) => {
           title={item.title}
           hasPermission={item.hasPermission}
           coverHref={item.coverHref}
-          href={item.href}
+          href={item.detailHref}
           categories={item.categories}
         />
       );

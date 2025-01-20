@@ -35,7 +35,7 @@ export const getVideosQuery = async (
   const endIndex = startIndex + pageSize
 
   let videos = videosDocs.docs.map((video) => {
-    const content = fetchPermittedContentQuery(
+    const allowedHref = fetchPermittedContentQuery(
       user,
       video.permissions_seeds ?? '',
       video.url,
@@ -44,7 +44,7 @@ export const getVideosQuery = async (
 
     return {
       ...video,
-      allowedHref: content,
+      allowedHref,
     }
   })
 
