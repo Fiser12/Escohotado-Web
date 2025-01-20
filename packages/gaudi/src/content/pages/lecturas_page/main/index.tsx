@@ -1,26 +1,28 @@
 import { useState } from "react";
 import { H2 } from "../../../../common/headers/H2";
-import { ContentGridList } from "../../../common/content_grid_list";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { SelectDropdown } from "../../../common/selectors/select_dropdown";
 import { TagIcon } from "../../../../common/icons/tag_icon";
 import { PenIcon } from "../../../../common/icons/pen_icon";
 import { HeadlineCard } from "../../../article/cards/article_headline_card";
 import { HighlightSection } from "../../../article/highlight/section_highlight";
-import { ArticleCard } from "../../../article/cards/article_card";
 import { CarouselBook } from "../../../book/carousel";
 import handwrittenBackground from "../../../../assets/images/handwritting-bg.jpg";
 import smokeEscohotado from "../../../../assets/images/escohotado-articles-portada.png";
+import { GridCardsBlockContainer, renderFeatured } from "../../../featured_grid_home/GridCardsBlock";
+import { FeaturedArticleProps } from "../../home_page";
 
 export const ArticlePage = () => {
 
-  const articles = [
+  const articles: FeaturedArticleProps[] = [
     {
       title: "El impacto del prohibicionismo en la libertad individual",
-      publishedAt: "2024-10-15T12:00:00Z",
       author: "Ana Pérez",
-      textLink: "Leer artículo",
-      coverHref: "https://placehold.co/300x150?text=Prohibicionismo",
+      className: "col-span-2",
+      detailHref: "/article/prohibicionismo-libertad",
+      id: "1",
+      coverHref: "https://placehold.co/300x150?text=Prohibicionismo+Libertad",
+      type: "article",
       href: "/article/prohibicionismo-libertad",
       categories: [
         { id: "1", singular_name: "Filosofía política" },
@@ -30,11 +32,13 @@ export const ArticlePage = () => {
     },
     {
       title: "¿Es el uso de drogas una cuestión ética o política?",
-      publishedAt: "2024-09-20T10:30:00Z",
+      id: "2",
+      coverHref: "https://placehold.co/300x150?text=Prohibicionismo+Libertad",
+      type: "article",
       author: "Carlos Gómez",
-      textLink: "Explorar más",
-      coverHref: "https://placehold.co/300x150?text=Ética+y+drogas",
       href: "/article/etica-y-politica-drogas",
+      className: "col-span-2",
+      detailHref: "/article/etica-y-politica-drogas",
       categories: [
         { id: "1", singular_name: "Ética" },
         { id: "2", singular_name: "Filosofía" },
@@ -43,9 +47,11 @@ export const ArticlePage = () => {
     },
     {
       title: "Legalización y justicia social: un enfoque filosófico",
-      publishedAt: "2024-08-05T08:00:00Z",
       author: "María López",
-      textLink: "Ver detalles",
+      detailHref: "/article/legalizacion-justicia",
+      className: "col-span-2",
+      id: "3",
+      type: "article",
       coverHref: "https://placehold.co/300x150?text=Justicia+Social",
       href: "/article/legalizacion-justicia",
       categories: [
@@ -56,15 +62,17 @@ export const ArticlePage = () => {
     },
     {
       title: "Legalización y justicia social: un enfoque filosófico",
-      publishedAt: "2024-08-05T08:00:00Z",
+      detailHref: "/article/legalizacion-justicia",
+      className: "col-span-2",
       author: "María López",
-      textLink: "Ver detalles",
       coverHref: "https://placehold.co/300x150?text=Justicia+Social",
       href: "/article/legalizacion-justicia",
       categories: [
         { id: "1", singular_name: "Justicia social" },
         { id: "2", singular_name: "Política" },
       ],
+      id: "4",
+      type: "article",
       hasPermission: true,
     },
   ];
@@ -160,23 +168,15 @@ export const ArticlePage = () => {
               iconButton={<PenIcon />}
             />
           </div>
-          <ContentGridList
-            items={articles}
-            renderBox={(article) => (
-              <ArticleCard
-                title={article.title}
-                publishedAt={article.publishedAt}
-                author={article.author}
-                textLink={article.textLink}
-                coverHref={article.coverHref}
-                href={article.href}
-                categories={article.categories}
-                hasPermission={article.hasPermission}
-              />
-            )}
-            gridCols="md:grid-cols-2 lg:grid-cols-3"
-            gap="gap-6"
-          />
+          <GridCardsBlockContainer
+            gridClassname='grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10'
+        >
+            {Object
+                .values(articles)
+                .flat()
+                .map(renderFeatured)
+            }
+        </GridCardsBlockContainer>
         </ContentWrapper>
       </div>
     </div>

@@ -1,23 +1,25 @@
 "use client";
 
 import { CommonArticle, getArticlesQuery } from "@/core/content/getArticlesQuery";
-import { COLLECTION_SLUG_ARTICLE_PDF } from "@/core/infrastructure/payload/collections/config";
-import { ArticleCard, ContentGridList } from "gaudi/client";
-import { Media, Taxonomy } from "payload-types";
+import { mapArticleCard } from "@/core/domain/mapping/mapCards";
+import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
+import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 
 interface Props {
+    user: User | null;
     query: string;
     medioArray: string[];
     autor: string | null;
     maxPage: number;
 }
 
-export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArray, maxPage }) => {
+export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArray, maxPage, user }) => {
     const [articles, setArticles] = useState<Record<string, CommonArticle[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const observerRef = useRef<HTMLDivElement | null>(null);
+    const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article, "col-span-2");
 
     useEffect(() => {
         const loadArticles = async () => {
@@ -63,19 +65,16 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
     }, [loading, page, maxPage]);
 
     return <div>
-        <ContentGridList
-            items={Object.values(articles).flat()}
-            renderBox={(article) => <ArticleCard
-                key={article.id}
-                title={article.title ?? "No title"}
-                href={article.url ?? "#"}
-                publishedAt={article.publishedAt ?? ""}
-                coverHref={(article.cover as Media | null)?.url ?? "#"}
-                textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
-                categories={(article.categories ?? []) as Taxonomy[]}
-                hasPermission={article.hasPermission}
-            />}
-        />
+        <GridCardsBlockContainer
+            gridClassname='grid-cols-2 md:grid-cols-6 lg:grid-cols-8'
+        >
+            {Object
+                .values(articles)
+                .flat()
+                .map(articleCardMapper)
+                .map(renderFeatured)
+            }
+        </GridCardsBlockContainer>
         <div ref={observerRef} style={{ height: "20px", background: "transparent" }}></div>
         {loading && <p>Loading more articles...</p>}
     </div>

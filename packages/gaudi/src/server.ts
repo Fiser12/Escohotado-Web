@@ -8,7 +8,6 @@ export { SubscriptionCard } from "./subscription/subscription_card";
 export { default as storybookHelpers } from "./storybook-helpers";
 export { ToggleButtonGroup } from "./common/toggle_button_group/toggle_button_group";
 export { SubscriptionsGroupCard } from "./subscription/subscriptions_card_group";
-export { ArticleCard } from "./content/article/cards/article_card";
 export { BookCard } from "./content/book/cards";
 export { ArticleDetail } from "./content/pages/article_page/detalle_web";
 export { ContentGridList } from "./content/common/content_grid_list";

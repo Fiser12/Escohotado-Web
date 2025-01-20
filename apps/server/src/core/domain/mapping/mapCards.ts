@@ -37,7 +37,7 @@ const getTopicsFromTaxonomies = (
 
 const imageError = 'https://placehold.co/600x300?text=Error+cargando+imagen'
 
-const mapArticleCard =
+export const mapArticleCard =
   (user: User | null) =>
   (item: ArticlePdf | ArticleWeb, classNames?: string | null): Featured => {
     const taxonomies = (item.categories ?? []) as Taxonomy[]
@@ -54,7 +54,7 @@ const mapArticleCard =
       className: classNames ?? 'col-span-1 md:col-span-2 lg:col-span-3',
     }
   }
-const mapVideoCard =
+export const mapVideoCard =
   (user: User | null) =>
   (video: Video, classNames?: string | null): Featured => {
     const href = fetchPermittedContentQuery(
@@ -67,6 +67,7 @@ const mapVideoCard =
     return {
       type: 'video',
       id: video.id,
+      publishedAt: video.publishedAt,
       title: video.title ?? 'No title',
       categories: [],
       hasPermission: href != null && href != '',

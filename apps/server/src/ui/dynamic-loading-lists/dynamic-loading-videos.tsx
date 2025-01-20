@@ -1,39 +1,41 @@
 "use client";
 
 import { getVideosQuery, ResultVideo } from "@/core/content/getVideosQuery";
-import { ArticleCard, ContentGridList } from "gaudi/client";
+import { mapVideoCard } from "@/core/domain/mapping/mapCards";
+import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
+import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 
 interface Props {
+    user: User | null;
     query: string;
     maxPage: number;
 }
 
-export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage }) => {
+export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user }) => {
     const [videos, setVideos] = useState<Record<string, ResultVideo[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const observerRef = useRef<HTMLDivElement | null>(null);
+    const videoCardMapper = (video: ResultVideo) => mapVideoCard(user)(video, "col-span-2");
 
     useEffect(() => {
-        const loadArticles = async () => {
+        const load = async () => {
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
                 const newVideos = await getVideosQuery(query, page);
-                setVideos((prev) => {
-                    return {
-                        ...prev,
-                        [page]: newVideos.results
-                    }
-                });
+                setVideos((prev) => ({
+                    ...prev,
+                    [page]: newVideos.results
+                }));
             } catch (error) {
                 console.error("Error loading articles:", error);
             } finally {
                 setLoading(false);
             }
         };
-        loadArticles();
+        load();
     }, [page, maxPage, query]);
 
     useEffect(() => {
@@ -51,7 +53,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage }) => {
         );
 
         observer.observe(currentObserverRef);
-        
+
         return () => {
             observer.unobserve(currentObserverRef);
             observer.disconnect();
@@ -59,20 +61,19 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage }) => {
     }, [loading, page, maxPage]);
 
     return <div>
-        <ContentGridList
-            items={Object.values(videos).flat()}
-            renderBox={(video) => <ArticleCard
-                key={video.id}
-                title={video.title ?? "No title"}
-                href={video.allowedHref ?? "#"}
-                publishedAt={video.publishedAt ?? ""}
-                coverHref={video.thumbnailUrl ?? "#"}
-                textLink={"Ver vídeo"}
-                categories={[]}
-                hasPermission={video.allowedHref != null && video.allowedHref != ""}
-            />}
-        />
+        <GridCardsBlockContainer
+            gridClassname='grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10'
+        >
+            {Object
+                .values(videos)
+                .flat()
+                .map(videoCardMapper)
+                .map(renderFeatured)
+            }
+        </GridCardsBlockContainer>
         <div ref={observerRef} style={{ height: "20px", background: "transparent" }}></div>
-        {loading && <p>Loading more articles...</p>}
+        <div>
+            {loading && <p>Loading more videos...</p>}
+        </div>
     </div>
 }

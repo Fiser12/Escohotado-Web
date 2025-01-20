@@ -9,7 +9,7 @@ import { searchElementsQuery } from './searchElementsQuery'
 import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery';
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery';
 
-const pageSize = 20
+const pageSize = 40
 export type CommonArticle = (ArticlePdf | ArticleWeb) & {
   type: string
   url?: string | null

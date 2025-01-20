@@ -1,17 +1,19 @@
 import { COLLECTION_SLUG_ARTICLE_PDF } from "@/core/infrastructure/payload/collections/config";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2, ArticleCard, ContentGridList, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
+import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
 import { Media, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/ui/autor_bar_ssr";
 import { MedioBarSSR } from "@/ui/medio_bar_ssr";
 import { SearchBarNuqs } from "@/ui/search_bar_nuqs";
 import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
-import { getArticlesQuery } from "@/core/content/getArticlesQuery";
+import { CommonArticle, getArticlesQuery } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
 import { getLastArticlesQuery } from "@/core/content/getLastArticlesQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
+import { mapArticleCard } from "@/core/domain/mapping/mapCards";
+import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 
 export const pageSize = 10;
 
@@ -33,6 +35,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
   const articles = await getArticlesQuery(query, autor, medioArray, 0)
   const lastArticles = await getLastArticlesQuery();
   const books = await getBooksQuery(query, 0)
+  const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article, "col-span-2");
 
   return (
     <div className="w-full bg-gray-light">
@@ -75,24 +78,15 @@ export const ArticlePage = async ({ searchParams }: Props) => {
               <MedioBarSSR />
               <SearchBarNuqs />
             </div>
-          <ContentGridList
-            items={articles.results}
-            renderBox={(article) => (
-              <ArticleCard
-                key={article.id}
-                title={article.title ?? "No title"}
-                href={article.url ?? "#"}
-                publishedAt={article.publishedAt ?? ""}
-                coverHref={(article.cover as Media | null)?.url ?? "#"}
-                textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
-                categories={(article.categories ?? []) as Taxonomy[]}
-                hasPermission={evalPermissionQuery(user, article.permissions_seeds?.trim() ?? "")}
-              />
-            )}
-            gridCols="md:grid-cols-2 lg:grid-cols-3"
-            gap="gap-6"
-          />
+      <GridCardsBlockContainer
+        gridClassname='grid-cols-2 md:grid-cols-4 lg:grid-cols-8'
+      >
+        {articles.results
+          .map(articleCardMapper)
+          .map(renderFeatured)}
+      </GridCardsBlockContainer>
           <DynamicLoadingArticles 
+            user={user}
             autor={autor}
             medioArray={medioArray}
             query={query}

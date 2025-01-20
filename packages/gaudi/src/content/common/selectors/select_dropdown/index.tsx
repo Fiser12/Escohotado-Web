@@ -114,7 +114,7 @@ export const SelectDropdown = (props: Props): JSX.Element => {
       </button>
       <div className={menuContainerClass}>
         <ul
-          className="max-h-[150px] overflow-scroll space-y-0.5 text-sm font-body w-full"
+          className="max-h-[450px] overflow-scroll space-y-0.5 text-sm font-body w-full"
           aria-labelledby="dropdownBgHoverButton"
         >
           {Object.entries(props.tags).map(([key, { label, icon }]) => (

@@ -1,5 +1,3 @@
-"use client";
-
 import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
 import Image from "next/image";

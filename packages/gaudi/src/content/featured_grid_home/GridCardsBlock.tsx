@@ -7,12 +7,8 @@ import { FeaturedQuote } from './content/quote'
 import { FeaturedBook } from './content/book'
 import { FeaturedVideo } from './content/video'
 
-interface Props { 
-  features: Featured[]
-  gridClassname: string 
-}
 
-const renderFeatured = (item: Featured) => {
+export const renderFeatured = (item: Featured) => {
   switch (item.type) {
     case "article":
       return (
@@ -65,15 +61,30 @@ const renderFeatured = (item: Featured) => {
   }
 };
 
+interface Props {
+  features: Featured[]
+  gridClassname: string
+}
 
 export const GridCardsBlock: React.FC<Props> = (props) => {
+  return <GridCardsBlockContainer gridClassname={props.gridClassname}>
+    {props.features.map(renderFeatured)}
+  </GridCardsBlockContainer>
+}
+
+interface Props2 {
+  gridClassname: string
+  children: React.ReactNode
+}
+
+export const GridCardsBlockContainer: React.FC<Props2> = (props) => {
   const featuredGridClass = (gridClassname: string) => classNames(
     '@container w-full grid gap-4 gap-4',
     gridClassname ?? 'grid-cols-1 md:grid-cols-4'
   );
 
   return <div className={featuredGridClass(props.gridClassname)}>
-    {props.features.map(renderFeatured)}
+    {props.children}
   </div>
 }
 
