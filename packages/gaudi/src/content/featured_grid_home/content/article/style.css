@@ -16,8 +16,7 @@
 }
 .dynamic-text-article {
   font-size: clamp(1.5rem, 1.8rem, 2.5rem);
-    line-height: clamp(1.8rem, 2.2rem, 3rem);
-  
+  line-height: clamp(1.8rem, 2.2rem, 3rem);
   overflow: hidden;
 }
 @container (min-width: 350px) {

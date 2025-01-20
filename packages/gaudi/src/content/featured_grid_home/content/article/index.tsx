@@ -3,8 +3,8 @@ import { Tag } from "../../../../common/tag/tag";
 import { Link } from "../../../../common/links/link";
 import Image from "next/image";
 import { BaseCardContainer } from "../../container_base";
-import "./style.css";
 import { UnlockIcon } from "../../../../common/icons/unlock_icon";
+import "./style.css";
 
 interface Props {
   title: string;
