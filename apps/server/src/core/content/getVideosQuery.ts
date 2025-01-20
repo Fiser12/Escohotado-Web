@@ -1,19 +1,28 @@
+'use server'
 import { COLLECTION_SLUG_VIDEO } from '@/core/infrastructure/payload/collections/config'
 import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import { Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
+import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
+import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 
 const pageSize = 20
+
+export type ResultVideo = Video & {
+  allowedHref: string | null
+}
 
 export const getVideosQuery = async (
   query: string,
   page: number,
 ): Promise<{
-  results: Video[]
+  results: ResultVideo[]
   maxPage: number
 }> => {
   const results = (await searchElementsQuery(query, [COLLECTION_SLUG_VIDEO])).map((item) => item.id)
   const payload = await getPayload()
+  const user = await getCurrentUserQuery(payload)
+
   const videosDocs = await payload.find({
     collection: COLLECTION_SLUG_VIDEO,
     sort: '-publishedAt',
@@ -25,7 +34,19 @@ export const getVideosQuery = async (
   const startIndex = page * pageSize
   const endIndex = startIndex + pageSize
 
-  let videos = videosDocs.docs
+  let videos = videosDocs.docs.map((video) => {
+    const allowedHref = fetchPermittedContentQuery(
+      user,
+      video.permissions_seeds ?? '',
+      video.url,
+      video.url_free,
+    )
+
+    return {
+      ...video,
+      allowedHref,
+    }
+  })
 
   return {
     results: videos.slice(startIndex, endIndex),

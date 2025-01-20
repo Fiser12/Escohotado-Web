@@ -1,13 +1,22 @@
 .base-container-axis-book {
-      container-type: inline-size;
+  container-type: inline-size;
 }
 .grid-axis-control-content-book {
-      display: flex;
-      flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
-@container (max-width: 300px) {
-      .grid-axis-control-content-book {
-            flex-direction: column;
-            text-align: center;
-      }
+.dynamic-text-book {
+  font-size: clamp(1.5rem, 1.8rem, 2.5rem);
+  line-height: clamp(1.8rem, 2.2rem, 3rem);
+  overflow: hidden;
+}
+@container (max-width: 350px) {
+  .grid-axis-control-content-book {
+    flex-direction: column;
+    text-align: center;
+  }
+  .dynamic-text-book {
+    font-size: clamp(1.2rem, 1.4rem, 1.8rem);
+    line-height: clamp(1.5rem, 1.8rem, 2.3rem);
+  }
 }

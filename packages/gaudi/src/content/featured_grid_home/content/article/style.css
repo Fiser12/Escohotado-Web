@@ -12,6 +12,13 @@
 .text-content-position-article {
   margin-top: 1rem;
   justify-content: start;
+  container-type: inline-size;
+}
+.dynamic-text-article {
+  font-size: clamp(1.5rem, 1.8rem, 2.5rem);
+    line-height: clamp(1.8rem, 2.2rem, 3rem);
+  
+  overflow: hidden;
 }
 @container (min-width: 350px) {
   .grid-axis-control-content-article {
@@ -25,5 +32,9 @@
 @container (max-width: 350px) {
   .image-control-article {
     display: none;
+  }
+  .dynamic-text-article {
+    font-size: clamp(1.2rem, 1.4rem, 1.8rem);
+  line-height: clamp(1.5rem, 1.8rem, 2.3rem);
   }
 }

@@ -1,11 +1,10 @@
 import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
-import { H3 } from "../../../../common/headers/H3";
 import { Link } from "../../../../common/links/link";
 import Image from "next/image";
 import { BaseCardContainer } from "../../container_base";
-import { LockIcon } from "../../../../common/icons/lock_icon";
 import "./style.css";
+import { UnlockIcon } from "../../../../common/icons/unlock_icon";
 
 interface Props {
   title: string;
@@ -36,9 +35,10 @@ export const FeaturedArticle = (props: Props) => {
   const categoriesClass = classNames("flex flex-wrap gap-1");
   const authorClass = classNames("text-xs text-gray-dark");
   const titleClass = classNames(
+    "line-clamp-3 font-display",
     {
       'text-black': props.hasPermission,
-      'text-gray-dark border-solid': !props.hasPermission,
+      'text-gray-dark': !props.hasPermission,
     }
   );
 
@@ -60,13 +60,15 @@ export const FeaturedArticle = (props: Props) => {
                 <Tag key={index} text={category.singular_name} variant={props.hasPermission ? 'primary' : 'disabled'}></Tag>
               ))}
             </div>
-            <H3 label={props.title} className={`${titleClass} line-clamp-3`} />
+            <p className={`dynamic-text-article ${titleClass}`}>{props.title}</p>
             <p className={authorClass}>{props.author}</p>
           </div>
-          <div className={`flex justify-end gap-1 text-primary-400 pt-4`}>
-            {!props.hasPermission && <LockIcon className="w-4 mb-0.5" />}
-            <Link text={props.hasPermission ? 'Leer más' : 'Desbloquear'} href={props.href} />
-          </div>
+          {!props.hasPermission &&
+            <div className="group flex justify-end items-center gap-1.5 text-primary-400 pt-4">
+              <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
+              <Link text="Desbloquear" href={props.href} />
+            </div>
+          }
         </div>
       </div>
     </BaseCardContainer>

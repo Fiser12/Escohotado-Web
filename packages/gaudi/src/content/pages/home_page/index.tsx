@@ -22,7 +22,8 @@ export interface FeaturedArticleProps extends FeaturedBase {
   author: string;
   coverHref: string;
   hasPermission: boolean;
-  href: string;
+  href: string | null;
+  detailHref: string;
   categories: Array<{ id: string; singular_name: string }>;
 }
 
@@ -45,7 +46,9 @@ export interface FeaturedVideoProps extends FeaturedBase {
   type: "video";
   title: string;
   coverHref: string;
-  href: string;
+  hasPermission: boolean;
+  href: string | null;
+  detailHref: string;
   categories: Array<{ id: string; singular_name: string }>;
 }
 

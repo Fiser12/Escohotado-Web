@@ -49,7 +49,7 @@ type Story = StoryObj<typeof meta>;
 export const Horizontal: Story = {
       decorators: [
             (Story) => (
-                  <div style={{ height: '400px', overflow: 'auto' }}>
+                  <div style={{ overflow: 'auto' }}>
                         <Story />
                   </div>
             ),

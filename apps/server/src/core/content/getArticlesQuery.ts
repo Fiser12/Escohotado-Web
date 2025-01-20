@@ -1,3 +1,4 @@
+"use server";
 import {
   COLLECTION_SLUG_ARTICLE_PDF,
   COLLECTION_SLUG_ARTICLE_WEB,
@@ -5,11 +6,14 @@ import {
 import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import { ArticlePdf, ArticleWeb, Book } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
+import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery';
+import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery';
 
 const pageSize = 20
-type CommonArticle = (ArticlePdf | ArticleWeb) & {
+export type CommonArticle = (ArticlePdf | ArticleWeb) & {
   type: string
   url?: string | null
+  hasPermission: boolean
 }
 
 export const getArticlesQuery = async (
@@ -25,8 +29,8 @@ export const getArticlesQuery = async (
     COLLECTION_SLUG_ARTICLE_PDF,
     COLLECTION_SLUG_ARTICLE_WEB,
   ])
-
   const payload = await getPayload()
+  const user = await getCurrentUserQuery(payload);
   const [articlesPDF, articlesWeb] = await Promise.all([
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_PDF,
@@ -57,12 +61,14 @@ export const getArticlesQuery = async (
   const articlesPDFWithType = articlesPDF.docs.map((article) => ({
     ...article,
     type: COLLECTION_SLUG_ARTICLE_PDF,
+    hasPermission: evalPermissionQuery(user, article.permissions_seeds?.trim() ?? ""),
   }))
 
   const articlesWebWithType = articlesWeb.docs.map((article) => ({
     ...article,
     type: COLLECTION_SLUG_ARTICLE_WEB,
     url: `/articulos/${article.slug}`,
+    hasPermission: evalPermissionQuery(user, article.permissions_seeds?.trim() ?? ""),
   }))
   const startIndex = page * pageSize
   const endIndex = startIndex + pageSize
@@ -81,12 +87,6 @@ export const getArticlesQuery = async (
         article.title?.toLowerCase().includes(query.toLowerCase())
       return evalAutorFilter && evalMedioFilter && evalQueryFilter
     })
-    .map((article) => (
-      {
-        ...article,
-        title: article.title?.replace('.pdf', '')
-      }
-    ))
 
   return {
     results: articles.slice(startIndex, endIndex),

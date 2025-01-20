@@ -7,8 +7,8 @@ type Args = {
 
 export const H3 = (args: Args) => {
     const headerClass = classNames(
-        args.className, 
-        'text-black text-[clamp(1rem,2.5vw,2.5rem)] font-regular font-display',
+        args.className,
+        'text-black text-2xl font-regular font-display',
     );
 
     return (
