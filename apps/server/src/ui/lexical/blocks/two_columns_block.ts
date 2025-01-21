@@ -1,25 +1,13 @@
 import {
-  BlocksFeature,
-  BoldFeature,
-  HeadingFeature,
-  ItalicFeature,
-  lexicalEditor,
-  ParagraphFeature,
-  UnderlineFeature,
+  lexicalEditor
 } from '@payloadcms/richtext-lexical'
 import { Block } from 'payload'
-import { GridCardsBlock } from './grid_cards'
+import { GridCardsBlock } from './grid_cards_block'
+import { getLexicalFeaturesExcluding } from '@/core/infrastructure/payload/fields/defaultLexical'
 
 const lexicalEditorTwoColumnsBlock = lexicalEditor({
   features: () => {
-    return [
-      HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
-      ParagraphFeature(),
-      UnderlineFeature(),
-      BoldFeature(),
-      ItalicFeature(),
-      BlocksFeature({ blocks: [GridCardsBlock] }),
-    ]
+    return getLexicalFeaturesExcluding(['two_columns_block'])
   },
 })
 

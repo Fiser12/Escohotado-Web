@@ -953,19 +953,33 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: string;
-  hero?: {
-    description?: string | null;
-    buttons?:
-      | {
-          title: string;
-          link: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  cards?: GridCardsBlock[] | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -997,39 +1011,20 @@ export interface GridCardsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home_page_select".
+ * via the `definition` "HeroBlock".
  */
-export interface HomePageSelect<T extends boolean = true> {
-  hero?:
-    | T
+export interface HeroBlock {
+  description?: string | null;
+  buttons?:
     | {
-        description?: T;
-        buttons?:
-          | T
-          | {
-              title?: T;
-              link?: T;
-              id?: T;
-            };
-      };
-  cards?:
-    | T
-    | {
-        grid_cards?: T | GridCardsBlockSelect<T>;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "GridCardsBlock_select".
- */
-export interface GridCardsBlockSelect<T extends boolean = true> {
-  value?: T;
-  gridCards?: T;
-  id?: T;
-  blockName?: T;
+        title: string;
+        link: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero_block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

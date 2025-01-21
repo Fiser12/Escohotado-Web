@@ -1,6 +1,7 @@
-import { lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { COLLECTION_SLUG_BOOK } from '../../config'
 import { contentCollectionBuilder } from '../content_collection_builder'
+import { defaultLexical } from '../../../fields/defaultLexical'
 
 export const book = contentCollectionBuilder({
   slug: COLLECTION_SLUG_BOOK,
@@ -13,7 +14,7 @@ export const book = contentCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
-      editor: lexicalEditor(),
+      editor: defaultLexical,
     },
     {
       label: 'Slug',
