@@ -973,7 +973,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface ArticulosPage {
   id: string;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -987,7 +987,7 @@ export interface ArticulosPage {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -997,7 +997,7 @@ export interface ArticulosPage {
  */
 export interface HomePage {
   id: string;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -1011,7 +1011,7 @@ export interface HomePage {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1021,7 +1021,7 @@ export interface HomePage {
  */
 export interface VideosPage {
   id: string;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -1035,7 +1035,7 @@ export interface VideosPage {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }

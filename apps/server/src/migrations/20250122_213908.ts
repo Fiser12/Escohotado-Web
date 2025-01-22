@@ -4,14 +4,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TABLE IF NOT EXISTS "articulos_page" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-  	"content" jsonb NOT NULL,
+  	"content" jsonb,
   	"updated_at" timestamp(3) with time zone,
   	"created_at" timestamp(3) with time zone
   );
   
   CREATE TABLE IF NOT EXISTS "videos_page" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-  	"content" jsonb NOT NULL,
+  	"content" jsonb,
   	"updated_at" timestamp(3) with time zone,
   	"created_at" timestamp(3) with time zone
   );
@@ -20,7 +20,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   DROP TABLE "home_page_blocks_grid_cards" CASCADE;
   DROP TABLE "home_page_rels" CASCADE;
   ALTER TABLE "video" ADD COLUMN "content" jsonb;
-  ALTER TABLE "home_page" ADD COLUMN "content" jsonb NOT NULL;
+  ALTER TABLE "home_page" ADD COLUMN "content" jsonb;
   ALTER TABLE "home_page" DROP COLUMN IF EXISTS "hero_description";`)
 }
 

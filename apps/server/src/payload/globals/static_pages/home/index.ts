@@ -8,7 +8,6 @@ export const HomePage: GlobalConfig = {
       {
         name: 'content',
         type: 'richText',
-        required: true
       }
     ]
   }

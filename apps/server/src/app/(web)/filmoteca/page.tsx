@@ -34,7 +34,9 @@ const Page = async ({ searchParams }: Props) => {
 
   return (
     <div className='flex flex-col'>
-      <RichTextRenderer data={videosDataPage.content} />
+      { videosDataPage.content &&
+        <RichTextRenderer data={videosDataPage.content} />
+      }
       <ContentWrapper
         className="flex flex-col gap-y-5 relative"
         backgroundClassname="bg-white"

@@ -8,7 +8,6 @@ export const ArticulosPage: GlobalConfig = {
       {
         name: 'content',
         type: 'richText',
-        required: true
       }
     ]
   }

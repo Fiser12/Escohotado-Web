@@ -8,7 +8,6 @@ export const VideosPage: GlobalConfig = {
       {
         name: 'content',
         type: 'richText',
-        required: true
       }
     ]
   }

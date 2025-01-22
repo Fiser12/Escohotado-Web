@@ -8,10 +8,14 @@ const Page = async () => {
   })
 
   return (
-    <RichTextRenderer
-      data={homeData.content}
-      className="h-full"
-    />
+    <>
+      {homeData.content &&
+        <RichTextRenderer
+          data={homeData.content}
+          className="h-full"
+        />
+      }
+    </>
   );
 };
 
