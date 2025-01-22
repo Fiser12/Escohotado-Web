@@ -1093,6 +1093,15 @@ export interface HeroBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsletterSubscriptionBlock".
+ */
+export interface NewsletterSubscriptionBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsletter_subscription_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {

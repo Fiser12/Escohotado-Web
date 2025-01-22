@@ -3,7 +3,7 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { ArticleDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { Media, Taxonomy } from "payload-types";
-import { RichTextRenderer } from "@/ui/lexical/RichTextRenderer";
+import { RichTextRenderer } from "@/lexical/RichTextRenderer";
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/payload/collections/config';
 
 interface Props {

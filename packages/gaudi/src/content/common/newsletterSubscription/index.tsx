@@ -16,7 +16,7 @@ export const NewsletterSubscription = (props: Props) => {
                               buttonText="Suscribirse"
                               placeholder="Introduce tu correo"
                               href="https://example.com/subscribe"
-                              icon={<EmailIcon />} // Opcional, ícono al lado del botón
+                              icon={<EmailIcon />}
                               state="enabled"
                         />
                   </div>

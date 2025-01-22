@@ -21,6 +21,7 @@ export { CarouselBook } from "./content/book/carousel";
 export { MainButton } from "./common/main_button/main_button";
 export { BookDetail } from "./content/pages/book_page/detail";
 export { HomePage, type Featured } from "./content/pages/home_page"
+export { NewsletterSubscription } from "./content/common/newsletterSubscription";
 export { GridCardsBlock } from "./content/featured_grid_home/GridCardsBlock";
 import HomeHero from "./common/home_hero";
 import handwrittenBackground from "./assets/images/handwritting-bg.jpg";
