@@ -70,7 +70,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
       </div>
       <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="/subscriptions" coverHref={handwrittenBackground.src}></HighlightSection>
       <div className="@container w-full pt-12.5">
-        <CarouselBook books={books} />
+        <CarouselBook books={books} title="Obras de Antonio Escohotado" />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
           <H2 label="Artículos" id="h2-articles" />
           <div className="flex flex-col sm:flex-row gap-3">

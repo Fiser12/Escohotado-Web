@@ -1190,6 +1190,17 @@ export interface NewsletterSubscriptionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BookCarouselBlock".
+ */
+export interface BookCarouselBlock {
+  title: string;
+  books: (string | Book)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'books_carousel_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {

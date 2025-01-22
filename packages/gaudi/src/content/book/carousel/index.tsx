@@ -9,6 +9,7 @@ import { ContentWrapper } from '../../../common/content_wrapper/content_wrapper'
 import { NextButton, PrevButton, usePrevNextButtons } from './carousel-arrow';
 
 interface Props {
+  title: string;
   books: Array<{
     title: string;
     coverHref: string;
@@ -41,10 +42,10 @@ export const CarouselBook = (props: Props) => {
   );
 
   return (
-    <div className='w-full flex flex-col pb-5'>
+    <div className='w-full flex flex-col pb-10 pt-10'>
       <ContentWrapper>
         <div className="flex justify-between items-center">
-        <H2 label='Obras de Antonio Escohotado'/>
+        <H2 label={props.title}/>
         <div className="grid grid-cols-2 gap-[0.6rem] items-center">
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
