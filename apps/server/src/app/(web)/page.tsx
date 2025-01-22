@@ -1,5 +1,5 @@
 import { getPayload } from "@/payload/utils/getPayload";
-import { RichTextRenderer } from "@/lexical/RichTextRenderer";
+import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 
 const Page = async () => {
   const payload = await getPayload();
@@ -10,7 +10,7 @@ const Page = async () => {
   return (
     <>
       {homeData.content &&
-        <RichTextRenderer
+        <LexicalRenderer
           data={homeData.content}
           className="h-full"
         />

@@ -6,7 +6,7 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { BookDetail } from "gaudi/server";
 import { Media } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/ui/book_variants_selector_nuqs";
-import { RichTextRenderer } from "@/lexical/RichTextRenderer";
+import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 
 interface Props {
     params: {
@@ -48,7 +48,7 @@ const Page = async (props: Props) => {
             bookButtons={<BookVariantsSelectorNuqs options={options} />}
             link={book.Ediciones?.[0].link ?? "#"}
         >
-            { book.content && <RichTextRenderer data={book.content} /> }
+            { book.content && <LexicalRenderer data={book.content} /> }
         </BookDetail>
     );
 };

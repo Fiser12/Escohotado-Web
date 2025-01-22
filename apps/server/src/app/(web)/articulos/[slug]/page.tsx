@@ -3,7 +3,7 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { ArticleDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { Media, Taxonomy } from "payload-types";
-import { RichTextRenderer } from "@/lexical/RichTextRenderer";
+import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/payload/collections/config';
 
 interface Props {
@@ -39,7 +39,7 @@ const Page: NextPage<Props> = async (props) => {
         categories={article.categories as Taxonomy[]}
       >
         {article.content &&
-          <RichTextRenderer className="max-w-[48rem] mx-auto" data={article.content} />
+          <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
         }
       </ArticleDetail>
     </div>

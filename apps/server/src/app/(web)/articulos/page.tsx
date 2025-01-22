@@ -14,7 +14,7 @@ import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynami
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
 import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { getPayload } from "@/payload/utils/getPayload";
-import { RichTextRenderer } from "@/lexical/RichTextRenderer";
+import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 
 export const pageSize = 10;
 
@@ -75,7 +75,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
       <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="/subscriptions" coverHref={handwrittenBackground.src}></HighlightSection>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
       { articulosDataPage.content &&
-        <RichTextRenderer data={articulosDataPage.content} />
+        <LexicalRenderer data={articulosDataPage.content} />
       }
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
         <H2 label="Artículos" id="h2-articles" />

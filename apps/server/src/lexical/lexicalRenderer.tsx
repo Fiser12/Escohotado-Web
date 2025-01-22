@@ -1,5 +1,3 @@
-import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery'
-import { mapCards } from '@/core/domain/mapping/mapCards'
 import {
   DefaultNodeTypes,
   SerializedLinkNode,
@@ -13,8 +11,6 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 import classNames from 'classnames'
-import { GridCardsBlock as GridCardsBlockUI } from 'gaudi/server'
-import { GridCardsBlock } from 'payload-types'
 import { blockRenderers } from './blockRenderers'
 
 type NodeTypes =
@@ -39,7 +35,7 @@ type Props = {
   data: SerializedEditorState
 } & React.HTMLAttributes<HTMLDivElement>
 
-export function RichTextRenderer(props: Props) {
+export function LexicalRenderer(props: Props) {
   const { className, ...rest } = props
   return (
     <RichTextWithoutBlocks

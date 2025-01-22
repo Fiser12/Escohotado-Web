@@ -8,7 +8,7 @@ import { DynamicLoadingVideos } from '@/ui/dynamic-loading-lists/dynamic-loading
 export const pageSize = 10;
 import { mapVideoCard } from '@/core/domain/mapping/mapCards';
 import { GridCardsBlockContainer, renderFeatured } from 'node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock';
-import { RichTextRenderer } from '@/lexical/RichTextRenderer';
+import { LexicalRenderer } from '@/lexical/lexicalRenderer';
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),
@@ -35,7 +35,7 @@ const Page = async ({ searchParams }: Props) => {
   return (
     <div className='flex flex-col'>
       { videosDataPage.content &&
-        <RichTextRenderer data={videosDataPage.content} />
+        <LexicalRenderer data={videosDataPage.content} />
       }
       <ContentWrapper
         className="flex flex-col gap-y-5 relative"

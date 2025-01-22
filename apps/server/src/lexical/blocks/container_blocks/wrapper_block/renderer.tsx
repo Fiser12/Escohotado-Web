@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { RichTextRenderer } from '../../../RichTextRenderer'
+import { LexicalRenderer } from '../../../lexicalRenderer'
 import { ContentWrapper } from 'gaudi/server'
 
 export const renderer = async ({ node }: any) => {
@@ -12,6 +12,6 @@ export const renderer = async ({ node }: any) => {
       );
   
   return <ContentWrapper backgroundClassname={className} >
-    <RichTextRenderer data={node.fields.content} />
+    <LexicalRenderer data={node.fields.content} />
   </ContentWrapper>
 }
