@@ -41,6 +41,11 @@ export const video: CollectionConfig = {
   },
   fields: [
     {
+      label: 'Contenido',
+      name: 'content',
+      type: 'richText',
+    },
+    {
       type: 'row',
       fields: [
         {

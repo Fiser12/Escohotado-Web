@@ -30,7 +30,7 @@ import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
 import { contentCollections } from '@/payload/collections/content'
 import { migrations } from '@/migrations'
 import { searchPlugin } from '@payloadcms/plugin-search'
-import { HomePage } from '@/payload/globals/static_pages/home'
+import globals from '@/payload/globals/static_pages'
 import { uiCollections } from '@/payload/collections/ui'
 import { defaultLexical } from '@/lexical/defaultLexical'
 
@@ -50,7 +50,7 @@ export default buildConfig({
     ...uiCollections,
     permissions,
   ],
-  globals: [HomePage],
+  globals,
   db: postgresAdapter({
     idType: 'uuid',
     prodMigrations: migrations,

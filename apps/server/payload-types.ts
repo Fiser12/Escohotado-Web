@@ -61,10 +61,14 @@ export interface Config {
     defaultIDType: string;
   };
   globals: {
+    articulos_page: ArticulosPage;
     home_page: HomePage;
+    videos_page: VideosPage;
   };
   globalsSelect: {
+    articulos_page: ArticulosPageSelect<false> | ArticulosPageSelect<true>;
     home_page: HomePageSelect<false> | HomePageSelect<true>;
+    videos_page: VideosPageSelect<false> | VideosPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -437,6 +441,21 @@ export interface Book {
  */
 export interface Video {
   id: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   url: string;
   permissions?: (string | Permission)[] | null;
   url_free?: string | null;
@@ -861,6 +880,7 @@ export interface BookSelect<T extends boolean = true> {
  * via the `definition` "video_select".
  */
 export interface VideoSelect<T extends boolean = true> {
+  content?: T;
   url?: T;
   permissions?: T;
   url_free?: T;
@@ -949,6 +969,30 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articulos_page".
+ */
+export interface ArticulosPage {
+  id: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_page".
  */
 export interface HomePage {
@@ -973,9 +1017,53 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_page".
+ */
+export interface VideosPage {
+  id: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articulos_page_select".
+ */
+export interface ArticulosPageSelect<T extends boolean = true> {
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_page_select".
+ */
+export interface VideosPageSelect<T extends boolean = true> {
   content?: T;
   updatedAt?: T;
   createdAt?: T;
