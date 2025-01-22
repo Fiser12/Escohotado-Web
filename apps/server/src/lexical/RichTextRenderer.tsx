@@ -46,6 +46,7 @@ export function RichTextRenderer(props: Props) {
       converters={jsxConverters}
       className={classNames(
         "max-w-none",
+        "article-html-content",
         className,
       )}
       {...rest}
