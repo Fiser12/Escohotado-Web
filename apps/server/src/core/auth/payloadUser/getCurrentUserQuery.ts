@@ -1,7 +1,7 @@
 import { headers as getHeaders } from 'next/headers'
 import { BasePayload } from 'payload'
 import type { User } from 'payload-types'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getPayload } from '@/payload/utils/getPayload'
 
 /**
  * Get the current user with out needing to import the payload instance & headers.

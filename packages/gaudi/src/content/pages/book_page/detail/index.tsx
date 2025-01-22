@@ -10,9 +10,9 @@ interface Props {
     title: string;
     coverHref: string;
     description: string;
-    contentHtml: string;
     langs: ('es' | 'en')[];
     link: string;
+    bookButtons: React.ReactNode;
     children: React.ReactNode;
 }
 
@@ -47,7 +47,7 @@ export const BookDetail = (props: Props) => {
                 topHeader={true}
                 title={props.title}
                 description={props.description}
-                children={props.children}
+                children={props.bookButtons}
                 image={
                     <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[366px] min-[469px]:h-[550px] my-6" shadow={false}>
                         <Image
@@ -59,8 +59,8 @@ export const BookDetail = (props: Props) => {
                     </ImageParallax>
                 }
             />
-            <ContentWrapper className="flex flex-col gap-12">
-                <div className="article-html-content" dangerouslySetInnerHTML={{ __html: props.contentHtml ?? "<p>Empty</p>" }} />
+            {props.children}
+            <ContentWrapper className="flex flex-col gap-12 pt-10">
                 <GridComments
                     items={comments}
                     renderBox={(comment) => (

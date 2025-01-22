@@ -1,5 +1,5 @@
-import { COLLECTION_SLUG_BOOK } from '@/core/infrastructure/payload/collections/config'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { COLLECTION_SLUG_BOOK } from '@/payload/collections/config'
+import { getPayload } from '@/payload/utils/getPayload'
 import { Book, Media } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 
@@ -20,13 +20,13 @@ export const getBooksQuery = async (query: string, page: number): Promise<BookDt
       id: { in: results },
     },
   })
-  
+
   return books.docs.map((book) => {
     const cover = book.cover as Media | null
     return {
-      title: book.title ?? "",
-      coverHref: cover?.url ?? "#",
+      title: book.title ?? '',
+      coverHref: cover?.url ?? '#',
       link: `/biblioteca/${book.slug}`,
     }
-})
+  })
 }

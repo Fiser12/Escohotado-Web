@@ -7,7 +7,7 @@ import heroHome from "../../../assets/images/hero-home.png";
 import Image from "next/image";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 import { GridCardsBlock } from "../../featured_grid_home/GridCardsBlock";
-
+import HomeHero from "../../../common/home_hero"
 type FeaturedType = "article" | "quote" | "book" | "video";
 
 export interface FeaturedBase {
@@ -65,26 +65,7 @@ interface Props {
 export const HomePage = ({ featuredItems, description, buttons }: Props) => {
   return (
     <div>
-      <MainHero
-        description={description}
-        title="Antonio Escohotado"
-        image={
-          <Image
-            width={2610}
-            height={3036}
-            src={heroHome.src}
-            alt={"Antonio Escohotado"}
-          />
-        }
-        topHeader={true}
-        changeDirection={false}
-      >
-        {buttons.map((button, index) => (
-          <a key={index} href={button.link}>
-            <MainButton text={button.title} type="line" />
-          </a>
-        ))}
-      </MainHero>
+      <HomeHero description={description} buttons={buttons} />
       <div id="gridContentHome" className="bg-gray-light py-10">
         <ContentWrapper className="flex flex-col gap-4">
           {featuredItems.map(({ gridClassname, features }, index) => (

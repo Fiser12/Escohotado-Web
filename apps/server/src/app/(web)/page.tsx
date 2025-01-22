@@ -1,23 +1,16 @@
-import { getPayload } from "@/core/infrastructure/payload/utils/getPayload";
-import { HomePage } from "gaudi/server";
-import { mapCards } from "../../core/domain/mapping/mapCards";
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getPayload } from "@/payload/utils/getPayload";
+import { RichTextRenderer } from "@/lexical/RichTextRenderer";
 
 const Page = async () => {
   const payload = await getPayload();
-  const homePageData = await payload.findGlobal({
-    slug: 'home_page',
-    depth: 3
+  const homeData = await payload.findGlobal({
+    slug: "home_page"
   })
-  const user = await getCurrentUserQuery(payload);
-  
-  const gridItems = (homePageData.cards ?? []).map(mapCards(user))
 
   return (
-    <HomePage
-      buttons={homePageData.hero?.buttons ?? []}
-      description={homePageData.hero?.description ?? "No description"}
-      featuredItems={gridItems}
+    <RichTextRenderer
+      data={homeData.content}
+      className="h-full"
     />
   );
 };

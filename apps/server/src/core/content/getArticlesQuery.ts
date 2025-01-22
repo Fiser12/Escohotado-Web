@@ -1,13 +1,13 @@
-"use server";
+'use server'
 import {
   COLLECTION_SLUG_ARTICLE_PDF,
   COLLECTION_SLUG_ARTICLE_WEB,
-} from '@/core/infrastructure/payload/collections/config'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+} from '@/payload/collections/config'
+import { getPayload } from '@/payload/utils/getPayload'
 import { ArticlePdf, ArticleWeb, Book } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
-import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery';
-import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery';
+import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery'
+import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 
 const pageSize = 40
 export type CommonArticle = (ArticlePdf | ArticleWeb) & {
@@ -30,7 +30,7 @@ export const getArticlesQuery = async (
     COLLECTION_SLUG_ARTICLE_WEB,
   ])
   const payload = await getPayload()
-  const user = await getCurrentUserQuery(payload);
+  const user = await getCurrentUserQuery(payload)
   const [articlesPDF, articlesWeb] = await Promise.all([
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_PDF,
@@ -61,22 +61,22 @@ export const getArticlesQuery = async (
   const articlesPDFWithType = articlesPDF.docs.map((article) => ({
     ...article,
     type: COLLECTION_SLUG_ARTICLE_PDF,
-    hasPermission: evalPermissionQuery(user, article.permissions_seeds?.trim() ?? ""),
+    hasPermission: evalPermissionQuery(user, article.permissions_seeds?.trim() ?? ''),
   }))
 
   const articlesWebWithType = articlesWeb.docs.map((article) => ({
     ...article,
     type: COLLECTION_SLUG_ARTICLE_WEB,
     url: `/articulos/${article.slug}`,
-    hasPermission: evalPermissionQuery(user, article.permissions_seeds?.trim() ?? ""),
+    hasPermission: evalPermissionQuery(user, article.permissions_seeds?.trim() ?? ''),
   }))
   const startIndex = page * pageSize
   const endIndex = startIndex + pageSize
 
   const articles = [...articlesPDFWithType, ...articlesWebWithType]
-    .sort((a, b) => (
-      new Date(b.publishedAt ?? "0").getTime() - new Date(a.publishedAt ?? "0").getTime()
-    ))
+    .sort(
+      (a, b) => new Date(b.publishedAt ?? '0').getTime() - new Date(a.publishedAt ?? '0').getTime(),
+    )
     .filter((article) => {
       const evalAutorFilter = autor === null || article.seeds?.includes(autor)
       const evalMedioFilter =

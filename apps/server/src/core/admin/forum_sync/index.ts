@@ -1,9 +1,9 @@
 import { CollectionSlug } from 'payload'
-import { getPayload } from '../../infrastructure/payload/utils/getPayload'
 import { getCategoryByCollection } from './get_category_by_collection'
 import 'hegel'
 import { syncTopicsAtForumCommand } from './sync_topics_at_forum_command'
 import { updateForumDataAtCollection } from './update_forum_data_at_collection'
+import { getPayload } from '@/payload/utils/getPayload'
 
 const syncForumWithDatabase = async (collection: CollectionSlug) => {
   const payload = await getPayload()

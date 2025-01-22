@@ -22,10 +22,11 @@
 @container (min-width: 350px) {
   .grid-axis-control-content-article {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.5rem;
   }
   .text-content-position-article {
     justify-content: center;
+    margin: 0;
   }
 }
 @container (max-width: 350px) {
@@ -34,6 +35,6 @@
   }
   .dynamic-text-article {
     font-size: clamp(1.2rem, 1.4rem, 1.8rem);
-  line-height: clamp(1.5rem, 1.8rem, 2.3rem);
+    line-height: clamp(1.5rem, 1.8rem, 2.3rem);
   }
 }

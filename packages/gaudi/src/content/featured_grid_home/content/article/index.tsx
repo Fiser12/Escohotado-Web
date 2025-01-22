@@ -18,6 +18,7 @@ interface Props {
   }[];
   hasPermission: boolean;
   className?: string;
+  isPdf: boolean;
 }
 
 export const FeaturedArticle = (props: Props) => {
@@ -31,7 +32,7 @@ export const FeaturedArticle = (props: Props) => {
     }
   );
   const contentClass = classNames("w-full h-full flex flex-col justify-between p-2 gap-2");
-  const textareaClass = classNames("h-full flex flex-col gap-2.5");
+  const textareaClass = classNames("h-full flex flex-col gap-2");
   const categoriesClass = classNames("flex flex-wrap gap-1");
   const authorClass = classNames("text-xs text-gray-dark");
   const titleClass = classNames(
@@ -44,27 +45,31 @@ export const FeaturedArticle = (props: Props) => {
 
   return (
     <BaseCardContainer className={`base-container-axis-article ${props.className}`}>
-      <div className={`grid-axis-control-content-article ${containerClass}`}>
-        <div className={`image-control-article ${containerImageClass}`}>
-          <Image
-            fill
-            src={props.coverHref}
-            alt={props.title}
-            className={imageClass}
-          />
-        </div>
+      <div className={`${!props.isPdf && 'grid-axis-control-content-article'} ${containerClass}`}>
+        {!props.isPdf &&
+          <div className={`image-control-article ${containerImageClass}`}>
+            <Image
+              fill
+              src={props.coverHref}
+              alt={props.title}
+              className={imageClass}
+            />
+          </div>
+        }
         <div className={contentClass}>
-          <div className={`text-content-position-article ${textareaClass}`}>
-            <div className={categoriesClass}>
-              {props.categories?.map((category, index) => (
-                <Tag key={index} text={category.singular_name} variant={props.hasPermission ? 'primary' : 'disabled'}></Tag>
-              ))}
+          <div className={textareaClass}>
+            <div className={`text-content-position-article w-full h-full flex flex-col justify-center gap-1`}>
+              <div className={categoriesClass}>
+                {props.categories?.map((category, index) => (
+                  <Tag key={index} text={category.singular_name} variant={props.hasPermission ? 'primary' : 'disabled'}></Tag>
+                ))}
+              </div>
+              <p className={`dynamic-text-article ${titleClass}`}>{props.title}</p>
             </div>
-            <p className={`dynamic-text-article ${titleClass}`}>{props.title}</p>
-            <p className={authorClass}>{props.author}</p>
+            <p className={`author-margin-article ${authorClass} ${props.hasPermission && 'mb-3'}`}>{props.author}</p>
           </div>
           {!props.hasPermission &&
-            <div className="group flex justify-end items-center gap-1.5 text-primary-400 pt-4">
+            <div className="group flex justify-end items-center gap-1.5 text-primary-400">
               <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
               <Link text="Desbloquear" href={props.href} />
             </div>

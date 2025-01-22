@@ -61,10 +61,14 @@ export interface Config {
     defaultIDType: string;
   };
   globals: {
+    articulos_page: ArticulosPage;
     home_page: HomePage;
+    videos_page: VideosPage;
   };
   globalsSelect: {
+    articulos_page: ArticulosPageSelect<false> | ArticulosPageSelect<true>;
     home_page: HomePageSelect<false> | HomePageSelect<true>;
+    videos_page: VideosPageSelect<false> | VideosPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -437,6 +441,21 @@ export interface Book {
  */
 export interface Video {
   id: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   url: string;
   permissions?: (string | Permission)[] | null;
   url_free?: string | null;
@@ -861,6 +880,7 @@ export interface BookSelect<T extends boolean = true> {
  * via the `definition` "video_select".
  */
 export interface VideoSelect<T extends boolean = true> {
+  content?: T;
   url?: T;
   permissions?: T;
   url_free?: T;
@@ -949,23 +969,105 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articulos_page".
+ */
+export interface ArticulosPage {
+  id: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_page".
  */
 export interface HomePage {
   id: string;
-  hero?: {
-    description?: string | null;
-    buttons?:
-      | {
-          title: string;
-          link: string;
-          id?: string | null;
-        }[]
-      | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
   };
-  cards?: GridCardsBlock[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_page".
+ */
+export interface VideosPage {
+  id: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articulos_page_select".
+ */
+export interface ArticulosPageSelect<T extends boolean = true> {
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_page_select".
+ */
+export interface VideosPageSelect<T extends boolean = true> {
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -993,43 +1095,7 @@ export interface GridCardsBlock {
   gridCards: string | UiGridCard;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'grid_cards';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home_page_select".
- */
-export interface HomePageSelect<T extends boolean = true> {
-  hero?:
-    | T
-    | {
-        description?: T;
-        buttons?:
-          | T
-          | {
-              title?: T;
-              link?: T;
-              id?: T;
-            };
-      };
-  cards?:
-    | T
-    | {
-        grid_cards?: T | GridCardsBlockSelect<T>;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "GridCardsBlock_select".
- */
-export interface GridCardsBlockSelect<T extends boolean = true> {
-  value?: T;
-  gridCards?: T;
-  id?: T;
-  blockName?: T;
+  blockType: 'grid_cards_block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1070,6 +1136,68 @@ export interface TwoColumnsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'two_columns_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WrapperBlock".
+ */
+export interface WrapperBlock {
+  type?: ('white' | 'gray') | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'wrapper_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  description?: string | null;
+  buttons?:
+    | {
+        title: string;
+        link: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsletterSubscriptionBlock".
+ */
+export interface NewsletterSubscriptionBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsletter_subscription_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BookCarouselBlock".
+ */
+export interface BookCarouselBlock {
+  title: string;
+  books: (string | Book)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'books_carousel_block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

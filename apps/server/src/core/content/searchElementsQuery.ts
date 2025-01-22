@@ -1,4 +1,4 @@
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getPayload } from '@/payload/utils/getPayload'
 import { BasePayload } from 'payload'
 
 export const searchElementsQuery = async (

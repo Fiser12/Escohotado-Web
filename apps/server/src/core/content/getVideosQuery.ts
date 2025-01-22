@@ -1,6 +1,6 @@
 'use server'
-import { COLLECTION_SLUG_VIDEO } from '@/core/infrastructure/payload/collections/config'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { COLLECTION_SLUG_VIDEO } from '@/payload/collections/config'
+import { getPayload } from '@/payload/utils/getPayload'
 import { Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'

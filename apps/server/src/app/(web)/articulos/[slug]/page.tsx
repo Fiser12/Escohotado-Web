@@ -1,10 +1,10 @@
-import { COLLECTION_SLUG_ARTICLE_WEB } from "@/core/infrastructure/payload/collections/config";
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ArticleDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { Media, Taxonomy } from "payload-types";
-import { RichTextRenderer } from "@/ui/lexical/RichTextRenderer";
+import { RichTextRenderer } from "@/lexical/RichTextRenderer";
+import { COLLECTION_SLUG_ARTICLE_WEB } from '@/payload/collections/config';
 
 interface Props {
   params: {
@@ -30,18 +30,18 @@ const Page: NextPage<Props> = async (props) => {
   article?.content
   return (
     <div>
-    <ArticleDetail
-      title={article.title ?? "No title"}
-      href={`/articulos/${article.slug}`}
-      publishedAt={article.publishedAt as string}
-      coverHref={(article.cover as Media | null)?.url ?? "#"}
-      textLink={"Leer más"}
-      categories={article.categories as Taxonomy[]}
-    >
-      {article.content && 
-        <RichTextRenderer className="max-w-[48rem] mx-auto" data={article.content} enableGutter={false}  />
-      }
-    </ArticleDetail>
+      <ArticleDetail
+        title={article.title ?? "No title"}
+        href={`/articulos/${article.slug}`}
+        publishedAt={article.publishedAt as string}
+        coverHref={(article.cover as Media | null)?.url ?? "#"}
+        textLink={"Leer más"}
+        categories={article.categories as Taxonomy[]}
+      >
+        {article.content &&
+          <RichTextRenderer className="max-w-[48rem] mx-auto" data={article.content} />
+        }
+      </ArticleDetail>
     </div>
   );
 };

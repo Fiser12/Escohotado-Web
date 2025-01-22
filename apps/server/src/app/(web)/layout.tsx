@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "gaudi/server";
-import { signIn, signOut } from "@/core/infrastructure/payload/plugins/authjs/plugin";
+import { signIn, signOut } from "@/payload/plugins/authjs/plugin";
 import { NuqsAdapter } from 'nuqs/adapters/next'
 import "../tailwind.css";
 import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery";

@@ -1,5 +1,5 @@
-import { COLLECTION_SLUG_BOOK } from "@/core/infrastructure/payload/collections/config";
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { COLLECTION_SLUG_BOOK } from "@/payload/collections/config";
+import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, BookCard } from "gaudi/server";
 import { ContentGridList } from "gaudi/server";
