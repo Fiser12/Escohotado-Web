@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 import {
   permissionRelationship,
   cachePermissionSeedsHook,
-} from '@/core/infrastructure/payload/fields/permissions/permissionsRelationshipFields'
+} from '@/payload/fields/permissions/permissionsRelationshipFields'
 import { COLLECTION_SLUG_MEDIA } from '../config'
 import { checkReadPermissions, isAdmin } from '../../fields/permissions/accessEvaluations'
 import { taxonomiesRelationshipBuilder } from '../../fields/taxonomies/taxonomiesRelationshipFields'
@@ -91,7 +91,7 @@ export function contentCollectionBuilder(
       },
       ...categoriesRelationship.fields,
       ...(config.fields ?? []),
-      forumPostsCacheField
+      forumPostsCacheField,
     ],
   }
 }

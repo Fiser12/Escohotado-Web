@@ -3,7 +3,7 @@ import { COLLECTION_SLUG_VIDEO } from '../../config'
 import {
   cachePermissionSeedsHook,
   permissionRelationship,
-} from '@/core/infrastructure/payload/fields/permissions/permissionsRelationshipFields'
+} from '@/payload/fields/permissions/permissionsRelationshipFields'
 import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations'
 
 import { getYoutubeVideoMetadataHook } from '../../../hooks/video/getYoutubeMetadataHook'
@@ -28,13 +28,13 @@ export const video: CollectionConfig = {
     components: {
       views: {
         list: {
-          actions: [ 
-            { path: "/src/ui/payload_admin/refresh_yt_collection_button" },
-            { path: "/src/ui/payload_admin/sync_forum_posts_button" }
-          ]
-        }
+          actions: [
+            { path: '/src/ui/payload_admin/refresh_yt_collection_button' },
+            { path: '/src/ui/payload_admin/sync_forum_posts_button' },
+          ],
+        },
       },
-    }
+    },
   },
   hooks: {
     beforeChange: [cachePermissionSeedsHook(), getYoutubeVideoMetadataHook],
@@ -59,7 +59,7 @@ export const video: CollectionConfig = {
       type: 'text',
       admin: {
         readOnly: true,
-      }
+      },
     },
     permissionSeedField,
     {
@@ -103,6 +103,6 @@ export const video: CollectionConfig = {
         readOnly: true,
       },
     },
-    forumPostsCacheField
+    forumPostsCacheField,
   ],
 }

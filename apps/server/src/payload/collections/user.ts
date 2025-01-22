@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from './config'
-import { ADMIN_ACCESS_ROLES } from '@/core/infrastructure/payload/plugins/authjs/auth.config'
+import { ADMIN_ACCESS_ROLES } from '@/payload/plugins/authjs/auth.config'
 import { isAdminOrCurrentUser, isAdmin } from '../fields/permissions/accessEvaluations'
 
 const ADMIN_AUTH_GROUP = 'Auth'
@@ -12,9 +12,7 @@ export const users: CollectionConfig = {
     useAsTitle: 'email',
   },
   access: {
-    admin: async ({ req }) => (
-      req?.user?.roles?.includes(ADMIN_ACCESS_ROLES) == true
-    ),
+    admin: async ({ req }) => req?.user?.roles?.includes(ADMIN_ACCESS_ROLES) == true,
     read: isAdminOrCurrentUser,
     create: isAdmin,
     update: isAdminOrCurrentUser,

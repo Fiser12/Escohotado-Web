@@ -2,8 +2,8 @@ import {
   COLLECTION_SLUG_USER,
   COLLECTION_SLUG_PRODUCTS,
   COLLECTION_SLUG_SUBSCRIPTIONS,
-} from '@/core/infrastructure/payload/collections/config'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+} from '@/payload/collections/config'
+import { getPayload } from '@/payload/utils/getPayload'
 import { deleteForumPremiumRoleCommand } from '@/core/auth/keycloak/deleteForumPremiumRoleCommand'
 import { addForumPremiumRoleCommand } from '@/core/auth/keycloak/addForumPremiumRoleCommand'
 import type Stripe from 'stripe'

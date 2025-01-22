@@ -1,4 +1,4 @@
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2 } from "gaudi/server";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
@@ -44,9 +44,9 @@ const Page = async ({ searchParams }: Props) => {
           .map(renderFeatured)}
       </GridCardsBlockContainer>
       <DynamicLoadingVideos
-          query={query}
-          user={user}
-          maxPage={videosResult.maxPage}
+        query={query}
+        user={user}
+        maxPage={videosResult.maxPage}
       />
     </ContentWrapper>
   );

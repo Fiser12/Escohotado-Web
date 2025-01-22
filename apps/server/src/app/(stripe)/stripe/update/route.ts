@@ -1,7 +1,7 @@
-import { stripeBuilder } from '@/core/infrastructure/payload/plugins/stripe'
 import { NextResponse } from 'next/server'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getPayload } from '@/payload/utils/getPayload';
+import { stripeBuilder } from '@/payload/plugins/stripe';
 
 export async function GET(request: Request) {
   const payloadUser = await getCurrentUserQuery()

@@ -1,8 +1,5 @@
-import {
-  COLLECTION_SLUG_PRICES,
-  COLLECTION_SLUG_PRODUCTS,
-} from '@/core/infrastructure/payload/collections/config'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS } from '@/payload/collections/config'
+import { getPayload } from '@/payload/utils/getPayload'
 import type Stripe from 'stripe'
 import { payloadUpsert } from '../../utils/upsert'
 import { stripeBuilder } from '.'
@@ -13,20 +10,25 @@ export const updatePrices = async () => {
   const promises = prices.data.map(priceUpsert)
   const pricesUpserted = await Promise.all(promises)
 
-  const pricesByProductId = pricesUpserted.mapNotNull(t => t).reduce((acc, { productId, priceId }) => {
-    if (!acc[productId]) {
-      acc[productId] = [];
-    }
-    acc[productId].push(priceId);
-    return acc;
-  }, {} as Record<string, string[]>)
+  const pricesByProductId = pricesUpserted
+    .mapNotNull((t) => t)
+    .reduce(
+      (acc, { productId, priceId }) => {
+        if (!acc[productId]) {
+          acc[productId] = []
+        }
+        acc[productId].push(priceId)
+        return acc
+      },
+      {} as Record<string, string[]>,
+    )
 
   Object.entries(pricesByProductId).map(async ([productId, prices]) => {
     const payload = await getPayload()
     await payload.update({
       collection: COLLECTION_SLUG_PRODUCTS,
       data: {
-        prices
+        prices,
       },
       where: {
         stripeID: { equals: productId },

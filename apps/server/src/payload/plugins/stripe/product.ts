@@ -1,5 +1,5 @@
-import { COLLECTION_SLUG_PRODUCTS } from '@/core/infrastructure/payload/collections/config'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { COLLECTION_SLUG_PRODUCTS } from '@/payload/collections/config'
+import { getPayload } from '@/payload/utils/getPayload'
 import type Stripe from 'stripe'
 import { payloadUpsert } from '../../utils/upsert'
 import { stripeBuilder } from '.'
@@ -7,9 +7,9 @@ import { stripeBuilder } from '.'
 const logs = false
 
 export const updateProducts = async () => {
-    const stripe = await stripeBuilder()
-    const products = await stripe.products.list({ limit: 100, active: true })
-    products.data.forEach(productSync)
+  const stripe = await stripeBuilder()
+  const products = await stripe.products.list({ limit: 100, active: true })
+  products.data.forEach(productSync)
 }
 
 export const productSync = async (object: Stripe.Product) => {

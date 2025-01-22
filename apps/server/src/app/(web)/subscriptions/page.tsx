@@ -1,4 +1,4 @@
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi/server";
 import { IntervalOptions } from "hegel";

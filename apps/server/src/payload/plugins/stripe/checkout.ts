@@ -1,7 +1,7 @@
 import type Stripe from 'stripe'
 import { subscriptionUpsert } from './subscription'
 import { stripeBuilder } from '.'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+import { getPayload } from '@/payload/utils/getPayload'
 
 const logs = false
 

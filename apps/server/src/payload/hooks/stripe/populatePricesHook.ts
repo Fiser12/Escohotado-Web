@@ -1,4 +1,4 @@
-import { stripeBuilder, priceUpsert } from '@/core/infrastructure/payload/plugins/stripe'
+import { stripeBuilder, priceUpsert } from '@/payload/plugins/stripe'
 import { Price } from 'payload-types'
 import { CollectionBeforeChangeHook } from 'payload'
 import 'hegel'

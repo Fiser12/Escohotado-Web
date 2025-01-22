@@ -1,6 +1,6 @@
-import { getPayload } from "@/core/infrastructure/payload/utils/getPayload";
+import { getPayload } from "@/payload/utils/getPayload";
 import { FilterBarNuqs } from "./filter_bar_nuqs";
-import { COLLECTION_SLUG_TAXONOMY } from "@/core/infrastructure/payload/collections/config";
+import { COLLECTION_SLUG_TAXONOMY } from "@/payload/collections/config";
 
 interface Props {
 }

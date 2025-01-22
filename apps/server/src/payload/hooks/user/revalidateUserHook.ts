@@ -3,7 +3,7 @@
 import { revalidateTag } from 'next/cache'
 import type { Payload } from 'payload'
 import type { User } from '@/../payload-types'
-import { SESSION_STRATEGY } from '@/core/infrastructure/payload/plugins/authjs/auth.config'
+import { SESSION_STRATEGY } from '@/payload/plugins/authjs/auth.config'
 
 export const revalidateUser = async (user: User, payload: Payload) => {
   revalidateTag(`payload-user-${user.id}`)

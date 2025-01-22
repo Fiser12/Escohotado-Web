@@ -1,6 +1,5 @@
 import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery'
 import { mapCards } from '@/core/domain/mapping/mapCards'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
 import {
   DefaultNodeTypes,
   SerializedLinkNode,

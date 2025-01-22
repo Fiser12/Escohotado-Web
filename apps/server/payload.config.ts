@@ -6,15 +6,15 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
-import { authConfig } from '@/core/infrastructure/payload/plugins/authjs/auth.config'
-import { users } from '@/core/infrastructure/payload/collections/user'
-import taxonomy from '@/core/infrastructure/payload/collections/taxonomy'
-import media from '@/core/infrastructure/payload/collections/media'
+import { authConfig } from '@/payload/plugins/authjs/auth.config'
+import { users } from '@/payload/collections/user'
+import taxonomy from '@/payload/collections/taxonomy'
+import media from '@/payload/collections/media'
 import { authjsPlugin } from 'payload-authjs'
-import { subscriptions } from '@/core/infrastructure/payload/collections/stripe/subscriptions'
-import { prices } from '@/core/infrastructure/payload/collections/stripe/prices'
-import permissions from '@/core/infrastructure/payload/fields/permissions'
-import { products } from '@/core/infrastructure/payload/collections/stripe/products'
+import { subscriptions } from '@/payload/collections/stripe/subscriptions'
+import { prices } from '@/payload/collections/stripe/prices'
+import permissions from '@/payload/fields/permissions'
+import { products } from '@/payload/collections/stripe/products'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
 import {
   COLLECTION_SLUG_MEDIA,
@@ -22,16 +22,16 @@ import {
   COLLECTION_SLUG_VIDEO,
   COLLECTION_SLUG_ARTICLE_WEB,
   COLLECTION_SLUG_BOOK,
-} from '@/core/infrastructure/payload/collections/config'
+} from '@/payload/collections/config'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
 import * as Sentry from '@sentry/nextjs'
-import { S3_PLUGIN_CONFIG } from '@/core/infrastructure/payload/plugins/s3'
+import { S3_PLUGIN_CONFIG } from '@/payload/plugins/s3'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
-import { contentCollections } from '@/core/infrastructure/payload/collections/content'
+import { contentCollections } from '@/payload/collections/content'
 import { migrations } from '@/migrations'
 import { searchPlugin } from '@payloadcms/plugin-search'
-import { HomePage } from '@/core/infrastructure/payload/globals/static_pages/home'
-import { uiCollections } from '@/core/infrastructure/payload/collections/ui'
+import { HomePage } from '@/payload/globals/static_pages/home'
+import { uiCollections } from '@/payload/collections/ui'
 import { defaultLexical } from '@/ui/lexical/defaultLexical'
 
 const filename = fileURLToPath(import.meta.url)
@@ -50,14 +50,12 @@ export default buildConfig({
     ...uiCollections,
     permissions,
   ],
-  globals: [
-    HomePage
-  ],
+  globals: [HomePage],
   db: postgresAdapter({
     idType: 'uuid',
     prodMigrations: migrations,
     pool: {
-      connectionString: process.env.DATABASE_URL     
+      connectionString: process.env.DATABASE_URL,
     },
   }),
   plugins: [

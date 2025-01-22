@@ -1,8 +1,8 @@
 import {
   COLLECTION_SLUG_ARTICLE_PDF,
   COLLECTION_SLUG_ARTICLE_WEB,
-} from '@/core/infrastructure/payload/collections/config'
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
+} from '@/payload/collections/config'
+import { getPayload } from '@/payload/utils/getPayload'
 import { ArticlePdf, ArticleWeb } from 'payload-types'
 
 type CommonArticle = (ArticlePdf | ArticleWeb) & {
@@ -15,11 +15,11 @@ export const getLastArticlesQuery = async (): Promise<CommonArticle[]> => {
   const [articlesPDF, articlesWeb] = await Promise.all([
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_PDF,
-      sort: '-created_at'
+      sort: '-created_at',
     }),
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_WEB,
-      sort: '-created_at'
+      sort: '-created_at',
     }),
   ])
 
@@ -34,10 +34,9 @@ export const getLastArticlesQuery = async (): Promise<CommonArticle[]> => {
     url: `/articulos/${article.slug}`,
   }))
 
-  const articles = [...articlesPDFWithType, ...articlesWebWithType]
-    .sort((a, b) => (
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    ))
+  const articles = [...articlesPDFWithType, ...articlesWebWithType].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )
 
   return articles.slice(0, 3)
 }

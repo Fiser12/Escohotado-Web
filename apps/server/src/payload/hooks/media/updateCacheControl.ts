@@ -1,4 +1,4 @@
-import { S3_PLUGIN_CONFIG } from '@/core/infrastructure/payload/plugins/s3'
+import { S3_PLUGIN_CONFIG } from '@/payload/plugins/s3'
 import {
   CopyObjectCommand,
   CopyObjectCommandInput,

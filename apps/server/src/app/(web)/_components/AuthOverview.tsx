@@ -1,7 +1,7 @@
-import { auth } from "@/core/infrastructure/payload/plugins/authjs/plugin";
+import { auth } from "@/payload/plugins/authjs/plugin";
 import { ContentWrapper, H3, H4 } from "gaudi/server";
-import { getPayload } from '@/core/infrastructure/payload/utils/getPayload'
-import { COLLECTION_SLUG_MEDIA } from "@/core/infrastructure/payload/collections/config";
+import { getPayload } from '@/payload/utils/getPayload';
+import { COLLECTION_SLUG_MEDIA } from "@/payload/collections/config";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 
 const AuthOverview = async () => {
