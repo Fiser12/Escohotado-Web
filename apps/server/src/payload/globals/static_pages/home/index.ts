@@ -1,5 +1,3 @@
-import { GridCardsBlock } from "@/ui/lexical/blocks/grid_cards_block";
-import { HeroBlock } from "@/ui/lexical/blocks/hero_block";
 import { GlobalConfig } from "payload";
 
 export const HomePage: GlobalConfig = {
@@ -10,6 +8,7 @@ export const HomePage: GlobalConfig = {
       {
         name: 'content',
         type: 'richText',
+        required: true
       }
     ]
   }

@@ -1,15 +1,15 @@
 import { HomePage } from "gaudi/server";
 import { getPayload } from "@/payload/utils/getPayload";
+import { RichTextRenderer } from "@/ui/lexical/RichTextRenderer";
 
 const Page = async () => {
   const payload = await getPayload();
-  
+  const homeData = await payload.findGlobal({
+    slug: "home_page"
+  })
+
   return (
-    <HomePage
-      buttons={[]}
-      description={"No description"}
-      featuredItems={[]}
-    />
+    <RichTextRenderer data={homeData.content!} enableGutter={false}  />
   );
 };
 

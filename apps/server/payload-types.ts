@@ -953,7 +953,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: string;
-  content?: {
+  content: {
     root: {
       type: string;
       children: {
@@ -967,7 +967,7 @@ export interface HomePage {
       version: number;
     };
     [k: string]: unknown;
-  } | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1007,7 +1007,7 @@ export interface GridCardsBlock {
   gridCards: string | UiGridCard;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'grid_cards';
+  blockType: 'grid_cards_block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1055,7 +1055,7 @@ export interface TwoColumnsBlock {
  */
 export interface WrapperBlock {
   type?: ('white' | 'gray') | null;
-  description?: {
+  content?: {
     root: {
       type: string;
       children: {

@@ -15,6 +15,7 @@ import {
 import classNames from 'classnames'
 import { GridCardsBlock as GridCardsBlockUI } from 'gaudi/server'
 import { GridCardsBlock } from 'payload-types'
+import { blockRenderers } from './blockRenderers'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -31,48 +32,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
-  blocks: {
-    grid_cards: async ({ node }: any) => {
-      const user = await getCurrentUserQuery();
-      const gridCards = node?.fields as GridCardsBlock
-      const result = mapCards(user)(gridCards)
-      return <GridCardsBlockUI features={result.features} gridClassname={result.gridClassname} />
-
-
-    },
-    hero_block: async ({ node }: any) => {
-      return <div>Hero Block</div>
-    },
-    wrapper_block: async ({ node }: any) => {
-      return <div>Wrapper Block</div>
-    },
-    two_columns_block: async ({ node }: any) => {
-      const type = node?.fields?.type
-      const leftSpan =
-        type === "1x3" ? "col-span-1" :
-          type === "2x2" ? "col-span-2" :
-            type === "3x1" ? "col-span-3" :
-              "col-span-2";
-
-      const rightSpan =
-        type === "1x3" ? "col-span-3" :
-          type === "2x2" ? "col-span-2" :
-            type === "3x1" ? "col-span-1" :
-              "col-span-2";
-      return <div className="grid md:grid-cols-4 grid-cols-1 gap-4">
-        {node?.fields?.left &&
-          <div className={`${leftSpan}`}>
-            <RichTextRenderer data={node.fields.left} />
-          </div>
-        }
-        {node?.fields?.right &&
-          <div className={`${rightSpan}`}>
-            <RichTextRenderer data={node.fields.right} />
-          </div>
-        }
-      </div>
-    }
-  }
+  blocks: blockRenderers
 })
 
 type Props = {

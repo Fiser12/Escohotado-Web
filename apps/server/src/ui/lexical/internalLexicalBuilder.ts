@@ -1,7 +1,7 @@
 import { Block } from "payload"
 import { BlockSlug } from "./blocks/slug_blogs"
-import { TwoColumnsBlock } from "./blocks/two_columns_block"
-import { GridCardsBlock } from "./blocks/grid_cards_block"
+import { TwoColumnsBlock } from "./blocks/content_blocks/two_columns_block/block"
+import { GridCardsBlock } from "./blocks/content_blocks/grid_cards_block/block"
 
 export const internalLexicalBlocks = () => [
     TwoColumnsBlock,

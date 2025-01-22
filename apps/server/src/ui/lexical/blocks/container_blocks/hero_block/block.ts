@@ -1,7 +1,8 @@
 import { Block } from 'payload'
+import { heroBlockSlug } from '../../slug_blogs'
 
 export const HeroBlock: Block = {
-  slug: 'hero_block',
+  slug: heroBlockSlug,
   interfaceName: 'HeroBlock',
   labels: {
     singular: 'Hero panel',
@@ -36,3 +37,4 @@ export const HeroBlock: Block = {
     },
   ],
 }
+

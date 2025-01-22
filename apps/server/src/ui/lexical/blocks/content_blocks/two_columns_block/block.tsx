@@ -1,11 +1,12 @@
 import { Block } from 'payload'
-import { buildLexical } from '../lexicalBuilder'
-import { internalLexicalBlocksExcluding } from '../internalLexicalBuilder'
+import { internalLexicalBlocksExcluding } from '../../../internalLexicalBuilder'
+import { buildLexical } from '../../../lexicalBuilder'
+import { twoColumnsBlockSlug } from '../../slug_blogs'
 
 const editor = buildLexical(() => internalLexicalBlocksExcluding(["two_columns_block"]))
 
 export const TwoColumnsBlock: Block = {
-  slug: 'two_columns_block',
+  slug: twoColumnsBlockSlug,
   labels: {
     singular: 'Bloque de dos columnas',
     plural: 'Bloques de dos columnas'
@@ -39,3 +40,4 @@ export const TwoColumnsBlock: Block = {
     },
   ],
 }
+
