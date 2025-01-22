@@ -1,15 +1,8 @@
-import {
-  lexicalEditor
-} from '@payloadcms/richtext-lexical'
 import { Block } from 'payload'
-import { GridCardsBlock } from './grid_cards_block'
-import { getLexicalFeaturesExcluding } from '@/core/infrastructure/payload/fields/defaultLexical'
+import { buildLexical } from '../lexicalBuilder'
+import { internalLexicalBlocksExcluding } from '../internalLexicalBuilder'
 
-const lexicalEditorTwoColumnsBlock = lexicalEditor({
-  features: () => {
-    return getLexicalFeaturesExcluding(['two_columns_block'])
-  },
-})
+const editor = buildLexical(() => internalLexicalBlocksExcluding(["two_columns_block"]))
 
 export const TwoColumnsBlock: Block = {
   slug: 'two_columns_block',
@@ -35,14 +28,14 @@ export const TwoColumnsBlock: Block = {
       name: 'left',
       label: 'Izquierda',
       required: true,
-      editor: lexicalEditorTwoColumnsBlock,
+      editor: editor,
     },
     {
       type: 'richText',
       name: 'right',
       label: 'Derecha',
       required: true,
-      editor: lexicalEditorTwoColumnsBlock,
+      editor: editor,
     },
   ],
 }

@@ -1,7 +1,5 @@
-import { defaultLexical } from '../../../fields/defaultLexical'
 import { COLLECTION_SLUG_ARTICLE_WEB } from '../../config'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
@@ -21,7 +19,6 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
-      editor: defaultLexical,
     },
   ]
 })

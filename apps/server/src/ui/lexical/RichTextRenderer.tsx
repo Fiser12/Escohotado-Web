@@ -14,7 +14,7 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 import classNames from 'classnames'
-import { ContentWrapper, GridCardsBlock as GridCardsBlockUI } from 'gaudi/server'
+import { GridCardsBlock as GridCardsBlockUI } from 'gaudi/server'
 import { GridCardsBlock } from 'payload-types'
 
 type NodeTypes =
@@ -40,6 +40,12 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       return <GridCardsBlockUI features={result.features} gridClassname={result.gridClassname} />
 
 
+    },
+    hero_block: async ({ node }: any) => {
+      return <div>Hero Block</div>
+    },
+    wrapper_block: async ({ node }: any) => {
+      return <div>Wrapper Block</div>
     },
     two_columns_block: async ({ node }: any) => {
       const type = node?.fields?.type

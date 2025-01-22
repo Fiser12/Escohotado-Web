@@ -32,7 +32,7 @@ import { migrations } from '@/migrations'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { HomePage } from '@/core/infrastructure/payload/globals/static_pages/home'
 import { uiCollections } from '@/core/infrastructure/payload/collections/ui'
-import { defaultLexical } from '@/core/infrastructure/payload/fields/defaultLexical'
+import { defaultLexical } from '@/ui/lexical/defaultLexical'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

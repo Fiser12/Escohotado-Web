@@ -1,7 +1,6 @@
 import { GridCardsBlock } from "@/ui/lexical/blocks/grid_cards_block";
 import { HeroBlock } from "@/ui/lexical/blocks/hero_block";
 import { GlobalConfig } from "payload";
-import { defaultLexical } from "../../../fields/defaultLexical";
 
 export const HomePage: GlobalConfig = {
     slug: 'home_page',
@@ -11,7 +10,6 @@ export const HomePage: GlobalConfig = {
       {
         name: 'content',
         type: 'richText',
-        editor: defaultLexical,
       }
     ]
   }
