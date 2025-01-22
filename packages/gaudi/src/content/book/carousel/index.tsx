@@ -42,7 +42,7 @@ export const CarouselBook = (props: Props) => {
   );
 
   return (
-    <div className='w-full flex flex-col pb-10 pt-20'>
+    <div className='w-full flex flex-col pb-10 pt-10'>
       <ContentWrapper>
         <div className="flex justify-between items-center">
         <H2 label={props.title}/>

@@ -37,19 +37,15 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
 
 type Props = {
   data: SerializedEditorState
-  enableGutter?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
 export function RichTextRenderer(props: Props) {
-  const { className, enableGutter = true, ...rest } = props
+  const { className, ...rest } = props
   return (
     <RichTextWithoutBlocks
       converters={jsxConverters}
       className={classNames(
-        {
-          'container ': enableGutter,
-          'max-w-none': !enableGutter,
-        },
+        "max-w-none",
         className,
       )}
       {...rest}

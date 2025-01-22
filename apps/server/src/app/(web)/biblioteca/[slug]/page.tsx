@@ -4,9 +4,9 @@ import { COLLECTION_SLUG_BOOK } from "@/payload/collections/config";
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { BookDetail } from "gaudi/server";
-
 import { Media } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/ui/book_variants_selector_nuqs";
+import { RichTextRenderer } from "@/lexical/RichTextRenderer";
 
 interface Props {
     params: {
@@ -43,12 +43,12 @@ const Page = async (props: Props) => {
         <BookDetail
             title={book.title ?? "No title"}
             description={book.description ?? "Empty"}
-            contentHtml={book.content_html ?? "<p>Empty</p>"}
             coverHref={(book.cover as Media)?.url ?? "#"}
             langs={['es', 'en']}
+            bookButtons={<BookVariantsSelectorNuqs options={options} />}
             link={book.Ediciones?.[0].link ?? "#"}
         >
-            <BookVariantsSelectorNuqs options={options} />
+            { book.content && <RichTextRenderer data={book.content} /> }
         </BookDetail>
     );
 };

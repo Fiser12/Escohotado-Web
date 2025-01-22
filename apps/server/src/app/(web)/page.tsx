@@ -10,7 +10,6 @@ const Page = async () => {
   return (
     <RichTextRenderer
       data={homeData.content}
-      enableGutter={false}
       className="h-full"
     />
   );
