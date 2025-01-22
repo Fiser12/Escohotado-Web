@@ -1,3 +1,5 @@
+import { HomeHero } from "gaudi/server"
+
 export const renderer = async ({ node }: any) => {
-    return <div>Hero Block</div>
+    return <HomeHero description={node.fields.description} buttons={node.fields.buttons}/>
 }

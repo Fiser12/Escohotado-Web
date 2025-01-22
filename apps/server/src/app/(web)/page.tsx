@@ -1,4 +1,3 @@
-import { HomePage } from "gaudi/server";
 import { getPayload } from "@/payload/utils/getPayload";
 import { RichTextRenderer } from "@/ui/lexical/RichTextRenderer";
 
@@ -9,7 +8,11 @@ const Page = async () => {
   })
 
   return (
-    <RichTextRenderer data={homeData.content!} enableGutter={false}  />
+    <RichTextRenderer 
+      data={homeData.content}
+      enableGutter={false} 
+      className="h-full"
+    />
   );
 };
 
