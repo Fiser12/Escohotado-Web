@@ -22,7 +22,7 @@ type Props = {
   className?: string;
 };
 
-export const SelectDropdown = (props: Props): JSX.Element => {
+export const SelectDropdown: React.FC<Props> = (props) => {
   const multiple = props.multiple ?? true;
   const onSelectedTagsChange = props.onSelectedTagsChange;
   const [isOpen, setIsOpen] = useState(false);

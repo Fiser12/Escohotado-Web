@@ -9,7 +9,7 @@ type Props = {
     className?: string;
 };
 
-export const SelectBox = (props: Props): JSX.Element => {
+export const SelectBox: React.FC<Props> = (props) => {
     const buttonClass = classNames(
         'relative min-[439px]:max-w-[200px] w-full h-[80px] flex flex-col justify-center items-center rounded border-[1.5px] font-body px-8 hover:bg-gray-light hover:border-primary-50 focus:bg-primary-50',
         props.className,

@@ -7,7 +7,7 @@ type Props = {
     applyText: (text: string) => void;
 };
 
-export const SearchBar = (props: Props): JSX.Element => {
+export const SearchBar: React.FC<Props> = (props) => {
     const [inputValue, setInputValue] = useState<string>(props.initialValue ?? "");
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);

@@ -10,7 +10,7 @@ type Props = {
     onClick: (id: string) => void
 }
 
-export const SelectBoxes = (props: Props): JSX.Element => {
+export const SelectBoxes: React.FC<Props> = (props) => {
     const gridClass = classNames(
         'w-full flex flex-col min-[469px]:flex-row gap-4'
     );

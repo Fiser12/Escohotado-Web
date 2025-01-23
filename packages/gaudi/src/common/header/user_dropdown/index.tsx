@@ -4,12 +4,12 @@ import { BasicMenu } from "../../menu";
 import { MenuSection, UserModel } from "hegel";
 import { UserIcon } from '../../icons/user_icon';
 
-export type Args = {
+export interface Props {
     user: UserModel
     menuSections: MenuSection[]
 }
 
-export const UserDropdown = ({ user, menuSections }: Args): JSX.Element => {
+export const UserDropdown: React.FC<Props> = ({ user, menuSections }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     function toggleMenu(changeTo?: boolean) {

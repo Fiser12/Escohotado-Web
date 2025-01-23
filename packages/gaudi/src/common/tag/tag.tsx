@@ -1,16 +1,16 @@
 import classNames from 'classnames';
 
-interface Args {
+interface Props {
     text: string;
     className?: string;
     variant?: 'light' | 'primary' | 'disabled';
 }
 
-export const Tag = ({
+export const Tag: React.FC<Props> = ({
     text,
     variant = 'primary',
     className = '',
-}: Args): JSX.Element => {
+}) => {
     const tagClass = classNames(
         'px-3 py-1 rounded flex justify-center items-center text-center font-body text-xs inline-flex min-w-14 text-primary-900',
         className,

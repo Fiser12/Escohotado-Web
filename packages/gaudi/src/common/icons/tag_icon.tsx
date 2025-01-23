@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 
-interface Args {
+interface Props {
     className?: string;
 }
 
-export const TagIcon = ({
+export const TagIcon: React.FC<Props> = ({
     className = '',
-}: Args): JSX.Element => {
+}) => {
     const iconClass = classNames(
         'h-4 w-4 stroke-current', 
         className,

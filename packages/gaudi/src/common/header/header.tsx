@@ -15,12 +15,12 @@ export interface Props {
     signOut: () => Promise<void>
 }
 
-export const Header = ({
+export const Header: React.FC<Props> = ({
     user,
     signIn,
     signOut,
     menuSections
-}: Props): JSX.Element => {
+}) => {
     const catalogoSections: MenuSection[] = [
         {
             items: [

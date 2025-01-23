@@ -21,6 +21,7 @@ export const ArticlePage = () => {
       className: "col-span-2",
       detailHref: "/article/prohibicionismo-libertad",
       id: "1",
+      isPdf: false,
       coverHref: "https://placehold.co/300x150?text=Prohibicionismo+Libertad",
       type: "article",
       href: "/article/prohibicionismo-libertad",
@@ -35,6 +36,7 @@ export const ArticlePage = () => {
       id: "2",
       coverHref: "https://placehold.co/300x150?text=Prohibicionismo+Libertad",
       type: "article",
+      isPdf: false,
       author: "Carlos Gómez",
       href: "/article/etica-y-politica-drogas",
       className: "col-span-2",
@@ -50,6 +52,7 @@ export const ArticlePage = () => {
       author: "María López",
       detailHref: "/article/legalizacion-justicia",
       className: "col-span-2",
+      isPdf: false,
       id: "3",
       type: "article",
       coverHref: "https://placehold.co/300x150?text=Justicia+Social",
@@ -65,6 +68,7 @@ export const ArticlePage = () => {
       detailHref: "/article/legalizacion-justicia",
       className: "col-span-2",
       author: "María López",
+      isPdf: false,
       coverHref: "https://placehold.co/300x150?text=Justicia+Social",
       href: "/article/legalizacion-justicia",
       categories: [
@@ -141,7 +145,7 @@ export const ArticlePage = () => {
       </div>
       <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="#" coverHref={handwrittenBackground.src}></HighlightSection>
       <div className="@container w-full pt-12.5">
-        <CarouselBook books={booksExample} />
+        <CarouselBook books={booksExample} title="Obras de Antonio Escohotado" />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
           <H2 label="Artículos"></H2>
           <div className="flex gap-3">

@@ -6,7 +6,7 @@ export type Props = {
       comment: string;
 }
 
-export const CommentCard = (props: Props): JSX.Element => {
+export const CommentCard: React.FC<Props> = (props) => {
 
       const contentData = classNames(
             'w-full flex flex-col sm:flex-row justify-start sm:justify-between items-start  sm:items-center pb-2'

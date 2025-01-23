@@ -1,13 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 
-interface Args {
+interface Props {
     className?: string;
 }
 
-export const ArrowLinkIcon = ({
+export const ArrowLinkIcon: React.FC<Props> = ({
     className = '',
-}: Args): JSX.Element => {
+}) => {
     const iconClass = classNames(
         'h-4 stroke-current',
         className,

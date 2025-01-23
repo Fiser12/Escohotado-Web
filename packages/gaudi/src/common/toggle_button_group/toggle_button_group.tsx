@@ -9,17 +9,17 @@ type ButtonOption = {
   sublabel?: string;
 };
 
-type Args = {
+interface Props {
   options: ButtonOption[];
   selected: string;
   setOption: (option: string) => void;
 };
 
-export const ToggleButtonGroup = ({
+export const ToggleButtonGroup: React.FC<Props> = ({
   options,
   selected,
   setOption,
-}: Args): JSX.Element => {
+}) => {
   
   const [activeIndex, setActiveIndex] = useState(
     options.map((option) => option.id).indexOf(selected)

@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 
-interface Args {
+interface Props {
     className?: string;
 }
 
-export const ESFlag = ({ className = '' }: Args): JSX.Element => {
+export const ESFlag: React.FC<Props> = ({ className = '' }) => {
     const iconClass = classNames('w-4', className);
 
     return (

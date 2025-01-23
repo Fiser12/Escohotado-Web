@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 
-interface Args {
+interface Props {
     className?: string;
 }
 
-export const UnlockIcon = ({
+export const UnlockIcon: React.FC<Props> = ({
     className = '',
-}: Args): JSX.Element => {
+}) => {
     const iconClass = classNames(
         className,
     );

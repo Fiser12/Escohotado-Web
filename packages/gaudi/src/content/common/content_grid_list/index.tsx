@@ -1,6 +1,6 @@
 interface Props<T> {
     items: T[];
-    renderBox: (item: T, index: number) => JSX.Element;
+    renderBox: (item: T, index: number) => React.ReactNode;
     gridCols?: string;
     gridColsSm?: string;
     gridColsMd?: string;
@@ -16,7 +16,7 @@ export const ContentGridList = <T,>({
     gridColsMd = "md:grid-cols-3",
     gridColsLg = "lg:grid-cols-4",
     gap = "gap-5"
-}: Props<T>): JSX.Element => {
+}: Props<T>): React.ReactNode => {
     return (
         <div className={`grid ${gridCols} ${gridColsSm} ${gridColsMd} ${gridColsLg} ${gap}`}>
             {items.map((item, index) => <div key={index}>

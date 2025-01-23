@@ -8,9 +8,9 @@ interface Props {
     subscription?: Subscription;
     currentPriceId: string;
 }
-export const SubscriptionButton = ({
+export const SubscriptionButton: React.FC<Props> = ({
     currentPriceId, subscription, href
-}: Props): JSX.Element => {
+}) => {
     const buttonAction = calculateButtonActionType(currentPriceId, subscription);
     const canceledDate = notNull(subscription?.canceledAt, (cancelAt) => new Date(cancelAt));
 

@@ -1,11 +1,11 @@
 import logo from '../../assets/svgs/signature.svg';
 
 
-type Args = {
+interface Props {
     tabindex?: number,
 }
 
-export const Logo = ({ tabindex }: Args): JSX.Element => {
+export const Logo: React.FC<Props> = ({ tabindex }) => {
     const homeUrl = '/';
 
     return (

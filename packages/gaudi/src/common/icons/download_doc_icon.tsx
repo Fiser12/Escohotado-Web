@@ -1,15 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
 
-interface Args {
+interface Props {
       className?: string;
       color?: 'default' | 'primary' | 'secondary';
 }
 
-export const DownloadDocIcon = ({
+export const DownloadDocIcon: React.FC<Props> = ({
       className = '',
       color = 'default',
-}: Args): JSX.Element => {
+}) => {
       const iconClass = classNames(
             'h-4',
             className,

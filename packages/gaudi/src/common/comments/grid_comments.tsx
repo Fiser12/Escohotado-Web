@@ -5,17 +5,17 @@ import { MainButton } from "../main_button/main_button";
 interface Props<T> {
       items: T[];
       forumTopicId?: string | null;
-      renderBox: (item: T, index: number) => JSX.Element;
+      renderBox: (item: T, index: number) => React.ReactNode;
 }
 
 const generateTopicHref = (forumTopicId: string) => {
       return `https://foro.laemboscadura.com/topic/${forumTopicId}`;
 }
-export const GridComments = <T,>({ 
+export const GridComments: React.FC<Props<any>> = ({ 
       items, 
       forumTopicId,
       renderBox, 
-}: Props<T>): JSX.Element => {
+}): React.ReactNode => {
       return (
             <div className="w-full pb-8">
                   <div className="w-full flex justify-between items-center pb-4 border-b border-gray-400 mb-7">

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-interface Args {
+interface Props {
     text: string;
     color?: 'primary' | 'secondary';
     type?: 'fill' | 'line';
@@ -9,13 +9,13 @@ interface Args {
     icon?: React.ReactNode;
 }
 
-export const MainButton = ({
+export const MainButton: React.FC<Props> = ({
     text,
     color = 'primary',
     type = 'fill',
     className = '',
     icon,
-}: Args): JSX.Element => {
+}) => {
     const buttonClass = classNames(
         'px-4 py-1.5 rounded flex justify-center items-center text-center font-body text-sm inline-flex min-w-24 max-w-52 cursor-pointer',
         className,

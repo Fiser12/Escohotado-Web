@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { H3 } from '../common/headers/H3';
 
-type Args = {
+interface Props {
   title: string;
   price: string;
   interval: 'day' | 'week' | 'month' | 'year';
@@ -11,14 +11,14 @@ type Args = {
   children?: React.ReactNode;
 };
 
-export const SubscriptionCard = ({
+export const SubscriptionCard: React.FC<Props> = ({
   title,
   price,
   interval,
   features,
   mainCard = false,
   children,
-}: Args): JSX.Element => {
+}) => {
   return (
     <div
       className={classNames(

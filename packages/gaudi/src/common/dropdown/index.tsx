@@ -3,13 +3,13 @@ import { useState } from "react";
 import { MenuSection } from "hegel";
 import { BasicMenu } from "../menu";
 
-export type Props = {
+export interface Props {
     text: string;
     menuSections: MenuSection[]
     icon?: React.ReactNode;
 }
 
-export const BasicDropdown = (props: Props): JSX.Element => {
+export const BasicDropdown: React.FC<Props> = (props) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     function toggleMenu(changeTo?: boolean) {

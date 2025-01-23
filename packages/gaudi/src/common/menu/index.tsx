@@ -3,14 +3,14 @@ import { MenuSection } from "hegel";
 import React from "react"
 import { useState } from "react"
 
-type Args = {
+interface Props {
     toggleMenu: (changeTo?: boolean) => void
     menuSections: MenuSection[]
 }
-export const BasicMenu = ({
+export const BasicMenu: React.FC<Props> = ({
     toggleMenu,
     menuSections
-}: Args): JSX.Element => {
+}) => {
 
     return (
         <div

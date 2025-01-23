@@ -1,13 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 
-interface Args {
+interface Props {
     className?: string;
 }
 
-export const HamburguerIcon = ({
+export const HamburguerIcon: React.FC<Props> = ({
     className = '',
-}: Args): JSX.Element => {
+}) => {
     const iconClass = classNames(
         'h-6 stroke-current text-primary-900',
         className,

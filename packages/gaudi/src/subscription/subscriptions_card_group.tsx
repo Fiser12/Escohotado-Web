@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { ToggleButtonGroup } from "../common/toggle_button_group/toggle_button_group";
 import { SubscriptionCard } from "./subscription_card";
 import { Interval, IntervalOptions } from "hegel";
@@ -48,11 +48,11 @@ interface Props {
     options: IntervalOptions[];
 }
 
-export const SubscriptionsGroupCard = ({
+export const SubscriptionsGroupCard: React.FC<Props> = ({
     products,
     subscription,
     options,
-}: Props): JSX.Element => {
+}) => {
     const [selected, setSelected] = useState(options[0]!.id);
 
     return (

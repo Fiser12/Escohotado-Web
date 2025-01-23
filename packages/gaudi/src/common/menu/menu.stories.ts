@@ -3,7 +3,7 @@ import { mockAdminUser, menuSectionsLoaderMock } from "hegel";
 import { BasicMenu } from ".";
 import storybookHelpers from "../../storybook-helpers";
 
-const meta = {
+const meta: Meta<typeof BasicMenu> = {
   title: "Molecules/Menu",
   component: BasicMenu,
   args: {
