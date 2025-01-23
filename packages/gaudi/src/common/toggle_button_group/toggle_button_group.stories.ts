@@ -14,7 +14,7 @@ const meta = {
     setOption: () => {},
   },
   parameters: {
-    layout: 'fullscreen',
+    layout: 'centered',
     design: {
       type: 'figspec',
       url: 'https://www.figma.com/file/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=490-2187&m=dev',

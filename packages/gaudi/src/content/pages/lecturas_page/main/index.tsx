@@ -8,7 +8,7 @@ import { HeadlineCard } from "../../../article/cards/article_headline_card";
 import { HighlightSection } from "../../../article/highlight/section_highlight";
 import { CarouselBook } from "../../../book/carousel";
 import handwrittenBackground from "../../../../assets/images/handwritting-bg.jpg";
-import smokeEscohotado from "../../../../assets/images/escohotado-articles-portada.png";
+import drinkEscohotado from "../../../../assets/images/antonio-escohotado-lecturas.png";
 import { GridCardsBlockContainer, renderFeatured } from "../../../featured_grid_home/GridCardsBlock";
 import { FeaturedArticleProps } from "../../home_page";
 
@@ -127,7 +127,7 @@ export const ArticlePage = () => {
           <H2 label="Últimos artículos"></H2>
           <div className="grid grid-cols-3 @max-md:grid-cols-1 items-center gap-4 md:gap-10">
             <img
-              src={smokeEscohotado.src}
+              src={drinkEscohotado.src}
               alt="Escohotado image"
               className="order-2 md:order-none"
             />
