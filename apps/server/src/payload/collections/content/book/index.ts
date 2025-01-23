@@ -1,3 +1,4 @@
+import { slugField } from '@/payload/fields/slug'
 import { COLLECTION_SLUG_BOOK } from '../../config'
 import { contentCollectionBuilder } from '../content_collection_builder'
 
@@ -13,13 +14,7 @@ export const book = contentCollectionBuilder({
       name: 'content',
       type: 'richText',
     },
-    {
-      label: 'Slug',
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-    },
+    ...slugField("title"),
     {
       type: "array",
       name: "Ediciones",

@@ -35,9 +35,6 @@ export interface Config {
     prices: {
       product: 'products';
     };
-    taxonomy: {
-      children: 'taxonomy';
-    };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
@@ -291,15 +288,19 @@ export interface Media {
 export interface Taxonomy {
   id: string;
   selectable?: boolean | null;
-  slug: string;
   singular_name: string;
   plural_name?: string | null;
-  seed?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   parent?: (string | null) | Taxonomy;
-  children?: {
-    docs?: (string | Taxonomy)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Taxonomy;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -316,7 +317,6 @@ export interface ArticlePdf {
   description?: string | null;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
-  seeds?: string | null;
   content?: {
     root: {
       type: string;
@@ -369,8 +369,8 @@ export interface ArticleWeb {
   description?: string | null;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
-  seeds?: string | null;
-  slug: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
   content?: {
     root: {
       type: string;
@@ -411,7 +411,6 @@ export interface Book {
   description?: string | null;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
-  seeds?: string | null;
   content?: {
     root: {
       type: string;
@@ -427,7 +426,8 @@ export interface Book {
     };
     [k: string]: unknown;
   } | null;
-  slug: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
   Ediciones?:
     | {
         link?: string | null;
@@ -488,6 +488,7 @@ export interface Video {
   title?: string | null;
   description?: string | null;
   publishedAt?: string | null;
+  categories?: (string | Taxonomy)[] | null;
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -804,12 +805,19 @@ export interface MediaSelect<T extends boolean = true> {
 export interface TaxonomySelect<T extends boolean = true> {
   id?: T;
   selectable?: T;
-  slug?: T;
   singular_name?: T;
   plural_name?: T;
-  seed?: T;
+  slug?: T;
+  slugLock?: T;
   parent?: T;
-  children?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -825,7 +833,6 @@ export interface ArticlePdfSelect<T extends boolean = true> {
   description?: T;
   publishedAt?: T;
   categories?: T;
-  seeds?: T;
   content?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
@@ -855,8 +862,8 @@ export interface ArticleWebSelect<T extends boolean = true> {
   description?: T;
   publishedAt?: T;
   categories?: T;
-  seeds?: T;
   slug?: T;
+  slugLock?: T;
   content?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
@@ -874,9 +881,9 @@ export interface BookSelect<T extends boolean = true> {
   description?: T;
   publishedAt?: T;
   categories?: T;
-  seeds?: T;
   content?: T;
   slug?: T;
+  slugLock?: T;
   Ediciones?:
     | T
     | {
@@ -906,6 +913,7 @@ export interface VideoSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   publishedAt?: T;
+  categories?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;

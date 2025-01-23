@@ -4,7 +4,7 @@ import {
   COLLECTION_SLUG_ARTICLE_WEB,
 } from '@/payload/collections/config'
 import { getPayload } from '@/payload/utils/getPayload'
-import { ArticlePdf, ArticleWeb, Book } from 'payload-types'
+import { ArticlePdf, ArticleWeb, Book, Taxonomy } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
@@ -78,9 +78,17 @@ export const getArticlesQuery = async (
       (a, b) => new Date(b.publishedAt ?? '0').getTime() - new Date(a.publishedAt ?? '0').getTime(),
     )
     .filter((article) => {
-      const evalAutorFilter = autor === null || article.seeds?.includes(autor)
+      const evalAutorFilter = autor == null || autor == "" || article.categories
+        ?.map(cat => cat as Taxonomy)
+        ?.map(cat => {
+          return cat
+        })
+        ?.some(cat => cat.breadcrumbs?.map(t => t.url).includes(autor))
       const evalMedioFilter =
-        medios.length === 0 || medios.every((seed) => article.seeds?.includes(seed))
+        medios.length === 0 || medios.every((mediosSeed) => article.categories
+        ?.map(cat => cat as Taxonomy)
+        ?.some(cat => cat.breadcrumbs?.map(t => t.url).includes(mediosSeed))
+      )
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||

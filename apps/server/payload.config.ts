@@ -23,6 +23,7 @@ import {
   COLLECTION_SLUG_ARTICLE_WEB,
   COLLECTION_SLUG_BOOK,
 } from '@/payload/collections/config'
+import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
 import * as Sentry from '@sentry/nextjs'
 import { S3_PLUGIN_CONFIG } from '@/payload/plugins/s3'
@@ -63,6 +64,10 @@ export default buildConfig({
       isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test'),
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
+    }),
+    nestedDocsPlugin({
+      collections: ['taxonomy'],
+      generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ''),
     }),
     authjsPlugin({ authjsConfig: authConfig }) as any,
     sentryPlugin({ Sentry }),

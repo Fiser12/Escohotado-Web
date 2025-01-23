@@ -9,18 +9,14 @@ export async function MedioBarSSR(props: Props) {
 	const payload = await getPayload();
 	const taxonomies = await payload.find({
 		collection: COLLECTION_SLUG_TAXONOMY,
-		pagination: false,
-		where: {
-			and: [
-				{ selectable: { equals: true } },
-				{ seed: { contains: 'medio' } }
-			]
-		}
+		pagination: false
 	})
 	const tagsAsRecord: Record<string, { label: string }> = {};
-	taxonomies.docs.forEach((taxonomy) => {
-		if (taxonomy.seed)
-			tagsAsRecord[taxonomy.seed] = { label: taxonomy.plural_name ?? taxonomy.singular_name };
+	taxonomies.docs
+	.filter(taxonomy => taxonomy.breadcrumbs?.some(breadcrumb => breadcrumb.url?.includes("medio/")))
+	.forEach((taxonomy) => {
+		if (taxonomy.slug)
+			tagsAsRecord[taxonomy.slug] = { label: taxonomy.plural_name ?? taxonomy.singular_name };
 	});
 
 	return (

@@ -5,16 +5,9 @@ import {
 } from '@/payload/fields/permissions/permissionsRelationshipFields'
 import { COLLECTION_SLUG_MEDIA } from '../config'
 import { checkReadPermissions, isAdmin } from '../../fields/permissions/accessEvaluations'
-import { taxonomiesRelationshipBuilder } from '../../fields/taxonomies/taxonomiesRelationshipFields'
+import { taxonomyRelationship } from '../../fields/taxonomies/taxonomiesRelationshipFields'
 import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
 
-export const categoriesRelationship = taxonomiesRelationshipBuilder({
-  relationship: {
-    name: 'categories',
-    label: 'Categorías',
-  },
-  seeds: { name: 'seeds', label: 'Semillas de categorías' },
-})
 
 export function contentWithPermissionsCollectionBuilder(
   config: Partial<CollectionConfig> & { slug: string },
@@ -30,7 +23,7 @@ export function contentWithPermissionsCollectionBuilder(
     },
     hooks: {
       ...contentCollection.hooks,
-      beforeChange: [...contentCollection.hooks!.beforeChange!, cachePermissionSeedsHook()],
+      beforeChange: [...(contentCollection.hooks?.beforeChange ?? []), cachePermissionSeedsHook()],
     },
     fields: [...permissionRelationship(), ...(contentCollection.fields ?? [])],
   }
@@ -59,8 +52,7 @@ export function contentCollectionBuilder(
     },
 
     hooks: {
-      ...config.hooks,
-      beforeChange: [categoriesRelationship.hook],
+      ...config.hooks
     },
     fields: [
       {
@@ -89,7 +81,7 @@ export function contentCollectionBuilder(
         label: 'Fecha de publicación',
         type: 'date',
       },
-      ...categoriesRelationship.fields,
+      taxonomyRelationship,
       ...(config.fields ?? []),
       forumPostsCacheField,
     ],

@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_TAXONOMY } from '../config'
-import { populateSeedHook } from './populateSeedHook'
 import { v4 as uuid_v4 } from 'uuid'
 import { isAnyone, isAdmin } from '../../fields/permissions/accessEvaluations'
+import { slugField } from '@/payload/fields/slug'
 
 const taxonomy: CollectionConfig = {
   slug: COLLECTION_SLUG_TAXONOMY,
@@ -20,9 +20,6 @@ const taxonomy: CollectionConfig = {
     useAsTitle: 'singular_name',
     group: 'Contenido'
   },
-  hooks: {
-    beforeChange: [populateSeedHook],
-  },
   fields: [
     {
       name: 'id',
@@ -34,12 +31,6 @@ const taxonomy: CollectionConfig = {
       name: 'selectable',
       type: 'checkbox',
       defaultValue: true,
-    },
-    {
-      name: 'slug',
-      unique: true,
-      type: 'text',
-      required: true,
     },
     {
       name: 'singular_name',
@@ -55,24 +46,7 @@ const taxonomy: CollectionConfig = {
       localized: true,
       required: false,
     },
-    {
-      name: 'seed',
-      type: 'text',
-      admin: { position: 'sidebar', readOnly: true },
-    },
-    {
-      name: 'parent',
-      type: 'relationship',
-      relationTo: COLLECTION_SLUG_TAXONOMY,
-      hasMany: false,
-      required: false,
-    },
-    {
-      name: 'children',
-      type: 'join',
-      collection: COLLECTION_SLUG_TAXONOMY,
-      on: 'parent',
-    },
+    ...slugField("singular_name")
   ],
 }
 

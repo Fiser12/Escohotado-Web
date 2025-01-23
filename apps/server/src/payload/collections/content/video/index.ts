@@ -8,6 +8,7 @@ import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations
 
 import { getYoutubeVideoMetadataHook } from '../../../hooks/video/getYoutubeMetadataHook'
 import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
+import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()
 export const video: CollectionConfig = {
@@ -108,6 +109,7 @@ export const video: CollectionConfig = {
         readOnly: true,
       },
     },
+    taxonomyRelationship,
     forumPostsCacheField,
   ],
 }
