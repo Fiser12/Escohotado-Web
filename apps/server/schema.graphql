@@ -1,62 +1,72 @@
 type Query {
   User(id: String!, draft: Boolean): User
-  Users(draft: Boolean, where: User_where, limit: Int, page: Int, sort: String): Users
+  Users(draft: Boolean, where: User_where, limit: Int, page: Int, pagination: Boolean, sort: String): Users
   countUsers(draft: Boolean, where: User_where): countUsers
   docAccessUser(id: String!): usersDocAccess
   meUser: usersMe
   initializedUser: Boolean
   Price(id: String!, draft: Boolean): Price
-  Prices(draft: Boolean, where: Price_where, limit: Int, page: Int, sort: String): Prices
+  Prices(draft: Boolean, where: Price_where, limit: Int, page: Int, pagination: Boolean, sort: String): Prices
   countPrices(draft: Boolean, where: Price_where): countPrices
   docAccessPrice(id: String!): pricesDocAccess
   Product(id: String!, draft: Boolean): Product
-  Products(draft: Boolean, where: Product_where, limit: Int, page: Int, sort: String): Products
+  Products(draft: Boolean, where: Product_where, limit: Int, page: Int, pagination: Boolean, sort: String): Products
   countProducts(draft: Boolean, where: Product_where): countProducts
   docAccessProduct(id: String!): productsDocAccess
   Subscription(id: String!, draft: Boolean): Subscription
-  Subscriptions(draft: Boolean, where: Subscription_where, limit: Int, page: Int, sort: String): Subscriptions
+  Subscriptions(draft: Boolean, where: Subscription_where, limit: Int, page: Int, pagination: Boolean, sort: String): Subscriptions
   countSubscriptions(draft: Boolean, where: Subscription_where): countSubscriptions
   docAccessSubscription(id: String!): subscriptionsDocAccess
   Media(id: String!, draft: Boolean): Media
-  allMedia(draft: Boolean, where: Media_where, limit: Int, page: Int, sort: String): allMedia
+  allMedia(draft: Boolean, where: Media_where, limit: Int, page: Int, pagination: Boolean, sort: String): allMedia
   countallMedia(draft: Boolean, where: Media_where): countallMedia
   docAccessMedia(id: String!): mediaDocAccess
   Taxonomy(id: String!, draft: Boolean): Taxonomy
-  Taxonomies(draft: Boolean, where: Taxonomy_where, limit: Int, page: Int, sort: String): Taxonomies
+  Taxonomies(draft: Boolean, where: Taxonomy_where, limit: Int, page: Int, pagination: Boolean, sort: String): Taxonomies
   countTaxonomies(draft: Boolean, where: Taxonomy_where): countTaxonomies
   docAccessTaxonomy(id: String!): taxonomyDocAccess
   Article_pdf(id: String!, draft: Boolean): Article_pdf
-  Article_pdfs(draft: Boolean, where: Article_pdf_where, limit: Int, page: Int, sort: String): Article_pdfs
+  Article_pdfs(draft: Boolean, where: Article_pdf_where, limit: Int, page: Int, pagination: Boolean, sort: String): Article_pdfs
   countArticle_pdfs(draft: Boolean, where: Article_pdf_where): countArticle_pdfs
   docAccessArticle_pdf(id: String!): article_pdfDocAccess
   Article_web(id: String!, draft: Boolean): Article_web
-  Article_webs(draft: Boolean, where: Article_web_where, limit: Int, page: Int, sort: String): Article_webs
+  Article_webs(draft: Boolean, where: Article_web_where, limit: Int, page: Int, pagination: Boolean, sort: String): Article_webs
   countArticle_webs(draft: Boolean, where: Article_web_where): countArticle_webs
   docAccessArticle_web(id: String!): article_webDocAccess
   Book(id: String!, draft: Boolean): Book
-  Books(draft: Boolean, where: Book_where, limit: Int, page: Int, sort: String): Books
+  Books(draft: Boolean, where: Book_where, limit: Int, page: Int, pagination: Boolean, sort: String): Books
   countBooks(draft: Boolean, where: Book_where): countBooks
   docAccessBook(id: String!): bookDocAccess
   Video(id: String!, draft: Boolean): Video
-  Videos(draft: Boolean, where: Video_where, limit: Int, page: Int, sort: String): Videos
+  Videos(draft: Boolean, where: Video_where, limit: Int, page: Int, pagination: Boolean, sort: String): Videos
   countVideos(draft: Boolean, where: Video_where): countVideos
   docAccessVideo(id: String!): videoDocAccess
+  Ui_grid_card(id: String!, draft: Boolean): Ui_grid_card
+  Ui_grid_cards(draft: Boolean, where: Ui_grid_card_where, limit: Int, page: Int, pagination: Boolean, sort: String): Ui_grid_cards
+  countUi_grid_cards(draft: Boolean, where: Ui_grid_card_where): countUi_grid_cards
+  docAccessUi_grid_card(id: String!): ui_grid_cardsDocAccess
   Permission(id: String!, draft: Boolean): Permission
-  Permissions(draft: Boolean, where: Permission_where, limit: Int, page: Int, sort: String): Permissions
+  Permissions(draft: Boolean, where: Permission_where, limit: Int, page: Int, pagination: Boolean, sort: String): Permissions
   countPermissions(draft: Boolean, where: Permission_where): countPermissions
   docAccessPermission(id: String!): permissionDocAccess
   SearchResult(id: String!, draft: Boolean): SearchResult
-  SearchResults(draft: Boolean, where: SearchResult_where, limit: Int, page: Int, sort: String): SearchResults
+  SearchResults(draft: Boolean, where: SearchResult_where, limit: Int, page: Int, pagination: Boolean, sort: String): SearchResults
   countSearchResults(draft: Boolean, where: SearchResult_where): countSearchResults
   docAccessSearchResult(id: String!): search_resultsDocAccess
   PayloadLockedDocument(id: String!, draft: Boolean): PayloadLockedDocument
-  PayloadLockedDocuments(draft: Boolean, where: PayloadLockedDocument_where, limit: Int, page: Int, sort: String): PayloadLockedDocuments
+  PayloadLockedDocuments(draft: Boolean, where: PayloadLockedDocument_where, limit: Int, page: Int, pagination: Boolean, sort: String): PayloadLockedDocuments
   countPayloadLockedDocuments(draft: Boolean, where: PayloadLockedDocument_where): countPayloadLockedDocuments
   docAccessPayloadLockedDocument(id: String!): payload_locked_documentsDocAccess
   PayloadPreference(id: String!, draft: Boolean): PayloadPreference
-  PayloadPreferences(draft: Boolean, where: PayloadPreference_where, limit: Int, page: Int, sort: String): PayloadPreferences
+  PayloadPreferences(draft: Boolean, where: PayloadPreference_where, limit: Int, page: Int, pagination: Boolean, sort: String): PayloadPreferences
   countPayloadPreferences(draft: Boolean, where: PayloadPreference_where): countPayloadPreferences
   docAccessPayloadPreference(id: String!): payload_preferencesDocAccess
+  Articulos_page(draft: Boolean): Articulos_page
+  docAccessArticulos_page: articulos_pageDocAccess
+  Home_page(draft: Boolean): Home_page
+  docAccessHome_page: home_pageDocAccess
+  Videos_page(draft: Boolean): Videos_page
+  docAccessVideos_page: videos_pageDocAccess
   Access: Access
 }
 
@@ -4557,11 +4567,15 @@ type Article_pdf {
   permissions: [Permission!]
   permissions_seeds: String
   cover: Media!
-  title: String
+  title: String!
   description: String
-  publishedAt: DateTime!
+  publishedAt: DateTime
   categories: [Taxonomy!]
   seeds: String
+  content(depth: Int): JSON
+  forum_post_id: String
+  last_forum_sync: DateTime
+  last_forum_posts: JSON
   prefix: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -4599,6 +4613,10 @@ input Article_pdf_where {
   publishedAt: Article_pdf_publishedAt_operator
   categories: Article_pdf_categories_operator
   seeds: Article_pdf_seeds_operator
+  content: Article_pdf_content_operator
+  forum_post_id: Article_pdf_forum_post_id_operator
+  last_forum_sync: Article_pdf_last_forum_sync_operator
+  last_forum_posts: Article_pdf_last_forum_posts_operator
   prefix: Article_pdf_prefix_operator
   updatedAt: Article_pdf_updatedAt_operator
   createdAt: Article_pdf_createdAt_operator
@@ -4652,7 +4670,6 @@ input Article_pdf_title_operator {
   in: [String]
   not_in: [String]
   all: [String]
-  exists: Boolean
 }
 
 input Article_pdf_description_operator {
@@ -4671,6 +4688,7 @@ input Article_pdf_publishedAt_operator {
   less_than_equal: DateTime
   less_than: DateTime
   like: DateTime
+  exists: Boolean
 }
 
 input Article_pdf_categories_operator {
@@ -4690,6 +4708,46 @@ input Article_pdf_seeds_operator {
   in: [String]
   not_in: [String]
   all: [String]
+  exists: Boolean
+}
+
+input Article_pdf_content_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  exists: Boolean
+}
+
+input Article_pdf_forum_post_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Article_pdf_last_forum_sync_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Article_pdf_last_forum_posts_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  within: JSON
+  intersects: JSON
   exists: Boolean
 }
 
@@ -4840,6 +4898,10 @@ input Article_pdf_where_and {
   publishedAt: Article_pdf_publishedAt_operator
   categories: Article_pdf_categories_operator
   seeds: Article_pdf_seeds_operator
+  content: Article_pdf_content_operator
+  forum_post_id: Article_pdf_forum_post_id_operator
+  last_forum_sync: Article_pdf_last_forum_sync_operator
+  last_forum_posts: Article_pdf_last_forum_posts_operator
   prefix: Article_pdf_prefix_operator
   updatedAt: Article_pdf_updatedAt_operator
   createdAt: Article_pdf_createdAt_operator
@@ -4866,6 +4928,10 @@ input Article_pdf_where_or {
   publishedAt: Article_pdf_publishedAt_operator
   categories: Article_pdf_categories_operator
   seeds: Article_pdf_seeds_operator
+  content: Article_pdf_content_operator
+  forum_post_id: Article_pdf_forum_post_id_operator
+  last_forum_sync: Article_pdf_last_forum_sync_operator
+  last_forum_posts: Article_pdf_last_forum_posts_operator
   prefix: Article_pdf_prefix_operator
   updatedAt: Article_pdf_updatedAt_operator
   createdAt: Article_pdf_createdAt_operator
@@ -4904,6 +4970,10 @@ type Article_pdfDocAccessFields {
   publishedAt: Article_pdfDocAccessFields_publishedAt
   categories: Article_pdfDocAccessFields_categories
   seeds: Article_pdfDocAccessFields_seeds
+  content: Article_pdfDocAccessFields_content
+  forum_post_id: Article_pdfDocAccessFields_forum_post_id
+  last_forum_sync: Article_pdfDocAccessFields_last_forum_sync
+  last_forum_posts: Article_pdfDocAccessFields_last_forum_posts
   prefix: Article_pdfDocAccessFields_prefix
   updatedAt: Article_pdfDocAccessFields_updatedAt
   createdAt: Article_pdfDocAccessFields_createdAt
@@ -5099,6 +5169,98 @@ type Article_pdfDocAccessFields_seeds_Update {
 }
 
 type Article_pdfDocAccessFields_seeds_Delete {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_content {
+  create: Article_pdfDocAccessFields_content_Create
+  read: Article_pdfDocAccessFields_content_Read
+  update: Article_pdfDocAccessFields_content_Update
+  delete: Article_pdfDocAccessFields_content_Delete
+}
+
+type Article_pdfDocAccessFields_content_Create {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_content_Read {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_content_Update {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_content_Delete {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_forum_post_id {
+  create: Article_pdfDocAccessFields_forum_post_id_Create
+  read: Article_pdfDocAccessFields_forum_post_id_Read
+  update: Article_pdfDocAccessFields_forum_post_id_Update
+  delete: Article_pdfDocAccessFields_forum_post_id_Delete
+}
+
+type Article_pdfDocAccessFields_forum_post_id_Create {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_forum_post_id_Read {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_forum_post_id_Update {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_forum_post_id_Delete {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_last_forum_sync {
+  create: Article_pdfDocAccessFields_last_forum_sync_Create
+  read: Article_pdfDocAccessFields_last_forum_sync_Read
+  update: Article_pdfDocAccessFields_last_forum_sync_Update
+  delete: Article_pdfDocAccessFields_last_forum_sync_Delete
+}
+
+type Article_pdfDocAccessFields_last_forum_sync_Create {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_last_forum_sync_Read {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_last_forum_sync_Update {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_last_forum_sync_Delete {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_last_forum_posts {
+  create: Article_pdfDocAccessFields_last_forum_posts_Create
+  read: Article_pdfDocAccessFields_last_forum_posts_Read
+  update: Article_pdfDocAccessFields_last_forum_posts_Update
+  delete: Article_pdfDocAccessFields_last_forum_posts_Delete
+}
+
+type Article_pdfDocAccessFields_last_forum_posts_Create {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_last_forum_posts_Read {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_last_forum_posts_Update {
+  permission: Boolean!
+}
+
+type Article_pdfDocAccessFields_last_forum_posts_Delete {
   permission: Boolean!
 }
 
@@ -5403,14 +5565,16 @@ type Article_web {
   permissions: [Permission!]
   permissions_seeds: String
   cover: Media!
-  title: String
+  title: String!
   description: String
-  publishedAt: DateTime!
+  publishedAt: DateTime
   categories: [Taxonomy!]
   seeds: String
   slug: String!
   content(depth: Int): JSON
-  content_html: String
+  forum_post_id: String
+  last_forum_sync: DateTime
+  last_forum_posts: JSON
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -5440,7 +5604,9 @@ input Article_web_where {
   seeds: Article_web_seeds_operator
   slug: Article_web_slug_operator
   content: Article_web_content_operator
-  content_html: Article_web_content_html_operator
+  forum_post_id: Article_web_forum_post_id_operator
+  last_forum_sync: Article_web_last_forum_sync_operator
+  last_forum_posts: Article_web_last_forum_posts_operator
   updatedAt: Article_web_updatedAt_operator
   createdAt: Article_web_createdAt_operator
   id: Article_web_id_operator
@@ -5484,7 +5650,6 @@ input Article_web_title_operator {
   in: [String]
   not_in: [String]
   all: [String]
-  exists: Boolean
 }
 
 input Article_web_description_operator {
@@ -5503,6 +5668,7 @@ input Article_web_publishedAt_operator {
   less_than_equal: DateTime
   less_than: DateTime
   like: DateTime
+  exists: Boolean
 }
 
 input Article_web_categories_operator {
@@ -5543,11 +5709,35 @@ input Article_web_content_operator {
   exists: Boolean
 }
 
-input Article_web_content_html_operator {
+input Article_web_forum_post_id_operator {
   equals: String
   not_equals: String
   like: String
   contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Article_web_last_forum_sync_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Article_web_last_forum_posts_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  within: JSON
+  intersects: JSON
   exists: Boolean
 }
 
@@ -5595,7 +5785,9 @@ input Article_web_where_and {
   seeds: Article_web_seeds_operator
   slug: Article_web_slug_operator
   content: Article_web_content_operator
-  content_html: Article_web_content_html_operator
+  forum_post_id: Article_web_forum_post_id_operator
+  last_forum_sync: Article_web_last_forum_sync_operator
+  last_forum_posts: Article_web_last_forum_posts_operator
   updatedAt: Article_web_updatedAt_operator
   createdAt: Article_web_createdAt_operator
   id: Article_web_id_operator
@@ -5614,7 +5806,9 @@ input Article_web_where_or {
   seeds: Article_web_seeds_operator
   slug: Article_web_slug_operator
   content: Article_web_content_operator
-  content_html: Article_web_content_html_operator
+  forum_post_id: Article_web_forum_post_id_operator
+  last_forum_sync: Article_web_last_forum_sync_operator
+  last_forum_posts: Article_web_last_forum_posts_operator
   updatedAt: Article_web_updatedAt_operator
   createdAt: Article_web_createdAt_operator
   id: Article_web_id_operator
@@ -5645,7 +5839,9 @@ type Article_webDocAccessFields {
   seeds: Article_webDocAccessFields_seeds
   slug: Article_webDocAccessFields_slug
   content: Article_webDocAccessFields_content
-  content_html: Article_webDocAccessFields_content_html
+  forum_post_id: Article_webDocAccessFields_forum_post_id
+  last_forum_sync: Article_webDocAccessFields_last_forum_sync
+  last_forum_posts: Article_webDocAccessFields_last_forum_posts
   updatedAt: Article_webDocAccessFields_updatedAt
   createdAt: Article_webDocAccessFields_createdAt
 }
@@ -5880,26 +6076,72 @@ type Article_webDocAccessFields_content_Delete {
   permission: Boolean!
 }
 
-type Article_webDocAccessFields_content_html {
-  create: Article_webDocAccessFields_content_html_Create
-  read: Article_webDocAccessFields_content_html_Read
-  update: Article_webDocAccessFields_content_html_Update
-  delete: Article_webDocAccessFields_content_html_Delete
+type Article_webDocAccessFields_forum_post_id {
+  create: Article_webDocAccessFields_forum_post_id_Create
+  read: Article_webDocAccessFields_forum_post_id_Read
+  update: Article_webDocAccessFields_forum_post_id_Update
+  delete: Article_webDocAccessFields_forum_post_id_Delete
 }
 
-type Article_webDocAccessFields_content_html_Create {
+type Article_webDocAccessFields_forum_post_id_Create {
   permission: Boolean!
 }
 
-type Article_webDocAccessFields_content_html_Read {
+type Article_webDocAccessFields_forum_post_id_Read {
   permission: Boolean!
 }
 
-type Article_webDocAccessFields_content_html_Update {
+type Article_webDocAccessFields_forum_post_id_Update {
   permission: Boolean!
 }
 
-type Article_webDocAccessFields_content_html_Delete {
+type Article_webDocAccessFields_forum_post_id_Delete {
+  permission: Boolean!
+}
+
+type Article_webDocAccessFields_last_forum_sync {
+  create: Article_webDocAccessFields_last_forum_sync_Create
+  read: Article_webDocAccessFields_last_forum_sync_Read
+  update: Article_webDocAccessFields_last_forum_sync_Update
+  delete: Article_webDocAccessFields_last_forum_sync_Delete
+}
+
+type Article_webDocAccessFields_last_forum_sync_Create {
+  permission: Boolean!
+}
+
+type Article_webDocAccessFields_last_forum_sync_Read {
+  permission: Boolean!
+}
+
+type Article_webDocAccessFields_last_forum_sync_Update {
+  permission: Boolean!
+}
+
+type Article_webDocAccessFields_last_forum_sync_Delete {
+  permission: Boolean!
+}
+
+type Article_webDocAccessFields_last_forum_posts {
+  create: Article_webDocAccessFields_last_forum_posts_Create
+  read: Article_webDocAccessFields_last_forum_posts_Read
+  update: Article_webDocAccessFields_last_forum_posts_Update
+  delete: Article_webDocAccessFields_last_forum_posts_Delete
+}
+
+type Article_webDocAccessFields_last_forum_posts_Create {
+  permission: Boolean!
+}
+
+type Article_webDocAccessFields_last_forum_posts_Read {
+  permission: Boolean!
+}
+
+type Article_webDocAccessFields_last_forum_posts_Update {
+  permission: Boolean!
+}
+
+type Article_webDocAccessFields_last_forum_posts_Delete {
   permission: Boolean!
 }
 
@@ -5972,15 +6214,17 @@ type Article_webDeleteDocAccess {
 type Book {
   id: String!
   cover: Media!
-  title: String
+  title: String!
   description: String
-  publishedAt: DateTime!
+  publishedAt: DateTime
   categories: [Taxonomy!]
   seeds: String
   content(depth: Int): JSON
-  content_html: String
   slug: String!
   Ediciones: [Book_Ediciones!]
+  forum_post_id: String
+  last_forum_sync: DateTime
+  last_forum_posts: JSON
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -6025,12 +6269,14 @@ input Book_where {
   categories: Book_categories_operator
   seeds: Book_seeds_operator
   content: Book_content_operator
-  content_html: Book_content_html_operator
   slug: Book_slug_operator
   Ediciones__link: Book_Ediciones__link_operator
   Ediciones__variant: Book_Ediciones__variant_operator
   Ediciones__language: Book_Ediciones__language_operator
   Ediciones__id: Book_Ediciones__id_operator
+  forum_post_id: Book_forum_post_id_operator
+  last_forum_sync: Book_last_forum_sync_operator
+  last_forum_posts: Book_last_forum_posts_operator
   updatedAt: Book_updatedAt_operator
   createdAt: Book_createdAt_operator
   id: Book_id_operator
@@ -6054,7 +6300,6 @@ input Book_title_operator {
   in: [String]
   not_in: [String]
   all: [String]
-  exists: Boolean
 }
 
 input Book_description_operator {
@@ -6073,6 +6318,7 @@ input Book_publishedAt_operator {
   less_than_equal: DateTime
   less_than: DateTime
   like: DateTime
+  exists: Boolean
 }
 
 input Book_categories_operator {
@@ -6100,14 +6346,6 @@ input Book_content_operator {
   not_equals: JSON
   like: JSON
   contains: JSON
-  exists: Boolean
-}
-
-input Book_content_html_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
   exists: Boolean
 }
 
@@ -6172,6 +6410,38 @@ input Book_Ediciones__id_operator {
   exists: Boolean
 }
 
+input Book_forum_post_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Book_last_forum_sync_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Book_last_forum_posts_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  within: JSON
+  intersects: JSON
+  exists: Boolean
+}
+
 input Book_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
@@ -6213,12 +6483,14 @@ input Book_where_and {
   categories: Book_categories_operator
   seeds: Book_seeds_operator
   content: Book_content_operator
-  content_html: Book_content_html_operator
   slug: Book_slug_operator
   Ediciones__link: Book_Ediciones__link_operator
   Ediciones__variant: Book_Ediciones__variant_operator
   Ediciones__language: Book_Ediciones__language_operator
   Ediciones__id: Book_Ediciones__id_operator
+  forum_post_id: Book_forum_post_id_operator
+  last_forum_sync: Book_last_forum_sync_operator
+  last_forum_posts: Book_last_forum_posts_operator
   updatedAt: Book_updatedAt_operator
   createdAt: Book_createdAt_operator
   id: Book_id_operator
@@ -6234,12 +6506,14 @@ input Book_where_or {
   categories: Book_categories_operator
   seeds: Book_seeds_operator
   content: Book_content_operator
-  content_html: Book_content_html_operator
   slug: Book_slug_operator
   Ediciones__link: Book_Ediciones__link_operator
   Ediciones__variant: Book_Ediciones__variant_operator
   Ediciones__language: Book_Ediciones__language_operator
   Ediciones__id: Book_Ediciones__id_operator
+  forum_post_id: Book_forum_post_id_operator
+  last_forum_sync: Book_last_forum_sync_operator
+  last_forum_posts: Book_last_forum_posts_operator
   updatedAt: Book_updatedAt_operator
   createdAt: Book_createdAt_operator
   id: Book_id_operator
@@ -6267,9 +6541,11 @@ type BookDocAccessFields {
   categories: BookDocAccessFields_categories
   seeds: BookDocAccessFields_seeds
   content: BookDocAccessFields_content
-  content_html: BookDocAccessFields_content_html
   slug: BookDocAccessFields_slug
   Ediciones: BookDocAccessFields_Ediciones
+  forum_post_id: BookDocAccessFields_forum_post_id
+  last_forum_sync: BookDocAccessFields_last_forum_sync
+  last_forum_posts: BookDocAccessFields_last_forum_posts
   updatedAt: BookDocAccessFields_updatedAt
   createdAt: BookDocAccessFields_createdAt
 }
@@ -6435,29 +6711,6 @@ type BookDocAccessFields_content_Delete {
   permission: Boolean!
 }
 
-type BookDocAccessFields_content_html {
-  create: BookDocAccessFields_content_html_Create
-  read: BookDocAccessFields_content_html_Read
-  update: BookDocAccessFields_content_html_Update
-  delete: BookDocAccessFields_content_html_Delete
-}
-
-type BookDocAccessFields_content_html_Create {
-  permission: Boolean!
-}
-
-type BookDocAccessFields_content_html_Read {
-  permission: Boolean!
-}
-
-type BookDocAccessFields_content_html_Update {
-  permission: Boolean!
-}
-
-type BookDocAccessFields_content_html_Delete {
-  permission: Boolean!
-}
-
 type BookDocAccessFields_slug {
   create: BookDocAccessFields_slug_Create
   read: BookDocAccessFields_slug_Read
@@ -6604,6 +6857,75 @@ type BookDocAccessFields_Ediciones_id_Delete {
   permission: Boolean!
 }
 
+type BookDocAccessFields_forum_post_id {
+  create: BookDocAccessFields_forum_post_id_Create
+  read: BookDocAccessFields_forum_post_id_Read
+  update: BookDocAccessFields_forum_post_id_Update
+  delete: BookDocAccessFields_forum_post_id_Delete
+}
+
+type BookDocAccessFields_forum_post_id_Create {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_forum_post_id_Read {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_forum_post_id_Update {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_forum_post_id_Delete {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_last_forum_sync {
+  create: BookDocAccessFields_last_forum_sync_Create
+  read: BookDocAccessFields_last_forum_sync_Read
+  update: BookDocAccessFields_last_forum_sync_Update
+  delete: BookDocAccessFields_last_forum_sync_Delete
+}
+
+type BookDocAccessFields_last_forum_sync_Create {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_last_forum_sync_Read {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_last_forum_sync_Update {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_last_forum_sync_Delete {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_last_forum_posts {
+  create: BookDocAccessFields_last_forum_posts_Create
+  read: BookDocAccessFields_last_forum_posts_Read
+  update: BookDocAccessFields_last_forum_posts_Update
+  delete: BookDocAccessFields_last_forum_posts_Delete
+}
+
+type BookDocAccessFields_last_forum_posts_Create {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_last_forum_posts_Read {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_last_forum_posts_Update {
+  permission: Boolean!
+}
+
+type BookDocAccessFields_last_forum_posts_Delete {
+  permission: Boolean!
+}
+
 type BookDocAccessFields_updatedAt {
   create: BookDocAccessFields_updatedAt_Create
   read: BookDocAccessFields_updatedAt_Read
@@ -6672,6 +6994,7 @@ type BookDeleteDocAccess {
 
 type Video {
   id: String!
+  content(depth: Int): JSON
   url: String!
   permissions: [Permission!]
   url_free: String
@@ -6681,6 +7004,9 @@ type Video {
   title: String
   description: String
   publishedAt: DateTime
+  forum_post_id: String
+  last_forum_sync: DateTime
+  last_forum_posts: JSON
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -6700,6 +7026,7 @@ type Videos {
 }
 
 input Video_where {
+  content: Video_content_operator
   url: Video_url_operator
   permissions: Video_permissions_operator
   url_free: Video_url_free_operator
@@ -6709,11 +7036,22 @@ input Video_where {
   title: Video_title_operator
   description: Video_description_operator
   publishedAt: Video_publishedAt_operator
+  forum_post_id: Video_forum_post_id_operator
+  last_forum_sync: Video_last_forum_sync_operator
+  last_forum_posts: Video_last_forum_posts_operator
   updatedAt: Video_updatedAt_operator
   createdAt: Video_createdAt_operator
   id: Video_id_operator
   AND: [Video_where_and]
   OR: [Video_where_or]
+}
+
+input Video_content_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  exists: Boolean
 }
 
 input Video_url_operator {
@@ -6808,6 +7146,38 @@ input Video_publishedAt_operator {
   exists: Boolean
 }
 
+input Video_forum_post_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Video_last_forum_sync_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Video_last_forum_posts_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  within: JSON
+  intersects: JSON
+  exists: Boolean
+}
+
 input Video_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
@@ -6842,6 +7212,7 @@ input Video_id_operator {
 }
 
 input Video_where_and {
+  content: Video_content_operator
   url: Video_url_operator
   permissions: Video_permissions_operator
   url_free: Video_url_free_operator
@@ -6851,6 +7222,9 @@ input Video_where_and {
   title: Video_title_operator
   description: Video_description_operator
   publishedAt: Video_publishedAt_operator
+  forum_post_id: Video_forum_post_id_operator
+  last_forum_sync: Video_last_forum_sync_operator
+  last_forum_posts: Video_last_forum_posts_operator
   updatedAt: Video_updatedAt_operator
   createdAt: Video_createdAt_operator
   id: Video_id_operator
@@ -6859,6 +7233,7 @@ input Video_where_and {
 }
 
 input Video_where_or {
+  content: Video_content_operator
   url: Video_url_operator
   permissions: Video_permissions_operator
   url_free: Video_url_free_operator
@@ -6868,6 +7243,9 @@ input Video_where_or {
   title: Video_title_operator
   description: Video_description_operator
   publishedAt: Video_publishedAt_operator
+  forum_post_id: Video_forum_post_id_operator
+  last_forum_sync: Video_last_forum_sync_operator
+  last_forum_posts: Video_last_forum_posts_operator
   updatedAt: Video_updatedAt_operator
   createdAt: Video_createdAt_operator
   id: Video_id_operator
@@ -6888,6 +7266,7 @@ type videoDocAccess {
 }
 
 type VideoDocAccessFields {
+  content: VideoDocAccessFields_content
   url: VideoDocAccessFields_url
   permissions: VideoDocAccessFields_permissions
   url_free: VideoDocAccessFields_url_free
@@ -6897,8 +7276,34 @@ type VideoDocAccessFields {
   title: VideoDocAccessFields_title
   description: VideoDocAccessFields_description
   publishedAt: VideoDocAccessFields_publishedAt
+  forum_post_id: VideoDocAccessFields_forum_post_id
+  last_forum_sync: VideoDocAccessFields_last_forum_sync
+  last_forum_posts: VideoDocAccessFields_last_forum_posts
   updatedAt: VideoDocAccessFields_updatedAt
   createdAt: VideoDocAccessFields_createdAt
+}
+
+type VideoDocAccessFields_content {
+  create: VideoDocAccessFields_content_Create
+  read: VideoDocAccessFields_content_Read
+  update: VideoDocAccessFields_content_Update
+  delete: VideoDocAccessFields_content_Delete
+}
+
+type VideoDocAccessFields_content_Create {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_content_Read {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_content_Update {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_content_Delete {
+  permission: Boolean!
 }
 
 type VideoDocAccessFields_url {
@@ -7108,6 +7513,75 @@ type VideoDocAccessFields_publishedAt_Delete {
   permission: Boolean!
 }
 
+type VideoDocAccessFields_forum_post_id {
+  create: VideoDocAccessFields_forum_post_id_Create
+  read: VideoDocAccessFields_forum_post_id_Read
+  update: VideoDocAccessFields_forum_post_id_Update
+  delete: VideoDocAccessFields_forum_post_id_Delete
+}
+
+type VideoDocAccessFields_forum_post_id_Create {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_forum_post_id_Read {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_forum_post_id_Update {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_forum_post_id_Delete {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_last_forum_sync {
+  create: VideoDocAccessFields_last_forum_sync_Create
+  read: VideoDocAccessFields_last_forum_sync_Read
+  update: VideoDocAccessFields_last_forum_sync_Update
+  delete: VideoDocAccessFields_last_forum_sync_Delete
+}
+
+type VideoDocAccessFields_last_forum_sync_Create {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_last_forum_sync_Read {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_last_forum_sync_Update {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_last_forum_sync_Delete {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_last_forum_posts {
+  create: VideoDocAccessFields_last_forum_posts_Create
+  read: VideoDocAccessFields_last_forum_posts_Read
+  update: VideoDocAccessFields_last_forum_posts_Update
+  delete: VideoDocAccessFields_last_forum_posts_Delete
+}
+
+type VideoDocAccessFields_last_forum_posts_Create {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_last_forum_posts_Read {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_last_forum_posts_Update {
+  permission: Boolean!
+}
+
+type VideoDocAccessFields_last_forum_posts_Delete {
+  permission: Boolean!
+}
+
 type VideoDocAccessFields_updatedAt {
   create: VideoDocAccessFields_updatedAt_Create
   read: VideoDocAccessFields_updatedAt_Read
@@ -7170,6 +7644,353 @@ type VideoUpdateDocAccess {
 }
 
 type VideoDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Ui_grid_card {
+  id: String!
+  title: String
+  tailwindGridClassNames: String
+  cards: [Ui_grid_card_Cards!]
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Ui_grid_card_Cards {
+  tailwindClassNames: String
+  id: String
+}
+
+type Ui_grid_cards {
+  docs: [Ui_grid_card]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input Ui_grid_card_where {
+  title: Ui_grid_card_title_operator
+  tailwindGridClassNames: Ui_grid_card_tailwindGridClassNames_operator
+  cards__tailwindClassNames: Ui_grid_card_cards__tailwindClassNames_operator
+  cards__id: Ui_grid_card_cards__id_operator
+  updatedAt: Ui_grid_card_updatedAt_operator
+  createdAt: Ui_grid_card_createdAt_operator
+  id: Ui_grid_card_id_operator
+  AND: [Ui_grid_card_where_and]
+  OR: [Ui_grid_card_where_or]
+}
+
+input Ui_grid_card_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Ui_grid_card_tailwindGridClassNames_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Ui_grid_card_cards__tailwindClassNames_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Ui_grid_card_cards__id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Ui_grid_card_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Ui_grid_card_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Ui_grid_card_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Ui_grid_card_where_and {
+  title: Ui_grid_card_title_operator
+  tailwindGridClassNames: Ui_grid_card_tailwindGridClassNames_operator
+  cards__tailwindClassNames: Ui_grid_card_cards__tailwindClassNames_operator
+  cards__id: Ui_grid_card_cards__id_operator
+  updatedAt: Ui_grid_card_updatedAt_operator
+  createdAt: Ui_grid_card_createdAt_operator
+  id: Ui_grid_card_id_operator
+  AND: [Ui_grid_card_where_and]
+  OR: [Ui_grid_card_where_or]
+}
+
+input Ui_grid_card_where_or {
+  title: Ui_grid_card_title_operator
+  tailwindGridClassNames: Ui_grid_card_tailwindGridClassNames_operator
+  cards__tailwindClassNames: Ui_grid_card_cards__tailwindClassNames_operator
+  cards__id: Ui_grid_card_cards__id_operator
+  updatedAt: Ui_grid_card_updatedAt_operator
+  createdAt: Ui_grid_card_createdAt_operator
+  id: Ui_grid_card_id_operator
+  AND: [Ui_grid_card_where_and]
+  OR: [Ui_grid_card_where_or]
+}
+
+type countUi_grid_cards {
+  totalDocs: Int
+}
+
+type ui_grid_cardsDocAccess {
+  fields: Ui_grid_cardsDocAccessFields
+  create: Ui_grid_cardsCreateDocAccess
+  read: Ui_grid_cardsReadDocAccess
+  update: Ui_grid_cardsUpdateDocAccess
+  delete: Ui_grid_cardsDeleteDocAccess
+}
+
+type Ui_grid_cardsDocAccessFields {
+  title: Ui_grid_cardsDocAccessFields_title
+  tailwindGridClassNames: Ui_grid_cardsDocAccessFields_tailwindGridClassNames
+  cards: Ui_grid_cardsDocAccessFields_cards
+  updatedAt: Ui_grid_cardsDocAccessFields_updatedAt
+  createdAt: Ui_grid_cardsDocAccessFields_createdAt
+}
+
+type Ui_grid_cardsDocAccessFields_title {
+  create: Ui_grid_cardsDocAccessFields_title_Create
+  read: Ui_grid_cardsDocAccessFields_title_Read
+  update: Ui_grid_cardsDocAccessFields_title_Update
+  delete: Ui_grid_cardsDocAccessFields_title_Delete
+}
+
+type Ui_grid_cardsDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_tailwindGridClassNames {
+  create: Ui_grid_cardsDocAccessFields_tailwindGridClassNames_Create
+  read: Ui_grid_cardsDocAccessFields_tailwindGridClassNames_Read
+  update: Ui_grid_cardsDocAccessFields_tailwindGridClassNames_Update
+  delete: Ui_grid_cardsDocAccessFields_tailwindGridClassNames_Delete
+}
+
+type Ui_grid_cardsDocAccessFields_tailwindGridClassNames_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_tailwindGridClassNames_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_tailwindGridClassNames_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_tailwindGridClassNames_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards {
+  create: Ui_grid_cardsDocAccessFields_cards_Create
+  read: Ui_grid_cardsDocAccessFields_cards_Read
+  update: Ui_grid_cardsDocAccessFields_cards_Update
+  delete: Ui_grid_cardsDocAccessFields_cards_Delete
+  fields: Ui_grid_cardsDocAccessFields_cards_Fields
+}
+
+type Ui_grid_cardsDocAccessFields_cards_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_Fields {
+  tailwindClassNames: Ui_grid_cardsDocAccessFields_cards_tailwindClassNames
+  id: Ui_grid_cardsDocAccessFields_cards_id
+}
+
+type Ui_grid_cardsDocAccessFields_cards_tailwindClassNames {
+  create: Ui_grid_cardsDocAccessFields_cards_tailwindClassNames_Create
+  read: Ui_grid_cardsDocAccessFields_cards_tailwindClassNames_Read
+  update: Ui_grid_cardsDocAccessFields_cards_tailwindClassNames_Update
+  delete: Ui_grid_cardsDocAccessFields_cards_tailwindClassNames_Delete
+}
+
+type Ui_grid_cardsDocAccessFields_cards_tailwindClassNames_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_tailwindClassNames_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_tailwindClassNames_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_tailwindClassNames_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_id {
+  create: Ui_grid_cardsDocAccessFields_cards_id_Create
+  read: Ui_grid_cardsDocAccessFields_cards_id_Read
+  update: Ui_grid_cardsDocAccessFields_cards_id_Update
+  delete: Ui_grid_cardsDocAccessFields_cards_id_Delete
+}
+
+type Ui_grid_cardsDocAccessFields_cards_id_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_id_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_id_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_cards_id_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_updatedAt {
+  create: Ui_grid_cardsDocAccessFields_updatedAt_Create
+  read: Ui_grid_cardsDocAccessFields_updatedAt_Read
+  update: Ui_grid_cardsDocAccessFields_updatedAt_Update
+  delete: Ui_grid_cardsDocAccessFields_updatedAt_Delete
+}
+
+type Ui_grid_cardsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_createdAt {
+  create: Ui_grid_cardsDocAccessFields_createdAt_Create
+  read: Ui_grid_cardsDocAccessFields_createdAt_Read
+  update: Ui_grid_cardsDocAccessFields_createdAt_Update
+  delete: Ui_grid_cardsDocAccessFields_createdAt_Delete
+}
+
+type Ui_grid_cardsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Ui_grid_cardsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Ui_grid_cardsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Ui_grid_cardsDeleteDocAccess {
   permission: Boolean!
   where: JSONObject
 }
@@ -7445,9 +8266,10 @@ enum SearchResult_Doc_RelationTo {
   video
   article_web
   article_pdf
+  book
 }
 
-union SearchResult_Doc = Video | Article_web | Article_pdf
+union SearchResult_Doc = Video | Article_web | Article_pdf | Book
 
 type SearchResults {
   docs: [SearchResult]
@@ -7505,6 +8327,7 @@ enum SearchResult_doc_Relation_RelationTo {
   video
   article_web
   article_pdf
+  book
 }
 
 input SearchResult_tags_operator {
@@ -7779,11 +8602,12 @@ enum PayloadLockedDocument_Document_RelationTo {
   article_web
   book
   video
+  ui_grid_cards
   permission
   search_results
 }
 
-union PayloadLockedDocument_Document = User | Price | Product | Subscription | Media | Taxonomy | Article_pdf | Article_web | Book | Video | Permission | SearchResult
+union PayloadLockedDocument_Document = User | Price | Product | Subscription | Media | Taxonomy | Article_pdf | Article_web | Book | Video | Ui_grid_card | Permission | SearchResult
 
 type PayloadLockedDocument_User_Relationship {
   relationTo: PayloadLockedDocument_User_RelationTo
@@ -7837,6 +8661,7 @@ enum PayloadLockedDocument_document_Relation_RelationTo {
   article_web
   book
   video
+  ui_grid_cards
   permission
   search_results
 }
@@ -8356,6 +9181,297 @@ type PayloadPreferencesDeleteDocAccess {
   where: JSONObject
 }
 
+type Articulos_page {
+  content(depth: Int): JSON
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type articulos_pageDocAccess {
+  fields: Articulos_pageDocAccessFields
+  read: Articulos_pageReadDocAccess
+  update: Articulos_pageUpdateDocAccess
+}
+
+type Articulos_pageDocAccessFields {
+  content: Articulos_pageDocAccessFields_content
+  updatedAt: Articulos_pageDocAccessFields_updatedAt
+  createdAt: Articulos_pageDocAccessFields_createdAt
+}
+
+type Articulos_pageDocAccessFields_content {
+  create: Articulos_pageDocAccessFields_content_Create
+  read: Articulos_pageDocAccessFields_content_Read
+  update: Articulos_pageDocAccessFields_content_Update
+  delete: Articulos_pageDocAccessFields_content_Delete
+}
+
+type Articulos_pageDocAccessFields_content_Create {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_content_Read {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_content_Update {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_content_Delete {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_updatedAt {
+  create: Articulos_pageDocAccessFields_updatedAt_Create
+  read: Articulos_pageDocAccessFields_updatedAt_Read
+  update: Articulos_pageDocAccessFields_updatedAt_Update
+  delete: Articulos_pageDocAccessFields_updatedAt_Delete
+}
+
+type Articulos_pageDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_createdAt {
+  create: Articulos_pageDocAccessFields_createdAt_Create
+  read: Articulos_pageDocAccessFields_createdAt_Read
+  update: Articulos_pageDocAccessFields_createdAt_Update
+  delete: Articulos_pageDocAccessFields_createdAt_Delete
+}
+
+type Articulos_pageDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type Articulos_pageDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type Articulos_pageReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Articulos_pageUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Home_page {
+  content(depth: Int): JSON
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type home_pageDocAccess {
+  fields: Home_pageDocAccessFields
+  read: Home_pageReadDocAccess
+  update: Home_pageUpdateDocAccess
+}
+
+type Home_pageDocAccessFields {
+  content: Home_pageDocAccessFields_content
+  updatedAt: Home_pageDocAccessFields_updatedAt
+  createdAt: Home_pageDocAccessFields_createdAt
+}
+
+type Home_pageDocAccessFields_content {
+  create: Home_pageDocAccessFields_content_Create
+  read: Home_pageDocAccessFields_content_Read
+  update: Home_pageDocAccessFields_content_Update
+  delete: Home_pageDocAccessFields_content_Delete
+}
+
+type Home_pageDocAccessFields_content_Create {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_content_Read {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_content_Update {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_content_Delete {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_updatedAt {
+  create: Home_pageDocAccessFields_updatedAt_Create
+  read: Home_pageDocAccessFields_updatedAt_Read
+  update: Home_pageDocAccessFields_updatedAt_Update
+  delete: Home_pageDocAccessFields_updatedAt_Delete
+}
+
+type Home_pageDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_createdAt {
+  create: Home_pageDocAccessFields_createdAt_Create
+  read: Home_pageDocAccessFields_createdAt_Read
+  update: Home_pageDocAccessFields_createdAt_Update
+  delete: Home_pageDocAccessFields_createdAt_Delete
+}
+
+type Home_pageDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type Home_pageDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type Home_pageReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Home_pageUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Videos_page {
+  content(depth: Int): JSON
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type videos_pageDocAccess {
+  fields: Videos_pageDocAccessFields
+  read: Videos_pageReadDocAccess
+  update: Videos_pageUpdateDocAccess
+}
+
+type Videos_pageDocAccessFields {
+  content: Videos_pageDocAccessFields_content
+  updatedAt: Videos_pageDocAccessFields_updatedAt
+  createdAt: Videos_pageDocAccessFields_createdAt
+}
+
+type Videos_pageDocAccessFields_content {
+  create: Videos_pageDocAccessFields_content_Create
+  read: Videos_pageDocAccessFields_content_Read
+  update: Videos_pageDocAccessFields_content_Update
+  delete: Videos_pageDocAccessFields_content_Delete
+}
+
+type Videos_pageDocAccessFields_content_Create {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_content_Read {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_content_Update {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_content_Delete {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_updatedAt {
+  create: Videos_pageDocAccessFields_updatedAt_Create
+  read: Videos_pageDocAccessFields_updatedAt_Read
+  update: Videos_pageDocAccessFields_updatedAt_Update
+  delete: Videos_pageDocAccessFields_updatedAt_Delete
+}
+
+type Videos_pageDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_createdAt {
+  create: Videos_pageDocAccessFields_createdAt_Create
+  read: Videos_pageDocAccessFields_createdAt_Read
+  update: Videos_pageDocAccessFields_createdAt_Update
+  delete: Videos_pageDocAccessFields_createdAt_Delete
+}
+
+type Videos_pageDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type Videos_pageDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type Videos_pageReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Videos_pageUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Access {
   canAccessAdmin: Boolean!
   users: usersAccess
@@ -8368,10 +9484,14 @@ type Access {
   article_web: article_webAccess
   book: bookAccess
   video: videoAccess
+  ui_grid_cards: ui_grid_cardsAccess
   permission: permissionAccess
   search_results: search_resultsAccess
   payload_locked_documents: payload_locked_documentsAccess
   payload_preferences: payload_preferencesAccess
+  articulos_page: articulos_pageAccess
+  home_page: home_pageAccess
+  videos_page: videos_pageAccess
 }
 
 type usersAccess {
@@ -11131,6 +12251,10 @@ type Article_pdfFields {
   publishedAt: Article_pdfFields_publishedAt
   categories: Article_pdfFields_categories
   seeds: Article_pdfFields_seeds
+  content: Article_pdfFields_content
+  forum_post_id: Article_pdfFields_forum_post_id
+  last_forum_sync: Article_pdfFields_last_forum_sync
+  last_forum_posts: Article_pdfFields_last_forum_posts
   prefix: Article_pdfFields_prefix
   updatedAt: Article_pdfFields_updatedAt
   createdAt: Article_pdfFields_createdAt
@@ -11326,6 +12450,98 @@ type Article_pdfFields_seeds_Update {
 }
 
 type Article_pdfFields_seeds_Delete {
+  permission: Boolean!
+}
+
+type Article_pdfFields_content {
+  create: Article_pdfFields_content_Create
+  read: Article_pdfFields_content_Read
+  update: Article_pdfFields_content_Update
+  delete: Article_pdfFields_content_Delete
+}
+
+type Article_pdfFields_content_Create {
+  permission: Boolean!
+}
+
+type Article_pdfFields_content_Read {
+  permission: Boolean!
+}
+
+type Article_pdfFields_content_Update {
+  permission: Boolean!
+}
+
+type Article_pdfFields_content_Delete {
+  permission: Boolean!
+}
+
+type Article_pdfFields_forum_post_id {
+  create: Article_pdfFields_forum_post_id_Create
+  read: Article_pdfFields_forum_post_id_Read
+  update: Article_pdfFields_forum_post_id_Update
+  delete: Article_pdfFields_forum_post_id_Delete
+}
+
+type Article_pdfFields_forum_post_id_Create {
+  permission: Boolean!
+}
+
+type Article_pdfFields_forum_post_id_Read {
+  permission: Boolean!
+}
+
+type Article_pdfFields_forum_post_id_Update {
+  permission: Boolean!
+}
+
+type Article_pdfFields_forum_post_id_Delete {
+  permission: Boolean!
+}
+
+type Article_pdfFields_last_forum_sync {
+  create: Article_pdfFields_last_forum_sync_Create
+  read: Article_pdfFields_last_forum_sync_Read
+  update: Article_pdfFields_last_forum_sync_Update
+  delete: Article_pdfFields_last_forum_sync_Delete
+}
+
+type Article_pdfFields_last_forum_sync_Create {
+  permission: Boolean!
+}
+
+type Article_pdfFields_last_forum_sync_Read {
+  permission: Boolean!
+}
+
+type Article_pdfFields_last_forum_sync_Update {
+  permission: Boolean!
+}
+
+type Article_pdfFields_last_forum_sync_Delete {
+  permission: Boolean!
+}
+
+type Article_pdfFields_last_forum_posts {
+  create: Article_pdfFields_last_forum_posts_Create
+  read: Article_pdfFields_last_forum_posts_Read
+  update: Article_pdfFields_last_forum_posts_Update
+  delete: Article_pdfFields_last_forum_posts_Delete
+}
+
+type Article_pdfFields_last_forum_posts_Create {
+  permission: Boolean!
+}
+
+type Article_pdfFields_last_forum_posts_Read {
+  permission: Boolean!
+}
+
+type Article_pdfFields_last_forum_posts_Update {
+  permission: Boolean!
+}
+
+type Article_pdfFields_last_forum_posts_Delete {
   permission: Boolean!
 }
 
@@ -11644,7 +12860,9 @@ type Article_webFields {
   seeds: Article_webFields_seeds
   slug: Article_webFields_slug
   content: Article_webFields_content
-  content_html: Article_webFields_content_html
+  forum_post_id: Article_webFields_forum_post_id
+  last_forum_sync: Article_webFields_last_forum_sync
+  last_forum_posts: Article_webFields_last_forum_posts
   updatedAt: Article_webFields_updatedAt
   createdAt: Article_webFields_createdAt
 }
@@ -11879,26 +13097,72 @@ type Article_webFields_content_Delete {
   permission: Boolean!
 }
 
-type Article_webFields_content_html {
-  create: Article_webFields_content_html_Create
-  read: Article_webFields_content_html_Read
-  update: Article_webFields_content_html_Update
-  delete: Article_webFields_content_html_Delete
+type Article_webFields_forum_post_id {
+  create: Article_webFields_forum_post_id_Create
+  read: Article_webFields_forum_post_id_Read
+  update: Article_webFields_forum_post_id_Update
+  delete: Article_webFields_forum_post_id_Delete
 }
 
-type Article_webFields_content_html_Create {
+type Article_webFields_forum_post_id_Create {
   permission: Boolean!
 }
 
-type Article_webFields_content_html_Read {
+type Article_webFields_forum_post_id_Read {
   permission: Boolean!
 }
 
-type Article_webFields_content_html_Update {
+type Article_webFields_forum_post_id_Update {
   permission: Boolean!
 }
 
-type Article_webFields_content_html_Delete {
+type Article_webFields_forum_post_id_Delete {
+  permission: Boolean!
+}
+
+type Article_webFields_last_forum_sync {
+  create: Article_webFields_last_forum_sync_Create
+  read: Article_webFields_last_forum_sync_Read
+  update: Article_webFields_last_forum_sync_Update
+  delete: Article_webFields_last_forum_sync_Delete
+}
+
+type Article_webFields_last_forum_sync_Create {
+  permission: Boolean!
+}
+
+type Article_webFields_last_forum_sync_Read {
+  permission: Boolean!
+}
+
+type Article_webFields_last_forum_sync_Update {
+  permission: Boolean!
+}
+
+type Article_webFields_last_forum_sync_Delete {
+  permission: Boolean!
+}
+
+type Article_webFields_last_forum_posts {
+  create: Article_webFields_last_forum_posts_Create
+  read: Article_webFields_last_forum_posts_Read
+  update: Article_webFields_last_forum_posts_Update
+  delete: Article_webFields_last_forum_posts_Delete
+}
+
+type Article_webFields_last_forum_posts_Create {
+  permission: Boolean!
+}
+
+type Article_webFields_last_forum_posts_Read {
+  permission: Boolean!
+}
+
+type Article_webFields_last_forum_posts_Update {
+  permission: Boolean!
+}
+
+type Article_webFields_last_forum_posts_Delete {
   permission: Boolean!
 }
 
@@ -11984,9 +13248,11 @@ type BookFields {
   categories: BookFields_categories
   seeds: BookFields_seeds
   content: BookFields_content
-  content_html: BookFields_content_html
   slug: BookFields_slug
   Ediciones: BookFields_Ediciones
+  forum_post_id: BookFields_forum_post_id
+  last_forum_sync: BookFields_last_forum_sync
+  last_forum_posts: BookFields_last_forum_posts
   updatedAt: BookFields_updatedAt
   createdAt: BookFields_createdAt
 }
@@ -12152,29 +13418,6 @@ type BookFields_content_Delete {
   permission: Boolean!
 }
 
-type BookFields_content_html {
-  create: BookFields_content_html_Create
-  read: BookFields_content_html_Read
-  update: BookFields_content_html_Update
-  delete: BookFields_content_html_Delete
-}
-
-type BookFields_content_html_Create {
-  permission: Boolean!
-}
-
-type BookFields_content_html_Read {
-  permission: Boolean!
-}
-
-type BookFields_content_html_Update {
-  permission: Boolean!
-}
-
-type BookFields_content_html_Delete {
-  permission: Boolean!
-}
-
 type BookFields_slug {
   create: BookFields_slug_Create
   read: BookFields_slug_Read
@@ -12321,6 +13564,75 @@ type BookFields_Ediciones_id_Delete {
   permission: Boolean!
 }
 
+type BookFields_forum_post_id {
+  create: BookFields_forum_post_id_Create
+  read: BookFields_forum_post_id_Read
+  update: BookFields_forum_post_id_Update
+  delete: BookFields_forum_post_id_Delete
+}
+
+type BookFields_forum_post_id_Create {
+  permission: Boolean!
+}
+
+type BookFields_forum_post_id_Read {
+  permission: Boolean!
+}
+
+type BookFields_forum_post_id_Update {
+  permission: Boolean!
+}
+
+type BookFields_forum_post_id_Delete {
+  permission: Boolean!
+}
+
+type BookFields_last_forum_sync {
+  create: BookFields_last_forum_sync_Create
+  read: BookFields_last_forum_sync_Read
+  update: BookFields_last_forum_sync_Update
+  delete: BookFields_last_forum_sync_Delete
+}
+
+type BookFields_last_forum_sync_Create {
+  permission: Boolean!
+}
+
+type BookFields_last_forum_sync_Read {
+  permission: Boolean!
+}
+
+type BookFields_last_forum_sync_Update {
+  permission: Boolean!
+}
+
+type BookFields_last_forum_sync_Delete {
+  permission: Boolean!
+}
+
+type BookFields_last_forum_posts {
+  create: BookFields_last_forum_posts_Create
+  read: BookFields_last_forum_posts_Read
+  update: BookFields_last_forum_posts_Update
+  delete: BookFields_last_forum_posts_Delete
+}
+
+type BookFields_last_forum_posts_Create {
+  permission: Boolean!
+}
+
+type BookFields_last_forum_posts_Read {
+  permission: Boolean!
+}
+
+type BookFields_last_forum_posts_Update {
+  permission: Boolean!
+}
+
+type BookFields_last_forum_posts_Delete {
+  permission: Boolean!
+}
+
 type BookFields_updatedAt {
   create: BookFields_updatedAt_Create
   read: BookFields_updatedAt_Read
@@ -12396,6 +13708,7 @@ type videoAccess {
 }
 
 type VideoFields {
+  content: VideoFields_content
   url: VideoFields_url
   permissions: VideoFields_permissions
   url_free: VideoFields_url_free
@@ -12405,8 +13718,34 @@ type VideoFields {
   title: VideoFields_title
   description: VideoFields_description
   publishedAt: VideoFields_publishedAt
+  forum_post_id: VideoFields_forum_post_id
+  last_forum_sync: VideoFields_last_forum_sync
+  last_forum_posts: VideoFields_last_forum_posts
   updatedAt: VideoFields_updatedAt
   createdAt: VideoFields_createdAt
+}
+
+type VideoFields_content {
+  create: VideoFields_content_Create
+  read: VideoFields_content_Read
+  update: VideoFields_content_Update
+  delete: VideoFields_content_Delete
+}
+
+type VideoFields_content_Create {
+  permission: Boolean!
+}
+
+type VideoFields_content_Read {
+  permission: Boolean!
+}
+
+type VideoFields_content_Update {
+  permission: Boolean!
+}
+
+type VideoFields_content_Delete {
+  permission: Boolean!
 }
 
 type VideoFields_url {
@@ -12616,6 +13955,75 @@ type VideoFields_publishedAt_Delete {
   permission: Boolean!
 }
 
+type VideoFields_forum_post_id {
+  create: VideoFields_forum_post_id_Create
+  read: VideoFields_forum_post_id_Read
+  update: VideoFields_forum_post_id_Update
+  delete: VideoFields_forum_post_id_Delete
+}
+
+type VideoFields_forum_post_id_Create {
+  permission: Boolean!
+}
+
+type VideoFields_forum_post_id_Read {
+  permission: Boolean!
+}
+
+type VideoFields_forum_post_id_Update {
+  permission: Boolean!
+}
+
+type VideoFields_forum_post_id_Delete {
+  permission: Boolean!
+}
+
+type VideoFields_last_forum_sync {
+  create: VideoFields_last_forum_sync_Create
+  read: VideoFields_last_forum_sync_Read
+  update: VideoFields_last_forum_sync_Update
+  delete: VideoFields_last_forum_sync_Delete
+}
+
+type VideoFields_last_forum_sync_Create {
+  permission: Boolean!
+}
+
+type VideoFields_last_forum_sync_Read {
+  permission: Boolean!
+}
+
+type VideoFields_last_forum_sync_Update {
+  permission: Boolean!
+}
+
+type VideoFields_last_forum_sync_Delete {
+  permission: Boolean!
+}
+
+type VideoFields_last_forum_posts {
+  create: VideoFields_last_forum_posts_Create
+  read: VideoFields_last_forum_posts_Read
+  update: VideoFields_last_forum_posts_Update
+  delete: VideoFields_last_forum_posts_Delete
+}
+
+type VideoFields_last_forum_posts_Create {
+  permission: Boolean!
+}
+
+type VideoFields_last_forum_posts_Read {
+  permission: Boolean!
+}
+
+type VideoFields_last_forum_posts_Update {
+  permission: Boolean!
+}
+
+type VideoFields_last_forum_posts_Delete {
+  permission: Boolean!
+}
+
 type VideoFields_updatedAt {
   create: VideoFields_updatedAt_Create
   read: VideoFields_updatedAt_Read
@@ -12678,6 +14086,209 @@ type VideoUpdateAccess {
 }
 
 type VideoDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ui_grid_cardsAccess {
+  fields: Ui_grid_cardsFields
+  create: Ui_grid_cardsCreateAccess
+  read: Ui_grid_cardsReadAccess
+  update: Ui_grid_cardsUpdateAccess
+  delete: Ui_grid_cardsDeleteAccess
+}
+
+type Ui_grid_cardsFields {
+  title: Ui_grid_cardsFields_title
+  tailwindGridClassNames: Ui_grid_cardsFields_tailwindGridClassNames
+  cards: Ui_grid_cardsFields_cards
+  updatedAt: Ui_grid_cardsFields_updatedAt
+  createdAt: Ui_grid_cardsFields_createdAt
+}
+
+type Ui_grid_cardsFields_title {
+  create: Ui_grid_cardsFields_title_Create
+  read: Ui_grid_cardsFields_title_Read
+  update: Ui_grid_cardsFields_title_Update
+  delete: Ui_grid_cardsFields_title_Delete
+}
+
+type Ui_grid_cardsFields_title_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_title_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_title_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_title_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_tailwindGridClassNames {
+  create: Ui_grid_cardsFields_tailwindGridClassNames_Create
+  read: Ui_grid_cardsFields_tailwindGridClassNames_Read
+  update: Ui_grid_cardsFields_tailwindGridClassNames_Update
+  delete: Ui_grid_cardsFields_tailwindGridClassNames_Delete
+}
+
+type Ui_grid_cardsFields_tailwindGridClassNames_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_tailwindGridClassNames_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_tailwindGridClassNames_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_tailwindGridClassNames_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards {
+  create: Ui_grid_cardsFields_cards_Create
+  read: Ui_grid_cardsFields_cards_Read
+  update: Ui_grid_cardsFields_cards_Update
+  delete: Ui_grid_cardsFields_cards_Delete
+  fields: Ui_grid_cardsFields_cards_Fields
+}
+
+type Ui_grid_cardsFields_cards_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_Fields {
+  tailwindClassNames: Ui_grid_cardsFields_cards_tailwindClassNames
+  id: Ui_grid_cardsFields_cards_id
+}
+
+type Ui_grid_cardsFields_cards_tailwindClassNames {
+  create: Ui_grid_cardsFields_cards_tailwindClassNames_Create
+  read: Ui_grid_cardsFields_cards_tailwindClassNames_Read
+  update: Ui_grid_cardsFields_cards_tailwindClassNames_Update
+  delete: Ui_grid_cardsFields_cards_tailwindClassNames_Delete
+}
+
+type Ui_grid_cardsFields_cards_tailwindClassNames_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_tailwindClassNames_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_tailwindClassNames_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_tailwindClassNames_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_id {
+  create: Ui_grid_cardsFields_cards_id_Create
+  read: Ui_grid_cardsFields_cards_id_Read
+  update: Ui_grid_cardsFields_cards_id_Update
+  delete: Ui_grid_cardsFields_cards_id_Delete
+}
+
+type Ui_grid_cardsFields_cards_id_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_id_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_id_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_cards_id_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_updatedAt {
+  create: Ui_grid_cardsFields_updatedAt_Create
+  read: Ui_grid_cardsFields_updatedAt_Read
+  update: Ui_grid_cardsFields_updatedAt_Update
+  delete: Ui_grid_cardsFields_updatedAt_Delete
+}
+
+type Ui_grid_cardsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_createdAt {
+  create: Ui_grid_cardsFields_createdAt_Create
+  read: Ui_grid_cardsFields_createdAt_Read
+  update: Ui_grid_cardsFields_createdAt_Update
+  delete: Ui_grid_cardsFields_createdAt_Delete
+}
+
+type Ui_grid_cardsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type Ui_grid_cardsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Ui_grid_cardsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Ui_grid_cardsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Ui_grid_cardsDeleteAccess {
   permission: Boolean!
   where: JSONObject
 }
@@ -13310,6 +14921,279 @@ type PayloadPreferencesDeleteAccess {
   where: JSONObject
 }
 
+type articulos_pageAccess {
+  fields: Articulos_pageFields
+  read: Articulos_pageReadAccess
+  update: Articulos_pageUpdateAccess
+}
+
+type Articulos_pageFields {
+  content: Articulos_pageFields_content
+  updatedAt: Articulos_pageFields_updatedAt
+  createdAt: Articulos_pageFields_createdAt
+}
+
+type Articulos_pageFields_content {
+  create: Articulos_pageFields_content_Create
+  read: Articulos_pageFields_content_Read
+  update: Articulos_pageFields_content_Update
+  delete: Articulos_pageFields_content_Delete
+}
+
+type Articulos_pageFields_content_Create {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_content_Read {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_content_Update {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_content_Delete {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_updatedAt {
+  create: Articulos_pageFields_updatedAt_Create
+  read: Articulos_pageFields_updatedAt_Read
+  update: Articulos_pageFields_updatedAt_Update
+  delete: Articulos_pageFields_updatedAt_Delete
+}
+
+type Articulos_pageFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_createdAt {
+  create: Articulos_pageFields_createdAt_Create
+  read: Articulos_pageFields_createdAt_Read
+  update: Articulos_pageFields_createdAt_Update
+  delete: Articulos_pageFields_createdAt_Delete
+}
+
+type Articulos_pageFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type Articulos_pageFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type Articulos_pageReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Articulos_pageUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type home_pageAccess {
+  fields: Home_pageFields
+  read: Home_pageReadAccess
+  update: Home_pageUpdateAccess
+}
+
+type Home_pageFields {
+  content: Home_pageFields_content
+  updatedAt: Home_pageFields_updatedAt
+  createdAt: Home_pageFields_createdAt
+}
+
+type Home_pageFields_content {
+  create: Home_pageFields_content_Create
+  read: Home_pageFields_content_Read
+  update: Home_pageFields_content_Update
+  delete: Home_pageFields_content_Delete
+}
+
+type Home_pageFields_content_Create {
+  permission: Boolean!
+}
+
+type Home_pageFields_content_Read {
+  permission: Boolean!
+}
+
+type Home_pageFields_content_Update {
+  permission: Boolean!
+}
+
+type Home_pageFields_content_Delete {
+  permission: Boolean!
+}
+
+type Home_pageFields_updatedAt {
+  create: Home_pageFields_updatedAt_Create
+  read: Home_pageFields_updatedAt_Read
+  update: Home_pageFields_updatedAt_Update
+  delete: Home_pageFields_updatedAt_Delete
+}
+
+type Home_pageFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type Home_pageFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type Home_pageFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type Home_pageFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type Home_pageFields_createdAt {
+  create: Home_pageFields_createdAt_Create
+  read: Home_pageFields_createdAt_Read
+  update: Home_pageFields_createdAt_Update
+  delete: Home_pageFields_createdAt_Delete
+}
+
+type Home_pageFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type Home_pageFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type Home_pageFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type Home_pageFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type Home_pageReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Home_pageUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type videos_pageAccess {
+  fields: Videos_pageFields
+  read: Videos_pageReadAccess
+  update: Videos_pageUpdateAccess
+}
+
+type Videos_pageFields {
+  content: Videos_pageFields_content
+  updatedAt: Videos_pageFields_updatedAt
+  createdAt: Videos_pageFields_createdAt
+}
+
+type Videos_pageFields_content {
+  create: Videos_pageFields_content_Create
+  read: Videos_pageFields_content_Read
+  update: Videos_pageFields_content_Update
+  delete: Videos_pageFields_content_Delete
+}
+
+type Videos_pageFields_content_Create {
+  permission: Boolean!
+}
+
+type Videos_pageFields_content_Read {
+  permission: Boolean!
+}
+
+type Videos_pageFields_content_Update {
+  permission: Boolean!
+}
+
+type Videos_pageFields_content_Delete {
+  permission: Boolean!
+}
+
+type Videos_pageFields_updatedAt {
+  create: Videos_pageFields_updatedAt_Create
+  read: Videos_pageFields_updatedAt_Read
+  update: Videos_pageFields_updatedAt_Update
+  delete: Videos_pageFields_updatedAt_Delete
+}
+
+type Videos_pageFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type Videos_pageFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type Videos_pageFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type Videos_pageFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type Videos_pageFields_createdAt {
+  create: Videos_pageFields_createdAt_Create
+  read: Videos_pageFields_createdAt_Read
+  update: Videos_pageFields_createdAt_Update
+  delete: Videos_pageFields_createdAt_Delete
+}
+
+type Videos_pageFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type Videos_pageFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type Videos_pageFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type Videos_pageFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type Videos_pageReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Videos_pageUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Mutation {
   createUser(data: mutationUserInput!, draft: Boolean): User
   updateUser(id: String!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean): User
@@ -13319,55 +15203,62 @@ type Mutation {
   createPrice(data: mutationPriceInput!, draft: Boolean): Price
   updatePrice(id: String!, autosave: Boolean, data: mutationPriceUpdateInput!, draft: Boolean): Price
   deletePrice(id: String!): Price
-  duplicatePrice(id: String!): Price
+  duplicatePrice(id: String!, data: mutationPriceInput!): Price
   createProduct(data: mutationProductInput!, draft: Boolean): Product
   updateProduct(id: String!, autosave: Boolean, data: mutationProductUpdateInput!, draft: Boolean): Product
   deleteProduct(id: String!): Product
-  duplicateProduct(id: String!): Product
+  duplicateProduct(id: String!, data: mutationProductInput!): Product
   createSubscription(data: mutationSubscriptionInput!, draft: Boolean): Subscription
   updateSubscription(id: String!, autosave: Boolean, data: mutationSubscriptionUpdateInput!, draft: Boolean): Subscription
   deleteSubscription(id: String!): Subscription
-  duplicateSubscription(id: String!): Subscription
+  duplicateSubscription(id: String!, data: mutationSubscriptionInput!): Subscription
   createMedia(data: mutationMediaInput!, draft: Boolean): Media
   updateMedia(id: String!, autosave: Boolean, data: mutationMediaUpdateInput!, draft: Boolean): Media
   deleteMedia(id: String!): Media
-  duplicateMedia(id: String!): Media
+  duplicateMedia(id: String!, data: mutationMediaInput!): Media
   createTaxonomy(data: mutationTaxonomyInput!, draft: Boolean): Taxonomy
   updateTaxonomy(id: String!, autosave: Boolean, data: mutationTaxonomyUpdateInput!, draft: Boolean): Taxonomy
   deleteTaxonomy(id: String!): Taxonomy
-  duplicateTaxonomy(id: String!): Taxonomy
+  duplicateTaxonomy(id: String!, data: mutationTaxonomyInput!): Taxonomy
   createArticle_pdf(data: mutationArticle_pdfInput!, draft: Boolean): Article_pdf
   updateArticle_pdf(id: String!, autosave: Boolean, data: mutationArticle_pdfUpdateInput!, draft: Boolean): Article_pdf
   deleteArticle_pdf(id: String!): Article_pdf
-  duplicateArticle_pdf(id: String!): Article_pdf
+  duplicateArticle_pdf(id: String!, data: mutationArticle_pdfInput!): Article_pdf
   createArticle_web(data: mutationArticle_webInput!, draft: Boolean): Article_web
   updateArticle_web(id: String!, autosave: Boolean, data: mutationArticle_webUpdateInput!, draft: Boolean): Article_web
   deleteArticle_web(id: String!): Article_web
-  duplicateArticle_web(id: String!): Article_web
+  duplicateArticle_web(id: String!, data: mutationArticle_webInput!): Article_web
   createBook(data: mutationBookInput!, draft: Boolean): Book
   updateBook(id: String!, autosave: Boolean, data: mutationBookUpdateInput!, draft: Boolean): Book
   deleteBook(id: String!): Book
-  duplicateBook(id: String!): Book
+  duplicateBook(id: String!, data: mutationBookInput!): Book
   createVideo(data: mutationVideoInput!, draft: Boolean): Video
   updateVideo(id: String!, autosave: Boolean, data: mutationVideoUpdateInput!, draft: Boolean): Video
   deleteVideo(id: String!): Video
-  duplicateVideo(id: String!): Video
+  duplicateVideo(id: String!, data: mutationVideoInput!): Video
+  createUi_grid_card(data: mutationUi_grid_cardInput!, draft: Boolean): Ui_grid_card
+  updateUi_grid_card(id: String!, autosave: Boolean, data: mutationUi_grid_cardUpdateInput!, draft: Boolean): Ui_grid_card
+  deleteUi_grid_card(id: String!): Ui_grid_card
+  duplicateUi_grid_card(id: String!, data: mutationUi_grid_cardInput!): Ui_grid_card
   createPermission(data: mutationPermissionInput!, draft: Boolean): Permission
   updatePermission(id: String!, autosave: Boolean, data: mutationPermissionUpdateInput!, draft: Boolean): Permission
   deletePermission(id: String!): Permission
-  duplicatePermission(id: String!): Permission
+  duplicatePermission(id: String!, data: mutationPermissionInput!): Permission
   createSearchResult(data: mutationSearchResultInput!, draft: Boolean): SearchResult
   updateSearchResult(id: String!, autosave: Boolean, data: mutationSearchResultUpdateInput!, draft: Boolean): SearchResult
   deleteSearchResult(id: String!): SearchResult
-  duplicateSearchResult(id: String!): SearchResult
+  duplicateSearchResult(id: String!, data: mutationSearchResultInput!): SearchResult
   createPayloadLockedDocument(data: mutationPayloadLockedDocumentInput!, draft: Boolean): PayloadLockedDocument
   updatePayloadLockedDocument(id: String!, autosave: Boolean, data: mutationPayloadLockedDocumentUpdateInput!, draft: Boolean): PayloadLockedDocument
   deletePayloadLockedDocument(id: String!): PayloadLockedDocument
-  duplicatePayloadLockedDocument(id: String!): PayloadLockedDocument
+  duplicatePayloadLockedDocument(id: String!, data: mutationPayloadLockedDocumentInput!): PayloadLockedDocument
   createPayloadPreference(data: mutationPayloadPreferenceInput!, draft: Boolean): PayloadPreference
   updatePayloadPreference(id: String!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean): PayloadPreference
   deletePayloadPreference(id: String!): PayloadPreference
-  duplicatePayloadPreference(id: String!): PayloadPreference
+  duplicatePayloadPreference(id: String!, data: mutationPayloadPreferenceInput!): PayloadPreference
+  updateArticulos_page(data: mutationArticulos_pageInput!, draft: Boolean): Articulos_page
+  updateHome_page(data: mutationHome_pageInput!, draft: Boolean): Home_page
+  updateVideos_page(data: mutationVideos_pageInput!, draft: Boolean): Videos_page
 }
 
 input mutationUserInput {
@@ -13721,11 +15612,15 @@ input mutationArticle_pdfInput {
   permissions: [String]
   permissions_seeds: String
   cover: String
-  title: String
+  title: String!
   description: String
-  publishedAt: String!
+  publishedAt: String
   categories: [String]
   seeds: String
+  content: JSON
+  forum_post_id: String
+  last_forum_sync: String
+  last_forum_posts: JSON
   prefix: String
   updatedAt: String
   createdAt: String
@@ -13749,6 +15644,10 @@ input mutationArticle_pdfUpdateInput {
   publishedAt: String
   categories: [String]
   seeds: String
+  content: JSON
+  forum_post_id: String
+  last_forum_sync: String
+  last_forum_posts: JSON
   prefix: String
   updatedAt: String
   createdAt: String
@@ -13767,14 +15666,16 @@ input mutationArticle_webInput {
   permissions: [String]
   permissions_seeds: String
   cover: String
-  title: String
+  title: String!
   description: String
-  publishedAt: String!
+  publishedAt: String
   categories: [String]
   seeds: String
   slug: String!
   content: JSON
-  content_html: String
+  forum_post_id: String
+  last_forum_sync: String
+  last_forum_posts: JSON
   updatedAt: String
   createdAt: String
 }
@@ -13790,22 +15691,26 @@ input mutationArticle_webUpdateInput {
   seeds: String
   slug: String
   content: JSON
-  content_html: String
+  forum_post_id: String
+  last_forum_sync: String
+  last_forum_posts: JSON
   updatedAt: String
   createdAt: String
 }
 
 input mutationBookInput {
   cover: String
-  title: String
+  title: String!
   description: String
-  publishedAt: String!
+  publishedAt: String
   categories: [String]
   seeds: String
   content: JSON
-  content_html: String
   slug: String!
   Ediciones: [mutationBook_EdicionesInput]
+  forum_post_id: String
+  last_forum_sync: String
+  last_forum_posts: JSON
   updatedAt: String
   createdAt: String
 }
@@ -13836,9 +15741,11 @@ input mutationBookUpdateInput {
   categories: [String]
   seeds: String
   content: JSON
-  content_html: String
   slug: String
   Ediciones: [mutationBookUpdate_EdicionesInput]
+  forum_post_id: String
+  last_forum_sync: String
+  last_forum_posts: JSON
   updatedAt: String
   createdAt: String
 }
@@ -13862,6 +15769,7 @@ enum BookUpdate_Ediciones_language_MutationInput {
 }
 
 input mutationVideoInput {
+  content: JSON
   url: String!
   permissions: [String]
   url_free: String
@@ -13871,11 +15779,15 @@ input mutationVideoInput {
   title: String
   description: String
   publishedAt: String
+  forum_post_id: String
+  last_forum_sync: String
+  last_forum_posts: JSON
   updatedAt: String
   createdAt: String
 }
 
 input mutationVideoUpdateInput {
+  content: JSON
   url: String
   permissions: [String]
   url_free: String
@@ -13885,8 +15797,37 @@ input mutationVideoUpdateInput {
   title: String
   description: String
   publishedAt: String
+  forum_post_id: String
+  last_forum_sync: String
+  last_forum_posts: JSON
   updatedAt: String
   createdAt: String
+}
+
+input mutationUi_grid_cardInput {
+  title: String
+  tailwindGridClassNames: String
+  cards: [mutationUi_grid_card_CardsInput]
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationUi_grid_card_CardsInput {
+  tailwindClassNames: String!
+  id: String
+}
+
+input mutationUi_grid_cardUpdateInput {
+  title: String
+  tailwindGridClassNames: String
+  cards: [mutationUi_grid_cardUpdate_CardsInput]
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationUi_grid_cardUpdate_CardsInput {
+  tailwindClassNames: String!
+  id: String
 }
 
 input mutationPermissionInput {
@@ -13922,6 +15863,7 @@ enum SearchResult_DocRelationshipInputRelationTo {
   video
   article_web
   article_pdf
+  book
 }
 
 input mutationSearchResultUpdateInput {
@@ -13942,6 +15884,7 @@ enum SearchResultUpdate_DocRelationshipInputRelationTo {
   video
   article_web
   article_pdf
+  book
 }
 
 input mutationPayloadLockedDocumentInput {
@@ -13968,6 +15911,7 @@ enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   article_web
   book
   video
+  ui_grid_cards
   permission
   search_results
 }
@@ -14005,6 +15949,7 @@ enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   article_web
   book
   video
+  ui_grid_cards
   permission
   search_results
 }
@@ -14050,4 +15995,22 @@ input PayloadPreferenceUpdate_UserRelationshipInput {
 
 enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
   users
+}
+
+input mutationArticulos_pageInput {
+  content: JSON
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationHome_pageInput {
+  content: JSON
+  updatedAt: String
+  createdAt: String
+}
+
+input mutationVideos_pageInput {
+  content: JSON
+  updatedAt: String
+  createdAt: String
 }
