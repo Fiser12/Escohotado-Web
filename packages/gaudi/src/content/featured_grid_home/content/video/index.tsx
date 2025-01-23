@@ -12,12 +12,14 @@ interface Props {
   title: string;
   coverHref: string;
   href: string;
+  detailHref: string;
   publishedAt?: string | null;
   categories?: {
     id: string;
     singular_name: string;
     seed?: string | null;
   }[];
+  unlockHref: string;
   hasPermission: boolean;
   className?: string;
 }
@@ -54,7 +56,7 @@ export const FeaturedVideo = (props: Props) => {
   });
 
   return (
-    <BaseCardContainer className={`base-container-axis-video ${props.className}`}>
+    <BaseCardContainer className={`base-container-axis-video ${props.className}`} href={props.hasPermission ? props.detailHref : null}>
       <div className={`grid-axis-control-content-video ${containerClass}`}>
         <div className={`image-container-video ${containerImageClass}`}>
           <Image
@@ -87,7 +89,7 @@ export const FeaturedVideo = (props: Props) => {
           {!props.hasPermission &&
             <div className="group flex justify-end items-center gap-1.5 text-primary-400 pt-4">
               <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
-              <Link text="Desbloquear" href={props.href} />
+              <Link text="Desbloquear" href={props.unlockHref} />
             </div>
           }
         </div>

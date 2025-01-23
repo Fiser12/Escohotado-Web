@@ -1,5 +1,4 @@
-import { RichTextRenderer } from '../../../RichTextRenderer';
-
+import { LexicalRenderer } from '../../../lexicalRenderer';
 
 export const renderer = async ({ node }: any) => {
     const type = node?.fields?.type;
@@ -15,11 +14,11 @@ export const renderer = async ({ node }: any) => {
     return <div className="grid md:grid-cols-4 grid-cols-1 gap-4">
         {node?.fields?.left &&
             <div className={`${leftSpan}`}>
-                <RichTextRenderer data={node.fields.left} />
+                <LexicalRenderer data={node.fields.left} />
             </div>}
         {node?.fields?.right &&
             <div className={`${rightSpan}`}>
-                <RichTextRenderer data={node.fields.right} />
+                <LexicalRenderer data={node.fields.right} />
             </div>}
     </div>;
 };

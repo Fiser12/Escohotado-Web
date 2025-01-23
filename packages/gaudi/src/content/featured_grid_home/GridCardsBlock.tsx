@@ -7,7 +7,7 @@ import { FeaturedQuote } from './content/quote'
 import { FeaturedBook } from './content/book'
 import { FeaturedVideo } from './content/video'
 
-
+const unlockHref = '/subscriptions'
 export const renderFeatured = (item: Featured) => {
   switch (item.type) {
     case "article":
@@ -16,10 +16,12 @@ export const renderFeatured = (item: Featured) => {
           key={item.id}
           className={item.className}
           title={item.title}
+          isPdf={item.isPdf}
           hasPermission={item.hasPermission}
           author={item.author}
           coverHref={item.coverHref}
           href={item.detailHref}
+          unlockHref={unlockHref}
           categories={item.categories}
         />
       );
@@ -51,9 +53,11 @@ export const renderFeatured = (item: Featured) => {
           title={item.title}
           hasPermission={item.hasPermission}
           coverHref={item.coverHref}
-          href={item.detailHref}
+          detailHref={item.detailHref}
+          href={item.href ?? "https://placehold.co/error"}
           publishedAt={item.publishedAt}
           categories={item.categories}
+          unlockHref={unlockHref}
         />
       );
     default:

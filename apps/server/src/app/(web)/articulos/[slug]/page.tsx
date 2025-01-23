@@ -32,11 +32,11 @@ const Page: NextPage<Props> = async (props) => {
     <div>
       <ArticleDetail
         title={article.title ?? "No title"}
-        href={`/articulos/${article.slug}`}
         publishedAt={article.publishedAt as string}
         coverHref={(article.cover as Media | null)?.url ?? "#"}
         textLink={"Leer más"}
         categories={article.categories as Taxonomy[]}
+        comments={[]}
       >
         {article.content &&
           <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />

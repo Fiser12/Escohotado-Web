@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { ArticleDetail } from ".";
+import { VideoDetail } from ".";
 
-const content = `<h1>Prueba Header 1</h1><h2>Prueba Header 2</h2><h3>Prueba Header 3</h3><h4>Prueba Header 4</h4><h5>Prueba Header 5</h5><h6>Prueba Header 6</h6><p>Body text de prueba</p><p><strong>Body text de prueba bold</strong></p><p><em>Body text de prueba italic</em></p><p><span style="text-decoration: underline">Body text de prueba underline</span></p><p><sup>Body text de prueba sup</sup></p><p><sub>Body text de prueba sub</sub></p><hr><blockquote>Cita con bloque</blockquote><ul class="list-bullet"><li value="1">Bullet list 1</li><li value="2">Bullet list 2</li><li value="3">Bullet list 3</li></ul><ol class="list-number"><li value="1">Number list 1</li><li value="2">Number list 2</li><li value="3">Number list 3</li></ol>`
 const comments = [
     {
         user: "Juan Pérez",
@@ -26,8 +25,8 @@ const comments = [
 ];
 
 const meta: Meta = {
-    title: "Pages/Articles/Detail/Web",
-    component: ArticleDetail,
+    title: "Pages/Videos/Detail",
+    component: VideoDetail,
     parameters: {
         layout: 'fullscreen',
         design: {
@@ -50,13 +49,14 @@ const meta: Meta = {
         author: "Sample Article Author",
         publishedAt: "2024-11-18",
         textLink: "Leer más",
+        videoHref: "https://www.youtube.com/watch?v=mV-4JUWcAC4",
         coverHref: "https://placehold.co/600x150",
         categories: [
             { id: "1", singular_name: "Tecnología" },
             { id: "2", singular_name: "Filosofía" },
         ],
-        comments
-},
+        comments,
+    },
 };
 
 export default meta;

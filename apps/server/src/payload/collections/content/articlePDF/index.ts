@@ -13,5 +13,12 @@ export const articlePDF = contentWithPermissionsCollectionBuilder({
   },
   hooks: {
     beforeOperation: [addContentHashToFile]
-  }
+  },
+  fields: [
+    {
+      label: 'Contenido',
+      name: 'content',
+      type: 'richText',
+    }
+  ]
 })

@@ -37,7 +37,7 @@ export const Header = ({
                     <Logo tabindex={0} />
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
                         <NavItem href="/articulos" text="Lecturas" tabindex={2} />
-                        <NavItem href="/filmoteca" text="Filmoteca" tabindex={3} />
+                        <NavItem href="/videos" text="Vídeos" tabindex={3} />
                         <BasicDropdown menuSections={catalogoSections} text="Catálogo" />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">

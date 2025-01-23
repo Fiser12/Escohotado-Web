@@ -317,6 +317,21 @@ export interface ArticlePdf {
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   seeds?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -811,6 +826,7 @@ export interface ArticlePdfSelect<T extends boolean = true> {
   publishedAt?: T;
   categories?: T;
   seeds?: T;
+  content?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;

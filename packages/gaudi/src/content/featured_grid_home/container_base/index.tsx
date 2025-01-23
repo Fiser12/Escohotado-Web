@@ -2,6 +2,7 @@ import classNames from "classnames";
 
 interface Props {
       children: React.ReactNode;
+      href?: string | null;
       className?: string;
 }
 
@@ -12,10 +13,14 @@ export const BaseCardContainer = (props: Props) => {
             props.className
       );
 
-      return (
-            <div className={containerClass}>
-                  {props.children}
-            </div>
-      );
-
+      return <>
+            {props.href &&
+                  <a className={containerClass} href={props.href}>{props.children}</a>
+            }
+            {!props.href &&
+                  <div className={containerClass}>
+                        {props.children}
+                  </div>
+            }
+      </>
 };

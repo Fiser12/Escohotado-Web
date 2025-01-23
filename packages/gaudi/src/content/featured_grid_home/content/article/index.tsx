@@ -19,6 +19,7 @@ interface Props {
   hasPermission: boolean;
   className?: string;
   isPdf: boolean;
+  unlockHref: string;
 }
 
 export const FeaturedArticle = (props: Props) => {
@@ -44,7 +45,7 @@ export const FeaturedArticle = (props: Props) => {
   );
 
   return (
-    <BaseCardContainer className={`base-container-axis-article ${props.className}`}>
+    <BaseCardContainer className={`base-container-axis-article ${props.className}`} href={props.hasPermission ? props.href : null}>
       <div className={`${!props.isPdf && 'grid-axis-control-content-article'} ${containerClass}`}>
         {!props.isPdf &&
           <div className={`image-control-article ${containerImageClass}`}>
@@ -71,7 +72,7 @@ export const FeaturedArticle = (props: Props) => {
           {!props.hasPermission &&
             <div className="group flex justify-end items-center gap-1.5 text-primary-400">
               <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
-              <Link text="Desbloquear" href={props.href} />
+              <Link text="Desbloquear" href={props.unlockHref} />
             </div>
           }
         </div>

@@ -22,7 +22,8 @@ export interface FeaturedArticleProps extends FeaturedBase {
   author: string;
   coverHref: string;
   hasPermission: boolean;
-  href: string | null;
+  href?: string | null;
+  isPdf: boolean;
   detailHref: string;
   categories: Array<{ id: string; singular_name: string }>;
 }
@@ -60,7 +61,6 @@ interface Props {
   description: string;
   buttons: Array<{ title: string; link: string }>;
 }
-
 
 export const HomePage = ({ featuredItems, description, buttons }: Props) => {
   return (

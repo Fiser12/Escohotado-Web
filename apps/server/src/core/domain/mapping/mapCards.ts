@@ -45,12 +45,13 @@ export const mapArticleCard =
       type: 'article',
       id: item.id,
       title: item.title,
+      isPdf: 'url' in item,
       hasPermission: evalPermissionQuery(user, item.permissions_seeds?.trim() ?? ''),
       author: getAuthorFromTaxonomies(taxonomies),
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
       coverHref: (item.cover as Media)?.url ?? imageError,
-      detailHref: '/articulos/' + ('slug' in item ? item.slug : item.id),
-      href: '',
+      detailHref: ('slug' in item ? `/articulos/${item.slug}` : `/articulos/pdf/${item.id}`),
+      href: 'url' in item ? item.url : undefined,
       className: classNames ?? 'col-span-1 md:col-span-2 lg:col-span-3',
     }
   }
@@ -72,7 +73,7 @@ export const mapVideoCard =
       categories: [],
       hasPermission: href != null && href != '',
       coverHref: video.thumbnailUrl ?? imageError,
-      detailHref: '/video/' + video.id,
+      detailHref: '/videos/' + video.id,
       href: href,
       className: classNames ?? 'col-span-1 md:col-span-2',
     }

@@ -10,6 +10,8 @@ export { ToggleButtonGroup } from "./common/toggle_button_group/toggle_button_gr
 export { SubscriptionsGroupCard } from "./subscription/subscriptions_card_group";
 export { BookCard } from "./content/book/cards";
 export { ArticleDetail } from "./content/pages/article_page/detalle_web";
+export { ArticleDetailPdf } from "./content/pages/article_page/detalle_pdf";
+export { VideoDetail } from "./content/pages/video_page/detalle";
 export { ContentGridList } from "./content/common/content_grid_list";
 export { ESFlag } from "./common/icons/flags/ES";
 export { ENFlag } from "./common/icons/flags/EN";

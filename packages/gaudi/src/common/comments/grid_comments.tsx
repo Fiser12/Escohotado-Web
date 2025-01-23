@@ -23,6 +23,7 @@ export const GridComments = <T,>({
                   />
                   </div>
                   <div className="flex flex-col gap-7">
+                        {items.length === 0 && <p className="text-gray-500">Aún no hay comentarios</p>}
                         {items.map((item, index) => <div key={index}>
                               { renderBox(item, index) }
                         </div>)}

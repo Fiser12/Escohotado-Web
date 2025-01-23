@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { GridComments } from "./grid_comments";
-import { Comment } from ".";
+import { CommentCard } from ".";
 import { ContentWrapper } from "../content_wrapper/content_wrapper";
 
 const meta: Meta<typeof GridComments> = {
@@ -38,7 +38,7 @@ const meta: Meta<typeof GridComments> = {
             ],
             renderBox(item, index) {
                   const comment = item as {user: string, date: string, comment: string};
-                  return <Comment 
+                  return <CommentCard 
                         user={comment.user} 
                         date={comment.date} 
                         comment={comment.comment} 

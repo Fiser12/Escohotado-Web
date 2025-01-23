@@ -4,3 +4,4 @@ export type { MenuItem, MenuSection } from './domain/header_submenu_model';
 export * from './mockData/user.model'
 export type { Interval, IntervalOptions } from './domain/interval_options';
 import './domain/optional_helpers'; 
+export type { Comment } from './domain/types/Comment';
