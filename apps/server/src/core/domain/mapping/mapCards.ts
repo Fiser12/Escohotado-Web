@@ -1,5 +1,6 @@
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery'
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery'
+import { getAuthorsNamesFromTaxonomies, getMediasFromTaxonomies, getTopicsFromTaxonomies } from '@/core/content/taxonomiesGetters'
 import { Featured } from 'gaudi/server'
 import {
   Taxonomy,
@@ -13,27 +14,6 @@ import {
   User,
 } from 'payload-types'
 
-const getAuthorFromTaxonomies = (taxonomies: Taxonomy[]): string => {
-  return taxonomies
-    .filter((taxonomy) => taxonomy.seed?.includes('autor'))
-    .map((taxonomy) => taxonomy.singular_name)
-    .join(', ')
-}
-const getMediasFromTaxonomies = (
-  taxonomies: Taxonomy[],
-): { id: string; singular_name: string }[] => {
-  return taxonomies
-    .filter((taxonomy) => taxonomy.seed?.includes('medio'))
-    .map((taxonomy) => ({ id: taxonomy.id, singular_name: taxonomy.singular_name }))
-}
-
-const getTopicsFromTaxonomies = (
-  taxonomies: Taxonomy[],
-): { id: string; singular_name: string }[] => {
-  return taxonomies
-    .filter((taxonomy) => taxonomy.seed?.includes('tema'))
-    .map((taxonomy) => ({ id: taxonomy.id, singular_name: taxonomy.singular_name }))
-}
 
 const imageError = 'https://placehold.co/600x300?text=Error+cargando+imagen'
 
@@ -47,7 +27,7 @@ export const mapArticleCard =
       title: item.title,
       isPdf: 'url' in item,
       hasPermission: evalPermissionQuery(user, item.permissions_seeds?.trim() ?? ''),
-      author: getAuthorFromTaxonomies(taxonomies),
+      author: getAuthorsNamesFromTaxonomies(taxonomies),
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
       coverHref: (item.cover as Media)?.url ?? imageError,
       detailHref: ('slug' in item ? `/articulos/${item.slug}` : `/articulos/pdf/${item.id}`),
@@ -82,7 +62,7 @@ const mapBookCard = (item: Book, classNames?: string | null): Featured => {
   return {
     type: 'book',
     id: item.id,
-    author: getAuthorFromTaxonomies((item.categories ?? []) as Taxonomy[]),
+    author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     coverHref: (item.cover as Media)?.url ?? imageError,
     href: '/biblioteca/' + item.slug,
     quote: item.description ?? 'No description',

@@ -15,6 +15,7 @@ import { mapArticleCard } from "@/core/domain/mapping/mapCards";
 import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
+import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
 
 export const pageSize = 10;
 
@@ -58,7 +59,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
             <div className="w-full col-span-2 order-1 md:order-none">
               {lastArticles.map((article, index) => {
                 const categories = article.categories as Taxonomy[]
-                const authorName = categories?.find(category => category.seed?.includes("autor") == true)?.singular_name ?? "No author"
+                const authorName = getAuthorFromTaxonomies(categories)?.singular_name ?? "No author"
                 return <HeadlineCard
                   key={index}
                   author={authorName}
