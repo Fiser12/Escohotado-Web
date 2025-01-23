@@ -21,7 +21,7 @@ export const FeaturedBook = (props: Props) => {
       return (
             <BaseCardContainer className={`base-container-axis-book ${props.className}`}>
                   <div className={`grid-axis-control-content-book ${containerClass}`}>
-                        <ImageParallax shadow={false} className="w-auto h-full">
+                        <ImageParallax shadow={false} className="h-full w-full">
                               <Image
                                     width={300}
                                     height={600}
