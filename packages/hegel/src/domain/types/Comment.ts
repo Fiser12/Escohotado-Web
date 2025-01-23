@@ -4,3 +4,8 @@ export interface Comment {
     date: string;
     comment: string;
 }
+
+export interface CommentsSectionModel {
+    comments: Comment[];
+    forumTopicId?: string | null;
+}

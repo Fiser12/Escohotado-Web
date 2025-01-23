@@ -42,7 +42,6 @@ const meta: Meta = {
         textLink: { control: "text", description: "Text for the link" },
         coverHref: { control: "text", description: "Image URL for the cover" },
         publishedAt: { control: "text", description: "Publication date" },
-        contentHtml: { control: "text", description: "HTML content of the article" },
     },
     args: {
         title: "Sample Article Title",
@@ -55,7 +54,10 @@ const meta: Meta = {
             { id: "1", singular_name: "Tecnología" },
             { id: "2", singular_name: "Filosofía" },
         ],
-        comments,
+        commentsSectionModel: {
+            comments,
+            forumTopicId: "1234",
+        }
     },
 };
 

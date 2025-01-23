@@ -48,7 +48,10 @@ const meta: Meta = {
         description: "Reedición de «Rameras y Esposas» (1993) de Antonio Escohotado, en formato impreso, con cuadernillo a color de 20 páginas.",
         coverHref: "https://laemboscadura.com/wp-content/uploads/Rameras-y-esposas.png",
         langs: ["es", "en"],
-        comments
+        commentsSectionModel: {
+            comments,
+            forumTopicId: "1234",
+        }
     },
     render: (props) => {
         const [variant, setVariant] = useState(options[0]?.id);

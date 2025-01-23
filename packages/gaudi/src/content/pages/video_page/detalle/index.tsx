@@ -1,11 +1,10 @@
 import classNames from "classnames";
 import { H3 } from "../../../../common/headers/H3";
-import { H4 } from "../../../../common/headers/H4";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { Tag } from "../../../../common/tag/tag";
 import { GridComments } from "../../../../common/comments/grid_comments";
 import { CommentCard } from "../../../../common/comments";
-import { Comment } from "hegel";
+import { CommentsSectionModel } from "hegel";
 
 interface Props {
     title: string;
@@ -19,7 +18,7 @@ interface Props {
         singular_name: string;
         seed?: string | null
     }[];
-    comments: Comment[];
+    commentsSectionModel: CommentsSectionModel;
     children: React.ReactNode;
 }
 
@@ -86,7 +85,8 @@ export const VideoDetail = (props: Props) => {
             {props.children}
             <ContentWrapper>
                 <GridComments
-                    items={props.comments}
+                    items={props.commentsSectionModel.comments}
+                    forumTopicId={props.commentsSectionModel.forumTopicId}
                     renderBox={(comment) => (
                         <CommentCard
                             user={comment.user}

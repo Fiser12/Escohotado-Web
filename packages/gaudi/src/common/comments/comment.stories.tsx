@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react/*";
-import { Comment } from ".";
+import { CommentCard } from ".";
 
-const meta: Meta<typeof Comment> = {
+const meta: Meta<typeof CommentCard> = {
       title: "Molecules",
-      component: Comment,
+      component: CommentCard,
       parameters: {
             layout: 'centered',
             design: {

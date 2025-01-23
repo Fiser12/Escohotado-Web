@@ -4,7 +4,7 @@ import { ImageParallax } from "../../../book/cards/image_parallax";
 import Image from "next/image";
 import { GridComments } from "../../../../common/comments/grid_comments";
 import { CommentCard } from "../../../../common/comments";
-import { Comment } from "hegel";
+import { CommentsSectionModel } from "hegel";
 
 interface Props {
     title: string;
@@ -13,7 +13,7 @@ interface Props {
     langs: ('es' | 'en')[];
     link: string;
     bookButtons: React.ReactNode;
-    comments: Comment[];
+    commentsSectionModel: CommentsSectionModel;
     children: React.ReactNode;
 }
 
@@ -40,7 +40,8 @@ export const BookDetail = (props: Props) => {
             {props.children}
             <ContentWrapper className="flex flex-col gap-12 pt-10">
                 <GridComments
-                    items={props.comments}
+                    items={props.commentsSectionModel.comments}
+                    forumTopicId={props.commentsSectionModel.forumTopicId}
                     renderBox={(comment) => (
                         <CommentCard
                             user={comment.user}

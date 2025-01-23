@@ -7,7 +7,7 @@ import { H4 } from "../../../../common/headers/H4";
 import { H1 } from "../../../../common/headers/H1";
 import { MainButton } from "../../../../common/main_button/main_button";
 import { DownloadDocIcon } from "../../../../common/icons/download_doc_icon";
-import { Comment } from "hegel";
+import { CommentsSectionModel } from "hegel";
 
 interface Props {
       title: string;
@@ -20,13 +20,12 @@ interface Props {
             singular_name: string;
             seed?: string | null
       }[];
-      comments: Comment[];
+      commentsSectionModel: CommentsSectionModel;
       children: React.ReactNode;
 }
 
 
 export const ArticleDetailPdf = (props: Props) => {
-      const comments = props.comments;
       const tagDateContainerClass = classNames(
             'flex flex-col md:flex-row gap-3 justify-between'
       );
@@ -75,7 +74,8 @@ export const ArticleDetailPdf = (props: Props) => {
                   {props.children}
                   <ContentWrapper>
                         <GridComments
-                              items={comments}
+                              forumTopicId={props.commentsSectionModel.forumTopicId}
+                              items={props.commentsSectionModel.comments}
                               renderBox={(comment) => (
                                     <CommentCard
                                           user={comment.user}

@@ -7,7 +7,7 @@ import { GridComments } from "../../../../common/comments/grid_comments";
 import { CommentCard } from "../../../../common/comments";
 import "./article-html-content.css";
 import Image from "next/image";
-import { Comment } from "hegel";
+import { CommentsSectionModel } from "hegel";
 
 interface Props {
     title: string;
@@ -20,7 +20,7 @@ interface Props {
         singular_name: string;
         seed?: string | null
     }[];
-    comments: Comment[];
+    commentsSectionModel: CommentsSectionModel;
     children: React.ReactNode;
 }
 
@@ -72,7 +72,8 @@ export const ArticleDetail = (props: Props) => {
             {props.children}
             <ContentWrapper>
                 <GridComments
-                    items={props.comments}
+                    items={props.commentsSectionModel.comments}
+                    forumTopicId={props.commentsSectionModel.forumTopicId}
                     renderBox={(comment) => (
                         <CommentCard
                             user={comment.user}

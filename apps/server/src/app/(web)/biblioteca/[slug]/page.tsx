@@ -47,7 +47,10 @@ const Page = async (props: Props) => {
             langs={['es', 'en']}
             bookButtons={<BookVariantsSelectorNuqs options={options} />}
             link={book.Ediciones?.[0].link ?? "#"}
-            comments={[]}
+            commentsSectionModel={{
+                comments: [],
+                forumTopicId: book.forum_post_id
+            }}
         >
             { book.content && <LexicalRenderer data={book.content} /> }
         </BookDetail>

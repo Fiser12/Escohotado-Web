@@ -30,7 +30,10 @@ const Page: NextPage<Props> = async (props) => {
     publishedAt={articlePdf.publishedAt as string}
     coverHref={(articlePdf.cover as Media | null)?.url ?? "#"}
     categories={articlePdf.categories as Taxonomy[]}
-    comments={[]}
+    commentsSectionModel={{
+      comments: [],
+      forumTopicId: articlePdf.forum_post_id
+    }}
   >
     {articlePdf.content &&
       <LexicalRenderer className="max-w-[48rem] mx-auto" data={articlePdf.content} />

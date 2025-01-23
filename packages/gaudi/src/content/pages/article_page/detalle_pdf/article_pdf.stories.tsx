@@ -54,7 +54,10 @@ const meta: Meta = {
             { id: "1", singular_name: "Tecnología" },
             { id: "2", singular_name: "Filosofía" },
         ],
-        comments
+        commentsSectionModel: {
+            comments,
+            forumTopicId: "1234",
+        }
     },
 };
 

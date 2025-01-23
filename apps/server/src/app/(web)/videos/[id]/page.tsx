@@ -40,7 +40,10 @@ const Page: NextPage<Props> = async (props) => {
         coverHref={video.thumbnailUrl ?? ""}
         textLink={"Leer más"}
         categories={[]}
-        comments={[]}
+        commentsSectionModel={{
+          comments: [],
+          forumTopicId: video.forum_post_id
+        }}
       >
         {video.content &&
           <LexicalRenderer className="max-w-[48rem] mx-auto" data={video.content} />

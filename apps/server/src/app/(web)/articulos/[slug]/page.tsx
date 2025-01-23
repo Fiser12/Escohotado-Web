@@ -36,7 +36,10 @@ const Page: NextPage<Props> = async (props) => {
         coverHref={(article.cover as Media | null)?.url ?? "#"}
         textLink={"Leer más"}
         categories={article.categories as Taxonomy[]}
-        comments={[]}
+        commentsSectionModel={{
+          comments: [],
+          forumTopicId: article.forum_post_id
+        }}
       >
         {article.content &&
           <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
