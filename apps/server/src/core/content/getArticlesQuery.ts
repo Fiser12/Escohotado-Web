@@ -80,14 +80,11 @@ export const getArticlesQuery = async (
     .filter((article) => {
       const evalAutorFilter = autor == null || autor == "" || article.categories
         ?.map(cat => cat as Taxonomy)
-        ?.map(cat => {
-          return cat
-        })
-        ?.some(cat => cat.breadcrumbs?.map(t => t.url).includes(autor))
+        ?.some(cat => cat.breadcrumbs?.some(t => t?.url?.includes(autor)))
       const evalMedioFilter =
         medios.length === 0 || medios.every((mediosSeed) => article.categories
         ?.map(cat => cat as Taxonomy)
-        ?.some(cat => cat.breadcrumbs?.map(t => t.url).includes(mediosSeed))
+        ?.some(cat => cat.breadcrumbs?.some(t => t?.url?.includes(mediosSeed)))
       )
       const evalQueryFilter =
         query === null ||
