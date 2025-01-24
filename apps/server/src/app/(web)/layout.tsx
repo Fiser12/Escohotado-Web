@@ -11,6 +11,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
 
   return (
     <html>
+      <head>
+        <title>A. Escohotado</title>
+        <link rel="icon" href="/icons/favicon.ico" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+
+      </head>
       <body>
         <NuqsAdapter>
           <Header
