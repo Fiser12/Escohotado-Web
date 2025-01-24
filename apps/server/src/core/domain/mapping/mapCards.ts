@@ -1,6 +1,7 @@
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery'
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery'
 import { getAuthorsNamesFromTaxonomies, getMediasFromTaxonomies, getTopicsFromTaxonomies } from '@/core/content/taxonomiesGetters'
+import { consolidateHTMLConverters, convertLexicalToHTML } from '@payloadcms/richtext-lexical'
 import { Featured } from 'gaudi/server'
 import {
   Taxonomy,
@@ -9,6 +10,7 @@ import {
   Media,
   Video,
   Book,
+  Quote,
   GridCardsBlock,
   UiGridCard,
   User,
@@ -70,6 +72,16 @@ const mapBookCard = (item: Book, classNames?: string | null): Featured => {
     className: classNames ?? 'col-span-1 md:col-span-2',
   }
 }
+const mapQuoteCard = (item: Quote, classNames?: string | null): Featured => {
+  return {
+    type: 'quote',
+    id: item.id,
+    className: classNames ?? 'col-span-1 md:col-span-2',
+    author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
+    quote: item.quote
+  }
+}
+
 
 export const mapCards =
   (user: User | null) =>
@@ -95,6 +107,8 @@ export const mapCards =
               return mapVideoCard(user)(item.value as Video, cardTailwind)
             case 'book':
               return mapBookCard(item.value as Book, cardTailwind)
+            case 'quote':
+              return mapQuoteCard(item.value as Quote, cardTailwind)
           }
         })
         .filter(Boolean)

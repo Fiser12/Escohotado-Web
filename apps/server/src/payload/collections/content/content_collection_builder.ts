@@ -50,7 +50,6 @@ export function contentCollectionBuilder(
         },
       },
     },
-
     hooks: {
       ...config.hooks
     },

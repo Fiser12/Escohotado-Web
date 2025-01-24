@@ -12,7 +12,7 @@ export const GridCardsBlock: Block = {
     {
       type: 'relationship',
       name: 'value',
-      relationTo: ['article_web', 'article_pdf', 'book', 'video'],
+      relationTo: ['article_web', 'article_pdf', 'book', 'video', 'quote'],
       required: true,
       hasMany: true,
       admin: {

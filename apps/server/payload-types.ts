@@ -21,6 +21,7 @@ export interface Config {
     article_web: ArticleWeb;
     book: Book;
     video: Video;
+    quote: Quote;
     ui_grid_cards: UiGridCard;
     permission: Permission;
     'search-results': SearchResult;
@@ -47,6 +48,7 @@ export interface Config {
     article_web: ArticleWebSelect<false> | ArticleWebSelect<true>;
     book: BookSelect<false> | BookSelect<true>;
     video: VideoSelect<false> | VideoSelect<true>;
+    quote: QuoteSelect<false> | QuoteSelect<true>;
     ui_grid_cards: UiGridCardsSelect<false> | UiGridCardsSelect<true>;
     permission: PermissionSelect<false> | PermissionSelect<true>;
     'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
@@ -505,6 +507,35 @@ export interface Video {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote".
+ */
+export interface Quote {
+  id: string;
+  quote: string;
+  context?: string | null;
+  source?:
+    | ({
+        relationTo: 'book';
+        value: string | Book;
+      } | null)
+    | ({
+        relationTo: 'video';
+        value: string | Video;
+      } | null)
+    | ({
+        relationTo: 'article_pdf';
+        value: string | ArticlePdf;
+      } | null)
+    | ({
+        relationTo: 'article_web';
+        value: string | ArticleWeb;
+      } | null);
+  categories?: (string | Taxonomy)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ui_grid_cards".
  */
 export interface UiGridCard {
@@ -597,6 +628,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'video';
         value: string | Video;
+      } | null)
+    | ({
+        relationTo: 'quote';
+        value: string | Quote;
       } | null)
     | ({
         relationTo: 'ui_grid_cards';
@@ -922,6 +957,18 @@ export interface VideoSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote_select".
+ */
+export interface QuoteSelect<T extends boolean = true> {
+  quote?: T;
+  context?: T;
+  source?: T;
+  categories?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ui_grid_cards_select".
  */
 export interface UiGridCardsSelect<T extends boolean = true> {
@@ -1114,6 +1161,10 @@ export interface GridCardsBlock {
     | {
         relationTo: 'video';
         value: string | Video;
+      }
+    | {
+        relationTo: 'quote';
+        value: string | Quote;
       }
   )[];
   gridCards: string | UiGridCard;
