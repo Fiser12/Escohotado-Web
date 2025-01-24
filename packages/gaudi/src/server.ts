@@ -27,5 +27,5 @@ export { NewsletterSubscription } from "./content/common/newsletterSubscription"
 export { GridCardsBlock } from "./content/featured_grid_home/GridCardsBlock";
 import HomeHero from "./common/home_hero";
 import handwrittenBackground from "./assets/images/handwritting-bg.jpg";
-import escohotadoArticlesPortada from "./assets/images/escohotado-articles-portada.png";
+import escohotadoArticlesPortada from "./assets/images/antonio-escohotado-lecturas.png";
 export { handwrittenBackground, escohotadoArticlesPortada, HomeHero };
