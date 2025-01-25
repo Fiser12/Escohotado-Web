@@ -53,7 +53,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
 
         const observer = new IntersectionObserver(
             entries => entries[0].isIntersecting && !loading && page < maxPage && setPage(prev => prev + 1),
-            { threshold: 1.0 }
+            { threshold: 0.5 }
         );
 
         observer.observe(currentObserverRef);

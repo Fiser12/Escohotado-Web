@@ -66,6 +66,7 @@ const Page = async ({ searchParams }: Props) => {
             .map(renderFeatured)}
         </GridCardsBlockContainer>
         <DynamicLoadingVideos
+          sortedBy={sort}
           query={query}
           user={user}
           maxPage={videosResult.maxPage}

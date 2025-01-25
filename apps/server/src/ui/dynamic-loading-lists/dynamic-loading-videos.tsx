@@ -9,10 +9,11 @@ import { useEffect, useRef, useState } from "react";
 interface Props {
     user: User | null;
     query: string;
+    sortedBy: string;
     maxPage: number;
 }
 
-export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user }) => {
+export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, sortedBy }) => {
     const [videos, setVideos] = useState<Record<string, ResultVideo[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -24,7 +25,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user }) 
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newVideos = await getVideosQuery(query, page);
+                const newVideos = await getVideosQuery(query, page, sortedBy);
                 setVideos((prev) => ({
                     ...prev,
                     [page]: newVideos.results
@@ -36,7 +37,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user }) 
             }
         };
         load();
-    }, [page, maxPage, query]);
+    }, [page, maxPage, query, sortedBy]);
 
     useEffect(() => {
         setVideos({});
@@ -49,7 +50,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user }) 
 
         const observer = new IntersectionObserver(
             entries => entries[0].isIntersecting && !loading && page < maxPage && setPage(prev => prev + 1),
-            { threshold: 1.0 }
+            { threshold: 0.5 } 
         );
 
         observer.observe(currentObserverRef);
