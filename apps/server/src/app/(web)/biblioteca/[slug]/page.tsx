@@ -5,7 +5,7 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { BookDetail } from "gaudi/server";
 import { Media } from "payload-types";
-import { BookVariantsSelectorNuqs } from "@/ui/book_variants_selector_nuqs";
+import { BookVariantsSelectorNuqs } from "@/ui/nuqs/book_variants_selector_nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 
 interface Props {
