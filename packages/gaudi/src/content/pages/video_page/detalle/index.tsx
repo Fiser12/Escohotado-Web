@@ -5,6 +5,7 @@ import { Tag } from "../../../../common/tag/tag";
 import { GridComments } from "../../../../common/comments/grid_comments";
 import { CommentCard } from "../../../../common/comments";
 import { CommentsSectionModel } from "hegel";
+import { VideoEmbed } from "../../../../common/video_embed/video_embed";
 
 interface Props {
     title: string;
@@ -22,27 +23,6 @@ interface Props {
     commentsSectionModel: CommentsSectionModel;
     children: React.ReactNode;
 }
-
-function extractYouTubeVideoId(url: string) {
-    const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/.*v=([^&\s]+)/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
-}
-
-const YouTubeEmbed = (props: { videoId: string }) => {
-    return (
-        <div className="w-full max-w-[80rem] mx-auto aspect-video max-h-[600px]">
-        <iframe
-            className="w-full h-full"
-            src={`https://www.youtube.com/embed/${props.videoId}`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-
-        ></iframe>
-        </div>
-    );
-};
-
 
 export const VideoDetail = (props: Props) => {
     const containerClass = classNames(
@@ -62,18 +42,16 @@ export const VideoDetail = (props: Props) => {
         month: 'long',
         day: 'numeric'
     });
-    const videoId = props.videoHref ? extractYouTubeVideoId(props.videoHref) : null;
     const duration = segundosAFormatoHHMMSS(props.duration);
     return (
         <div className={containerClass}>
             <ContentWrapper className="flex flex-col gap-12">
-                {videoId &&
-                    <YouTubeEmbed videoId={videoId} />
+                {props.videoHref &&
+                    <VideoEmbed url={props.videoHref} />
                 }
-
                 <div className="border-b-2 border-gray-light pb-9 md:pb-10 flex flex-col gap-6 md:gap-10">
-                <H3 label={props.title ?? "No title"} />
-                <div className={tagDateContainerClass}>
+                    <H3 label={props.title ?? "No title"} />
+                    <div className={tagDateContainerClass}>
                         <div className={categoriesClass}>
                             {props.categories?.map((category, index) =>
                                 <Tag key={index} text={category.singular_name}></Tag>

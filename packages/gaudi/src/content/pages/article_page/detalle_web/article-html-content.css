@@ -45,7 +45,7 @@
 }
 
 @layer components {
-  .article-html-content h1 {
+  .article-html-content > h1 {
     font-family: var(--font-display);
     font-size: 3em;
     line-height: 1.4em;
@@ -60,7 +60,7 @@
     }
   }
 
-  .article-html-content h2 {
+  .article-html-content > h2 {
     font-size: 2em;
     line-height: 1.3em;
     margin-top: 0.6em;
@@ -75,7 +75,7 @@
     }
   }
 
-  .article-html-content h3 {
+  .article-html-content > h3 {
     font-size: 1.5em;
     line-height: 1.4em;
     margin-top: 0.5em;
@@ -90,7 +90,7 @@
     }
   }
 
-  .article-html-content h4 {
+  .article-html-content > h4 {
     font-size: 1.35em;
     line-height: 1.6em;
     margin-top: 0.4em;
@@ -98,7 +98,7 @@
     font-weight: 600;
   }
 
-  .article-html-content h5,
+  .article-html-content > h5,
   h6 {
     font-size: 1.2em;
     line-height: 1.5em;
@@ -106,7 +106,7 @@
     font-weight: 600;
   }
 
-  .article-html-content p {
+  .article-html-content > p {
     font-size: 1.1em;
     line-height: 1.5em;
     margin-bottom: 1.4em;
@@ -118,7 +118,7 @@
     }
   }
 
-  .article-html-content blockquote {
+  .article-html-content > blockquote {
     width: 100%;
     font-size: 1.25em;
     line-height: 1.75em;
@@ -150,7 +150,7 @@
     }
   }
 
-  .article-html-content ul, ol {
+  .article-html-content > ul, ol {
     font-size: 1em;
     margin-bottom: 2em;
 
@@ -160,7 +160,7 @@
     }
   }
 
-  .article-html-content ul {
+  .article-html-content > ul {
     margin-left: 2em;
 
     @media (max-width: 699px) {
@@ -168,7 +168,7 @@
     }
   }
 
-  .article-html-content ol {
+  .article-html-content > ol {
     list-style-type: decimal;
     margin-left: 3em;
 
@@ -177,7 +177,7 @@
     }
   }
 
-  .article-html-content ol > li {
+  .article-html-content > ol > li {
     padding-left: 0.25em;
     margin-bottom: 0.4em;
 
@@ -197,7 +197,7 @@
     }
   }
 
-  .article-html-content ul > li {
+  .article-html-content > ul > li {
     position: relative;
     padding-left: 1.25em;
     margin-bottom: 0.8em;
@@ -222,7 +222,7 @@
     }
   }
 
-  .article-html-content hr {
+  .article-html-content > hr {
     border: none;
     height: 2px;
     background-color: var(--color-gray-light);
