@@ -38,12 +38,12 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
             }
         };
         load();
-    }, [page, maxPage, query, sortedBy]);
+    }, [page, maxPage, query, sortedBy, playlist]);
 
     useEffect(() => {
         setVideos({});
         setPage(0);
-    }, [query]);
+    }, [query, playlist, sortedBy]);
 
     useEffect(() => {
         const currentObserverRef = observerRef.current;
