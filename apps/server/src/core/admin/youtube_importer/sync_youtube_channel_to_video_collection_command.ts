@@ -59,7 +59,6 @@ export const youtubeVideoUpsert = async (
 ): Promise<void> => {  
   try {
     const url = `https://www.youtube.com/watch?v=${video.id}`
-
     if (upsert && existingUrls.includes(url)) {
       await payload.db.drizzle
         .update(videoSchema)

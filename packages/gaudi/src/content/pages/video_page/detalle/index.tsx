@@ -11,6 +11,7 @@ interface Props {
     publishedAt: string;
     author?: string;
     textLink: string;
+    duration: number;
     videoHref?: string | null;
     coverHref: string;
     categories: {
@@ -62,7 +63,7 @@ export const VideoDetail = (props: Props) => {
         day: 'numeric'
     });
     const videoId = props.videoHref ? extractYouTubeVideoId(props.videoHref) : null;
-
+    const duration = segundosAFormatoHHMMSS(props.duration);
     return (
         <div className={containerClass}>
             <ContentWrapper className="flex flex-col gap-12">
@@ -78,7 +79,10 @@ export const VideoDetail = (props: Props) => {
                                 <Tag key={index} text={category.singular_name}></Tag>
                             )}
                         </div>
-                        <p className="text-gray-disabled">{formattedDate}</p>
+                        <div className="flex flex-col gap-2 items-end">
+                            <p className="text-gray-disabled">{formattedDate}</p>
+                            <p className="text-gray-disabled">Duración: {duration}</p>
+                        </div>
                     </div>
                 </div>
             </ContentWrapper>
@@ -99,3 +103,7 @@ export const VideoDetail = (props: Props) => {
         </div>
     );
 };
+function segundosAFormatoHHMMSS(totalSegundos: number) {
+    const date = new Date(totalSegundos * 1000);
+    return date.toISOString().slice(11, 19).replace("00:", "").replace("00:", "");
+}

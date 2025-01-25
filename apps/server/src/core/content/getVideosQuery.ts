@@ -15,6 +15,7 @@ export type ResultVideo = Video & {
 export const getVideosQuery = async (
   query: string,
   page: number,
+  sortBy: string
 ): Promise<{
   results: ResultVideo[]
   maxPage: number
@@ -25,10 +26,10 @@ export const getVideosQuery = async (
 
   const videosDocs = await payload.find({
     collection: COLLECTION_SLUG_VIDEO,
-    sort: '-publishedAt',
+    sort: sortBy === "popularity" ? "-viewCount" : '-publishedAt',
     pagination: false,
     where: {
-      id: { in: results },
+      id: { in: results }
     },
   })
   const startIndex = page * pageSize

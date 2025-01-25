@@ -104,7 +104,8 @@ export default buildConfig({
       beforeSync: ({ originalDoc, searchDoc }: any) => {
         return {
           ...searchDoc,
-          tags: originalDoc.categories?.map((cat: any) => cat.breadcrumbs?.map((t: any) => t.url)).flat().join(" "),
+          tags: originalDoc.categories?.map((cat: any) => cat.breadcrumbs?.map((t: any) => t.url)).flat().join(" ")
+          + " " + originalDoc.tags?.join(" ")
         }
       },
     }),

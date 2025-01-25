@@ -12,6 +12,7 @@ interface Props {
 		icon?: React.ReactNode
 	}
 	>;
+	showClearButton?: boolean;
 }
 
 export function FilterBarNuqs(props: Props) {
@@ -27,6 +28,7 @@ export function FilterBarNuqs(props: Props) {
 			{...props}
 			showSelectionAtLabel={false}
 			color="white"
+			showClearButton={props.showClearButton ?? true}
 			selectedTags={tags.split(',').filter(Boolean) ?? []}
 			onSelectedTagsChange={(tags) => {
 				setSearch(tags.join(","))

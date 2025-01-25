@@ -3,9 +3,9 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
 import { Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { AutorBarSSR } from "@/ui/autor_bar_ssr";
-import { MedioBarSSR } from "@/ui/medio_bar_ssr";
-import { SearchBarNuqs } from "@/ui/search_bar_nuqs";
+import { AutorBarSSR } from "@/ui/nuqs/autor_bar_ssr";
+import { MedioBarSSR } from "@/ui/nuqs/medio_bar_ssr";
+import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
 import { CommonArticle, getArticlesQuery } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
 import { getLastArticlesQuery } from "@/core/content/getLastArticlesQuery";
@@ -80,7 +80,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
       }
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
         <H2 label="Artículos" id="h2-articles" />
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 items-end">
           <AutorBarSSR />
           <MedioBarSSR />
           <SearchBarNuqs />
