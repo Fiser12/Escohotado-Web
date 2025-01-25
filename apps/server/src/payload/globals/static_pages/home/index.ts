@@ -9,6 +9,11 @@ export const HomePage: GlobalConfig = {
         name: 'content',
         type: 'richText',
       }
-    ]
+    ],
+    admin: {
+      livePreview: {
+        url: ({ data }) => `/`,
+      }  
+    }
   }
   

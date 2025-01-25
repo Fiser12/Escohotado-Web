@@ -9,6 +9,11 @@ export const ArticulosPage: GlobalConfig = {
         name: 'content',
         type: 'richText',
       }
-    ]
+    ],
+    admin: {
+      livePreview: {
+        url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}/articulos`,
+      }  
+    }
   }
   

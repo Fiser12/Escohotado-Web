@@ -40,6 +40,7 @@ export function contentCollectionBuilder(
       delete: isAdmin,
     },
     admin: {
+      ...config.admin,
       useAsTitle: 'title',
       group: 'Contenido',
       components: {

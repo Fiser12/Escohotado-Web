@@ -8,6 +8,11 @@ export const book = contentCollectionBuilder({
     singular: 'Libro',
     plural: 'Libros',
   },
+  admin: {
+    livePreview: {
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}/biblioteca/${data.slug}`,
+    }  
+  },
   fields: [
     {
       label: 'Contenido',

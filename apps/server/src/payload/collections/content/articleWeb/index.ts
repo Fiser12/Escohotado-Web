@@ -8,6 +8,11 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
     singular: 'Articulo Web',
     plural: 'Artículos Web',
   },
+  admin: {
+    livePreview: {
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}/articulos/${data.slug}`,
+    }  
+  },
   fields: [
     ...slugField("title"),
     {

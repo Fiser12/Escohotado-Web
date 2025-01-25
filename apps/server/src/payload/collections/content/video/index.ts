@@ -25,6 +25,9 @@ export const video: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Contenido',
+    livePreview: {
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}/videos/${data.id}`,
+    },
     components: {
       views: {
         list: {

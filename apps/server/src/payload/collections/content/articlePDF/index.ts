@@ -14,6 +14,11 @@ export const articlePDF = contentWithPermissionsCollectionBuilder({
   hooks: {
     beforeOperation: [addContentHashToFile]
   },
+  admin: {
+    livePreview: {
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}/articulos/pdf/${data.id}`,
+    }  
+  },
   fields: [
     {
       label: 'Contenido',
