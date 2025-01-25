@@ -9,11 +9,12 @@ import { useEffect, useRef, useState } from "react";
 interface Props {
     user: User | null;
     query: string;
+    playlist: string;
     sortedBy: string;
     maxPage: number;
 }
 
-export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, sortedBy }) => {
+export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, sortedBy, playlist }) => {
     const [videos, setVideos] = useState<Record<string, ResultVideo[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -25,7 +26,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newVideos = await getVideosQuery(query, page, sortedBy);
+                const newVideos = await getVideosQuery(query, playlist, page, sortedBy);
                 setVideos((prev) => ({
                     ...prev,
                     [page]: newVideos.results

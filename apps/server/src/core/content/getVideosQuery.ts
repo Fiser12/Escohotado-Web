@@ -14,6 +14,7 @@ export type ResultVideo = Video & {
 
 export const getVideosQuery = async (
   query: string,
+  tag: string,
   page: number,
   sortBy: string
 ): Promise<{
@@ -47,6 +48,13 @@ export const getVideosQuery = async (
       ...video,
       allowedHref,
     }
+  })
+  .filter((video) => {
+    const tags = (video.tags ?? []) as string[]
+    if (tag) {
+      return tags.includes(tag)
+    }
+    return true
   })
 
   return {

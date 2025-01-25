@@ -10,9 +10,11 @@ import { mapVideoCard } from '@/core/domain/mapping/mapCards';
 import { GridCardsBlockContainer, renderFeatured } from 'node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock';
 import { LexicalRenderer } from '@/lexical/lexicalRenderer';
 import { SortSelectorSSR } from '@/ui/nuqs/sort_selector_ssr';
+import { PlaylistsSelectorSSR } from '@/ui/nuqs/playlists_selector_ssr';
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),
+  playlist: parseAsString.withDefault(''),
   temas: parseAsString.withDefault(''),
   sort: parseAsString.withDefault('popularity'),
 })
@@ -23,11 +25,11 @@ interface Props {
 
 const Page = async ({ searchParams }: Props) => {
   const payload = await getPayload();
-  const { query, sort } = await searchContentParamsCache.parse(searchParams)
+  const { query, sort, playlist } = await searchContentParamsCache.parse(searchParams)
   const [user, videosResult, lastVideosResult] = await Promise.all([
     getCurrentUserQuery(payload),
-    getVideosQuery(query, 0, sort),
-    getVideosQuery(query, 0, "publishedAt")
+    getVideosQuery(query, playlist, 0, sort),
+    getVideosQuery(query, playlist, 0, "publishedAt")
   ]);
   const videosDataPage = await payload.findGlobal({
     slug: "videos_page"
@@ -57,6 +59,7 @@ const Page = async ({ searchParams }: Props) => {
         <div className="flex flex-col sm:flex-row gap-3 items-end">
           <SearchBarNuqs />
           <SortSelectorSSR />
+          <PlaylistsSelectorSSR />
         </div>
         <GridCardsBlockContainer
           gridClassname='grid-cols-2 md:grid-cols-4 lg:grid-cols-8 2xl:grid-cols-10'
@@ -67,6 +70,7 @@ const Page = async ({ searchParams }: Props) => {
         </GridCardsBlockContainer>
         <DynamicLoadingVideos
           sortedBy={sort}
+          playlist={playlist}
           query={query}
           user={user}
           maxPage={videosResult.maxPage}
