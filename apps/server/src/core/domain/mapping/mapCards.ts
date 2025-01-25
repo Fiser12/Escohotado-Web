@@ -66,7 +66,7 @@ const mapBookCard = (item: Book, classNames?: string | null): Featured => {
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     coverHref: (item.cover as Media)?.url ?? imageError,
-    href: '/biblioteca/' + item.slug,
+    detailHref: '/biblioteca/' + item.slug,
     quote: item.description ?? 'No description',
     title: item.title ?? 'No title',
     className: classNames ?? 'col-span-1 md:col-span-2',

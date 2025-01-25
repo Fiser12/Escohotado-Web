@@ -10,7 +10,10 @@
   line-height: clamp(1.8rem, 2.2rem, 3rem);
   overflow: hidden;
 }
-@container (max-width: 350px) {
+@container (max-width: 550px) {
+  .text-book-quote {
+    display: none;
+  }
   .grid-axis-control-content-book {
     flex-direction: column;
     text-align: center;

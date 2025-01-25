@@ -40,7 +40,7 @@ export interface FeaturedBookProps extends FeaturedBase {
   quote: string;
   author: string;
   coverHref: string;
-  href: string;
+  detailHref: string;
 }
 
 export interface FeaturedVideoProps extends FeaturedBase {

@@ -40,6 +40,7 @@ export const renderFeatured = (item: Featured) => {
           key={item.id}
           className={item.className}
           title={item.title}
+          detailHref={item.detailHref}
           quote={item.quote}
           author={item.author}
           coverHref={item.coverHref}
