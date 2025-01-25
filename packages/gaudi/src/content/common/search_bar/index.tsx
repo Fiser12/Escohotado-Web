@@ -31,11 +31,25 @@ export const SearchBar: React.FC<Props> = (props) => {
                 <input
                     value={inputValue}
                     onChange={handleInputChange}
-                    className="w-full bg-transparent placeholder:text-gray-disabled text-black font-body text-sm border border-primary-900 rounded-l-lg pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-primary-500 hover:border-primary-500 shadow-sm focus:shadow"
+                    className="w-full bg-transparent placeholder:text-gray-disabled text-black font-body text-sm border border-primary-300 rounded-l-lg pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-primary-500 hover:border-primary-500 shadow-sm focus:shadow"
                     placeholder="Buscar..."
                 />
                 <button
-                    className="rounded-r-lg bg-primary-900 py-2 px-4 border border-transparent font-body text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-primary-500 focus:shadow-none active:bg-primary-400 hover:bg-primary-500 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    className="
+                    rounded-r-lg 
+                    bg-primary-300 
+                    text-white 
+                    focus:bg-primary-500 
+                    focus:shadow-none 
+                    active:bg-primary-400 
+                    disabled:pointer-events-none 
+                    disabled:opacity-50 
+                    disabled:shadow-none
+                    py-2 px-4 
+                    border border-transparent font-body text-center text-sm 
+                    transition-all shadow-md hover:shadow-lg 
+                    hover:bg-primary-100 
+                    active:shadow-none"
                     type="submit"
                 >
                     Buscar

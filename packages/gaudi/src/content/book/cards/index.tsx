@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { ImageParallax } from "./image_parallax";
 import { H4 } from "../../../common/headers/H4";
 import Image from "next/image";
+import Link from 'next/link';
 
 interface Props {
     title: string;
@@ -16,7 +17,7 @@ export const BookCard = (props: Props) => {
     );
 
     return (
-        <a href={props.link}>
+        <Link href={props.link}>
             <div className={containerClass}>
                 <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[200px] min-[469px]:h-[300px]" shadow={false}>
                     <Image
@@ -28,7 +29,7 @@ export const BookCard = (props: Props) => {
                 </ImageParallax>
                 <H4 label={props.title} className="line-clamp-3 text-center px-4 w-full md:max-w-[80%]"></H4>
             </div>
-        </a>
+        </Link>
     );
 };
 

@@ -36,7 +36,7 @@ const Page = async ({ searchParams }: Props) => {
   })
 
   const videoCardMapper = (video: ResultVideo) => mapVideoCard(user)(video, "col-span-2");
-
+  
   return (
     <div className='flex flex-col'>
       { videosDataPage.content &&
@@ -46,20 +46,22 @@ const Page = async ({ searchParams }: Props) => {
         className="flex flex-col gap-y-5 relative pt-20"
         backgroundClassname="bg-white"
       >
-        <H2 label="Últimos vídeos" />
-        <GridCardsBlockContainer
-          gridClassname='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'
-        >
+        <div className="flex flex-col sm:flex-row gap-3 items-end sm:justify-end">
+          <PlaylistsSelectorSSR />
+          <SearchBarNuqs />
+        </div>
+        {lastVideosResult.results.length !== 0 && <>
+          <H2 label="Últimos vídeos" />
+
+        <GridCardsBlockContainer gridClassname='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'>
           {lastVideosResult.results
             .slice(0, 3)
             .map(videoCardMapper)
             .map(renderFeatured)}
-        </GridCardsBlockContainer>
-        <H2 label="Todos los vídeos" />
-        <div className="flex flex-col sm:flex-row gap-3 items-end">
-          <SearchBarNuqs />
+        </GridCardsBlockContainer></> }
+        <div className="flex flex-col sm:flex-row gap-10 items-end justify-between">
+          <H2 label="Todos los vídeos" />
           <SortSelectorSSR />
-          <PlaylistsSelectorSSR />
         </div>
         <GridCardsBlockContainer
           gridClassname='grid-cols-2 md:grid-cols-4 lg:grid-cols-8 2xl:grid-cols-10'

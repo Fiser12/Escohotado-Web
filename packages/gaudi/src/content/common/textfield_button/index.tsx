@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { MainButton } from "../../../common/main_button/main_button";
 import { InputForm } from "../../../common/input";
 

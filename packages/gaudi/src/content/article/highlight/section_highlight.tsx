@@ -1,6 +1,7 @@
 import { H4 } from "../../../common/headers/H4";
 import { MainButton } from "../../../common/main_button/main_button";
 import Image from "next/image";
+import Link from 'next/link';
 
 interface Props {
     description: string;
@@ -20,9 +21,9 @@ export const HighlightSection = (props: Props) => {
             />
             <div className="relative z-10 flex flex-col justify-center items-center gap-7.5">
                 <H4 label={props.description} className="text-white text-center"></H4>
-                <a href={props.href}>
+                <Link href={props.href}>
                     <MainButton text={props.textButton} color="secondary" type="line"></MainButton>
-                </a>
+                </Link>
             </div>
         </div>
     );

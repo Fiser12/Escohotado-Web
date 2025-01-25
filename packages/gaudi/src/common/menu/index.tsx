@@ -1,7 +1,7 @@
 "use client";
 import { MenuSection } from "hegel";
 import React from "react"
-import { useState } from "react"
+import Link from 'next/link';
 
 interface Props {
     toggleMenu: (changeTo?: boolean) => void
@@ -45,12 +45,12 @@ export const BasicMenu: React.FC<Props> = ({
                                             {item.text}
                                         </button>
                                     ) : href ? (
-                                        <a
+                                        <Link
                                             href={href}
                                             className="text-primary-900 text-xs font-normal font-body leading-3"
                                         >
                                             {item.text}
-                                        </a>
+                                        </Link>
                                     ) : null}
                                 </div>
                             </div>

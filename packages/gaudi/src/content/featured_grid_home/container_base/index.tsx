@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Link from 'next/link';
 
 interface Props {
       children: React.ReactNode;
@@ -15,7 +16,7 @@ export const BaseCardContainer = (props: Props) => {
 
       return <>
             {props.href &&
-                  <a className={containerClass} href={props.href}>{props.children}</a>
+                  <Link className={containerClass} href={props.href}>{props.children}</Link>
             }
             {!props.href &&
                   <div className={containerClass}>
