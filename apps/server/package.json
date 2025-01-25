@@ -13,6 +13,7 @@
     "ci": "payload migrate && pnpm build",
     "payload": "payload",
     "generate:types": "payload generate:types",
+    "generate:db-schema": "payload generate:db-schema",
     "generate:schema": "payload-graphql generate:schema",
     "standalone-script": "payload run ./src/scripts/standalone-script.ts",
     "generate:importmap": "payload generate:importmap",

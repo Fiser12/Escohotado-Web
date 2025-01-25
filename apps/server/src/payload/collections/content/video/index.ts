@@ -6,7 +6,6 @@ import {
 } from '@/payload/fields/permissions/permissionsRelationshipFields'
 import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations'
 
-import { getYoutubeVideoMetadataHook } from '../../../hooks/video/getYoutubeMetadataHook'
 import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
 
@@ -38,7 +37,7 @@ export const video: CollectionConfig = {
     },
   },
   hooks: {
-    beforeChange: [cachePermissionSeedsHook(), getYoutubeVideoMetadataHook],
+    beforeChange: [cachePermissionSeedsHook()],
   },
   fields: [
     {
@@ -94,12 +93,20 @@ export const video: CollectionConfig = {
       },
     },
     {
-      name: 'description',
-      type: 'textarea',
-      localized: true,
+      name: 'viewCount',
+      label: 'Vistas',
+      type: 'number',
       admin: {
         readOnly: true,
-      },
+      }
+    },
+    {
+      name: 'duration',
+      label: 'Duración (segundos)',
+      type: 'number',
+      admin: {
+        readOnly: true,
+      }
     },
     {
       name: 'publishedAt',

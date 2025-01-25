@@ -1,11 +1,11 @@
 export interface YoutubeVideo {
     id: string
-    url: string
     title: string
-    description: string
     publishedAt: string
     tags: string[]
     thumbnailUrl: string
+    viewCount: string
+    duration: string
   }
   
   export interface YoutubeVideosResult {

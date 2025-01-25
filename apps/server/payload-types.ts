@@ -488,7 +488,8 @@ export interface Video {
     | null;
   thumbnailUrl?: string | null;
   title?: string | null;
-  description?: string | null;
+  viewCount?: number | null;
+  duration?: number | null;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   forum_post_id?: string | null;
@@ -946,7 +947,8 @@ export interface VideoSelect<T extends boolean = true> {
   tags?: T;
   thumbnailUrl?: T;
   title?: T;
-  description?: T;
+  viewCount?: T;
+  duration?: T;
   publishedAt?: T;
   categories?: T;
   forum_post_id?: T;

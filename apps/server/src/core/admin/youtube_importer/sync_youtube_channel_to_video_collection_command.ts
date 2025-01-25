@@ -58,37 +58,41 @@ export const youtubeVideoUpsert = async (
   upsert: boolean,
 ): Promise<void> => {  
   try {
-    if (upsert && existingUrls.includes(video.url)) {
+    const url = `https://www.youtube.com/watch?v=${video.id}`
+
+    if (upsert && existingUrls.includes(url)) {
       await payload.db.drizzle
         .update(videoSchema)
         .set(
           {
             title: video.title,
-            description: video.description,
             publishedAt: video.publishedAt,
             tags: video.tags,
             thumbnailUrl: video.thumbnailUrl,
+            viewCount: video.viewCount,
+            duration: parseISODurationToSeconds(video.duration)
           }
         )
-        .where(eq(videoSchema.url, video.url))
+        .where(eq(videoSchema.url, url))
         .execute()
 
       payload.logger.warn(`Video updated: ${video.id}: ${video.title}`)
       return
     }
-    if (existingUrls.includes(video.url)) return
+    if (existingUrls.includes(url)) return
 
     await payload.db.drizzle
       .insert(videoSchema)
       .values(
         {
-          url: video.url,
-          url_free: video.url,
+          url: url,
+          url_free: url,
           title: video.title,
-          description: video.description,
           publishedAt: video.publishedAt,
           tags: video.tags,
           thumbnailUrl: video.thumbnailUrl,
+          viewCount: video.viewCount,
+          duration: parseISODurationToSeconds(video.duration)
         }
       )
       .execute()
@@ -97,6 +101,18 @@ export const youtubeVideoUpsert = async (
   } catch (error) {
     payload.logger.error(`Error in payloadUpsert: ${error}`)
   }
+}
+function parseISODurationToSeconds(isoDuration: string): string {
+  const regex = /P(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?/;
+  const match = isoDuration.match(regex);
+
+  if (!match) throw new Error('Formato de duración no válido.');
+
+  const hours = parseInt(match[1] || "0", 10);
+  const minutes = parseInt(match[2] || "0", 10);
+  const seconds = parseInt(match[3] || "0", 10);
+
+  return String((hours * 3600) + (minutes * 60) + seconds);
 }
 
 const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
