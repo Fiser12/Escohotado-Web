@@ -11,3 +11,4 @@ export const COLLECTION_SLUG_BOOK = 'book' as const
 export const COLLECTION_SLUG_QUOTE = 'quote' as const
 export const COLLECTION_SLUG_VIDEO = 'video' as const
 export const COLLECTION_SLUG_UI_GRID_CARDS = 'ui_grid_cards' as const
+export const COLLECTION_SLUG_UI_BLOCK = 'ui_block' as const

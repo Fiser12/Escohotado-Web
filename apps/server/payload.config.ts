@@ -69,7 +69,7 @@ export default buildConfig({
       collections: ['taxonomy'],
       generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ''),
     }),
-    authjsPlugin({ authjsConfig: authConfig }) as any,
+    authjsPlugin({ authjsConfig: authConfig }),
     sentryPlugin({ Sentry }),
     searchPlugin({
       collections: [

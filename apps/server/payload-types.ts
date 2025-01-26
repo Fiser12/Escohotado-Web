@@ -23,6 +23,7 @@ export interface Config {
     video: Video;
     quote: Quote;
     ui_grid_cards: UiGridCard;
+    ui_block: UiBlock;
     permission: Permission;
     'search-results': SearchResult;
     'payload-locked-documents': PayloadLockedDocument;
@@ -50,6 +51,7 @@ export interface Config {
     video: VideoSelect<false> | VideoSelect<true>;
     quote: QuoteSelect<false> | QuoteSelect<true>;
     ui_grid_cards: UiGridCardsSelect<false> | UiGridCardsSelect<true>;
+    ui_block: UiBlockSelect<false> | UiBlockSelect<true>;
     permission: PermissionSelect<false> | PermissionSelect<true>;
     'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -553,6 +555,31 @@ export interface UiGridCard {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ui_block".
+ */
+export interface UiBlock {
+  id: string;
+  title: string;
+  block: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -637,6 +664,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'ui_grid_cards';
         value: string | UiGridCard;
+      } | null)
+    | ({
+        relationTo: 'ui_block';
+        value: string | UiBlock;
       } | null)
     | ({
         relationTo: 'permission';
@@ -987,6 +1018,16 @@ export interface UiGridCardsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ui_block_select".
+ */
+export interface UiBlockSelect<T extends boolean = true> {
+  title?: T;
+  block?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "permission_select".
  */
 export interface PermissionSelect<T extends boolean = true> {
@@ -1275,6 +1316,19 @@ export interface BookCarouselBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'books_carousel_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "UIBlock".
+ */
+export interface UIBlock {
+  uiBlock?: {
+    relationTo: 'ui_block';
+    value: string | UiBlock;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ui_block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

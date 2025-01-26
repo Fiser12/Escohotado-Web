@@ -41,7 +41,7 @@ export function LexicalRenderer(props: Props) {
       converters={jsxConverters}
       className={classNames(
         "max-w-none",
-        "article-html-content",
+        "w-full",
         className,
       )}
       {...rest}

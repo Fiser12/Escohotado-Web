@@ -13,11 +13,11 @@ export const renderer = async ({ node }: any) => {
                 "col-span-2";
     return <div className="grid md:grid-cols-4 grid-cols-1 gap-4">
         {node?.fields?.left &&
-            <div className={`${leftSpan}`}>
+            <div className={`article-html-content ${leftSpan}`}>
                 <LexicalRenderer data={node.fields.left} />
             </div>}
         {node?.fields?.right &&
-            <div className={`${rightSpan}`}>
+            <div className={`article-html-content ${rightSpan}`}>
                 <LexicalRenderer data={node.fields.right} />
             </div>}
     </div>;
