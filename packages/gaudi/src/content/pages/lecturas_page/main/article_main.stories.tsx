@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { ArticlePage } from ".";
 
-const meta: Meta = {
+const meta: Meta<typeof ArticlePage> = {
     title:"Pages/Lecturas/Main",
     component: ArticlePage,
     parameters: {

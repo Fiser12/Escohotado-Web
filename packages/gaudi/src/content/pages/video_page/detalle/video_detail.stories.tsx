@@ -24,7 +24,7 @@ const comments = [
     },
 ];
 
-const meta: Meta = {
+const meta: Meta<typeof VideoDetail> = {
     title: "Pages/Videos/Detail",
     component: VideoDetail,
     parameters: {
@@ -39,15 +39,13 @@ const meta: Meta = {
     argTypes: {
         title: { control: "text", description: "Title of the article" },
         author: { control: "text", description: "Author of the article" },
-        textLink: { control: "text", description: "Text for the link" },
-        coverHref: { control: "text", description: "Image URL for the cover" },
         publishedAt: { control: "text", description: "Publication date" },
     },
     args: {
         title: "Sample Article Title",
         author: "Sample Article Author",
         publishedAt: "2024-11-18",
-        duration: "",
+        duration: 0,
         videoHref: "https://www.youtube.com/watch?v=mV-4JUWcAC4",
         categories: [
             { id: "1", singular_name: "Tecnología" },

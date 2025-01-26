@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { HeadlineCard } from "./article_headline_card";
 
-const meta: Meta = {
+const meta: Meta<typeof HeadlineCard> = {
     title: "Molecules",
     component: HeadlineCard,
     parameters: {

@@ -33,7 +33,7 @@ const comments = [
 ];
 
 
-const meta: Meta = {
+const meta: Meta<typeof BookDetail> = {
     title: "Pages/Book/Detail",
     component: BookDetail,
     parameters: {

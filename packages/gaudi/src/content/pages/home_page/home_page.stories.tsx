@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { HomePage } from ".";
-const featuredItem = {
+import { Featured, HomePage } from ".";
+const featuredItem: {gridClassname: string, features: Featured[]} = {
   gridClassname: "grid-cols-1 md:grid-cols-4",
   features: [
     {
@@ -15,6 +15,8 @@ const featuredItem = {
         { id: "1", singular_name: "Historia" },
         { id: "2", singular_name: "Filosofía" },
       ],
+      detailHref: "#",
+      isPdf: false,
       hasPermission: true,
     },
     {
@@ -33,6 +35,7 @@ const featuredItem = {
       quote:
         "Una exploración profunda y provocadora de la mente humana. Filosofía y psicodelia se entrelazan magistralmente.",
       author: "Antonio Escohotado",
+      detailHref: "#",
       coverHref: "https://placehold.co/300x400",
     },
     {
@@ -42,6 +45,8 @@ const featuredItem = {
       title: "250.000 agradecimientos escohotadianos a todos los emboscados",
       publishedAt: "2024-11-18",
       coverHref: "https://placehold.co/300x200",
+      detailHref: "#",
+      hasPermission: true,
       href: "/",
       categories: [
         { id: "1", singular_name: "Historia" },
@@ -54,6 +59,9 @@ const featuredItem = {
       className: "col-span-1 md:col-span-2 lg:col-span-3",
       title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
       author: "Antonio Escohotado",
+      detailHref: "#",
+      hasPermission: true,
+      isPdf: true,
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
@@ -67,6 +75,9 @@ const featuredItem = {
       className: "col-span-1 row-span-2",
       title: "El origen de la civilización",
       author: "Antonio Escohotado",
+      detailHref: "#",
+      hasPermission: true,
+      isPdf: true,
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
@@ -79,6 +90,9 @@ const featuredItem = {
       type: "article",
       className: "col-span-1 md:col-span-2",
       title: "El origen de la civilización",
+      detailHref: "#",
+      hasPermission: true,
+      isPdf: true,
       author: "Antonio Escohotado",
       coverHref: "https://placehold.co/600x800",
       href: "/",
@@ -91,6 +105,9 @@ const featuredItem = {
       id: "8",
       type: "article",
       className: "col-span-1",
+      detailHref: "#",
+      hasPermission: true,
+      isPdf: false,
       title: "El origen de la civilización",
       author: "Antonio Escohotado",
       coverHref: "https://placehold.co/600x800",
@@ -105,6 +122,7 @@ const featuredItem = {
       type: "book",
       className: "col-span-1 row-span-1 md:row-span-2 md:col-span-2",
       title: "Confesiones de un opiófilo",
+      detailHref: "#",
       quote:
         "Una exploración profunda y provocadora de la mente humana. Filosofía y psicodelia se entrelazan magistralmente.",
       author: "Antonio Escohotado",
@@ -114,6 +132,7 @@ const featuredItem = {
       id: "10",
       type: "book",
       className: "col-span-1 md:col-span-2",
+      detailHref: "#",
       title: "Confesiones de un opiófilo",
       quote:
         "Una exploración profunda y provocadora de la mente humana. Filosofía y psicodelia se entrelazan magistralmente.",
@@ -125,6 +144,7 @@ const featuredItem = {
       type: "book",
       className: "",
       title: "Confesiones de un opiófilo",
+      detailHref: "#",
       quote:
         "Una exploración profunda y provocadora de la mente humana. Filosofía y psicodelia se entrelazan magistralmente.",
       author: "Antonio Escohotado",
@@ -134,6 +154,7 @@ const featuredItem = {
       id: "12",
       type: "book",
       className: "",
+      detailHref: "#",
       title: "Confesiones de un opiófilo",
       quote:
         "Una exploración profunda y provocadora de la mente humana. Filosofía y psicodelia se entrelazan magistralmente.",
@@ -143,7 +164,7 @@ const featuredItem = {
   ]
 };
 
-const meta: Meta = {
+const meta: Meta<typeof HomePage> = {
   title: "Pages/Home",
   component: HomePage,
   parameters: {
@@ -154,7 +175,7 @@ const meta: Meta = {
     },
   },
   args: {
-    featuredItems: [featuredItem],
+    featuredItems: [featuredItem as any],
     buttons: [
       { title: "Ver más", link: "/libros" },
     ],

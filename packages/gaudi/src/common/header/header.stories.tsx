@@ -3,7 +3,7 @@ import { menuSectionsLoaderMock, mockUser } from 'hegel';
 import storybookHelpers from '../../storybook-helpers';
 import { Header } from './header';
 
-const meta = {
+const meta: Meta<typeof Header> = {
 	title: 'Organism/Header',
 	component: Header,
 	args: {

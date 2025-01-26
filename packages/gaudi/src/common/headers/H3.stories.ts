@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { H3 } from './H3';
 
-const meta = {
+const meta: Meta<typeof H3> = {
     title: 'Atoms/Headers/H3',
     component: H3,
     args: {

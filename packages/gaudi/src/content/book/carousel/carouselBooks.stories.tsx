@@ -14,7 +14,7 @@ const booksExample = [
     { title: 'Realidad y substancia', coverHref: 'https://laemboscadura.com/wp-content/uploads/Realidad-y-Substancia-300x300.png', link: '/book10' },
 ];
 
-const meta: Meta = {
+const meta: Meta<typeof CarouselBook> = {
     title: "Organism/Carousel/Book",
     component: CarouselBook,
     args: {

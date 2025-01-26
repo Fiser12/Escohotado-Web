@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { BookCard } from ".";
 
-const meta: Meta = {
+const meta: Meta<typeof BookCard> = {
     title: "Molecules/Cards",
     component: BookCard,
     parameters: {

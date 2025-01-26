@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { ArticleDetail } from ".";
 
-const content = `<h1>Prueba Header 1</h1><h2>Prueba Header 2</h2><h3>Prueba Header 3</h3><h4>Prueba Header 4</h4><h5>Prueba Header 5</h5><h6>Prueba Header 6</h6><p>Body text de prueba</p><p><strong>Body text de prueba bold</strong></p><p><em>Body text de prueba italic</em></p><p><span style="text-decoration: underline">Body text de prueba underline</span></p><p><sup>Body text de prueba sup</sup></p><p><sub>Body text de prueba sub</sub></p><hr><blockquote>Cita con bloque</blockquote><ul class="list-bullet"><li value="1">Bullet list 1</li><li value="2">Bullet list 2</li><li value="3">Bullet list 3</li></ul><ol class="list-number"><li value="1">Number list 1</li><li value="2">Number list 2</li><li value="3">Number list 3</li></ol>`
 const comments = [
     {
         user: "Juan Pérez",
@@ -25,7 +24,7 @@ const comments = [
     },
 ];
 
-const meta: Meta = {
+const meta: Meta<typeof ArticleDetail> = {
     title: "Pages/Articles/Detail/Web",
     component: ArticleDetail,
     parameters: {
@@ -43,7 +42,6 @@ const meta: Meta = {
         textLink: { control: "text", description: "Text for the link" },
         coverHref: { control: "text", description: "Image URL for the cover" },
         publishedAt: { control: "text", description: "Publication date" },
-        comments: { control: "object", description: "Comments" },
     },
     args: {
         title: "Sample Article Title",

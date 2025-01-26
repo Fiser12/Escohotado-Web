@@ -3,7 +3,7 @@ import { MainHero } from ".";
 import { MainButton } from "../../../common/main_button/main_button";
 import { ImageParallax } from "../../book/cards/image_parallax";
 
-const meta: Meta = {
+const meta: Meta<typeof MainHero> = {
     title: "Organism/Hero",
     component: MainHero,
     parameters: {
@@ -38,7 +38,6 @@ export const Book: Story = {
         title: "Sample Book Title",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer laoreet mi neque, eu blandit lectus facilisis non. Suspendisse ligula nibh, viverra vel congue sed, vestibulum sed ex. Phasellus a odio sodales, tincidunt odio sed, posuere lectus. Duis turpis nisi, posuere ac lectus eu, bibendum gravida est. Pellentesque turpis lectus, porttitor at augue non, mattis sollicitudin velit. Ut a metus eu arcu venenatis pharetra ac vitae orci.",
         quote: "Sample quote text",
-        image: {},
     },
     render: args => (
         <MainHero

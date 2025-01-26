@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { HighlightSection } from "./section_highlight";
 
-const meta: Meta = {
+const meta: Meta<typeof HighlightSection> = {
     title: "Organism",
     component: HighlightSection,
     parameters: {

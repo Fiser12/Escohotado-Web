@@ -24,7 +24,7 @@ const comments = [
     },
 ];
 
-const meta: Meta = {
+const meta: Meta<typeof ArticleDetailPdf> = {
     title: "Pages/Articles/Detail/Pdf",
     component: ArticleDetailPdf,
     parameters: {
@@ -39,16 +39,13 @@ const meta: Meta = {
     argTypes: {
         title: { control: "text", description: "Title of the article" },
         author: { control: "text", description: "Author of the article" },
-        textLink: { control: "text", description: "Text for the link" },
         coverHref: { control: "text", description: "Image URL for the cover" },
         publishedAt: { control: "text", description: "Publication date" },
-        comments: { control: "object", description: "Comments" },
     },
     args: {
         title: "Sample Article Title",
         author: "Sample Article Author",
         publishedAt: "2024-11-18",
-        textLink: "Leer más",
         coverHref: "https://placehold.co/600x150",
         categories: [
             { id: "1", singular_name: "Tecnología" },
