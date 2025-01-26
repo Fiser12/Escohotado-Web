@@ -6,7 +6,7 @@ import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/
 import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user: User | null;
     query: string;
     playlist: string;
@@ -14,7 +14,7 @@ interface Props {
     maxPage: number;
 }
 
-export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, sortedBy, playlist }) => {
+export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, sortedBy, playlist, className, ...rest }) => {
     const [videos, setVideos] = useState<Record<string, ResultVideo[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -51,7 +51,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
 
         const observer = new IntersectionObserver(
             entries => entries[0].isIntersecting && !loading && page < maxPage && setPage(prev => prev + 1),
-            { threshold: 0.5 } 
+            { threshold: 0.5 }
         );
 
         observer.observe(currentObserverRef);
@@ -64,7 +64,8 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
 
     return <div>
         <GridCardsBlockContainer
-            gridClassname='grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10'
+            {...rest}
+            className={'grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10 ' + (className ?? "")}
         >
             {Object
                 .values(videos)

@@ -42,7 +42,7 @@ export enum SubscriptionButtonActionType {
     select = 'select'
 }
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     products: Product[];
     subscription?: Subscription;
     options: IntervalOptions[];
@@ -52,13 +52,14 @@ export const SubscriptionsGroupCard: React.FC<Props> = ({
     products,
     subscription,
     options,
+    ...rest
 }) => {
     const [selected, setSelected] = useState(options[0]!.id);
 
     return (
         <>
             <ToggleButtonGroup options={options} selected={selected!} setOption={setSelected as () => void} />
-            <div className="h-96 justify-start items-start gap-7 inline-flex">
+            <div className="h-96 justify-start items-start gap-7 inline-flex" {...rest}>
                 {products
                     .mapNotNull((product) => {
                         const price = getPriceByProduct(product, selected);

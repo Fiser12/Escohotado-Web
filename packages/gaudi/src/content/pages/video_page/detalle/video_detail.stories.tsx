@@ -47,9 +47,8 @@ const meta: Meta = {
         title: "Sample Article Title",
         author: "Sample Article Author",
         publishedAt: "2024-11-18",
-        textLink: "Leer más",
+        duration: "",
         videoHref: "https://www.youtube.com/watch?v=mV-4JUWcAC4",
-        coverHref: "https://placehold.co/600x150",
         categories: [
             { id: "1", singular_name: "Tecnología" },
             { id: "2", singular_name: "Filosofía" },

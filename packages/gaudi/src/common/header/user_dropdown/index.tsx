@@ -3,21 +3,26 @@ import { useState } from "react";
 import { BasicMenu } from "../../menu";
 import { MenuSection, UserModel } from "hegel";
 import { UserIcon } from '../../icons/user_icon';
+import classNames from "classnames";
 
-export interface Props {
+export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user: UserModel
     menuSections: MenuSection[]
 }
 
-export const UserDropdown: React.FC<Props> = ({ user, menuSections }) => {
+export const UserDropdown: React.FC<Props> = ({ user, menuSections, className, ...rest }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     function toggleMenu(changeTo?: boolean) {
         setIsMenuOpen(changeTo ?? !isMenuOpen);
     }
+    const divClass = classNames(
+        className,
+        "relative inline-block"
+    )
 
     return (
-        <div className="relative inline-block">
+        <div className={divClass} {...rest}>
             <button
                 onMouseEnter={() => toggleMenu(true)}
                 onFocus={() => toggleMenu(true)}

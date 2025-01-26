@@ -3,7 +3,7 @@
 import { parseAsString, useQueryState } from "nuqs";
 import { SelectBoxes, MainButton } from "gaudi/client";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	options: {
 		label: string,
 		url: string,
@@ -11,20 +11,20 @@ interface Props {
 	}[]
 }
 
-export function BookVariantsSelectorNuqs(props: Props) {
+export function BookVariantsSelectorNuqs({options, className, ...rest}: Props) {
 	const [page, setPage] = useQueryState(
 		"variantId",
 		parseAsString
 			.withOptions({ shallow: false })
 			.withDefault("")
 	);
-	const currentUrl = props.options.find((option) => option.id === page)?.url;
+	const currentUrl = options.find((option) => option.id === page)?.url;
 	return (
-		<div className="flex flex-col gap-8 w-full">
+		<div className={"flex flex-col gap-8 w-full " + (className ?? "")} {...rest}>
 			<SelectBoxes
-				options={props.options}
+				options={options}
 				activeId={page}
-				onClick={(page) => {
+				onClickOption={(page) => {
 					setPage(page.toString());
 				}}
 			/>

@@ -5,8 +5,9 @@ import Image from "next/image";
 import { GridComments } from "../../../../common/comments/grid_comments";
 import { CommentCard } from "../../../../common/comments";
 import { CommentsSectionModel } from "hegel";
+import classNames from "classnames";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     coverHref: string;
     description: string;
@@ -17,31 +18,40 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const BookDetail = (props: Props) => {
-
+export const BookDetail: React.FC<Props> = ({
+    title,
+    coverHref,
+    description,
+    bookButtons,
+    commentsSectionModel,
+    children,
+    className,
+    ...rest
+}) => {
+    const divClass = classNames("w-full bg-white", className);
     return (
-        <div className="w-full bg-white">
+        <div className={divClass} {...rest}>
             <MainHero
                 topHeader={true}
-                title={props.title}
-                description={props.description}
-                children={props.bookButtons}
+                title={title}
+                description={description}
+                children={bookButtons}
                 image={
                     <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[366px] min-[469px]:h-[550px] my-6" shadow={false}>
                         <Image
                             fill
-                            src={props.coverHref}
-                            alt={props.title}
+                            src={coverHref}
+                            alt={title}
                             className="object-cover"
                         />
                     </ImageParallax>
                 }
             />
-            {props.children}
+            {children}
             <ContentWrapper className="flex flex-col gap-12 pt-10">
                 <GridComments
-                    items={props.commentsSectionModel.comments}
-                    forumTopicId={props.commentsSectionModel.forumTopicId}
+                    items={commentsSectionModel.comments}
+                    forumTopicId={commentsSectionModel.forumTopicId}
                     renderBox={(comment) => (
                         <CommentCard
                             user={comment.user}

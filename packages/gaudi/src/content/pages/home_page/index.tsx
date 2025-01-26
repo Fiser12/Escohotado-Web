@@ -56,20 +56,20 @@ export interface FeaturedVideoProps extends FeaturedBase {
 
 export type Featured = FeaturedArticleProps | FeaturedQuoteProps | FeaturedBookProps | FeaturedVideoProps;
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   featuredItems: { gridClassname: string, features: Featured[] }[];
   description: string;
   buttons: Array<{ title: string; link: string }>;
 }
 
-export const HomePage = ({ featuredItems, description, buttons }: Props) => {
+export const HomePage = ({ featuredItems, description, buttons, ...rest }: Props) => {
   return (
-    <div>
+    <div {...rest}>
       <HomeHero description={description} buttons={buttons} />
       <div id="gridContentHome" className="bg-gray-light py-10">
         <ContentWrapper className="flex flex-col gap-4">
           {featuredItems.map(({ gridClassname, features }, index) => (
-            <GridCardsBlock features={features} gridClassname={gridClassname} key={index} />
+            <GridCardsBlock features={features} className={gridClassname} key={index} />
           ))}
         </ContentWrapper>
       </div>

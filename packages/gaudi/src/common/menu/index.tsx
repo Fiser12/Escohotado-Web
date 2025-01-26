@@ -2,19 +2,26 @@
 import { MenuSection } from "hegel";
 import React from "react"
 import Link from 'next/link';
+import classNames from "classnames";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     toggleMenu: (changeTo?: boolean) => void
     menuSections: MenuSection[]
 }
 export const BasicMenu: React.FC<Props> = ({
     toggleMenu,
-    menuSections
+    menuSections,
+    className,
+    ...rest
 }) => {
-
+    const divClass = classNames(
+        'w-full md:w-40 bg-white rounded-sm flex-col justify-start items-start inline-flex shadow-lg',
+        className
+    );
     return (
         <div
-            className="w-full md:w-40 bg-white rounded-sm flex-col justify-start items-start inline-flex shadow-lg"
+            className={divClass}
+            {...rest}
             onMouseLeave={() => toggleMenu(false)}
             role="menu"
             tabIndex={7}

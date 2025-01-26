@@ -1,13 +1,24 @@
 import classNames from "classnames";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 
-interface Props {
-      className?: string;
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
-export const Footer = (props: Props) => {
+export const Footer: React.FC<Props> = (className, ...props) => {
+      const divClass = classNames(
+            'bg-primary-900',
+            'w-full',
+            'py-4',
+            'text-white',
+            'border-t',
+            'border-white',
+            'font-body',
+            'text-xs',
+            'md:text-sm',
+            className
+      )
       return (
-            <div className="bg-primary-900 w-full py-4 text-white border-t border-white font-body  text-xs md:text-sm">
+            <div className={divClass} {...props}>
                   <ContentWrapper className="flex flex-row justify-between items-center">
                         <div className="flex flex-col md:flex-row gap-1">
                               <p>&copy; 2024 Jorge Escohotado.</p>

@@ -3,13 +3,14 @@ import { MainButton } from "../main_button/main_button"
 import Image from "next/image"
 import heroHome from "../../assets/images/hero-home.png";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     description: string
     buttons: Array<{ title: string; link: string }>
 }
 
-const HomeHero: React.FC<Props> = ({ description, buttons }) => {
+const HomeHero: React.FC<Props> = ({ description, buttons, ...rest }) => {
     return <MainHero
+        {...rest}
         description={description}
         title="Antonio Escohotado"
         image={

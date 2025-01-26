@@ -37,9 +37,7 @@ const Page: NextPage<Props> = async (props) => {
         videoHref={href}
         title={video.title ?? "No title"}
         publishedAt={video.publishedAt as string}
-        coverHref={video.thumbnailUrl ?? ""}
         duration={video.duration ?? 0}
-        textLink={"Leer más"}
         categories={[]}
         commentsSectionModel={{
           comments: [],

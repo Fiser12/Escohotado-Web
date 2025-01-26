@@ -173,7 +173,7 @@ export const ArticlePage = () => {
             />
           </div>
           <GridCardsBlockContainer
-            gridClassname='grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10'
+            className='grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10'
         >
             {Object
                 .values(articles)

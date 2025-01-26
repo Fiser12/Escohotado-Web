@@ -2,25 +2,25 @@ import classNames from "classnames";
 import Link from 'next/link';
 
 interface Props {
+      className?: string;
       children: React.ReactNode;
       href?: string | null;
-      className?: string;
 }
 
-export const BaseCardContainer = (props: Props) => {
+export const BaseCardContainer: React.FC<Props> = ({className, href, children}) => {
 
       const containerClass = classNames(
             "w-full h-full bg-white p-1 rounded border-solid border-[0.5px] border-gray-200",
-            props.className
+            className
       );
 
       return <>
-            {props.href &&
-                  <Link className={containerClass} href={props.href}>{props.children}</Link>
+            {href &&
+                  <Link className={containerClass} href={href}>{children}</Link>
             }
-            {!props.href &&
+            {!href &&
                   <div className={containerClass}>
-                        {props.children}
+                        {children}
                   </div>
             }
       </>

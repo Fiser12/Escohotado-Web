@@ -3,7 +3,7 @@
 import { parseAsString, useQueryState } from "nuqs";
 import { SearchBar } from "gaudi/client";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLFormElement> {
 }
 
 export function SearchBarNuqs(props: Props) {
@@ -16,7 +16,8 @@ export function SearchBarNuqs(props: Props) {
 
 	return (
 		<SearchBar
-            initialValue={search}
+			{...props}
+			initialValue={search}
 			applyText={setSearch}
 		/>
 	);

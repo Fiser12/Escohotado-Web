@@ -9,7 +9,7 @@ type ButtonOption = {
   sublabel?: string;
 };
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   options: ButtonOption[];
   selected: string;
   setOption: (option: string) => void;
@@ -19,8 +19,10 @@ export const ToggleButtonGroup: React.FC<Props> = ({
   options,
   selected,
   setOption,
+  className,
+  ...rest
 }) => {
-  
+
   const [activeIndex, setActiveIndex] = useState(
     options.map((option) => option.id).indexOf(selected)
   );
@@ -29,9 +31,13 @@ export const ToggleButtonGroup: React.FC<Props> = ({
     setOption(option.id);
     setActiveIndex(index);
   };
+  const divClass = classNames(
+    'px-1 py-1 bg-stone-100 rounded-full justify-start items-center gap-6 inline-flex',
+    className
+  )
 
   return (
-    <div className="px-1 py-1 bg-stone-100 rounded-full justify-start items-center gap-6 inline-flex">
+    <div className={divClass} {...rest}>
       <div className="self-stretch justify-start items-center gap-2 flex">
         {options.map((option, index) => (
           <div className="relative" key={option.id}>

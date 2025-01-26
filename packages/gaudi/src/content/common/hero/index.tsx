@@ -3,7 +3,7 @@ import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper"
 import { H1 } from "../../../common/headers/H1";
 import { H2 } from "../../../common/headers/H2";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     description: string;
     quote?: string;
@@ -17,14 +17,20 @@ interface Props {
 export const MainHero = ({
     topHeader = false,
     changeDirection = true,
-    ...props
+    className,
+    image,
+    title,
+    description,
+    quote,
+    children,
+    ...rest
 }: Props) => {
 
     const Header = topHeader ? H1 : H2;
 
     const heroClass = classNames(
         'w-full min-h-[600px] flex items-center justify-center font-body',
-        props.className,
+        className,
     );
 
     const containerClass = classNames(
@@ -50,18 +56,18 @@ export const MainHero = ({
     const quoteClass = classNames('text-primary-500 text-sm');
 
     return (
-        <div className={heroClass}>
+        <div className={heroClass} {...rest}>
             <ContentWrapper className={containerClass}>
                 <div className={imageContainerClass}>
-                    {props.image}
+                    {image}
                 </div>
                 <div className={contentClass}>
                     <div className="flex flex-col gap-5">
-                        <Header label={props.title} />
-                        <p className="line-clamp-6">{props.description}</p>
-                        <p className={quoteClass}>{props.quote}</p>
+                        <Header label={title} />
+                        <p className="line-clamp-6">{description}</p>
+                        <p className={quoteClass}>{quote}</p>
                     </div>
-                    <div className="w-full">{props.children}</div>
+                    <div className="w-full">{children}</div>
                 </div>
             </ContentWrapper>
         </div>

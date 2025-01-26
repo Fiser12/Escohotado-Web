@@ -3,7 +3,7 @@
 import { parseAsString, useQueryState } from "nuqs";
 import { SelectDropdown } from "gaudi/client";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 	title: string
 	multiple?: boolean;
 	queryKey: string;
@@ -15,9 +15,9 @@ interface Props {
 	showClearButton?: boolean;
 }
 
-export function FilterBarNuqs(props: Props) {
+export function FilterBarNuqs({queryKey, ...props}: Props) {
 	const [tags, setSearch] = useQueryState(
-		props.queryKey,
+		queryKey,
 		parseAsString
 			.withOptions({ shallow: false })
 			.withDefault("")

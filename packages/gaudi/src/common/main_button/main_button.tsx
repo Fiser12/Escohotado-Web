@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     text: string;
     color?: 'primary' | 'secondary';
     type?: 'fill' | 'line';
@@ -13,8 +13,9 @@ export const MainButton: React.FC<Props> = ({
     text,
     color = 'primary',
     type = 'fill',
-    className = '',
+    className,
     icon,
+    ...rest
 }) => {
     const buttonClass = classNames(
         'px-4 py-1.5 rounded flex justify-center items-center text-center font-body text-sm inline-flex min-w-24 max-w-52 cursor-pointer',
@@ -41,7 +42,7 @@ export const MainButton: React.FC<Props> = ({
     );
 
     return (
-        <div className={buttonClass}>
+        <div className={buttonClass} {...rest}>
             {icon && <span className={iconClass}>{icon}</span>}
             {text}
         </div>

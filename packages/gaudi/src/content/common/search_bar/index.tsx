@@ -1,24 +1,32 @@
 "use client";
 
+import classNames from "classnames";
 import { useState } from "react";
 
-type Props = {
+interface Props extends React.HTMLAttributes<HTMLFormElement> {
     initialValue?: string;
     applyText: (text: string) => void;
 };
 
-export const SearchBar: React.FC<Props> = (props) => {
-    const [inputValue, setInputValue] = useState<string>(props.initialValue ?? "");
+export const SearchBar: React.FC<Props> = ({initialValue, applyText, className, ...rest}) => {
+    const [inputValue, setInputValue] = useState<string>(initialValue ?? "");
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
 
     const handleSearch = () => {
-        props.applyText(inputValue);
+        applyText(inputValue);
     };
-
+    const divClass = classNames(
+        'w-full',
+        'max-w-sm',
+        'min-w-[200px]',
+        className
+    )
     return (
-        <form className="w-full max-w-sm min-w-[200px]"
+        <form 
+            {...rest}
+            className={divClass}
             onSubmit={(e) => {
                 e.preventDefault();
                 handleSearch();

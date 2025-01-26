@@ -7,14 +7,12 @@ import { CommentCard } from "../../../../common/comments";
 import { CommentsSectionModel } from "hegel";
 import { VideoEmbed } from "../../../../common/video_embed/video_embed";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     publishedAt: string;
     author?: string;
-    textLink: string;
     duration: number;
     videoHref?: string | null;
-    coverHref: string;
     categories: {
         id: string;
         singular_name: string;
@@ -24,9 +22,20 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const VideoDetail = (props: Props) => {
+export const VideoDetail: React.FC<Props> = ({
+    className,
+    title,
+    publishedAt,
+    categories,
+    duration: durationStr,
+    videoHref,
+    children,
+    commentsSectionModel,
+    ...rest
+}) => {
     const containerClass = classNames(
-        'bg-white text-black flex flex-col gap-12 md:gap-16 pt-12'
+        'bg-white text-black flex flex-col gap-12 md:gap-16 pt-12',
+        className
     );
 
     const tagDateContainerClass = classNames(
@@ -34,26 +43,26 @@ export const VideoDetail = (props: Props) => {
     );
 
     const categoriesClass = classNames(
-        'flex flex-wrap gap-1'
+        'flex flex-wrap gap-1 max-h-7'
     );
-    const date = new Date(props.publishedAt);
+    const date = new Date(publishedAt);
     const formattedDate = date.toLocaleDateString('es-ES', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
-    const duration = segundosAFormatoHHMMSS(props.duration);
+    const duration = segundosAFormatoHHMMSS(durationStr);
     return (
-        <div className={containerClass}>
+        <div className={containerClass} {...rest}>
             <ContentWrapper className="flex flex-col gap-12">
-                {props.videoHref &&
-                    <VideoEmbed url={props.videoHref} />
+                {videoHref &&
+                    <VideoEmbed url={videoHref} />
                 }
                 <div className="border-b-2 border-gray-light pb-9 md:pb-10 flex flex-col gap-6 md:gap-10">
-                    <H3 label={props.title ?? "No title"} />
+                    <H3 label={title ?? "No title"} />
                     <div className={tagDateContainerClass}>
                         <div className={categoriesClass}>
-                            {props.categories?.map((category, index) =>
+                            {categories?.map((category, index) =>
                                 <Tag key={index} text={category.singular_name}></Tag>
                             )}
                         </div>
@@ -64,11 +73,11 @@ export const VideoDetail = (props: Props) => {
                     </div>
                 </div>
             </ContentWrapper>
-            {props.children}
+            {children}
             <ContentWrapper>
                 <GridComments
-                    items={props.commentsSectionModel.comments}
-                    forumTopicId={props.commentsSectionModel.forumTopicId}
+                    items={commentsSectionModel.comments}
+                    forumTopicId={commentsSectionModel.forumTopicId}
                     renderBox={(comment) => (
                         <CommentCard
                             user={comment.user}

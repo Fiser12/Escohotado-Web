@@ -61,7 +61,7 @@ const meta: Meta = {
                     <SelectBoxes
                         options={options}
                         activeId={variant ?? ""}
-                        onClick={setVariant}
+                        onClickOption={setVariant}
                     />
                     <a href={"#"}>
                         <MainButton text="Comprar" />

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { H3 } from '../common/headers/H3';
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   price: string;
   interval: 'day' | 'week' | 'month' | 'year';
@@ -18,11 +18,15 @@ export const SubscriptionCard: React.FC<Props> = ({
   features,
   mainCard = false,
   children,
+  className,
+  ...rest
 }) => {
   return (
     <div
+      {...rest}
       className={classNames(
         'w-96 h-96 p-10 rounded-sm border border-stone-300 flex-col justify-center items-center gap-6 inline-flex',
+        className,
         {
           'bg-stone-100': mainCard,
           'bg-white': !mainCard,

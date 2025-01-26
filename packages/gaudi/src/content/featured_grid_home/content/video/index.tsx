@@ -8,7 +8,7 @@ import { BaseCardContainer } from "../../container_base";
 import { UnlockIcon } from "../../../../common/icons/unlock_icon";
 import "./style.css"
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   coverHref: string;
   href: string;
@@ -24,15 +24,15 @@ interface Props {
   className?: string;
 }
 
-export const FeaturedVideo = (props: Props) => {
+export const FeaturedVideo: React.FC<Props> = ({hasPermission, publishedAt, className, detailHref, coverHref, title, categories, unlockHref, ...rest}) => {
 
   const containerClass = classNames("w-full h-full min-h-[300px] gap-1");
   const containerImageClass = classNames("w-full rounded overflow-hidden relative");
   const imageClass = classNames(
     "w-full h-full object-cover",
     {
-      'opacity-100': props.hasPermission,
-      'opacity-40': !props.hasPermission,
+      'opacity-100': hasPermission,
+      'opacity-40': !hasPermission,
     }
   );
   const contentClass = classNames(
@@ -42,13 +42,13 @@ export const FeaturedVideo = (props: Props) => {
   const titleClass = classNames(
     "line-clamp-3 font-body",
     {
-      'text-black': props.hasPermission,
-      'text-gray-dark': !props.hasPermission,
+      'text-black': hasPermission,
+      'text-gray-dark': !hasPermission,
     }
   );
   const categoriesClass = classNames("flex flex-wrap gap-1");
 
-  const date = props.publishedAt ? new Date(props.publishedAt) : null;
+  const date = publishedAt ? new Date(publishedAt) : null;
   const formattedDate = date?.toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'long',
@@ -56,40 +56,40 @@ export const FeaturedVideo = (props: Props) => {
   });
 
   return (
-    <BaseCardContainer className={`base-container-axis-video ${props.className}`} href={props.hasPermission ? props.detailHref : null}>
+    <BaseCardContainer className={`base-container-axis-video ${className}`} {...rest} href={hasPermission ? detailHref : null}>
       <div className={`grid-axis-control-content-video ${containerClass}`}>
         <div className={`image-container-video ${containerImageClass}`}>
           <Image
             width={1280}
             height={720}
-            src={props.coverHref}
-            alt={props.title}
+            src={coverHref}
+            alt={title}
             className={imageClass}
           />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-dark hover:text-primary-400 rounded-[100px] bg-white w-[50px] h-[50px] flex items-center justify-center shadow-xl">
-            {props.hasPermission ? <PlayIcon className="p-4 translate-x-[2px]" /> : <LockIcon className={`icon-animation p-3`} />}
+            {hasPermission ? <PlayIcon className="p-4 translate-x-[2px]" /> : <LockIcon className={`icon-animation p-3`} />}
           </div>
         </div>
         <div className={contentClass}>
           <div className={`text-content-position-video ${textareaClass}`}>
-            {props.categories && props.categories.length > 0 && (
+            {categories && categories.length > 0 && (
               <div className={categoriesClass}>
-                {props.categories.map((category) => (
+                {categories.map((category) => (
                   <Tag
                     key={category.id}
                     text={category.singular_name}
-                    variant={props.hasPermission ? 'primary' : 'disabled'}
+                    variant={hasPermission ? 'primary' : 'disabled'}
                   />
                 ))}
               </div>
             )}
-            <p className={`dynamic-text-video ${titleClass}`}>{props.title}</p>
+            <p className={`dynamic-text-video ${titleClass}`}>{title}</p>
             <p className="font-body text-xs text-gray-dark mt-1">{formattedDate}</p>
           </div>
-          {!props.hasPermission &&
+          {!hasPermission &&
             <div className="group flex justify-end items-center gap-1.5 text-primary-400 pt-4">
               <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
-              <Link text="Desbloquear" href={props.unlockHref} />
+              <Link text="Desbloquear" href={unlockHref} />
             </div>
           }
         </div>

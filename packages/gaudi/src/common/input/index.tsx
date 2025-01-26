@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
       label: string;
       text?: string;
       placeholder: string;
@@ -9,34 +9,34 @@ interface Props {
       children?: React.ReactNode;
 }
 
-export const InputForm = (props: Props) => {
+export const InputForm: React.FC<Props> = ({className, state, placeholder, text, children, ...rest}) => {
 
       const containerClass = classNames(
             'w-full p-1 flex items-center bg-white rounded border-solid font-normal text-base min-h-10',
-            props.className,
+            className,
             {
                   // Enabled
-                  'border border-primary-900': props.state === 'enabled',
+                  'border border-primary-900': state === 'enabled',
                   // Disabled
-                  'border-0.5 border-gray-disabled': props.state === 'disabled',
+                  'border-0.5 border-gray-disabled': state === 'disabled',
             }
       );
 
       const inputClass = classNames(
             'grow min-w-0 bg-transparent outline-none placeholder-gray-500 placeholder-gray-disabled px-2',
-            props.className,
+            className,
       );
 
       return (
-            <div className={containerClass}>
+            <div className={containerClass} {...rest}>
                   <input
                         type="text"
-                        placeholder={props.placeholder}
-                        defaultValue={props.text}
-                        disabled={props.state === 'disabled'}
+                        placeholder={placeholder}
+                        defaultValue={text}
+                        disabled={state === 'disabled'}
                         className={inputClass}
                   />
-                  {props.children}
+                  {children}
             </div>
       );
 };

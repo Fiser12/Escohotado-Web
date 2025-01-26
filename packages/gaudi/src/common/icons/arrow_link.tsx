@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const ArrowLinkIcon: React.FC<Props> = ({
-    className = '',
+    className
 }) => {
     const iconClass = classNames(
         'h-4 stroke-current',

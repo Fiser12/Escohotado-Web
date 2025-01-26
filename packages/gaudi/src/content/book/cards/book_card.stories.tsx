@@ -25,6 +25,7 @@ export const Book: Story = {
     name: "Book Card",
     args: {
         title: "Sample Book Title",
+        link: "#",
         coverHref: "https://placehold.co/200x307",
     },
 };

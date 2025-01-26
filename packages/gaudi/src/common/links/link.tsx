@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { ArrowLinkIcon } from '../icons/arrow_link';
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLAnchorElement> {
     text: string;
     href: string;
     className?: string;
@@ -10,8 +10,8 @@ interface Props {
 
 export const Link: React.FC<Props> = ({
     text,
-    href,
     className,
+    ...rest
 }) => {
     const linkClass = classNames(
         'w-auto font-normal font-body text-sm text-primary-400 flex flex-row justify-end gap-1 items-center',
@@ -19,7 +19,7 @@ export const Link: React.FC<Props> = ({
     );
 
     return (
-        <a href={href} className='hover: cursor-pointer'>
+        <a {...rest} className='hover: cursor-pointer'>
             <div className={linkClass}>
                 {text}
                 <ArrowLinkIcon />

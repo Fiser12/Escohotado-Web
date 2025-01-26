@@ -2,50 +2,49 @@ import React from 'react';
 import classNames from 'classnames';
 import { InputForm } from '../input';
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLAnchorElement> {
     label: string;
     text?: string;
     placeholder: string;
     error?: string;
     icon?: React.ReactNode;
     state?: 'enabled' | 'disabled';
-    className?: string;
 }
 
-export const TextField = (props: Props) => {
+export const TextField: React.FC<Props> = ({className, label, text, placeholder, state, icon, error}) => {
     const textFieldClass = classNames(
         'font-body flex flex-col gap-2 max-w-72',
-        props.className,
+        className,
     );
 
     const labelClass = classNames(
         'text-primary-900 text-sm font-bold',
-        props.className,
+        className,
     );
 
     const iconClass = classNames(
         'text-gray-dark flex-shrink-0 ml-2',
-        props.className,
+        className,
     );
 
     const errorClass = classNames(
         'text-red-500 text-xs',
-        props.className,
+        className,
     );
 
     return (
         <div className={textFieldClass}>
-            <label className={labelClass}>{props.label}</label>
+            <label className={labelClass}>{label}</label>
             <InputForm
-                label={props.label}
-                text={props.text}
-                placeholder={props.placeholder}
-                state={props.state}
+                label={label}
+                text={text}
+                placeholder={placeholder}
+                state={state}
                 className='pr-2.5'
             >
-                {props.icon && <span className={iconClass}>{props.icon}</span>}
+                {icon && <span className={iconClass}>{icon}</span>}
             </InputForm>
-            {props.error && <p className={errorClass}>{props.error}</p>}
+            {error && <p className={errorClass}>{error}</p>}
         </div>
     );
 };

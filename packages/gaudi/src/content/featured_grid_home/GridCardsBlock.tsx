@@ -66,30 +66,29 @@ export const renderFeatured = (item: Featured) => {
   }
 };
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   features: Featured[]
-  gridClassname: string
+  className: string
 }
 
-export const GridCardsBlock: React.FC<Props> = (props) => {
-  return <GridCardsBlockContainer gridClassname={props.gridClassname}>
-    {props.features.map(renderFeatured)}
+export const GridCardsBlock: React.FC<Props> = ({className, features, ...rest}) => {
+  return <GridCardsBlockContainer className={className} {...rest}>
+    {features.map(renderFeatured)}
   </GridCardsBlockContainer>
 }
 
-interface Props2 {
-  gridClassname: string
-  children: React.ReactNode
+interface Props2 extends React.HTMLAttributes<HTMLDivElement>  {
+  className: string
 }
 
-export const GridCardsBlockContainer: React.FC<Props2> = (props) => {
+export const GridCardsBlockContainer: React.FC<Props2> = ({className, children, ...rest}) => {
   const featuredGridClass = (gridClassname: string) => classNames(
     '@container w-full grid gap-4 gap-4',
     gridClassname ?? 'grid-cols-1 md:grid-cols-4'
   );
 
-  return <div className={featuredGridClass(props.gridClassname)}>
-    {props.children}
+  return <div className={featuredGridClass(className)} {...rest}>
+    {children}
   </div>
 }
 

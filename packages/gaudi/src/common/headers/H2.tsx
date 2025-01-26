@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-type Props = React.HTMLAttributes<HTMLHeadingElement> & {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   label: string;
 };
 

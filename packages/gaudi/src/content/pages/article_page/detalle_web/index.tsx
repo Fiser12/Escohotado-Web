@@ -9,7 +9,7 @@ import "./article-html-content.css";
 import Image from "next/image";
 import { CommentsSectionModel } from "hegel";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     publishedAt: string;
     author?: string;
@@ -24,9 +24,20 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const ArticleDetail = (props: Props) => {
+export const ArticleDetail: React.FC<Props> = ({
+    publishedAt,
+    author,
+    title,
+    coverHref,
+    categories,
+    commentsSectionModel,
+    children,
+    className,
+    ...rest
+}) => {
     const containerClass = classNames(
-        'bg-white text-black flex flex-col gap-12 md:gap-16'
+        'bg-white text-black flex flex-col gap-12 md:gap-16',
+        className
     );
 
     const tagDateContainerClass = classNames(
@@ -36,7 +47,7 @@ export const ArticleDetail = (props: Props) => {
     const categoriesClass = classNames(
         'flex flex-wrap gap-1'
     );
-    const date = new Date(props.publishedAt);
+    const date = new Date(publishedAt);
     const formattedDate = date.toLocaleDateString('es-ES', {
         year: 'numeric',
         month: 'long',
@@ -44,24 +55,24 @@ export const ArticleDetail = (props: Props) => {
     });
 
     return (
-        <div className={containerClass}>
+        <div className={containerClass} {...rest}>
             <div className="relative w-full h-[200px] md:h-[350px]">
                 <Image
                     fill
-                    src={props.coverHref}
-                    alt={props.title}
+                    src={coverHref}
+                    alt={title}
                     className="object-cover"
                 />
             </div>
             <ContentWrapper className="flex flex-col gap-12">
                 <div className="border-b-2 border-gray-light pb-9 md:pb-10 flex flex-col gap-6 md:gap-10">
                     <div className="flex flex-col gap-2">
-                        <H4 label={props.author ?? ""}></H4>
-                        <H1 label={props.title ?? "No title"} />
+                        <H4 label={author ?? ""}></H4>
+                        <H1 label={title ?? "No title"} />
                     </div>
                     <div className={tagDateContainerClass}>
                         <div className={categoriesClass}>
-                            {props.categories?.map((category, index) =>
+                            {categories?.map((category, index) =>
                                 <Tag key={index} text={category.singular_name}></Tag>
                             )}
                         </div>
@@ -69,11 +80,11 @@ export const ArticleDetail = (props: Props) => {
                     </div>
                 </div>
             </ContentWrapper>
-            {props.children}
+            {children}
             <ContentWrapper>
                 <GridComments
-                    items={props.commentsSectionModel.comments}
-                    forumTopicId={props.commentsSectionModel.forumTopicId}
+                    items={commentsSectionModel.comments}
+                    forumTopicId={commentsSectionModel.forumTopicId}
                     renderBox={(comment) => (
                         <CommentCard
                             user={comment.user}

@@ -9,7 +9,6 @@ import {
 
   RichText as RichTextWithoutBlocks,
 } from '@payloadcms/richtext-lexical/react'
-
 import classNames from 'classnames'
 import { blockRenderers } from './blockRenderers'
 
@@ -31,9 +30,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   blocks: blockRenderers
 })
 
-type Props = {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   data: SerializedEditorState
-} & React.HTMLAttributes<HTMLDivElement>
+}
 
 export function LexicalRenderer(props: Props) {
   const { className, ...rest } = props

@@ -2,7 +2,7 @@ import { getPayload } from "@/payload/utils/getPayload";
 import { FilterBarNuqs } from "./filter_bar_nuqs";
 import { COLLECTION_SLUG_TAXONOMY } from "@/payload/collections/config";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 export async function AutorBarSSR(props: Props) {
@@ -21,10 +21,10 @@ export async function AutorBarSSR(props: Props) {
 
 	return (
 		<FilterBarNuqs
+			{...props}
 			title="Autores"
 			queryKey="autor"
 			multiple={false}
-			{...props}
 			tags={tagsAsRecord}
 		/>
 	);

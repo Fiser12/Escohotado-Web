@@ -6,7 +6,7 @@ import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/
 import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user: User | null;
     query: string;
     medioArray: string[];
@@ -14,7 +14,7 @@ interface Props {
     maxPage: number;
 }
 
-export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArray, maxPage, user }) => {
+export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArray, maxPage, user, className, ...rest }) => {
     const [articles, setArticles] = useState<Record<string, CommonArticle[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -57,7 +57,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
         );
 
         observer.observe(currentObserverRef);
-        
+
         return () => {
             observer.unobserve(currentObserverRef);
             observer.disconnect();
@@ -66,7 +66,8 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
 
     return <div>
         <GridCardsBlockContainer
-            gridClassname='grid-cols-2 md:grid-cols-6 lg:grid-cols-8'
+            {...rest}
+            className={`grid-cols-2 md:grid-cols-6 lg:grid-cols-8 ` + (className ?? "")}
         >
             {Object
                 .values(articles)

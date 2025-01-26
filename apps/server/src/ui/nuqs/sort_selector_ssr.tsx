@@ -1,6 +1,6 @@
 import { FilterBarNuqs } from "./filter_bar_nuqs";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 export async function SortSelectorSSR(props: Props) {

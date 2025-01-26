@@ -16,6 +16,7 @@ import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
+import classNames from "classnames";
 
 export const pageSize = 10;
 
@@ -25,11 +26,11 @@ export const searchContentParamsCache = createSearchParamsCache({
   medio: parseAsString.withDefault('')
 })
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   searchParams: Record<string, string>;
 }
 
-export const ArticlePage = async ({ searchParams }: Props) => {
+export const ArticlePage = async ({ searchParams, className, ...rest }: Props) => {
   const { autor, medio, query } = await searchContentParamsCache.parse(searchParams)
   const medioArray = medio.split(',').filter(Boolean)
   const user = await getCurrentUserQuery();
@@ -41,9 +42,12 @@ export const ArticlePage = async ({ searchParams }: Props) => {
     slug: "articulos_page"
   })
   const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article, "col-span-2");
-
+  const divClass = classNames(
+    "w-full bg-gray-light",
+    className
+  )
   return (
-    <div className="w-full bg-gray-light">
+    <div className={divClass} {...rest}>
       <div id="headerArticles" className="@container w-full bg-white pt-12.5">
         <ContentWrapper className="mx-auto flex flex-col gap-7.5">
           <H2 label="Últimos artículos" id="last-articles" />
@@ -86,7 +90,7 @@ export const ArticlePage = async ({ searchParams }: Props) => {
           <SearchBarNuqs />
         </div>
         <GridCardsBlockContainer
-          gridClassname='grid-cols-2 md:grid-cols-4 lg:grid-cols-8'
+          className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8'
         >
           {articles.results
             .map(articleCardMapper)

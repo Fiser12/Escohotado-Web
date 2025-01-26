@@ -53,7 +53,7 @@ const Page = async ({ searchParams }: Props) => {
         {lastVideosResult.results.length !== 0 && <>
           <H2 label="Últimos vídeos" />
 
-        <GridCardsBlockContainer gridClassname='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'>
+        <GridCardsBlockContainer className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'>
           {lastVideosResult.results
             .slice(0, 3)
             .map(videoCardMapper)
@@ -64,7 +64,7 @@ const Page = async ({ searchParams }: Props) => {
           <SortSelectorSSR />
         </div>
         <GridCardsBlockContainer
-          gridClassname='grid-cols-2 md:grid-cols-4 lg:grid-cols-8 2xl:grid-cols-10'
+          className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8 2xl:grid-cols-10'
         >
           {videosResult.results
             .map(videoCardMapper)

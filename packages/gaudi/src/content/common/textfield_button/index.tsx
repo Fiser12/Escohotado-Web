@@ -1,7 +1,7 @@
 import { MainButton } from "../../../common/main_button/main_button";
 import { InputForm } from "../../../common/input";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
       label: string;
       buttonText: string;
       text?: string;
@@ -12,17 +12,18 @@ interface Props {
       icon?: React.ReactNode;
 }
 
-export const TextFieldButton = (props: Props) => {
+export const TextFieldButton: React.FC<Props> = ({label, text, placeholder, state, href, buttonText, icon, ...rest}) => {
 
       return (
-            <InputForm 
-                  label={props.label}
-                  text={props.text}
-                  placeholder={props.placeholder}
-                  state={props.state}
+            <InputForm
+                  label={label}
+                  text={text}
+                  placeholder={placeholder}
+                  state={state}
+                  {...rest}
             >
-                  <a href={props.href}>
-                        <MainButton text={props.buttonText} color="secondary" icon={props.icon} />
+                  <a href={href}>
+                        <MainButton text={buttonText} color="secondary" icon={icon} />
                   </a>
             </InputForm>
       );

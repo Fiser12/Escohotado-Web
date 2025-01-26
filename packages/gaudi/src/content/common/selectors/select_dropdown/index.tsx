@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 
-type Props = {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   title: string;
   multiple?: boolean;
   showSelectionAtLabel: boolean;
@@ -22,11 +22,23 @@ type Props = {
   className?: string;
 };
 
-export const SelectDropdown: React.FC<Props> = (props) => {
-  const multiple = props.multiple ?? true;
-  const onSelectedTagsChange = props.onSelectedTagsChange;
+export const SelectDropdown: React.FC<Props> = ({
+  multiple,
+  onSelectedTagsChange,
+  selectedTags,
+  tags,
+  title,
+  className,
+  color,
+  iconButton,
+  showSelectionAtLabel,
+  showClearButton,
+  ...rest
+
+}) => {
+  const _multiple = multiple ?? true;
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTags, setSelectedTags] = useState<string[]>(props.selectedTags);
+  const [selectedTagsState, setSelectedTags] = useState<string[]>(selectedTags);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -34,28 +46,28 @@ export const SelectDropdown: React.FC<Props> = (props) => {
 
   const handleTagChange = (key: string) => {
     setSelectedTags((prev) =>
-      !multiple
+      !_multiple
         ? [key]
         : prev.includes(key)
-        ? prev.filter((tag) => tag !== key)
-        : [...prev, key]
+          ? prev.filter((tag) => tag !== key)
+          : [...prev, key]
     );
     setIsOpen(false);
   };
 
   useEffect(() => {
     if (process.env.STORYBOOK) return;
-    onSelectedTagsChange(selectedTags);
-  }, [selectedTags]);
+    onSelectedTagsChange(selectedTagsState);
+  }, [selectedTagsState]);
 
   const buttonClass = classNames(
     "w-full md:w-auto h-[40px] max-w-[300px] rounded px-5 py-2 text-primary-500 font-body text-sm text-center flex items-center gap-2 border-[1.5px]",
-    props.className,
+    className,
     {
       "bg-primary-50 hover:bg-primary-100 focus:ring-1 focus:outline-none focus:ring-primary-200 border-primary-100":
-        props.color === "primary",
+        color === "primary",
       "bg-white hover:bg-primary-50 focus:ring-1 focus:outline-none focus:ring-primary-200 border-primary-100":
-        props.color === "white",
+        color === "white",
     }
   );
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -82,25 +94,25 @@ export const SelectDropdown: React.FC<Props> = (props) => {
     { hidden: !isOpen, block: isOpen }
   );
 
-  const selectedTag = selectedTags[0] ? props.tags[selectedTags[0]] : null;
+  const selectedTag = selectedTagsState[0] ? tags[selectedTagsState[0]] : null;
   const showCustomTitle =
-    props.showSelectionAtLabel && !multiple && selectedTags.length === 1;
+    showSelectionAtLabel && !_multiple && selectedTags.length === 1;
 
   return (
     <div ref={dropdownRef} className="relative w-auto">
-      <button onClick={toggleDropdown} className={buttonClass}>
-        {(props.iconButton || (showCustomTitle && selectedTag?.icon)) && (
+      <button {...rest} onClick={toggleDropdown} className={buttonClass}>
+        {(iconButton || (showCustomTitle && selectedTag?.icon)) && (
           <span className="text-primary-900">
             {showCustomTitle && selectedTag?.icon
               ? selectedTag.icon
-              : props.iconButton}
+              : iconButton}
           </span>
         )}
 
         <div className={contentButton}>
           {showCustomTitle && selectedTag
             ? selectedTag?.label
-            : props.title}
+            : title}
           <svg
             width="7"
             height="5"
@@ -117,12 +129,12 @@ export const SelectDropdown: React.FC<Props> = (props) => {
           className="max-h-[450px] overflow-scroll space-y-0.5 text-sm font-body w-full"
           aria-labelledby="dropdownBgHoverButton"
         >
-          {Object.entries(props.tags).map(([key, { label, icon }]) => (
+          {Object.entries(tags).map(([key, { label, icon }]) => (
             <li key={key}>
               <div
                 className={classNames(
                   "flex items-center gap-1 h-10 py-4 pl-4 pr-5 hover:bg-gray-100",
-                  { "bg-gray-100": selectedTags.includes(key) }
+                  { "bg-gray-100": selectedTagsState.includes(key) }
                 )}
               >
                 {icon && <span className="text-primary-900">{icon}</span>}
@@ -135,9 +147,9 @@ export const SelectDropdown: React.FC<Props> = (props) => {
                   </label>
                   <input
                     id={`item-${key}`}
-                    type={multiple ? "checkbox" : "radio"}
+                    type={_multiple ? "checkbox" : "radio"}
                     value={key}
-                    checked={selectedTags.includes(key)}
+                    checked={selectedTagsState.includes(key)}
                     onChange={() => handleTagChange(key)}
                     className="w-4 h-4 accent-primary-400 bg-gray-100 border-gray-300 rounded focus:ring-primary-300 focus:ring-1"
                   />
@@ -146,7 +158,7 @@ export const SelectDropdown: React.FC<Props> = (props) => {
             </li>
           ))}
         </ul>
-        {(props.showClearButton ?? true) && (
+        {(showClearButton ?? true) && (
           <button
             className="w-full px-6 py-4 hover:bg-gray-100 text-sm text-left text-gray-700"
             onClick={() => {

@@ -2,40 +2,40 @@
 
 import classNames from 'classnames';
 
-type Props = {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
     title: string;
     isSelected: boolean;
     onClick: () => void;
-    className?: string;
 };
 
-export const SelectBox: React.FC<Props> = (props) => {
+export const SelectBox: React.FC<Props> = ({title, className, isSelected, onClick, ...rest}) => {
     const buttonClass = classNames(
         'relative min-[439px]:max-w-[200px] w-full h-[80px] flex flex-col justify-center items-center rounded border-[1.5px] font-body px-8 hover:bg-gray-light hover:border-primary-50 focus:bg-primary-50',
-        props.className,
+        className,
         {
-            'border-primary-200 bg-primary-50 font-bold text-primary-400': props.isSelected,
-            'border-primary-100 bg-transparent': !props.isSelected,
+            'border-primary-200 bg-primary-50 font-bold text-primary-400': isSelected,
+            'border-primary-100 bg-transparent': !isSelected,
         },
     );
 
     const checkboxClass = classNames(
         'absolute bottom-0 right-0 w-6 h-6 flex items-center justify-center p-1 m-2 rounded border-[1.5px] text-primary-400 bg-white',
-        props.className,
+        className,
         {
-            'border-primary-100': props.isSelected,
-            'border-gray-disabled': !props.isSelected,
+            'border-primary-100': isSelected,
+            'border-gray-disabled': !isSelected,
         },
     );
 
     return (
         <button
-            onClick={props.onClick}
+            {...rest}
+            onClick={onClick}
             className={buttonClass}
         >
-            <p className='line-clamp-2'>{props.title}</p>
+            <p className='line-clamp-2'>{title}</p>
             <div className={checkboxClass}>
-                {props.isSelected && (
+                {isSelected && (
                     <svg
                         viewBox="0 0 14 14"
                         fill="none"
