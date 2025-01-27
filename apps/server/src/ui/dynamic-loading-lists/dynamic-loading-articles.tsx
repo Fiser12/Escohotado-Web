@@ -2,6 +2,7 @@
 
 import { CommonArticle, getArticlesQuery } from "@/core/content/getArticlesQuery";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
+import { convertFeaturedToFeaturedCard } from "gaudi/client";
 import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
@@ -19,7 +20,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const observerRef = useRef<HTMLDivElement | null>(null);
-    const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article, "col-span-2");
+    const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article);
 
     useEffect(() => {
         const loadArticles = async () => {
@@ -73,6 +74,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
                 .values(articles)
                 .flat()
                 .map(articleCardMapper)
+                .map(convertFeaturedToFeaturedCard("col-span-2"))
                 .map(renderFeatured)
             }
         </GridCardsBlockContainer>

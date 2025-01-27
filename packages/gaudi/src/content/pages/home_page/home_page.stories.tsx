@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Featured, HomePage } from ".";
-const featuredItem: {gridClassname: string, features: Featured[]} = {
+import { HomePage } from ".";
+import { Featured } from "./FeaturedCard";
+const featuredItem: { gridClassname: string, features: Featured[] } = {
   gridClassname: "grid-cols-1 md:grid-cols-4",
   features: [
     {

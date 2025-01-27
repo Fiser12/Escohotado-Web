@@ -4,3 +4,4 @@ export { MainButton } from "./common/main_button/main_button";
 export { SelectBox } from "./content/common/selectors/select_box";
 export { SelectBoxes } from "./content/common/selectors/grid_select_boxes";
 export { ContentGridList } from "./content/common/content_grid_list";
+export { type Featured, type FeaturedCard, convertFeaturedToFeaturedCard } from "./content/pages/home_page/FeaturedCard";

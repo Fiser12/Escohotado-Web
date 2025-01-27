@@ -1,6 +1,7 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2 } from "gaudi/server";
+import { convertFeaturedToFeaturedCard } from "gaudi/client";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
 import { getVideosQuery, ResultVideo } from "@/core/content/getVideosQuery";
@@ -35,7 +36,7 @@ const Page = async ({ searchParams }: Props) => {
     slug: "videos_page"
   })
 
-  const videoCardMapper = (video: ResultVideo) => mapVideoCard(user)(video, "col-span-2");
+  const videoCardMapper = (video: ResultVideo) => mapVideoCard(user)(video);
   
   return (
     <div className='flex flex-col'>
@@ -57,6 +58,7 @@ const Page = async ({ searchParams }: Props) => {
           {lastVideosResult.results
             .slice(0, 3)
             .map(videoCardMapper)
+            .map(convertFeaturedToFeaturedCard("col-span-2"))
             .map(renderFeatured)}
         </GridCardsBlockContainer></> }
         <div className="flex flex-col sm:flex-row gap-10 items-end justify-between">
@@ -68,6 +70,7 @@ const Page = async ({ searchParams }: Props) => {
         >
           {videosResult.results
             .map(videoCardMapper)
+            .map(convertFeaturedToFeaturedCard("col-span-2"))
             .map(renderFeatured)}
         </GridCardsBlockContainer>
         <DynamicLoadingVideos

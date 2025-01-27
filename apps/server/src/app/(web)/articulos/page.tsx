@@ -1,6 +1,7 @@
 import { COLLECTION_SLUG_ARTICLE_PDF } from "@/payload/collections/config";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
+import { convertFeaturedToFeaturedCard } from "gaudi/client";
 import { Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/ui/nuqs/autor_bar_ssr";
@@ -41,7 +42,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
   const articulosDataPage = await payload.findGlobal({
     slug: "articulos_page"
   })
-  const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article, "col-span-2");
+  const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article);
   const divClass = classNames(
     "w-full bg-gray-light",
     className
@@ -94,6 +95,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         >
           {articles.results
             .map(articleCardMapper)
+            .map(convertFeaturedToFeaturedCard("col-span-2"))
             .map(renderFeatured)}
         </GridCardsBlockContainer>
         <DynamicLoadingArticles

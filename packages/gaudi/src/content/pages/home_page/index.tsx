@@ -1,63 +1,11 @@
-import classNames from "classnames";
-import { MainHero } from "../../common/hero";
-import { MainButton } from "../../../common/main_button/main_button";
 import { NewsletterSubscription } from "../../common/newsletterSubscription";
 import { Footer } from "../../common/footer";
-import heroHome from "../../../assets/images/hero-home.png";
-import Image from "next/image";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 import { GridCardsBlock } from "../../featured_grid_home/GridCardsBlock";
 import HomeHero from "../../../common/home_hero"
-type FeaturedType = "article" | "quote" | "book" | "video";
-
-export interface FeaturedBase {
-  id: string;
-  type: FeaturedType;
-  className: string;
-}
-
-export interface FeaturedArticleProps extends FeaturedBase {
-  type: "article";
-  title: string;
-  author: string;
-  coverHref: string;
-  hasPermission: boolean;
-  href?: string | null;
-  isPdf: boolean;
-  detailHref: string;
-  categories: Array<{ id: string; singular_name: string }>;
-}
-
-export interface FeaturedQuoteProps extends FeaturedBase {
-  type: "quote";
-  quote: string;
-  author: string;
-}
-
-export interface FeaturedBookProps extends FeaturedBase {
-  type: "book";
-  title: string;
-  quote: string;
-  author: string;
-  coverHref: string;
-  detailHref: string;
-}
-
-export interface FeaturedVideoProps extends FeaturedBase {
-  type: "video";
-  title: string;
-  coverHref: string;
-  hasPermission: boolean;
-  href: string | null;
-  detailHref: string;
-  publishedAt: string | null | undefined;
-  categories: Array<{ id: string; singular_name: string }>;
-}
-
-export type Featured = FeaturedArticleProps | FeaturedQuoteProps | FeaturedBookProps | FeaturedVideoProps;
-
+import { FeaturedCard } from "./FeaturedCard";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  featuredItems: { gridClassname: string, features: Featured[] }[];
+  featuredItems: { gridClassname: string, features: FeaturedCard[] }[];
   description: string;
   buttons: Array<{ title: string; link: string }>;
 }
