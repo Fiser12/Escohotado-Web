@@ -9,7 +9,6 @@ import { MedioBarSSR } from "@/ui/nuqs/medio_bar_ssr";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
 import { CommonArticle, getArticlesQueryByMediasAndAuthor } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
-import { getLastArticlesQuery } from "@/core/content/getLastArticlesQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
@@ -36,7 +35,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
   const medioArray = medio.split(',').filter(Boolean)
   const user = await getCurrentUserQuery();
   const articles = await getArticlesQueryByMediasAndAuthor(query, autor, medioArray, 0)
-  const lastArticles = await getLastArticlesQuery();
+  const lastArticles = await getArticlesQueryByMediasAndAuthor("", null, [], 0, 4);
   const books = await getBooksQuery(query, 0)
   const payload = await getPayload()
   const articulosDataPage = await payload.findGlobal({
@@ -62,7 +61,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
               height={1080}
             />
             <div className="w-full col-span-2 order-1 md:order-none">
-              {lastArticles.map((article, index) => {
+              {lastArticles.results.map((article, index) => {
                 const categories = article.categories as Taxonomy[]
                 const authorName = getAuthorFromTaxonomies(categories)?.singular_name ?? "No author"
                 return <HeadlineCard

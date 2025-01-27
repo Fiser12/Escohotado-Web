@@ -21,6 +21,7 @@ import {
 } from 'payload-types'
 import 'hegel'
 import { getArticlesQuery } from '@/core/content/getArticlesQuery'
+import { getVideosQuery } from '@/core/content/getVideosQuery'
 
 type QueryFieldType = GridCardsBlock['queryField'][number]
 type ContentRelationType = Extract<
@@ -121,7 +122,9 @@ const mapQueryField =
 
     } else if (queryField.blockType === 'videoQueryBlock') {
       const { querySize, sort, filter } = queryField
-      
+      const videos = await getVideosQuery(0, querySize, sort, '', filter)
+      return videos.results.map((video) => mapVideoCard(user)(video))
+
     }
 
     return []

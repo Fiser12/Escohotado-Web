@@ -1,6 +1,6 @@
 "use client";
 
-import { getVideosQuery, ResultVideo } from "@/core/content/getVideosQuery";
+import { getVideosQueryByTags, ResultVideo } from "@/core/content/getVideosQuery";
 import { mapVideoCard } from "@/core/domain/mapping/mapCards";
 import { convertContentModelToCard } from "hegel";
 import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
@@ -27,7 +27,8 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newVideos = await getVideosQuery(query, playlist, page, sortedBy);
+                const tags = playlist != '' ? playlist.split(',') : []
+                const newVideos = await getVideosQueryByTags(query, tags, page, sortedBy);
                 setVideos((prev) => ({
                     ...prev,
                     [page]: newVideos.results

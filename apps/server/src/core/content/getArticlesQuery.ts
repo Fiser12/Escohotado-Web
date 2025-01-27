@@ -9,7 +9,7 @@ import { searchElementsQuery } from './searchElementsQuery'
 import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { evaluateExpression } from 'hegel'
-import { it } from 'node:test'
+import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
 
 const pageSize = 40
 export type CommonArticle = (ArticlePdf | ArticleWeb) & {
@@ -23,21 +23,28 @@ export const getArticlesQueryByMediasAndAuthor = async (
   autor: string | null,
   medios: string[],
   page: number,
+  maxPage: number = pageSize,
 ): Promise<{
   results: CommonArticle[]
   maxPage: number
 }> => {
-  if(medios.length === 0 && !autor) {
-    return getArticlesQuery(page, pageSize, 'publishedAt', query)
+  if (medios.length === 0 && !autor) {
+    return getArticlesQuery(page, maxPage, 'publishedAt', query)
   }
-  if(autor && medios.length === 0) {
-    return getArticlesQuery(page, pageSize, 'publishedAt', query, `"${autor}"`)
+  if (autor && medios.length === 0) {
+    return getArticlesQuery(page, maxPage, 'publishedAt', query, `"${autor}"`)
   }
-  if(!autor && medios.length !== 0) {
-    return getArticlesQuery(page, pageSize, 'publishedAt', query, medios.map((medio) => `"${medio}"`).join(' && '))
+  if (!autor && medios.length !== 0) {
+    return getArticlesQuery(
+      page,
+      maxPage,
+      'publishedAt',
+      query,
+      medios.map((medio) => `"${medio}"`).join(' && '),
+    )
   }
   const filterExpression = `"${autor || true}" || (${medios.map((medio) => `"${medio}"`).join(' && ')})`
-  return getArticlesQuery(page, pageSize, 'publishedAt', query, filterExpression)
+  return getArticlesQuery(page, maxPage, 'publishedAt', query, filterExpression)
 }
 
 export const getArticlesQuery = async (
@@ -108,18 +115,15 @@ export const getArticlesQuery = async (
       const tags = Array.from(
         new Set<string>(
           categories.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
-        )
+        ),
       )
 
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||
         article.title?.toLowerCase().includes(query.toLowerCase())
-      return evalQueryFilter && filterExpression
-        ? evaluateExpression(filterExpression, tags)
-        : true
-    }
-  )
+      return evalQueryFilter && filterExpression ? evaluateExpression(filterExpression, tags) : true
+    })
   const startIndex = page * maxPage
   const endIndex = startIndex + maxPage
 
@@ -128,7 +132,3 @@ export const getArticlesQuery = async (
     maxPage: Math.ceil(articles.length / maxPage),
   }
 }
-
-const getSlugsFromTaxonomy = (taxonomy: Taxonomy): string[] =>
-  taxonomy.breadcrumbs?.mapNotNull((t) => t?.url?.split('/').filter((t) => t))?.flatMap((t) => t) ??
-  []

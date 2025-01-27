@@ -4,7 +4,7 @@ import { ContentWrapper, H2 } from "gaudi/server";
 import { convertContentModelToCard } from "hegel";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { getVideosQuery, ResultVideo } from "@/core/content/getVideosQuery";
+import { getVideosQueryByTags, ResultVideo } from "@/core/content/getVideosQuery";
 import { DynamicLoadingVideos } from '@/ui/dynamic-loading-lists/dynamic-loading-videos';
 export const pageSize = 10;
 import { mapVideoCard } from '@/core/domain/mapping/mapCards';
@@ -27,10 +27,11 @@ interface Props {
 const Page = async ({ searchParams }: Props) => {
   const payload = await getPayload();
   const { query, sort, playlist } = await searchContentParamsCache.parse(searchParams)
+  const tags = playlist != '' ? playlist.split(',') : []
   const [user, videosResult, lastVideosResult] = await Promise.all([
     getCurrentUserQuery(payload),
-    getVideosQuery(query, playlist, 0, sort),
-    getVideosQuery(query, playlist, 0, "publishedAt")
+    getVideosQueryByTags(query, tags, 0, sort),
+    getVideosQueryByTags(query, tags, 0, "publishedAt")
   ]);
   const videosDataPage = await payload.findGlobal({
     slug: "videos_page"
