@@ -1,14 +1,14 @@
 import { COLLECTION_SLUG_ARTICLE_PDF } from "@/payload/collections/config";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
+import { convertContentModelToCard } from "hegel";
 import { Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/ui/nuqs/autor_bar_ssr";
 import { MedioBarSSR } from "@/ui/nuqs/medio_bar_ssr";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { CommonArticle, getArticlesQuery } from "@/core/content/getArticlesQuery";
+import { CommonArticle, getArticlesQueryByMediasAndAuthor } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
-import { getLastArticlesQuery } from "@/core/content/getLastArticlesQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
@@ -34,14 +34,14 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
   const { autor, medio, query } = await searchContentParamsCache.parse(searchParams)
   const medioArray = medio.split(',').filter(Boolean)
   const user = await getCurrentUserQuery();
-  const articles = await getArticlesQuery(query, autor, medioArray, 0)
-  const lastArticles = await getLastArticlesQuery();
+  const articles = await getArticlesQueryByMediasAndAuthor(query, autor, medioArray, 0)
+  const lastArticles = await getArticlesQueryByMediasAndAuthor("", null, [], 0, 4);
   const books = await getBooksQuery(query, 0)
   const payload = await getPayload()
   const articulosDataPage = await payload.findGlobal({
     slug: "articulos_page"
   })
-  const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article, "col-span-2");
+  const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article);
   const divClass = classNames(
     "w-full bg-gray-light",
     className
@@ -61,7 +61,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
               height={1080}
             />
             <div className="w-full col-span-2 order-1 md:order-none">
-              {lastArticles.map((article, index) => {
+              {lastArticles.results.map((article, index) => {
                 const categories = article.categories as Taxonomy[]
                 const authorName = getAuthorFromTaxonomies(categories)?.singular_name ?? "No author"
                 return <HeadlineCard
@@ -79,7 +79,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
       </div>
       <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="/subscriptions" coverHref={handwrittenBackground.src}></HighlightSection>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
-      { articulosDataPage.content &&
+      {articulosDataPage.content &&
         <LexicalRenderer data={articulosDataPage.content} />
       }
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
@@ -94,6 +94,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         >
           {articles.results
             .map(articleCardMapper)
+            .map(convertContentModelToCard("col-span-2"))
             .map(renderFeatured)}
         </GridCardsBlockContainer>
         <DynamicLoadingArticles

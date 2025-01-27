@@ -1188,26 +1188,57 @@ export interface VideosPageSelect<T extends boolean = true> {
  * via the `definition` "GridCardsBlock".
  */
 export interface GridCardsBlock {
-  value: (
+  queryField: (
     | {
-        relationTo: 'article_web';
-        value: string | ArticleWeb;
+        value: (
+          | {
+              relationTo: 'article_web';
+              value: string | ArticleWeb;
+            }
+          | {
+              relationTo: 'article_pdf';
+              value: string | ArticlePdf;
+            }
+          | {
+              relationTo: 'book';
+              value: string | Book;
+            }
+          | {
+              relationTo: 'video';
+              value: string | Video;
+            }
+          | {
+              relationTo: 'quote';
+              value: string | Quote;
+            }
+        )[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'staticQueryField';
       }
     | {
-        relationTo: 'article_pdf';
-        value: string | ArticlePdf;
+        filter?: string | null;
+        querySize: number;
+        sort: 'publishedAt' | 'popularity';
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'articleQueryBlock';
       }
     | {
-        relationTo: 'book';
-        value: string | Book;
+        filter?: string | null;
+        querySize: number;
+        sort: 'publishedAt' | 'popularity';
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'videoQueryBlock';
       }
     | {
-        relationTo: 'video';
-        value: string | Video;
-      }
-    | {
-        relationTo: 'quote';
-        value: string | Quote;
+        filter?: string | null;
+        querySize: number;
+        sort: 'publishedAt' | 'popularity';
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'quoteQueryBlock';
       }
   )[];
   gridCards: string | UiGridCard;

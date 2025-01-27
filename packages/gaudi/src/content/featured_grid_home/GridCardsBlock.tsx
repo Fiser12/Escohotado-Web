@@ -1,14 +1,14 @@
 import React from 'react'
 
 import classNames from 'classnames'
-import { Featured } from '../pages/home_page'
+import { ContentCardModel } from "hegel"
 import { FeaturedArticle } from './content/article'
 import { FeaturedQuote } from './content/quote'
 import { FeaturedBook } from './content/book'
 import { FeaturedVideo } from './content/video'
 
 const unlockHref = '/subscriptions'
-export const renderFeatured = (item: Featured) => {
+export const renderFeatured = (item: ContentCardModel) => {
   switch (item.type) {
     case "article":
       return (
@@ -67,21 +67,21 @@ export const renderFeatured = (item: Featured) => {
 };
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  features: Featured[]
+  features: ContentCardModel[]
   className: string
 }
 
-export const GridCardsBlock: React.FC<Props> = ({className, features, ...rest}) => {
+export const GridCardsBlock: React.FC<Props> = ({ className, features, ...rest }) => {
   return <GridCardsBlockContainer className={className} {...rest}>
     {features.map(renderFeatured)}
   </GridCardsBlockContainer>
 }
 
-interface Props2 extends React.HTMLAttributes<HTMLDivElement>  {
+interface Props2 extends React.HTMLAttributes<HTMLDivElement> {
   className: string
 }
 
-export const GridCardsBlockContainer: React.FC<Props2> = ({className, children, ...rest}) => {
+export const GridCardsBlockContainer: React.FC<Props2> = ({ className, children, ...rest }) => {
   const featuredGridClass = (gridClassname: string) => classNames(
     '@container w-full grid gap-4 gap-4',
     gridClassname ?? 'grid-cols-1 md:grid-cols-4'

@@ -2,6 +2,8 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer"
 import { getPayload } from "@/payload/utils/getPayload"
 
 export const renderer = async (all:any) => {
+    const id = all?.node?.fields?.uiBlock?.value?.id
+    if (id === undefined) return <p>Error Rendering</p>
     const payload = await getPayload()
     const block = await payload.findByID({
         id: all.node.fields.uiBlock.value.id,

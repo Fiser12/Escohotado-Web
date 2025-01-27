@@ -1,5 +1,5 @@
 export interface BlockRenderer {
   slug: string
-  builder: ({ node }: any) => Promise<JSX.Element>
+  builder: ({ node }: any) => any
 }
 

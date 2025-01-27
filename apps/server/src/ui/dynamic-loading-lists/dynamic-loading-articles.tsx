@@ -1,7 +1,8 @@
 "use client";
 
-import { CommonArticle, getArticlesQuery } from "@/core/content/getArticlesQuery";
+import { CommonArticle, getArticlesQueryByMediasAndAuthor } from "@/core/content/getArticlesQuery";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
+import { convertContentModelToCard } from "hegel";
 import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
@@ -19,14 +20,14 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const observerRef = useRef<HTMLDivElement | null>(null);
-    const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article, "col-span-2");
+    const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article);
 
     useEffect(() => {
         const loadArticles = async () => {
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newArticles = await getArticlesQuery(query, autor, medioArray, page);
+                const newArticles = await getArticlesQueryByMediasAndAuthor(query, autor, medioArray, page);
                 setArticles((prev) => {
                     return {
                         ...prev,
@@ -73,6 +74,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
                 .values(articles)
                 .flat()
                 .map(articleCardMapper)
+                .map(convertContentModelToCard("col-span-2"))
                 .map(renderFeatured)
             }
         </GridCardsBlockContainer>

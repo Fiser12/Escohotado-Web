@@ -1,7 +1,8 @@
 "use client";
 
-import { getVideosQuery, ResultVideo } from "@/core/content/getVideosQuery";
+import { getVideosQueryByTags, ResultVideo } from "@/core/content/getVideosQuery";
 import { mapVideoCard } from "@/core/domain/mapping/mapCards";
+import { convertContentModelToCard } from "hegel";
 import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
@@ -19,14 +20,15 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const observerRef = useRef<HTMLDivElement | null>(null);
-    const videoCardMapper = (video: ResultVideo) => mapVideoCard(user)(video, "col-span-2");
+    const videoCardMapper = (video: ResultVideo) => mapVideoCard(user)(video);
 
     useEffect(() => {
         const load = async () => {
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newVideos = await getVideosQuery(query, playlist, page, sortedBy);
+                const tags = playlist != '' ? playlist.split(',') : []
+                const newVideos = await getVideosQueryByTags(query, tags, page, sortedBy);
                 setVideos((prev) => ({
                     ...prev,
                     [page]: newVideos.results
@@ -61,7 +63,6 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
             observer.disconnect();
         };
     }, [loading, page, maxPage]);
-
     return <div>
         <GridCardsBlockContainer
             {...rest}
@@ -71,6 +72,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
                 .values(videos)
                 .flat()
                 .map(videoCardMapper)
+                .map(convertContentModelToCard("col-span-2"))
                 .map(renderFeatured)
             }
         </GridCardsBlockContainer>

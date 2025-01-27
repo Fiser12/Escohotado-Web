@@ -1,5 +1,6 @@
 import { Block } from "payload";
 import { gridCardsBlockSlug } from "../../slug_blogs";
+import { queryField } from "../query_field";
 
 export const GridCardsBlock: Block = {
   slug: gridCardsBlockSlug,
@@ -9,16 +10,7 @@ export const GridCardsBlock: Block = {
     plural: 'Grid de cards'
   },
   fields: [
-    {
-      type: 'relationship',
-      name: 'value',
-      relationTo: ['article_web', 'article_pdf', 'book', 'video', 'quote'],
-      required: true,
-      hasMany: true,
-      admin: {
-        allowCreate: false,
-      }
-    },
+    queryField,
     {
       name: 'gridCards',
       type: 'relationship',

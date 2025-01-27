@@ -10,15 +10,14 @@ import { CarouselBook } from "../../../book/carousel";
 import handwrittenBackground from "../../../../assets/images/handwritting-bg.jpg";
 import drinkEscohotado from "../../../../assets/images/antonio-escohotado-lecturas.png";
 import { GridCardsBlockContainer, renderFeatured } from "../../../featured_grid_home/GridCardsBlock";
-import { FeaturedArticleProps } from "../../home_page";
+import { convertContentModelToCard, ArticleHeaderModel } from "hegel";
 
 export const ArticlePage = () => {
 
-  const articles: FeaturedArticleProps[] = [
+  const articles: ArticleHeaderModel[] = [
     {
       title: "El impacto del prohibicionismo en la libertad individual",
       author: "Ana Pérez",
-      className: "col-span-2",
       detailHref: "/article/prohibicionismo-libertad",
       id: "1",
       isPdf: false,
@@ -39,7 +38,6 @@ export const ArticlePage = () => {
       isPdf: false,
       author: "Carlos Gómez",
       href: "/article/etica-y-politica-drogas",
-      className: "col-span-2",
       detailHref: "/article/etica-y-politica-drogas",
       categories: [
         { id: "1", singular_name: "Ética" },
@@ -51,7 +49,6 @@ export const ArticlePage = () => {
       title: "Legalización y justicia social: un enfoque filosófico",
       author: "María López",
       detailHref: "/article/legalizacion-justicia",
-      className: "col-span-2",
       isPdf: false,
       id: "3",
       type: "article",
@@ -66,7 +63,6 @@ export const ArticlePage = () => {
     {
       title: "Legalización y justicia social: un enfoque filosófico",
       detailHref: "/article/legalizacion-justicia",
-      className: "col-span-2",
       author: "María López",
       isPdf: false,
       coverHref: "https://placehold.co/300x150?text=Justicia+Social",
@@ -174,13 +170,14 @@ export const ArticlePage = () => {
           </div>
           <GridCardsBlockContainer
             className='grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10'
-        >
+          >
             {Object
-                .values(articles)
-                .flat()
-                .map(renderFeatured)
+              .values(articles)
+              .flat()
+              .map(convertContentModelToCard("col-span-2"))
+              .map(renderFeatured)
             }
-        </GridCardsBlockContainer>
+          </GridCardsBlockContainer>
         </ContentWrapper>
       </div>
     </div>
