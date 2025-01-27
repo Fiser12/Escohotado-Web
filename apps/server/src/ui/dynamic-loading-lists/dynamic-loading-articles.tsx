@@ -1,6 +1,6 @@
 "use client";
 
-import { CommonArticle, getArticlesQuery } from "@/core/content/getArticlesQuery";
+import { CommonArticle, getArticlesQueryByMediasAndAuthor } from "@/core/content/getArticlesQuery";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
 import { convertContentModelToCard } from "hegel";
 import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
@@ -27,7 +27,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newArticles = await getArticlesQuery(query, autor, medioArray, page);
+                const newArticles = await getArticlesQueryByMediasAndAuthor(query, autor, medioArray, page);
                 setArticles((prev) => {
                     return {
                         ...prev,

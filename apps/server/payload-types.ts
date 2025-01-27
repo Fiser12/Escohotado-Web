@@ -1218,24 +1218,24 @@ export interface GridCardsBlock {
       }
     | {
         filter?: string | null;
-        sort?: 'publishedAt' | null;
-        querySize?: number | null;
+        querySize: number;
+        sort: 'publishedAt' | 'popularity';
         id?: string | null;
         blockName?: string | null;
         blockType: 'articleQueryBlock';
       }
     | {
         filter?: string | null;
-        sort?: 'publishedAt' | null;
-        querySize?: number | null;
+        querySize: number;
+        sort: 'publishedAt' | 'popularity';
         id?: string | null;
         blockName?: string | null;
         blockType: 'videoQueryBlock';
       }
     | {
         filter?: string | null;
-        sort?: 'publishedAt' | null;
-        querySize?: number | null;
+        querySize: number;
+        sort: 'publishedAt' | 'popularity';
         id?: string | null;
         blockName?: string | null;
         blockType: 'quoteQueryBlock';

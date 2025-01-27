@@ -10,8 +10,13 @@ export const quoteQueryBlock: Block = {
         plural: 'Consultas de citas',
     },
     fields: [
-        filterQueryField,
-        sortQueryField,
-        querySizeField
+        {
+            type: 'row',
+            fields: [
+                filterQueryField,
+                querySizeField,
+                sortQueryField  
+            ]
+        }
     ]
 }

@@ -10,8 +10,13 @@ export const articleQueryBlock: Block = {
         plural: 'Consultas de artículos',
     },
     fields: [
-        filterQueryField,
-        sortQueryField,
-        querySizeField
+        {
+            type: 'row',
+            fields: [
+                filterQueryField,
+                querySizeField,
+                sortQueryField         
+            ]
+        }
     ]
 }

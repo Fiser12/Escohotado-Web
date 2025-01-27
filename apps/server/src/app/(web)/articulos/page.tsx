@@ -7,7 +7,7 @@ import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/ui/nuqs/autor_bar_ssr";
 import { MedioBarSSR } from "@/ui/nuqs/medio_bar_ssr";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { CommonArticle, getArticlesQuery } from "@/core/content/getArticlesQuery";
+import { CommonArticle, getArticlesQueryByMediasAndAuthor } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
 import { getLastArticlesQuery } from "@/core/content/getLastArticlesQuery";
 import Image from "next/image";
@@ -35,7 +35,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
   const { autor, medio, query } = await searchContentParamsCache.parse(searchParams)
   const medioArray = medio.split(',').filter(Boolean)
   const user = await getCurrentUserQuery();
-  const articles = await getArticlesQuery(query, autor, medioArray, 0)
+  const articles = await getArticlesQueryByMediasAndAuthor(query, autor, medioArray, 0)
   const lastArticles = await getLastArticlesQuery();
   const books = await getBooksQuery(query, 0)
   const payload = await getPayload()

@@ -6,9 +6,7 @@ import {
   getMediasFromTaxonomies,
   getTopicsFromTaxonomies,
 } from '@/core/content/taxonomiesGetters'
-import { ContentCardModel, ContentHeaderModel } from 'hegel'
-import 'hegel'
-
+import { ContentCardModel, ContentHeaderModel, evaluateExpression } from 'hegel'
 import {
   Taxonomy,
   ArticlePdf,
@@ -21,12 +19,19 @@ import {
   UiGridCard,
   User,
 } from 'payload-types'
-
+import 'hegel'
+import { getArticlesQuery } from '@/core/content/getArticlesQuery'
 
 type QueryFieldType = GridCardsBlock['queryField'][number]
-type ContentRelationType = Extract<QueryFieldType, { blockType: 'staticQueryField' }>['value'][number]
+type ContentRelationType = Extract<
+  QueryFieldType,
+  { blockType: 'staticQueryField' }
+>['value'][number]
 
-const mapRelationToFeatured = (user: User | null, item: ContentRelationType): ContentHeaderModel | null => {
+const mapRelationToFeatured = (
+  user: User | null,
+  item: ContentRelationType,
+): ContentHeaderModel | null => {
   if (typeof item.value === 'string') {
     return null
   }
@@ -104,22 +109,33 @@ const mapQuoteCard = (item: Quote): ContentHeaderModel => {
 
 const mapQueryField =
   (user: User | null) =>
-  (queryField: QueryFieldType): (ContentHeaderModel | null)[] => {
+  async (queryField: QueryFieldType): Promise<(ContentHeaderModel | null)[]> => {
     if (queryField.blockType === 'staticQueryField') {
-      return queryField.value.map((item) => {
-        return mapRelationToFeatured(user, item)
-      })
+      return queryField.value.map((item) => mapRelationToFeatured(user, item))
+    } else if (queryField.blockType === 'articleQueryBlock') {
+      const { querySize, sort, filter } = queryField
+      const articulos = await getArticlesQuery(0, querySize, sort, '', filter)
+      return articulos.results.map((article) => mapArticleCard(user)(article))
+    } else if (queryField.blockType === 'quoteQueryBlock') {
+      const { querySize, sort, filter } = queryField
+
+    } else if (queryField.blockType === 'videoQueryBlock') {
+      const { querySize, sort, filter } = queryField
+      
     }
 
     return []
   }
 export const mapCards =
   (user: User | null) =>
-  (gridCardsBlock: GridCardsBlock): { gridClassname: string; features: ContentCardModel[] } => {
+  async (
+    gridCardsBlock: GridCardsBlock,
+  ): Promise<{ gridClassname: string; features: ContentCardModel[] }> => {
     const { tailwindGridClassNames, cards } = gridCardsBlock.gridCards as UiGridCard
     const gridClassname = tailwindGridClassNames || 'grid-cols-1 md:grid-cols-4'
     const queryField: QueryFieldType[] = gridCardsBlock.queryField
-    const items = queryField.map(mapQueryField(user)).flat()
+    const items = (await Promise.all(queryField.map(mapQueryField(user)))).flat()
+
     const cardCount = (cards ?? []).length
     const features: ContentCardModel[] = []
     for (let start = 0; start < items.length; start += cardCount) {

@@ -10,8 +10,14 @@ export const videoQueryBlock: Block = {
         plural: 'Consultas de vídeos',
     },
     fields: [
-        filterQueryField,
-        sortQueryField,
-        querySizeField
+        {
+            type: 'row',
+            fields: [
+                filterQueryField,
+                querySizeField,
+                sortQueryField  
+            ]
+        }
+
     ]
 }
