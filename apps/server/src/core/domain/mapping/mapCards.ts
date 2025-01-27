@@ -1,12 +1,12 @@
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery'
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery'
-import { IMAGE_ERROR } from '@/core/constants'
+import { IMAGE_ERROR } from 'hegel/constants'
 import {
   getAuthorsNamesFromTaxonomies,
   getMediasFromTaxonomies,
   getTopicsFromTaxonomies,
 } from '@/core/content/taxonomiesGetters'
-import { Featured, FeaturedCard } from 'gaudi/client'
+import { ContentCardModel, ContentHeaderModel } from 'hegel'
 import 'hegel'
 
 import {
@@ -26,7 +26,7 @@ import {
 type QueryFieldType = GridCardsBlock['queryField'][number]
 type ContentRelationType = Extract<QueryFieldType, { blockType: 'staticQueryField' }>['value'][number]
 
-const mapRelationToFeatured = (user: User | null, item: ContentRelationType): Featured | null => {
+const mapRelationToFeatured = (user: User | null, item: ContentRelationType): ContentHeaderModel | null => {
   if (typeof item.value === 'string') {
     return null
   }
@@ -45,7 +45,7 @@ const mapRelationToFeatured = (user: User | null, item: ContentRelationType): Fe
 
 export const mapArticleCard =
   (user: User | null) =>
-  (item: ArticlePdf | ArticleWeb): Featured => {
+  (item: ArticlePdf | ArticleWeb): ContentHeaderModel => {
     const taxonomies = (item.categories ?? []) as Taxonomy[]
     return {
       type: 'article',
@@ -62,7 +62,7 @@ export const mapArticleCard =
   }
 export const mapVideoCard =
   (user: User | null) =>
-  (video: Video): Featured => {
+  (video: Video): ContentHeaderModel => {
     const href = fetchPermittedContentQuery(
       user,
       video.permissions_seeds ?? '',
@@ -82,7 +82,7 @@ export const mapVideoCard =
       href: href,
     }
   }
-const mapBookCard = (item: Book): Featured => {
+const mapBookCard = (item: Book): ContentHeaderModel => {
   return {
     type: 'book',
     id: item.id,
@@ -93,7 +93,7 @@ const mapBookCard = (item: Book): Featured => {
     title: item.title ?? 'No title',
   }
 }
-const mapQuoteCard = (item: Quote): Featured => {
+const mapQuoteCard = (item: Quote): ContentHeaderModel => {
   return {
     type: 'quote',
     id: item.id,
@@ -104,7 +104,7 @@ const mapQuoteCard = (item: Quote): Featured => {
 
 const mapQueryField =
   (user: User | null) =>
-  (queryField: QueryFieldType): (Featured | null)[] => {
+  (queryField: QueryFieldType): (ContentHeaderModel | null)[] => {
     if (queryField.blockType === 'staticQueryField') {
       return queryField.value.map((item) => {
         return mapRelationToFeatured(user, item)
@@ -115,13 +115,13 @@ const mapQueryField =
   }
 export const mapCards =
   (user: User | null) =>
-  (gridCardsBlock: GridCardsBlock): { gridClassname: string; features: FeaturedCard[] } => {
+  (gridCardsBlock: GridCardsBlock): { gridClassname: string; features: ContentCardModel[] } => {
     const { tailwindGridClassNames, cards } = gridCardsBlock.gridCards as UiGridCard
     const gridClassname = tailwindGridClassNames || 'grid-cols-1 md:grid-cols-4'
     const queryField: QueryFieldType[] = gridCardsBlock.queryField
     const items = queryField.map(mapQueryField(user)).flat()
     const cardCount = (cards ?? []).length
-    const features: FeaturedCard[] = []
+    const features: ContentCardModel[] = []
     for (let start = 0; start < items.length; start += cardCount) {
       const chunk = items.slice(start, start + cardCount)
       const newFeatures = chunk
@@ -129,7 +129,7 @@ export const mapCards =
           return {
             ...item,
             className: cards?.[idx]?.tailwindClassNames ?? '',
-          } as FeaturedCard
+          } as ContentCardModel
         })
         .filter(Boolean)
 

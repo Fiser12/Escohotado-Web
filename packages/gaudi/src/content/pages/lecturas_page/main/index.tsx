@@ -10,11 +10,11 @@ import { CarouselBook } from "../../../book/carousel";
 import handwrittenBackground from "../../../../assets/images/handwritting-bg.jpg";
 import drinkEscohotado from "../../../../assets/images/antonio-escohotado-lecturas.png";
 import { GridCardsBlockContainer, renderFeatured } from "../../../featured_grid_home/GridCardsBlock";
-import { convertFeaturedToFeaturedCard, FeaturedArticleProps } from "../../home_page/FeaturedCard";
+import { convertContentModelToCard, ArticleHeaderModel } from "hegel";
 
 export const ArticlePage = () => {
 
-  const articles: FeaturedArticleProps[] = [
+  const articles: ArticleHeaderModel[] = [
     {
       title: "El impacto del prohibicionismo en la libertad individual",
       author: "Ana Pérez",
@@ -174,7 +174,7 @@ export const ArticlePage = () => {
             {Object
               .values(articles)
               .flat()
-              .map(convertFeaturedToFeaturedCard("col-span-2"))
+              .map(convertContentModelToCard("col-span-2"))
               .map(renderFeatured)
             }
           </GridCardsBlockContainer>

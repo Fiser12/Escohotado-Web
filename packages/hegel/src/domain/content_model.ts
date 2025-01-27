@@ -1,11 +1,11 @@
-type FeaturedType = "article" | "quote" | "book" | "video";
+type ContentType = "article" | "quote" | "book" | "video";
 
-export interface FeaturedBase {
+export interface ContentHeaderBaseModel {
     id: string;
-    type: FeaturedType;
+    type: ContentType;
 }
 
-export interface FeaturedArticleProps extends FeaturedBase {
+export interface ArticleHeaderModel extends ContentHeaderBaseModel {
     type: "article";
     title: string;
     author: string;
@@ -17,13 +17,13 @@ export interface FeaturedArticleProps extends FeaturedBase {
     categories: Array<{ id: string; singular_name: string; }>;
 }
 
-export interface FeaturedQuoteProps extends FeaturedBase {
+export interface QuoteHeaderModel extends ContentHeaderBaseModel {
     type: "quote";
     quote: string;
     author: string;
 }
 
-export interface FeaturedBookProps extends FeaturedBase {
+export interface BookHeaderModel extends ContentHeaderBaseModel {
     type: "book";
     title: string;
     quote: string;
@@ -32,7 +32,7 @@ export interface FeaturedBookProps extends FeaturedBase {
     detailHref: string;
 }
 
-export interface FeaturedVideoProps extends FeaturedBase {
+export interface VideoHeaderModel extends ContentHeaderBaseModel {
     type: "video";
     title: string;
     coverHref: string;
@@ -43,11 +43,11 @@ export interface FeaturedVideoProps extends FeaturedBase {
     categories: Array<{ id: string; singular_name: string; }>;
 }
 
-export type Featured = FeaturedArticleProps | FeaturedQuoteProps | FeaturedBookProps | FeaturedVideoProps;
-export type FeaturedCard = Featured & { className: string; };
-export const convertFeaturedToFeaturedCard = (className: string) => (
-    featured: Featured
-): FeaturedCard => {
+export type ContentHeaderModel = ArticleHeaderModel | QuoteHeaderModel | BookHeaderModel | VideoHeaderModel;
+export type ContentCardModel = ContentHeaderModel & { className: string; };
+export const convertContentModelToCard = (className: string) => (
+    featured: ContentHeaderModel
+): ContentCardModel => {
     return {
         ...featured,
         className: className,

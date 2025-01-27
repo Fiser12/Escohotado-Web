@@ -3,9 +3,9 @@ import { Footer } from "../../common/footer";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 import { GridCardsBlock } from "../../featured_grid_home/GridCardsBlock";
 import HomeHero from "../../../common/home_hero"
-import { FeaturedCard } from "./FeaturedCard";
+import { ContentCardModel } from "hegel";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  featuredItems: { gridClassname: string, features: FeaturedCard[] }[];
+  featuredItems: { gridClassname: string, features: ContentCardModel[] }[];
   description: string;
   buttons: Array<{ title: string; link: string }>;
 }

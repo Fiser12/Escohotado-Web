@@ -1,14 +1,14 @@
 import React from 'react'
 
 import classNames from 'classnames'
-import { FeaturedCard } from "../pages/home_page/FeaturedCard"
+import { ContentCardModel } from "hegel"
 import { FeaturedArticle } from './content/article'
 import { FeaturedQuote } from './content/quote'
 import { FeaturedBook } from './content/book'
 import { FeaturedVideo } from './content/video'
 
 const unlockHref = '/subscriptions'
-export const renderFeatured = (item: FeaturedCard) => {
+export const renderFeatured = (item: ContentCardModel) => {
   switch (item.type) {
     case "article":
       return (
@@ -67,7 +67,7 @@ export const renderFeatured = (item: FeaturedCard) => {
 };
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  features: FeaturedCard[]
+  features: ContentCardModel[]
   className: string
 }
 

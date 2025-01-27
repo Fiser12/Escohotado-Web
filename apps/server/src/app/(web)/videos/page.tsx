@@ -1,7 +1,7 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2 } from "gaudi/server";
-import { convertFeaturedToFeaturedCard } from "gaudi/client";
+import { convertContentModelToCard } from "hegel";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
 import { getVideosQuery, ResultVideo } from "@/core/content/getVideosQuery";
@@ -37,10 +37,10 @@ const Page = async ({ searchParams }: Props) => {
   })
 
   const videoCardMapper = (video: ResultVideo) => mapVideoCard(user)(video);
-  
+
   return (
     <div className='flex flex-col'>
-      { videosDataPage.content &&
+      {videosDataPage.content &&
         <LexicalRenderer data={videosDataPage.content} />
       }
       <ContentWrapper
@@ -54,13 +54,13 @@ const Page = async ({ searchParams }: Props) => {
         {lastVideosResult.results.length !== 0 && <>
           <H2 label="Últimos vídeos" />
 
-        <GridCardsBlockContainer className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'>
-          {lastVideosResult.results
-            .slice(0, 3)
-            .map(videoCardMapper)
-            .map(convertFeaturedToFeaturedCard("col-span-2"))
-            .map(renderFeatured)}
-        </GridCardsBlockContainer></> }
+          <GridCardsBlockContainer className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'>
+            {lastVideosResult.results
+              .slice(0, 3)
+              .map(videoCardMapper)
+              .map(convertContentModelToCard("col-span-2"))
+              .map(renderFeatured)}
+          </GridCardsBlockContainer></>}
         <div className="flex flex-col sm:flex-row gap-10 items-end justify-between">
           <H2 label="Todos los vídeos" />
           <SortSelectorSSR />
@@ -70,7 +70,7 @@ const Page = async ({ searchParams }: Props) => {
         >
           {videosResult.results
             .map(videoCardMapper)
-            .map(convertFeaturedToFeaturedCard("col-span-2"))
+            .map(convertContentModelToCard("col-span-2"))
             .map(renderFeatured)}
         </GridCardsBlockContainer>
         <DynamicLoadingVideos

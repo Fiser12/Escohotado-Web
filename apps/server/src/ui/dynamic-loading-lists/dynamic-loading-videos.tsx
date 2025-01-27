@@ -2,7 +2,7 @@
 
 import { getVideosQuery, ResultVideo } from "@/core/content/getVideosQuery";
 import { mapVideoCard } from "@/core/domain/mapping/mapCards";
-import { convertFeaturedToFeaturedCard } from "gaudi/client";
+import { convertContentModelToCard } from "hegel";
 import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
@@ -71,7 +71,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
                 .values(videos)
                 .flat()
                 .map(videoCardMapper)
-                .map(convertFeaturedToFeaturedCard("col-span-2"))
+                .map(convertContentModelToCard("col-span-2"))
                 .map(renderFeatured)
             }
         </GridCardsBlockContainer>

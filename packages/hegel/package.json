@@ -5,7 +5,9 @@
     "module": "index.ts",
     "main": "index.ts",
     "exports": {
-      ".": "./src/index.ts"
+      ".": "./src/index.ts",
+      "./constants": "./src/constants.ts"
+
     },
     "types": "./src/index.ts",
     "scripts": {

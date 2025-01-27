@@ -1,7 +1,7 @@
 import { COLLECTION_SLUG_ARTICLE_PDF } from "@/payload/collections/config";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
-import { convertFeaturedToFeaturedCard } from "gaudi/client";
+import { convertContentModelToCard } from "hegel";
 import { Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { AutorBarSSR } from "@/ui/nuqs/autor_bar_ssr";
@@ -80,7 +80,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
       </div>
       <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="/subscriptions" coverHref={handwrittenBackground.src}></HighlightSection>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
-      { articulosDataPage.content &&
+      {articulosDataPage.content &&
         <LexicalRenderer data={articulosDataPage.content} />
       }
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
@@ -95,7 +95,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         >
           {articles.results
             .map(articleCardMapper)
-            .map(convertFeaturedToFeaturedCard("col-span-2"))
+            .map(convertContentModelToCard("col-span-2"))
             .map(renderFeatured)}
         </GridCardsBlockContainer>
         <DynamicLoadingArticles
