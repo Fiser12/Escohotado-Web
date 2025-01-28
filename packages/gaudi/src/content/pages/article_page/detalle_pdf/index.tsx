@@ -8,6 +8,7 @@ import { H1 } from "../../../../common/headers/H1";
 import { MainButton } from "../../../../common/main_button/main_button";
 import { DownloadDocIcon } from "../../../../common/icons/download_doc_icon";
 import { CommentsSectionModel } from "hegel";
+import { SocialMediaShare } from "../../../../common/social_media";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       title: string;
@@ -58,17 +59,19 @@ export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, c
                                           <p className="text-gray-disabled">{formattedDate}</p>
                                     </div>
                               </div>
-                              {href &&
-                                    <div className="mt-6">
-                                          <a href={href ?? "#"} target="_blank">
-                                                <MainButton
-                                                      text="Descargar PDF"
-                                                      icon={<DownloadDocIcon />}
-                                                />
-                                          </a>
-                                    </div>
-
-                              }
+                              <div className="flex justify-between items-center py-5">
+                                    {href &&
+                                          <div className="mt-6">
+                                                <a href={href ?? "#"} target="_blank">
+                                                      <MainButton
+                                                            text="Descargar PDF"
+                                                            icon={<DownloadDocIcon />}
+                                                      />
+                                                </a>
+                                          </div>
+                                    }
+                                    <SocialMediaShare />
+                              </div>
                         </div>
                   </ContentWrapper>
                   {children}
