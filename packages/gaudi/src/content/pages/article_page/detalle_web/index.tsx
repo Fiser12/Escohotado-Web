@@ -16,6 +16,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     author?: string;
     textLink: string;
     coverHref: string;
+    detailHref: string;
     categories: {
         id: string;
         singular_name: string;
@@ -31,6 +32,7 @@ export const ArticleDetail: React.FC<Props> = ({
     title,
     coverHref,
     categories,
+    detailHref,
     commentsSectionModel,
     children,
     className,
@@ -80,11 +82,12 @@ export const ArticleDetail: React.FC<Props> = ({
                         <p className="text-gray-disabled">{formattedDate}</p>
                     </div>
                 </div>
-                <div>
-                    <p>Aquí va el texto de todo el artículo</p>
-                </div>
                 <div className="border-t-2 border-gray-light flex justify-between items-center py-5">
-                    <SocialMediaShare />
+                    <SocialMediaShare 
+                        textToShare={`Quiero compartir con vosotros el artículo ${author ? `de ${author}`: ""}: ${title}`} 
+                        relativeLink={detailHref} 
+                        tags={["Artículo", author?.replace(" ", "")].mapNotNull(it => it)} 
+                    />
                 </div>
             </ContentWrapper>
             {children}

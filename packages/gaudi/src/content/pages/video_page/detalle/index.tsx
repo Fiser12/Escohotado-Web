@@ -6,6 +6,7 @@ import { GridComments } from "../../../../common/comments/grid_comments";
 import { CommentCard } from "../../../../common/comments";
 import { CommentsSectionModel } from "hegel";
 import { VideoEmbed } from "../../../../common/video_embed/video_embed";
+import { SocialMediaShare } from "../../../../common/social_media";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -13,6 +14,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     author?: string;
     duration: number;
     videoHref?: string | null;
+    detailHref: string;
     categories: {
         id: string;
         singular_name: string;
@@ -27,6 +29,7 @@ export const VideoDetail: React.FC<Props> = ({
     title,
     publishedAt,
     categories,
+    detailHref,
     duration: durationStr,
     videoHref,
     children,
@@ -58,7 +61,7 @@ export const VideoDetail: React.FC<Props> = ({
                 {videoHref &&
                     <VideoEmbed url={videoHref} />
                 }
-                <div className="border-b-2 border-gray-light pb-9 md:pb-10 flex flex-col gap-6 md:gap-10">
+                <div className="flex flex-col gap-6 md:gap-10">
                     <H3 label={title ?? "No title"} />
                     <div className={tagDateContainerClass}>
                         <div className={categoriesClass}>
@@ -68,9 +71,18 @@ export const VideoDetail: React.FC<Props> = ({
                         </div>
                         <div className="flex flex-col gap-2 items-end">
                             <p className="text-gray-disabled">{formattedDate}</p>
-                            <p className="text-gray-disabled">Duración: {duration}</p>
+                            { duration != "00" &&
+                                <p className="text-gray-disabled">Duración: {duration}</p>
+                            }
                         </div>
                     </div>
+                </div>
+                <div className="border-t-2 border-gray-light flex justify-between items-center py-5">
+                    <SocialMediaShare
+                        textToShare={`Quiero compartir con vosotros el vídeo de Antonio Escohotado (In Memoriam): ${title}`}
+                        relativeLink={detailHref}
+                        tags={["Vídeo", "AntonioEscohotado"]}
+                    />
                 </div>
             </ContentWrapper>
             {children}

@@ -4,10 +4,11 @@ import { COLLECTION_SLUG_BOOK } from "@/payload/collections/config";
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { BookDetail } from "gaudi/server";
-import { Media } from "payload-types";
+import { Media, Taxonomy } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/ui/nuqs/book_variants_selector_nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from "hegel";
+import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
 
 interface Props {
     params: {
@@ -44,6 +45,8 @@ const Page = async (props: Props) => {
         <BookDetail
             title={book.title ?? "No title"}
             description={book.description ?? "Empty"}
+            detailHref={`/biblioteca/${book.slug}`}
+            author={getAuthorFromTaxonomies(book.categories as Taxonomy[])?.singular_name}
             coverHref={(book.cover as Media)?.url ?? "#"}
             langs={['es', 'en']}
             bookButtons={<BookVariantsSelectorNuqs options={options} />}

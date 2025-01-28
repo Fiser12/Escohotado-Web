@@ -5,26 +5,17 @@ import { InstagramIcon } from "../icons/social/instagram_icon";
 import { FacebookIcon } from "../icons/social/facebook_icon";
 import { XIcon } from "../icons/social/x_icon";
 
+
 interface Props {
-  targetShare: string;
-  children: React.ReactNode;
+  textToShare: string;
+  relativeLink: string;
+  tags: string[];
 }
 
-export const SocialCircle = (props: Props) => {
-  const circleClass = classNames(
-    'w-11 h-11 rounded-full flex justify-center items-center flex-wrap bg-gray-100 text-primary-900 hover:bg-gray-300 transition-colors duration-200'
-  );
-  return (
-    <a href={props.targetShare} target="_blank" rel="noreferrer">
-      <div className={circleClass}>{props.children}</div>
-    </a>
-  );
-};
-
-export const SocialMediaShare = () => {
-  const url = encodeURIComponent("https://mi-sitio.com/post-increible");
-  const title = encodeURIComponent("¡Mira este post increíble!");
-  const hashtags = encodeURIComponent("DesarrolloWeb,ReactJS");
+export const SocialMediaShare: React.FC<Props> = ({textToShare, relativeLink, tags = []}) => {
+  const url = encodeURIComponent(`${process.env.DOMAIN}${relativeLink}`);
+  const title = encodeURIComponent(textToShare);
+  const hashtags = encodeURIComponent(tags.join(","));
 
   const heightIcon = "h-5";
 
@@ -56,5 +47,21 @@ export const SocialMediaShare = () => {
         <XIcon className={heightIcon} />
       </SocialCircle>
     </div>
+  );
+};
+
+interface Props2 {
+  targetShare: string;
+  children: React.ReactNode;
+}
+
+const SocialCircle = (props: Props2) => {
+  const circleClass = classNames(
+    'w-11 h-11 rounded-full flex justify-center items-center flex-wrap bg-gray-100 text-primary-900 hover:bg-gray-300 transition-colors duration-200'
+  );
+  return (
+    <a href={props.targetShare} target="_blank" rel="noreferrer">
+      <div className={circleClass}>{props.children}</div>
+    </a>
   );
 };

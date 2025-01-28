@@ -14,6 +14,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     description: string;
     langs: ('es' | 'en')[];
     link: string;
+    detailHref: string;
+    author?: string;
     bookButtons: React.ReactNode;
     commentsSectionModel: CommentsSectionModel;
     children: React.ReactNode;
@@ -24,8 +26,11 @@ export const BookDetail: React.FC<Props> = ({
     coverHref,
     description,
     bookButtons,
+    link,
     commentsSectionModel,
     children,
+    detailHref,
+    author,
     className,
     ...rest
 }) => {
@@ -48,14 +53,16 @@ export const BookDetail: React.FC<Props> = ({
                     </ImageParallax>
                 }
             />
-            {children && (
-                <ContentWrapper className="flex flex-col gap-10">
-                    {children}
-                    <div className="border-t-2 border-gray-light flex justify-between items-center py-5">
-                        <SocialMediaShare />
-                    </div>
-                </ContentWrapper>
-            )}
+            <ContentWrapper className="flex flex-col gap-10">
+                <div className="border-t-2 border-gray-light flex justify-between items-center py-5">
+                    <SocialMediaShare 
+                        textToShare={`Quiero compartir con vosotros el libro ${author ? `de ${author}`: ""}: ${title}`} 
+                        relativeLink={detailHref} 
+                        tags={["Libro", "Lecturas", author?.replace(" ", "")].mapNotNull(it => it)} 
+                    />
+                </div>
+            </ContentWrapper>
+            {children}
             <ContentWrapper className="flex flex-col gap-12 pt-10">
                 <GridComments
                     items={commentsSectionModel.comments}

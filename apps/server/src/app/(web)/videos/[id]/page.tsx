@@ -36,6 +36,7 @@ const Page: NextPage<Props> = async (props) => {
       <VideoDetail
         videoHref={href}
         title={video.title ?? "No title"}
+        detailHref={"/videos/" + id}
         publishedAt={video.publishedAt as string}
         duration={video.duration ?? 0}
         categories={[]}

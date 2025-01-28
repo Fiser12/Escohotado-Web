@@ -28,13 +28,13 @@ const Page: NextPage<Props> = async (props) => {
   ]);
 
   const article = articles.docs[0];
-  article?.content
   return (
     <div>
       <ArticleDetail
         title={article.title ?? "No title"}
         publishedAt={article.publishedAt as string}
         coverHref={(article.cover as Media | null)?.url ?? "#"}
+        detailHref={"/articulos/pdf/" + article.id}
         textLink={"Leer más"}
         categories={article.categories as Taxonomy[]}
         commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}

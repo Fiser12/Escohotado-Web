@@ -15,6 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
       publishedAt: string;
       author?: string;
       href?: string | null;
+      detailHref: string;
       categories: {
             id: string;
             singular_name: string;
@@ -26,7 +27,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 
-export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, categories, href, children, commentsSectionModel, ...rest}) => {
+export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, categories, href, children, commentsSectionModel, coverHref, detailHref, ...rest}) => {
       const tagDateContainerClass = classNames(
             'flex flex-col md:flex-row gap-3 justify-between'
       );
@@ -70,7 +71,11 @@ export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, c
                                                 </a>
                                           </div>
                                     }
-                                    <SocialMediaShare />
+                                    <SocialMediaShare 
+                                          textToShare={`Quiero compartir con vosotros el artículo ${author ? `de ${author}`: ""}: ${title}`} 
+                                          relativeLink={detailHref} 
+                                          tags={["Artículo", author?.replace(" ", "")].mapNotNull(it => it)} 
+                                    />
                               </div>
                         </div>
                   </ContentWrapper>
