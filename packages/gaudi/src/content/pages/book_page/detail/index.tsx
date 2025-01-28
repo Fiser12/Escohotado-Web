@@ -6,6 +6,7 @@ import { GridComments } from "../../../../common/comments/grid_comments";
 import { CommentCard } from "../../../../common/comments";
 import { CommentsSectionModel } from "hegel";
 import classNames from "classnames";
+import { SocialMediaShare } from "../../../../common/social_media";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -47,7 +48,14 @@ export const BookDetail: React.FC<Props> = ({
                     </ImageParallax>
                 }
             />
-            {children}
+            {children && (
+                <ContentWrapper className="flex flex-col gap-10">
+                    {children}
+                    <div className="border-t-2 border-gray-light flex justify-between items-center py-5">
+                        <SocialMediaShare />
+                    </div>
+                </ContentWrapper>
+            )}
             <ContentWrapper className="flex flex-col gap-12 pt-10">
                 <GridComments
                     items={commentsSectionModel.comments}

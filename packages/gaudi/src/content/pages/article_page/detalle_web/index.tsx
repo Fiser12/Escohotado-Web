@@ -8,6 +8,7 @@ import { CommentCard } from "../../../../common/comments";
 import "./article-html-content.css";
 import Image from "next/image";
 import { CommentsSectionModel } from "hegel";
+import { SocialMediaShare } from "../../../../common/social_media";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -78,6 +79,12 @@ export const ArticleDetail: React.FC<Props> = ({
                         </div>
                         <p className="text-gray-disabled">{formattedDate}</p>
                     </div>
+                </div>
+                <div>
+                    <p>Aquí va el texto de todo el artículo</p>
+                </div>
+                <div className="border-t-2 border-gray-light flex justify-between items-center py-5">
+                    <SocialMediaShare />
                 </div>
             </ContentWrapper>
             {children}
