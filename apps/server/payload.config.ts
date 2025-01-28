@@ -22,6 +22,7 @@ import {
   COLLECTION_SLUG_VIDEO,
   COLLECTION_SLUG_ARTICLE_WEB,
   COLLECTION_SLUG_BOOK,
+  COLLECTION_SLUG_QUOTE,
 } from '@/payload/collections/config'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
@@ -74,6 +75,7 @@ export default buildConfig({
     searchPlugin({
       collections: [
         COLLECTION_SLUG_VIDEO,
+        COLLECTION_SLUG_QUOTE,
         COLLECTION_SLUG_ARTICLE_WEB,
         COLLECTION_SLUG_ARTICLE_PDF,
         COLLECTION_SLUG_BOOK,

@@ -3,6 +3,8 @@ import { CollectionConfig } from 'payload'
 import { isAnyone, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
 
+export const quoteOriginRelationTo = [COLLECTION_SLUG_BOOK, COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB]
+
 export const quote: CollectionConfig = {
     slug: COLLECTION_SLUG_QUOTE,
     labels: {
@@ -37,9 +39,12 @@ export const quote: CollectionConfig = {
         label: 'Origen',
         name: 'source',
         type: 'relationship',
-        relationTo: [COLLECTION_SLUG_BOOK, COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB],
+        relationTo: quoteOriginRelationTo,
         hasMany: false
       },
       taxonomyRelationship,
     ]
 }
+
+type SourceField = typeof quoteOriginRelationTo
+export type QuoteOrigenSlugs = SourceField[number];

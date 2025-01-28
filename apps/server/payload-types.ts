@@ -595,6 +595,10 @@ export interface SearchResult {
         value: string | Video;
       }
     | {
+        relationTo: 'quote';
+        value: string | Quote;
+      }
+    | {
         relationTo: 'article_web';
         value: string | ArticleWeb;
       }
@@ -1234,6 +1238,23 @@ export interface GridCardsBlock {
       }
     | {
         filter?: string | null;
+        filterByQuoteOrigin?:
+          | ({
+              relationTo: 'book';
+              value: string | Book;
+            } | null)
+          | ({
+              relationTo: 'video';
+              value: string | Video;
+            } | null)
+          | ({
+              relationTo: 'article_pdf';
+              value: string | ArticlePdf;
+            } | null)
+          | ({
+              relationTo: 'article_web';
+              value: string | ArticleWeb;
+            } | null);
         querySize: number;
         sort: 'publishedAt' | 'popularity';
         id?: string | null;

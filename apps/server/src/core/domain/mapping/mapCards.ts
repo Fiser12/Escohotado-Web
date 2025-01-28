@@ -22,6 +22,8 @@ import {
 import 'hegel'
 import { getArticlesQuery } from '@/core/content/getArticlesQuery'
 import { getVideosQuery } from '@/core/content/getVideosQuery'
+import { getQueuedValue } from 'node_modules/nuqs/dist/_tsup-dts-rollup'
+import { getQuotesQuery } from '@/core/content/getQuotesQuery'
 
 type QueryFieldType = GridCardsBlock['queryField'][number]
 type ContentRelationType = Extract<
@@ -118,22 +120,21 @@ const mapQueryField =
       const articulos = await getArticlesQuery(0, querySize, sort, '', filter)
       return articulos.results.map((article) => mapArticleCard(user)(article))
     } else if (queryField.blockType === 'quoteQueryBlock') {
-      const { querySize, sort, filter } = queryField
-
+      const { querySize, sort, filter, filterByQuoteOrigin } = queryField
+      const filterByOrigin = filterByQuoteOrigin?.value as any | null
+      const quotes = await getQuotesQuery(0, querySize, sort, '', filterByOrigin?.id, filter)
+      return quotes.results.map((q) => mapQuoteCard(q))
     } else if (queryField.blockType === 'videoQueryBlock') {
       const { querySize, sort, filter } = queryField
       const videos = await getVideosQuery(0, querySize, sort, '', filter)
       return videos.results.map((video) => mapVideoCard(user)(video))
-
     }
 
     return []
   }
 export const mapCards =
   (user: User | null) =>
-  async (
-    gridCardsBlock: GridCardsBlock,
-  ): Promise<{ gridClassname: string; features: ContentCardModel[] }> => {
+  async (gridCardsBlock: GridCardsBlock): Promise<{ gridClassname: string; features: ContentCardModel[] }> => {
     const { tailwindGridClassNames, cards } = gridCardsBlock.gridCards as UiGridCard
     const gridClassname = tailwindGridClassNames || 'grid-cols-1 md:grid-cols-4'
     const queryField: QueryFieldType[] = gridCardsBlock.queryField

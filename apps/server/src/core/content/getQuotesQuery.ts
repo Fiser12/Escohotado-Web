@@ -1,0 +1,89 @@
+'use server'
+
+import { COLLECTION_SLUG_QUOTE } from '@/payload/collections/config'
+import { getPayload } from '@/payload/utils/getPayload'
+import { Quote, Taxonomy, Video } from 'payload-types'
+import { searchElementsQuery } from './searchElementsQuery'
+import { evaluateExpression } from 'hegel'
+import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
+
+const pageSize = 20
+
+export type ResultVideo = Video & {
+  allowedHref: string | null
+}
+
+export const getQuotesQueryByTags = async (
+  query: string,
+  tags: string[],
+  page: number,
+  sortBy: string,
+  filterByCollectionId?: string | null
+): Promise<{
+  results: Quote[]
+  maxPage: number
+}> => {
+  const filterExpression = tags.length !== 0 ? tags.map((tag) => `"${tag}"`).join(' || ') : null
+  return getQuotesQuery(page, pageSize, sortBy as 'publishedAt' | 'popularity', query, filterByCollectionId, filterExpression)
+}
+
+export const getQuotesQuery = async (
+  page: number = 0,
+  maxPage: number = pageSize,
+  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
+  query: string = '',
+  filterByCollectionId?: string | null,
+  filterExpression?: string | null,
+): Promise<{
+  results: Quote[]
+  maxPage: number
+}> => {
+  const results = (await searchElementsQuery(query, [COLLECTION_SLUG_QUOTE])).map((item) => item.id)
+  const payload = await getPayload()
+  const sort = sortBy == 'publishedAt' ? '-publishedAt' : '-publishedAt'
+
+  const quotesDocs = await payload.find({
+    collection: COLLECTION_SLUG_QUOTE,
+    sort,
+    pagination: false,
+    where: { id: { in: results } }
+  })
+
+  const quotes = quotesDocs.docs
+    .filter((quote) => {
+      if (filterByCollectionId) {
+        const id = typeof quote.source?.value === 'string' ? quote.source?.value : quote.source?.value.id
+        return id === filterByCollectionId
+      }
+      return true
+    })
+    .filter((quote) => {
+      const categories = quote.categories as Taxonomy[] | undefined
+      const tags = Array.from(
+        new Set<string>(
+          categories?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
+        ),
+      )
+      const value = typeof quote.source?.value === "string" ? null : quote.source?.value
+      const originTags = Array.from(
+        new Set<string>(
+          value?.categories
+            ?.cast<Taxonomy>()
+            ?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
+        ),
+      )
+
+      const evalQueryFilter =
+        query === null ||
+        query.trim() === '' ||
+        quote.quote.toLowerCase().includes(query.toLowerCase())
+      return evalQueryFilter && filterExpression ? evaluateExpression(filterExpression, [...tags, ...originTags]) : true
+    })
+  const startIndex = page * maxPage
+  const endIndex = startIndex + maxPage
+
+  return {
+    results: quotes.slice(startIndex, endIndex),
+    maxPage: Math.ceil(quotes.length / maxPage),
+  }
+}
