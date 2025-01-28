@@ -14,27 +14,27 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const FeaturedBook: React.FC<Props> = ({className, detailHref, coverHref, title, quote, author, ...rest}) => {
-      const containerClass = classNames(className, 'w-full h-full gap-6 px-4 py-6');
-      const containerImageClass = classNames('object-cover');
+      const containerClass = classNames(className, 'w-full h-full px-4 py-6');
+      const containerImageClass = classNames('w-full aspect-[2/3] mx-auto');
+      const ImageClass = classNames('object-cover');
       const contentClass = classNames('w-full flex flex-col justify-center items-center gap-2');
       const titleClass = classNames("w-full line-clamp-3 font-display");
 
       return (
             <BaseCardContainer className={`base-container-axis-book ${className}`} href={detailHref} {...rest}>
-                  <div className={`grid-axis-control-content-book ${containerClass}`}>
-                        <ImageParallax shadow={false} className="w-full aspect-[2/3]">
+                  <div className={`${containerClass} grid-axis-control-content-book`}>
+                        <ImageParallax shadow={false} className={`${containerImageClass} image-size-book`}>
                               <Image
                                     width={400}
                                     height={600}
                                     layout="responsive"
                                     src={coverHref}
                                     alt={title}
-
-                                    className={containerImageClass}
+                                    className={ImageClass}
                               />
                         </ImageParallax>
                         <div className={contentClass}>
-                              <p className={`dynamic-text-book ${titleClass}`}>{title}</p>
+                              <p className={`${titleClass} dynamic-text-book`}>{title}</p>
                               <p className="w-full text-book-quote">{quote}</p>
                               <p className="text-primary-400 text-sm w-full">{author}</p>
                         </div>

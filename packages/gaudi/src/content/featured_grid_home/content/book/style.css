@@ -4,11 +4,16 @@
 .grid-axis-control-content-book {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 2rem;
 }
 .dynamic-text-book {
   font-size: clamp(1.5rem, 1.8rem, 2.5rem);
   line-height: clamp(1.8rem, 2.2rem, 3rem);
   overflow: hidden;
+}
+.image-size-book {
+  max-width: 30%;
 }
 @container (max-width: 550px) {
   .text-book-quote {
@@ -17,9 +22,14 @@
   .grid-axis-control-content-book {
     flex-direction: column;
     text-align: center;
+    justify-content: center;
+    gap: 1rem;
   }
   .dynamic-text-book {
     font-size: clamp(1.2rem, 1.4rem, 1.8rem);
     line-height: clamp(1.5rem, 1.8rem, 2.3rem);
+  }
+  .image-size-book {
+    max-width: 60%;
   }
 }
