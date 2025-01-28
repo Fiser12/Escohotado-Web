@@ -5,13 +5,13 @@ import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_VIDEO } from '@/payload/collections/config';
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery';
+import { mapAnyToComment } from 'hegel';
 
 interface Props {
   params: {
     id: string;
   };
 }
-
 const Page: NextPage<Props> = async (props) => {
   const { id } = await props.params;
 
@@ -23,12 +23,12 @@ const Page: NextPage<Props> = async (props) => {
       id
     })
   ]);
-    const href = fetchPermittedContentQuery(
-      user,
-      video.permissions_seeds ?? '',
-      video.url,
-      video.url_free,
-    )
+  const href = fetchPermittedContentQuery(
+    user,
+    video.permissions_seeds ?? '',
+    video.url,
+    video.url_free,
+  )
 
 
   return (
@@ -39,11 +39,8 @@ const Page: NextPage<Props> = async (props) => {
         publishedAt={video.publishedAt as string}
         duration={video.duration ?? 0}
         categories={[]}
-        commentsSectionModel={{
-          comments: [],
-          forumTopicId: video.forum_post_id
-        }}
-      >
+        commentsSectionModel={mapAnyToComment(video.forum_post_id, video.last_forum_posts ?? [])}
+        >
         {video.content &&
           <LexicalRenderer className="max-w-[48rem] mx-auto" data={video.content} />
         }

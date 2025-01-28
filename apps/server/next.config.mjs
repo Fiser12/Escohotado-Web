@@ -26,8 +26,22 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'foro.laemboscadura.com',
+        pathname: '/assets/**',
+        search: '**'
+      },
     ],
   },
+  rewrites: async () => {
+    return [
+      {
+        source: '/assets/:path*',
+        destination: 'https://foro.laemboscadura.com/assets/:path*'
+      }
+    ]
+  }
 }
 
 const sentryConfig = {

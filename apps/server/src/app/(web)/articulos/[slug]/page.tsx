@@ -5,6 +5,7 @@ import { NextPage } from "next/types";
 import { Media, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/payload/collections/config';
+import { mapAnyToComment } from 'hegel';
 
 interface Props {
   params: {
@@ -36,10 +37,7 @@ const Page: NextPage<Props> = async (props) => {
         coverHref={(article.cover as Media | null)?.url ?? "#"}
         textLink={"Leer más"}
         categories={article.categories as Taxonomy[]}
-        commentsSectionModel={{
-          comments: [],
-          forumTopicId: article.forum_post_id
-        }}
+        commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
       >
         {article.content &&
           <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />

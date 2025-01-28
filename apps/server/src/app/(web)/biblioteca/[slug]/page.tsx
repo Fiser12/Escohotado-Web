@@ -7,6 +7,7 @@ import { BookDetail } from "gaudi/server";
 import { Media } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/ui/nuqs/book_variants_selector_nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
+import { mapAnyToComment } from "hegel";
 
 interface Props {
     params: {
@@ -47,10 +48,7 @@ const Page = async (props: Props) => {
             langs={['es', 'en']}
             bookButtons={<BookVariantsSelectorNuqs options={options} />}
             link={book.Ediciones?.[0].link ?? "#"}
-            commentsSectionModel={{
-                comments: [],
-                forumTopicId: book.forum_post_id
-            }}
+            commentsSectionModel={mapAnyToComment(book.forum_post_id, book.last_forum_posts ?? [])}
         >
             { book.content && <LexicalRenderer data={book.content} /> }
         </BookDetail>
