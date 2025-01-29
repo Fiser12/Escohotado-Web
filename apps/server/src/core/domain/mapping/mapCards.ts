@@ -22,7 +22,6 @@ import {
 import 'hegel'
 import { getArticlesQuery } from '@/core/content/getArticlesQuery'
 import { getVideosQuery } from '@/core/content/getVideosQuery'
-import { getQueuedValue } from 'node_modules/nuqs/dist/_tsup-dts-rollup'
 import { getQuotesQuery } from '@/core/content/getQuotesQuery'
 import { MediaHeaderModel } from 'node_modules/hegel/src/domain/content_model'
 
@@ -49,8 +48,6 @@ const mapRelationToFeatured = (
       return mapBookCard(item.value)
     case 'quote':
       return mapQuoteCard(item.value)
-    case 'media':
-      return mapMediaCard(item.value)
   }
 }
 
@@ -133,6 +130,11 @@ const mapQueryField =
   async (queryField: QueryFieldType): Promise<(ContentHeaderModel | null)[]> => {
     if (queryField.blockType === 'staticQueryField') {
       return queryField.value.map((item) => mapRelationToFeatured(user, item))
+    } else if (queryField.blockType === 'mediaQueryField') {
+      return queryField.value
+        .map(it => it.value)
+        .cast<Media>()
+        .map(mapMediaCard)
     } else if (queryField.blockType === 'articleQueryBlock') {
       const { querySize, sort, filter } = queryField
       const articulos = await getArticlesQuery(0, querySize, sort, '', filter)

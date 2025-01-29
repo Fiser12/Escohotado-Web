@@ -1247,14 +1247,19 @@ export interface GridCardsBlock {
               relationTo: 'quote';
               value: string | Quote;
             }
-          | {
-              relationTo: 'media';
-              value: string | Media;
-            }
         )[];
         id?: string | null;
         blockName?: string | null;
         blockType: 'staticQueryField';
+      }
+    | {
+        value: {
+          relationTo: 'media';
+          value: string | Media;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'mediaQueryField';
       }
     | {
         filter?: string | null;

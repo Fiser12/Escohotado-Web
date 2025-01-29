@@ -1,16 +1,16 @@
 import { Block } from 'payload'
 
-export const staticQueryBlock: Block = {
-  slug: 'staticQueryField',
+export const mediaQueryBlock: Block = {
+  slug: 'mediaQueryField',
   labels: {
-    singular: 'Consulta estática',
-    plural: 'Consultas estáticas',
+    singular: 'Consulta de imágen',
+    plural: 'Consultas de imágenes',
 },
   fields: [
     {
       type: 'relationship',
       name: 'value',
-      relationTo: ['article_web', 'article_pdf', 'book', 'video', 'quote'],
+      relationTo: ['media'],
       required: true,
       hasMany: true,
       admin: {
