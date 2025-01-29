@@ -1,3 +1,16 @@
+.grainy-pattern {
+      background:
+      linear-gradient(135deg, #B0CFDB 0%, #D4E4EA 100%),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.4) 0px,
+        rgba(255, 255, 255, 0.5) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+    background-blend-mode: overlay;
+}
+
 .base-container-axis-quote {
       container-type: inline-size;
       height: 100%;
