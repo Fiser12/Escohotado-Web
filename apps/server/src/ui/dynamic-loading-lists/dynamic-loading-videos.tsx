@@ -3,7 +3,7 @@
 import { getVideosQueryByTags, ResultVideo } from "@/core/content/getVideosQuery";
 import { mapVideoCard } from "@/core/domain/mapping/mapCards";
 import { convertContentModelToCard } from "hegel";
-import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
+import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 
@@ -64,18 +64,15 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
         };
     }, [loading, page, maxPage]);
     return <div>
-        <GridCardsBlockContainer
+        <GridCardsBlock
             {...rest}
-            className={'grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10 ' + (className ?? "")}
-        >
-            {Object
+            features={Object
                 .values(videos)
                 .flat()
                 .map(videoCardMapper)
-                .map(convertContentModelToCard("col-span-2"))
-                .map(renderFeatured)
-            }
-        </GridCardsBlockContainer>
+                .map(convertContentModelToCard("col-span-2"))}
+            className={'grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10 ' + (className ?? "")}
+        />
         <div ref={observerRef} style={{ height: "20px", background: "transparent" }}></div>
         <div>
             {loading && <p>Loading more videos...</p>}

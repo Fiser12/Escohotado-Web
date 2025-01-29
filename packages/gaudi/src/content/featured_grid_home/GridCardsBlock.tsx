@@ -6,6 +6,7 @@ import { FeaturedArticle } from './content/article'
 import { FeaturedQuote } from './content/quote'
 import { FeaturedBook } from './content/book'
 import { FeaturedVideo } from './content/video'
+import { FeaturedMedia } from './content/media'
 
 const unlockHref = '/subscriptions'
 export const renderFeatured = (item: ContentCardModel) => {
@@ -61,6 +62,11 @@ export const renderFeatured = (item: ContentCardModel) => {
           unlockHref={unlockHref}
         />
       );
+    case "media":
+      return <FeaturedMedia
+        mediaHref={item.mediaHref!}
+        alt={item.title}
+      />
     default:
       return null;
   }
@@ -77,11 +83,11 @@ export const GridCardsBlock: React.FC<Props> = ({ className, features, ...rest }
   </GridCardsBlockContainer>
 }
 
-interface Props2 extends React.HTMLAttributes<HTMLDivElement> {
+interface GridCardsBlockContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   className: string
 }
 
-export const GridCardsBlockContainer: React.FC<Props2> = ({ className, children, ...rest }) => {
+const GridCardsBlockContainer: React.FC<GridCardsBlockContainerProps> = ({ className, children, ...rest }) => {
   const featuredGridClass = (gridClassname: string) => classNames(
     '@container w-full grid gap-4 gap-4',
     gridClassname ?? 'grid-cols-1 md:grid-cols-4'

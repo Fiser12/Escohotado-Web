@@ -24,6 +24,7 @@ import { getArticlesQuery } from '@/core/content/getArticlesQuery'
 import { getVideosQuery } from '@/core/content/getVideosQuery'
 import { getQueuedValue } from 'node_modules/nuqs/dist/_tsup-dts-rollup'
 import { getQuotesQuery } from '@/core/content/getQuotesQuery'
+import { MediaHeaderModel } from 'node_modules/hegel/src/domain/content_model'
 
 type QueryFieldType = GridCardsBlock['queryField'][number]
 type ContentRelationType = Extract<
@@ -48,6 +49,8 @@ const mapRelationToFeatured = (
       return mapBookCard(item.value)
     case 'quote':
       return mapQuoteCard(item.value)
+    case 'media':
+      return mapMediaCard(item.value)
   }
 }
 
@@ -90,6 +93,15 @@ export const mapVideoCard =
       href: href,
     }
   }
+const mapMediaCard = (item: Media): MediaHeaderModel => ({
+  type: 'media',
+  id: item.id,
+  mediaHref: item.url,
+  title: item.title,
+  width: item.width,
+  height: item.height,
+})
+
 const mapBookCard = (item: Book): ContentHeaderModel => {
   return {
     type: 'book',
@@ -109,7 +121,7 @@ export const mapQuoteCard = (item: Quote): QuoteHeaderModel => {
     categories: getTopicsFromTaxonomies(taxonomies),
     context: item.context,
     originSlug: item.source?.relationTo,
-    originTitle: typeof item.source?.value == "string" ? null : item.source?.value?.title,
+    originTitle: typeof item.source?.value == 'string' ? null : item.source?.value?.title,
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     quote: item.quote,
@@ -140,7 +152,9 @@ const mapQueryField =
   }
 export const mapCards =
   (user: User | null) =>
-  async (gridCardsBlock: GridCardsBlock): Promise<{ gridClassname: string; features: ContentCardModel[] }> => {
+  async (
+    gridCardsBlock: GridCardsBlock,
+  ): Promise<{ gridClassname: string; features: ContentCardModel[] }> => {
     const { tailwindGridClassNames, cards } = gridCardsBlock.gridCards as UiGridCard
     const gridClassname = tailwindGridClassNames || 'grid-cols-1 md:grid-cols-4'
     const queryField: QueryFieldType[] = gridCardsBlock.queryField

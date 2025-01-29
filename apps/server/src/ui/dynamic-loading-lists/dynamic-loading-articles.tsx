@@ -3,7 +3,7 @@
 import { CommonArticle, getArticlesQueryByMediasAndAuthor } from "@/core/content/getArticlesQuery";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
 import { convertContentModelToCard } from "hegel";
-import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
+import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 
@@ -66,18 +66,16 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, autor, medioArr
     }, [loading, page, maxPage]);
 
     return <div>
-        <GridCardsBlockContainer
+        <GridCardsBlock
             {...rest}
-            className={`grid-cols-2 md:grid-cols-6 lg:grid-cols-8 ` + (className ?? "")}
-        >
-            {Object
+            features={Object
                 .values(articles)
                 .flat()
                 .map(articleCardMapper)
                 .map(convertContentModelToCard("col-span-2"))
-                .map(renderFeatured)
             }
-        </GridCardsBlockContainer>
+            className={`grid-cols-2 md:grid-cols-6 lg:grid-cols-8 ` + (className ?? "")}
+        />
         <div ref={observerRef} style={{ height: "20px", background: "transparent" }}></div>
         {loading && <p>Loading more articles...</p>}
     </div>

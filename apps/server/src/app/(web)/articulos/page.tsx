@@ -12,7 +12,7 @@ import { getBooksQuery } from "@/core/content/getBooksQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
-import { GridCardsBlockContainer, renderFeatured } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
+import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
@@ -89,14 +89,14 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
           <MedioBarSSR />
           <SearchBarNuqs />
         </div>
-        <GridCardsBlockContainer
-          className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8'
-        >
-          {articles.results
+        <GridCardsBlock
+          features={
+            articles.results
             .map(articleCardMapper)
             .map(convertContentModelToCard("col-span-2"))
-            .map(renderFeatured)}
-        </GridCardsBlockContainer>
+          }
+          className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8'
+        />
         <DynamicLoadingArticles
           user={user}
           autor={autor}

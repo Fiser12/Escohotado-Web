@@ -1,4 +1,4 @@
-type ContentType = "article" | "quote" | "book" | "video";
+type ContentType = "article" | "quote" | "book" | "video" | "media";
 
 export interface ContentHeaderBaseModel {
     id: string;
@@ -48,7 +48,16 @@ export interface VideoHeaderModel extends ContentHeaderBaseModel {
     categories: Array<{ id: string; singular_name: string; }>;
 }
 
-export type ContentHeaderModel = ArticleHeaderModel | QuoteHeaderModel | BookHeaderModel | VideoHeaderModel;
+export interface MediaHeaderModel extends ContentHeaderBaseModel {
+    type: "media";
+    title?: string | null;
+    mediaHref?: string | null;
+    width?: number | null;
+    height?: number | null;
+}
+
+
+export type ContentHeaderModel = ArticleHeaderModel | QuoteHeaderModel | BookHeaderModel | VideoHeaderModel | MediaHeaderModel;
 export type ContentCardModel = ContentHeaderModel & { className: string; };
 export const convertContentModelToCard = (className: string) => (
     featured: ContentHeaderModel

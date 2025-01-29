@@ -9,7 +9,7 @@ import { HighlightSection } from "../../../article/highlight/section_highlight";
 import { CarouselBook } from "../../../book/carousel";
 import handwrittenBackground from "../../../../assets/images/handwritting-bg.jpg";
 import drinkEscohotado from "../../../../assets/images/antonio-escohotado-lecturas.png";
-import { GridCardsBlockContainer, renderFeatured } from "../../../featured_grid_home/GridCardsBlock";
+import { GridCardsBlock } from "../../../featured_grid_home/GridCardsBlock";
 import { convertContentModelToCard, ArticleHeaderModel } from "hegel";
 
 export const ArticlePage = () => {
@@ -168,16 +168,13 @@ export const ArticlePage = () => {
               iconButton={<PenIcon />}
             />
           </div>
-          <GridCardsBlockContainer
+          <GridCardsBlock
             className='grid-cols-2 md:grid-cols-6 lg:grid-cols-8 2xl:grid-cols-10'
-          >
-            {Object
+            features={Object
               .values(articles)
               .flat()
-              .map(convertContentModelToCard("col-span-2"))
-              .map(renderFeatured)
-            }
-          </GridCardsBlockContainer>
+              .map(convertContentModelToCard("col-span-2"))}
+          />
         </ContentWrapper>
       </div>
     </div>

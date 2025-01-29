@@ -8,7 +8,7 @@ import { getVideosQueryByTags, ResultVideo } from "@/core/content/getVideosQuery
 import { DynamicLoadingVideos } from '@/ui/dynamic-loading-lists/dynamic-loading-videos';
 export const pageSize = 10;
 import { mapVideoCard } from '@/core/domain/mapping/mapCards';
-import { GridCardsBlockContainer, renderFeatured } from 'node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock';
+import { GridCardsBlock } from 'node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock';
 import { LexicalRenderer } from '@/lexical/lexicalRenderer';
 import { SortSelectorSSR } from '@/ui/nuqs/sort_selector_ssr';
 import { PlaylistsSelectorSSR } from '@/ui/nuqs/playlists_selector_ssr';
@@ -55,25 +55,23 @@ const Page = async ({ searchParams }: Props) => {
         {lastVideosResult.results.length !== 0 && <>
           <H2 label="Últimos vídeos" />
 
-          <GridCardsBlockContainer className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'>
-            {lastVideosResult.results
-              .slice(0, 3)
+          <GridCardsBlock className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'
+            features={videosResult.results
               .map(videoCardMapper)
               .map(convertContentModelToCard("col-span-2"))
-              .map(renderFeatured)}
-          </GridCardsBlockContainer></>}
+            }
+          />
+        </>}
         <div className="flex flex-col sm:flex-row gap-10 items-end justify-between">
           <H2 label="Todos los vídeos" />
           <SortSelectorSSR />
         </div>
-        <GridCardsBlockContainer
-          className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8 2xl:grid-cols-10'
-        >
-          {videosResult.results
+        <GridCardsBlock
+          features={videosResult.results
             .map(videoCardMapper)
-            .map(convertContentModelToCard("col-span-2"))
-            .map(renderFeatured)}
-        </GridCardsBlockContainer>
+            .map(convertContentModelToCard("col-span-2"))}
+          className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8 2xl:grid-cols-10'
+        />
         <DynamicLoadingVideos
           sortedBy={sort}
           playlist={playlist}

@@ -10,7 +10,7 @@ export const staticQueryBlock: Block = {
     {
       type: 'relationship',
       name: 'value',
-      relationTo: ['article_web', 'article_pdf', 'book', 'video', 'quote'],
+      relationTo: ['article_web', 'article_pdf', 'book', 'video', 'quote', 'media'],
       required: true,
       hasMany: true,
       admin: {
