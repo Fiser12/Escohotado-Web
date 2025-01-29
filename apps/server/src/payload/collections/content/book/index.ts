@@ -1,6 +1,7 @@
 import { slugField } from '@/payload/fields/slug'
 import { COLLECTION_SLUG_BOOK } from '../../config'
 import { contentCollectionBuilder } from '../content_collection_builder'
+import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 
 export const book = contentCollectionBuilder({
   slug: COLLECTION_SLUG_BOOK,
@@ -55,6 +56,7 @@ export const book = contentCollectionBuilder({
           ]
         }
       ]
-    }
+    },
+    quotesJoinField
   ]
 })

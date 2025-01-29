@@ -29,3 +29,4 @@ import HomeHero from "./common/home_hero";
 import handwrittenBackground from "./assets/images/handwritting-bg.jpg";
 import escohotadoArticlesPortada from "./assets/images/antonio-escohotado-lecturas.png";
 export { handwrittenBackground, escohotadoArticlesPortada, HomeHero };
+export { DetailBottomSection } from "./common/detail_bottom_section";

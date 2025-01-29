@@ -6,7 +6,7 @@ import {
   getMediasFromTaxonomies,
   getTopicsFromTaxonomies,
 } from '@/core/content/taxonomiesGetters'
-import { ContentCardModel, ContentHeaderModel, evaluateExpression } from 'hegel'
+import { ContentCardModel, ContentHeaderModel, evaluateExpression, QuoteHeaderModel } from 'hegel'
 import {
   Taxonomy,
   ArticlePdf,
@@ -101,9 +101,15 @@ const mapBookCard = (item: Book): ContentHeaderModel => {
     title: item.title ?? 'No title',
   }
 }
-const mapQuoteCard = (item: Quote): ContentHeaderModel => {
+export const mapQuoteCard = (item: Quote): QuoteHeaderModel => {
+  const taxonomies = (item.categories ?? []) as Taxonomy[]
+
   return {
     type: 'quote',
+    categories: getTopicsFromTaxonomies(taxonomies),
+    context: item.context,
+    originSlug: item.source?.relationTo,
+    originTitle: typeof item.source?.value == "string" ? null : item.source?.value?.title,
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     quote: item.quote,

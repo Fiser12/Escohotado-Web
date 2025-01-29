@@ -8,6 +8,7 @@ import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations
 
 import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
+import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()
 export const video: CollectionConfig = {
@@ -69,6 +70,7 @@ export const video: CollectionConfig = {
         readOnly: true,
       },
     },
+    quotesJoinField,
     permissionSeedField,
     {
       label: 'Youtube Tags',

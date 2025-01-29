@@ -19,8 +19,13 @@ export interface ArticleHeaderModel extends ContentHeaderBaseModel {
 
 export interface QuoteHeaderModel extends ContentHeaderBaseModel {
     type: "quote";
+    id: string;
     quote: string;
     author: string;
+    context?: string | null;
+    originTitle?: string | null;
+    originSlug?: 'book' | 'video' | 'article_web' | 'article_pdf';
+    categories: Array<{ id: string; singular_name: string; }>;
 }
 
 export interface BookHeaderModel extends ContentHeaderBaseModel {

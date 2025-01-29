@@ -1,11 +1,13 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ArticleDetail } from "gaudi/server";
+import { ArticleDetail, DetailBottomSection } from "gaudi/server";
 import { NextPage } from "next/types";
-import { Media, Taxonomy } from "payload-types";
+import { Media, Quote, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/payload/collections/config';
 import { mapAnyToComment } from 'hegel';
+import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
+import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 
 interface Props {
   params: {
@@ -26,25 +28,30 @@ const Page: NextPage<Props> = async (props) => {
       }
     })
   ]);
-
   const article = articles.docs[0];
-  return (
-    <div>
-      <ArticleDetail
-        title={article.title ?? "No title"}
-        publishedAt={article.publishedAt as string}
-        coverHref={(article.cover as Media | null)?.url ?? "#"}
-        detailHref={"/articulos/pdf/" + article.id}
-        textLink={"Leer más"}
-        categories={article.categories as Taxonomy[]}
-        commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
-      >
-        {article.content &&
-          <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
-        }
-      </ArticleDetail>
-    </div>
-  );
+
+  const hasPermissions = evalPermissionQuery(user, 'basic');
+  const quotes = (article?.quotes?.docs ?? [])
+    .slice(0, hasPermissions ? 3 : 0)
+    .cast<Quote>()
+
+  return <ArticleDetail
+    title={article.title ?? "No title"}
+    publishedAt={article.publishedAt as string}
+    coverHref={(article.cover as Media | null)?.url ?? "#"}
+    detailHref={"/articulos/pdf/" + article.id}
+    textLink={"Leer más"}
+    categories={article.categories as Taxonomy[]}
+    commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
+  >
+    {article.content &&
+      <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
+    }
+    <DetailBottomSection
+      quotesModel={quotes.mapNotNull(mapQuoteCard)}
+      commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
+    />
+  </ArticleDetail>
 };
 
 export default Page;

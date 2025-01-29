@@ -7,8 +7,8 @@ import { H4 } from "../../../../common/headers/H4";
 import { H1 } from "../../../../common/headers/H1";
 import { MainButton } from "../../../../common/main_button/main_button";
 import { DownloadDocIcon } from "../../../../common/icons/download_doc_icon";
-import { CommentsSectionModel } from "hegel";
 import { SocialMediaShare } from "../../../../common/social_media";
+import { GridCardsBlock, GridCardsBlockContainer } from "../../../featured_grid_home/GridCardsBlock";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       title: string;
@@ -22,12 +22,11 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
             seed?: string | null
       }[];
       coverHref?: string;
-      commentsSectionModel: CommentsSectionModel;
       children: React.ReactNode;
 }
 
 
-export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, categories, href, children, commentsSectionModel, coverHref, detailHref, ...rest}) => {
+export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, categories, href, children, coverHref, detailHref, ...rest}) => {
       const tagDateContainerClass = classNames(
             'flex flex-col md:flex-row gap-3 justify-between'
       );
@@ -79,20 +78,8 @@ export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, c
                               </div>
                         </div>
                   </ContentWrapper>
+                  <GridCardsBlock features={[]} className=""/>
                   {children}
-                  <ContentWrapper>
-                        <GridComments
-                              forumTopicId={commentsSectionModel.forumTopicId}
-                              items={commentsSectionModel.comments}
-                              renderBox={(comment) => (
-                                    <CommentCard
-                                          user={comment.user}
-                                          date={comment.date}
-                                          comment={comment.comment}
-                                    />
-                              )}
-                        />
-                  </ContentWrapper>
             </div>
       );
 }

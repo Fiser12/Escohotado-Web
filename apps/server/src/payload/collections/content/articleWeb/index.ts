@@ -1,6 +1,7 @@
 import { slugField } from '@/payload/fields/slug'
 import { COLLECTION_SLUG_ARTICLE_WEB } from '../../config'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
+import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
@@ -20,5 +21,6 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       name: 'content',
       type: 'richText',
     },
+    quotesJoinField,
   ]
 })

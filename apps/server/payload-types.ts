@@ -37,6 +37,18 @@ export interface Config {
     prices: {
       product: 'products';
     };
+    article_pdf: {
+      quotes: 'quote';
+    };
+    article_web: {
+      quotes: 'quote';
+    };
+    book: {
+      quotes: 'quote';
+    };
+    video: {
+      quotes: 'quote';
+    };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
@@ -336,6 +348,10 @@ export interface ArticlePdf {
     };
     [k: string]: unknown;
   } | null;
+  quotes?: {
+    docs?: (string | Quote)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -362,45 +378,30 @@ export interface ArticlePdf {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "article_web".
+ * via the `definition` "quote".
  */
-export interface ArticleWeb {
+export interface Quote {
   id: string;
-  permissions?: (string | Permission)[] | null;
-  permissions_seeds?: string | null;
-  cover: string | Media;
-  title: string;
-  description?: string | null;
-  publishedAt?: string | null;
+  quote: string;
+  context?: string | null;
+  source?:
+    | ({
+        relationTo: 'book';
+        value: string | Book;
+      } | null)
+    | ({
+        relationTo: 'video';
+        value: string | Video;
+      } | null)
+    | ({
+        relationTo: 'article_pdf';
+        value: string | ArticlePdf;
+      } | null)
+    | ({
+        relationTo: 'article_web';
+        value: string | ArticleWeb;
+      } | null);
   categories?: (string | Taxonomy)[] | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  forum_post_id?: string | null;
-  last_forum_sync?: string | null;
-  last_forum_posts?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -440,6 +441,10 @@ export interface Book {
         id?: string | null;
       }[]
     | null;
+  quotes?: {
+    docs?: (string | Quote)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -478,6 +483,10 @@ export interface Video {
   url: string;
   permissions?: (string | Permission)[] | null;
   url_free?: string | null;
+  quotes?: {
+    docs?: (string | Quote)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   permissions_seeds?: string | null;
   tags?:
     | {
@@ -510,30 +519,49 @@ export interface Video {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "quote".
+ * via the `definition` "article_web".
  */
-export interface Quote {
+export interface ArticleWeb {
   id: string;
-  quote: string;
-  context?: string | null;
-  source?:
-    | ({
-        relationTo: 'book';
-        value: string | Book;
-      } | null)
-    | ({
-        relationTo: 'video';
-        value: string | Video;
-      } | null)
-    | ({
-        relationTo: 'article_pdf';
-        value: string | ArticlePdf;
-      } | null)
-    | ({
-        relationTo: 'article_web';
-        value: string | ArticleWeb;
-      } | null);
+  permissions?: (string | Permission)[] | null;
+  permissions_seeds?: string | null;
+  cover: string | Media;
+  title: string;
+  description?: string | null;
+  publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  quotes?: {
+    docs?: (string | Quote)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  forum_post_id?: string | null;
+  last_forum_sync?: string | null;
+  last_forum_posts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -905,6 +933,7 @@ export interface ArticlePdfSelect<T extends boolean = true> {
   publishedAt?: T;
   categories?: T;
   content?: T;
+  quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;
@@ -936,6 +965,7 @@ export interface ArticleWebSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   content?: T;
+  quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;
@@ -963,6 +993,7 @@ export interface BookSelect<T extends boolean = true> {
         language?: T;
         id?: T;
       };
+  quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;
@@ -978,6 +1009,7 @@ export interface VideoSelect<T extends boolean = true> {
   url?: T;
   permissions?: T;
   url_free?: T;
+  quotes?: T;
   permissions_seeds?: T;
   tags?: T;
   thumbnailUrl?: T;

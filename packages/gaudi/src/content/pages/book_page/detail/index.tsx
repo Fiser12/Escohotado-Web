@@ -2,9 +2,6 @@ import { MainHero } from "../../../common/hero";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { ImageParallax } from "../../../book/cards/image_parallax";
 import Image from "next/image";
-import { GridComments } from "../../../../common/comments/grid_comments";
-import { CommentCard } from "../../../../common/comments";
-import { CommentsSectionModel } from "hegel";
 import classNames from "classnames";
 import { SocialMediaShare } from "../../../../common/social_media";
 
@@ -17,7 +14,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     detailHref: string;
     author?: string;
     bookButtons: React.ReactNode;
-    commentsSectionModel: CommentsSectionModel;
     children: React.ReactNode;
 }
 
@@ -27,7 +23,6 @@ export const BookDetail: React.FC<Props> = ({
     description,
     bookButtons,
     link,
-    commentsSectionModel,
     children,
     detailHref,
     author,
@@ -35,6 +30,7 @@ export const BookDetail: React.FC<Props> = ({
     ...rest
 }) => {
     const divClass = classNames("w-full bg-white", className);
+
     return (
         <div className={divClass} {...rest}>
             <MainHero
@@ -55,27 +51,14 @@ export const BookDetail: React.FC<Props> = ({
             />
             <ContentWrapper className="flex flex-col gap-10">
                 <div className="border-t-2 border-gray-light flex justify-between items-center py-5">
-                    <SocialMediaShare 
-                        textToShare={`Quiero compartir con vosotros el libro ${author ? `de ${author}`: ""}: ${title}`} 
-                        relativeLink={detailHref} 
-                        tags={["Libro", "Lecturas", author?.replace(" ", "")].mapNotNull(it => it)} 
+                    <SocialMediaShare
+                        textToShare={`Quiero compartir con vosotros el libro ${author ? `de ${author}` : ""}: ${title}`}
+                        relativeLink={detailHref}
+                        tags={["Libro", "Lecturas", author?.replace(" ", "")].mapNotNull(it => it)}
                     />
                 </div>
             </ContentWrapper>
             {children}
-            <ContentWrapper className="flex flex-col gap-12 pt-10">
-                <GridComments
-                    items={commentsSectionModel.comments}
-                    forumTopicId={commentsSectionModel.forumTopicId}
-                    renderBox={(comment) => (
-                        <CommentCard
-                            user={comment.user}
-                            date={comment.date}
-                            comment={comment.comment}
-                        />
-                    )}
-                />
-            </ContentWrapper>
         </div>
     );
 };

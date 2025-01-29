@@ -1,3 +1,4 @@
+import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 import { addContentHashToFile } from '../../../hooks/media/addContentHashToFileHook'
 import { COLLECTION_SLUG_ARTICLE_PDF } from '../../config'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
@@ -24,6 +25,7 @@ export const articlePDF = contentWithPermissionsCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
-    }
+    },
+    quotesJoinField,    
   ]
 })
