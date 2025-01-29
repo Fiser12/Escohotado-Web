@@ -50,11 +50,7 @@ const meta: Meta<typeof VideoDetail> = {
         categories: [
             { id: "1", singular_name: "Tecnología" },
             { id: "2", singular_name: "Filosofía" },
-        ],
-        commentsSectionModel: {
-            comments,
-            forumTopicId: "1234",
-        }
+        ]
     },
 };
 

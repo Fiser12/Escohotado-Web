@@ -8,7 +8,6 @@ import { H1 } from "../../../../common/headers/H1";
 import { MainButton } from "../../../../common/main_button/main_button";
 import { DownloadDocIcon } from "../../../../common/icons/download_doc_icon";
 import { SocialMediaShare } from "../../../../common/social_media";
-import { GridCardsBlock, GridCardsBlockContainer } from "../../../featured_grid_home/GridCardsBlock";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       title: string;
@@ -78,7 +77,6 @@ export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, c
                               </div>
                         </div>
                   </ContentWrapper>
-                  <GridCardsBlock features={[]} className=""/>
                   {children}
             </div>
       );

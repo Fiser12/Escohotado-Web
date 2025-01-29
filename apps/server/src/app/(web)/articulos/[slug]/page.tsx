@@ -42,7 +42,6 @@ const Page: NextPage<Props> = async (props) => {
     detailHref={"/articulos/pdf/" + article.id}
     textLink={"Leer más"}
     categories={article.categories as Taxonomy[]}
-    commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
   >
     {article.content &&
       <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />

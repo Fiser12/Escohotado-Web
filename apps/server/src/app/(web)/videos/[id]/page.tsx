@@ -38,7 +38,6 @@ const Page: NextPage<Props> = async (props) => {
     .cast<Quote>()
 
   return (
-    <div>
       <VideoDetail
         videoHref={href}
         title={video.title ?? "No title"}
@@ -50,12 +49,11 @@ const Page: NextPage<Props> = async (props) => {
         {video.content &&
           <LexicalRenderer className="max-w-[48rem] mx-auto" data={video.content} />
         }
-      </VideoDetail>
       <DetailBottomSection
         quotesModel={quotes.mapNotNull(mapQuoteCard)}
         commentsSectionModel={mapAnyToComment(video.forum_post_id, video.last_forum_posts ?? [])}
       />
-    </div>
+      </VideoDetail>
   );
 };
 

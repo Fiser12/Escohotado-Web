@@ -48,14 +48,10 @@ const meta: Meta<typeof BookDetail> = {
         description: "Reedición de «Rameras y Esposas» (1993) de Antonio Escohotado, en formato impreso, con cuadernillo a color de 20 páginas.",
         coverHref: "https://laemboscadura.com/wp-content/uploads/Rameras-y-esposas.png",
         langs: ["es", "en"],
-        commentsSectionModel: {
-            comments,
-            forumTopicId: "1234",
-        }
     },
     render: (props) => {
         const [variant, setVariant] = useState(options[0]?.id);
-        return <BookDetail {...props as any}
+        return <BookDetail {...props}
             bookButtons={
                 <div className="flex flex-col gap-8 w-full">
                     <SelectBoxes

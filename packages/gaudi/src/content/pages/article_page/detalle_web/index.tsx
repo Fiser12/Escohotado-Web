@@ -22,7 +22,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
         singular_name: string;
         seed?: string | null
     }[];
-    commentsSectionModel: CommentsSectionModel;
     children: React.ReactNode;
 }
 
@@ -33,7 +32,6 @@ export const ArticleDetail: React.FC<Props> = ({
     coverHref,
     categories,
     detailHref,
-    commentsSectionModel,
     children,
     className,
     ...rest
@@ -91,19 +89,6 @@ export const ArticleDetail: React.FC<Props> = ({
                 </div>
             </ContentWrapper>
             {children}
-            <ContentWrapper>
-                <GridComments
-                    items={commentsSectionModel.comments}
-                    forumTopicId={commentsSectionModel.forumTopicId}
-                    renderBox={(comment) => (
-                        <CommentCard
-                            user={comment.user}
-                            date={comment.date}
-                            comment={comment.comment}
-                        />
-                    )}
-                />
-            </ContentWrapper>
         </div>
     );
 };
