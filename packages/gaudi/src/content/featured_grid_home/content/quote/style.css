@@ -5,12 +5,28 @@
       min-height: 15rem;
       width: 100%;
       max-width: 100%;
+      position: relative;
+      overflow: hidden;
+      background-color: #B0CFDB; /* Color base */
+
 }
+
+/* Pseudo-elemento para aplicar el filtro SVG */
+.base-container-axis-quote::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: white; /* Fondo sobre el que aplicamos el filtro */
+      filter: url(#roughpaper);
+      z-index: -1;
+}
+
 .dynamic-text-quote {
       font-size: clamp(1rem, 1.4rem, 1.8rem);
       line-height: clamp(1.4rem, 1.8rem, 2.2rem);
       overflow: hidden;
 }
+
 @container (min-width: 350px) {
       .dynamic-text-quote {
             font-size: clamp(1.5rem, 1.8rem, 2.3rem);
