@@ -66,7 +66,7 @@ export const FeaturedVideo: React.FC<Props> = ({hasPermission, publishedAt, clas
             alt={title}
             className={imageClass}
           />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-dark hover:text-primary-400 rounded-full bg-white w-[50px] h-[50px] flex items-center justify-center shadow-xl">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-dark hover:text-primary-400 rounded-full bg-white w-[50px] h-[50px] items-center justify-center shadow-xl">
             {hasPermission ? <PlayIcon className="p-4 translate-x-[2px]" /> : <LockIcon className={`icon-animation p-3`} />}
           </div>
         </div>

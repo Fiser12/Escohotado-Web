@@ -57,6 +57,7 @@ const Page = async ({ searchParams }: Props) => {
 
           <GridCardsBlock className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'
             features={videosResult.results
+              .slice(0, 3)
               .map(videoCardMapper)
               .map(convertContentModelToCard("col-span-2"))
             }

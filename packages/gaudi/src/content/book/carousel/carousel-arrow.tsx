@@ -56,7 +56,6 @@ export const usePrevNextButtons = (
 type PropType = ComponentPropsWithRef<'button'>
 
 const classNameButton = classNames(
-  'inline-flex',
   'appearance-none',
   'bg-transparent',
   'cursor-pointer',
