@@ -7,8 +7,7 @@
       max-width: 100%;
       position: relative;
       overflow: hidden;
-      background-color: #B0CFDB; /* Color base */
-
+      z-index: 0; 
 }
 
 /* Pseudo-elemento para aplicar el filtro SVG */

@@ -5,10 +5,10 @@ import { NuqsAdapter } from 'nuqs/adapters/next'
 import "../tailwind.css";
 import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { Textures } from "gaudi/client";
 
 const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
   const payloadUser = await getCurrentUserQuery()
-
   return (
     <html>
       <head>
@@ -34,6 +34,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
           />
           {children}
         </NuqsAdapter>
+        { Textures.map(it => it({})) }
       </body>
     </html>
   );
