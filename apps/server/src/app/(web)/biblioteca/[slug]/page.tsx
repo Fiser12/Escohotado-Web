@@ -11,7 +11,7 @@ import { mapAnyToComment } from "hegel";
 import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
 import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
 import "hegel";
-import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
+import { generateDetailHref, mapQuoteCard } from "@/core/domain/mapping/mapCards";
 
 interface Props {
     params: {
@@ -52,7 +52,7 @@ const Page = async (props: Props) => {
     return (<BookDetail
         title={book.title ?? "No title"}
         description={book.description ?? "Empty"}
-        detailHref={`/biblioteca/${book.slug}`}
+        detailHref={generateDetailHref({relationTo: "book", value: book})}
         author={getAuthorFromTaxonomies(book.categories as Taxonomy[])?.singular_name}
         coverHref={(book.cover as Media)?.url ?? "#"}
         langs={['es', 'en']}

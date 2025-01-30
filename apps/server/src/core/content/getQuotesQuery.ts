@@ -59,7 +59,7 @@ export const getQuotesQuery = async (
     })
     .filter((quote) => {
       const categories = quote.categories as Taxonomy[] | undefined
-      const tags = Array.from(
+      const quoteTags = Array.from(
         new Set<string>(
           categories?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
         ),
@@ -72,12 +72,15 @@ export const getQuotesQuery = async (
             ?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
         ),
       )
+      const tags = [...quoteTags, ...originTags]
 
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||
-        quote.quote.toLowerCase().includes(query.toLowerCase())
-      return evalQueryFilter && filterExpression ? evaluateExpression(filterExpression, [...tags, ...originTags]) : true
+        quote.quote.toLowerCase().includes(query.toLowerCase()) ||
+        tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+        
+      return evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
     })
   const startIndex = page * maxPage
   const endIndex = startIndex + maxPage

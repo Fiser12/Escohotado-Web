@@ -119,7 +119,6 @@ const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
   payload.logger.warn(`Starting sync of Youtube channel to video collection`)
 
   const videos = await getYoutubeVideos()
-  console.error('Videos: ', videos.length)
   const existingUrls = await getVideoURLsFromDatabase(payload)
   const upsertPromises = videos.map(async (video) =>
     await youtubeVideoUpsert(payload, video, existingUrls, upsert),

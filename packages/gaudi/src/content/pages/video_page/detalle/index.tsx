@@ -2,9 +2,7 @@ import classNames from "classnames";
 import { H3 } from "../../../../common/headers/H3";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { Tag } from "../../../../common/tag/tag";
-import { GridComments } from "../../../../common/comments/grid_comments";
-import { CommentCard } from "../../../../common/comments";
-import { CommentsSectionModel } from "hegel";
+import { CategoryModel } from "hegel";
 import { VideoEmbed } from "../../../../common/video_embed/video_embed";
 import { SocialMediaShare } from "../../../../common/social_media";
 
@@ -15,11 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     duration: number;
     videoHref?: string | null;
     detailHref: string;
-    categories: {
-        id: string;
-        singular_name: string;
-        seed?: string | null
-    }[];
+    categories: CategoryModel[];
     children: React.ReactNode;
 }
 

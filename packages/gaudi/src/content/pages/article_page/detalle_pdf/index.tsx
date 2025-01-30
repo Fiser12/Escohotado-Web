@@ -1,6 +1,4 @@
-import { GridComments } from "../../../../common/comments/grid_comments";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
-import { CommentCard } from "../../../../common/comments";
 import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
 import { H4 } from "../../../../common/headers/H4";
@@ -8,6 +6,7 @@ import { H1 } from "../../../../common/headers/H1";
 import { MainButton } from "../../../../common/main_button/main_button";
 import { DownloadDocIcon } from "../../../../common/icons/download_doc_icon";
 import { SocialMediaShare } from "../../../../common/social_media";
+import { CategoryModel } from "hegel";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       title: string;
@@ -15,11 +14,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
       author?: string;
       href?: string | null;
       detailHref: string;
-      categories: {
-            id: string;
-            singular_name: string;
-            seed?: string | null
-      }[];
+      categories: CategoryModel[];
       coverHref?: string;
       children: React.ReactNode;
 }

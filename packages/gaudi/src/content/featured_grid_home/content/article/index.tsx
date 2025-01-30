@@ -5,17 +5,14 @@ import Image from "next/image";
 import { BaseCardContainer } from "../../container_base";
 import { UnlockIcon } from "../../../../common/icons/unlock_icon";
 import "./style.css";
+import { CategoryModel } from "hegel";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   author?: string;
   coverHref: string;
   href: string;
-  categories: {
-    id: string;
-    singular_name: string;
-    seed?: string | null;
-  }[];
+  categories: CategoryModel[];
   hasPermission: boolean;
   className?: string;
   isPdf: boolean;

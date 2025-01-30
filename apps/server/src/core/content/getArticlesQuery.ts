@@ -121,8 +121,10 @@ export const getArticlesQuery = async (
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||
-        article.title?.toLowerCase().includes(query.toLowerCase())
-      return evalQueryFilter && filterExpression ? evaluateExpression(filterExpression, tags) : true
+        article.title?.toLowerCase().includes(query.toLowerCase()) ||
+        tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+
+      return evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
     })
   const startIndex = page * maxPage
   const endIndex = startIndex + maxPage

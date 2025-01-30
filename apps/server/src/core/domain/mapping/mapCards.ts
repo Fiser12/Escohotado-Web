@@ -4,9 +4,10 @@ import { IMAGE_ERROR } from 'hegel/constants'
 import {
   getAuthorsNamesFromTaxonomies,
   getMediasFromTaxonomies,
+  getSelectableTaxonomies,
   getTopicsFromTaxonomies,
 } from '@/core/content/taxonomiesGetters'
-import { ContentCardModel, ContentHeaderModel, evaluateExpression, QuoteHeaderModel } from 'hegel'
+import { ContentCardModel, ContentHeaderModel, OrigenModel, QuoteHeaderModel } from 'hegel'
 import {
   Taxonomy,
   ArticlePdf,
@@ -50,7 +51,21 @@ const mapRelationToFeatured = (
       return mapQuoteCard(item.value)
   }
 }
-
+export const generateDetailHref = (field: Exclude<ContentRelationType, { relationTo: 'quote'; value: string | Quote }>): string => {
+  if(typeof field.value === 'string') {
+    return ''
+  }
+  switch(field.relationTo) {
+    case 'article_pdf':
+      return `/articulos/pdf/${field.value.id}`
+    case 'article_web':
+      return `/articulos/${field.value.slug}`
+    case 'video':
+      return `/videos/${field.value.id}`
+    case 'book':
+      return `/biblioteca/${field.value.slug}`
+  }
+}
 export const mapArticleCard =
   (user: User | null) =>
   (item: ArticlePdf | ArticleWeb): ContentHeaderModel => {
@@ -64,7 +79,10 @@ export const mapArticleCard =
       author: getAuthorsNamesFromTaxonomies(taxonomies),
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
       coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
-      detailHref: 'slug' in item ? `/articulos/${item.slug}` : `/articulos/pdf/${item.id}`,
+      detailHref: generateDetailHref({
+        relationTo: 'slug' in item ? `article_web` : `article_web`, 
+        value: item
+      }),
       href: 'url' in item ? item.url : undefined,
     }
   }
@@ -86,7 +104,7 @@ export const mapVideoCard =
       categories: [],
       hasPermission: href != null && href != '',
       coverHref: video.thumbnailUrl ?? IMAGE_ERROR,
-      detailHref: '/videos/' + video.id,
+      detailHref: generateDetailHref({relationTo: "video", value: video}),
       href: href,
     }
   }
@@ -105,7 +123,7 @@ const mapBookCard = (item: Book): ContentHeaderModel => {
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
-    detailHref: '/biblioteca/' + item.slug,
+    detailHref: generateDetailHref({relationTo: "book", value: item}),
     quote: item.description ?? 'No description',
     title: item.title ?? 'No title',
   }
@@ -115,10 +133,14 @@ export const mapQuoteCard = (item: Quote): QuoteHeaderModel => {
 
   return {
     type: 'quote',
-    categories: getTopicsFromTaxonomies(taxonomies),
+    categories: getSelectableTaxonomies(taxonomies),
     context: item.context,
-    originSlug: item.source?.relationTo,
-    originTitle: typeof item.source?.value == 'string' ? null : item.source?.value?.title,
+    origen: item.source && typeof item.source.value !== "string" ? {
+      title: item.source.value.title ?? "No title",
+      type: item.source.relationTo,
+      hasPermissions: true,
+      detailHref: generateDetailHref(item.source)
+    } : undefined,
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     quote: item.quote,

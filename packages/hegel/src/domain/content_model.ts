@@ -23,9 +23,15 @@ export interface QuoteHeaderModel extends ContentHeaderBaseModel {
     quote: string;
     author: string;
     context?: string | null;
-    originTitle?: string | null;
-    originSlug?: 'book' | 'video' | 'article_web' | 'article_pdf';
+    origen?: OrigenModel | null;
     categories: Array<{ id: string; singular_name: string; }>;
+}
+
+export interface OrigenModel {
+    title: string;
+    type: 'book' | 'video' | 'article_web' | 'article_pdf'
+    detailHref: string
+    hasPermissions: boolean
 }
 
 export interface BookHeaderModel extends ContentHeaderBaseModel {

@@ -6,7 +6,7 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_VIDEO } from '@/payload/collections/config';
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery';
 import { mapAnyToComment } from 'hegel';
-import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
+import { generateDetailHref, mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { Quote } from 'payload-types';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
 
@@ -41,7 +41,7 @@ const Page: NextPage<Props> = async (props) => {
       <VideoDetail
         videoHref={href}
         title={video.title ?? "No title"}
-        detailHref={"/videos/" + id}
+        detailHref={generateDetailHref({relationTo: "video", value: video})}
         publishedAt={video.publishedAt as string}
         duration={video.duration ?? 0}
         categories={[]}

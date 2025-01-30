@@ -27,3 +27,12 @@ export const getTopicsFromTaxonomies = (
   .filter(taxonomy => taxonomy.breadcrumbs?.some(b => b.url?.includes("tema")) == true)
   .map((taxonomy) => ({ id: taxonomy.id, singular_name: taxonomy.singular_name }))
 }
+
+export const getSelectableTaxonomies = (
+  taxonomies: Taxonomy[],
+): { id: string; singular_name: string }[] => {
+  return taxonomies
+  .filter(taxonomy => taxonomy.selectable == true)
+  .map((taxonomy) => ({ id: taxonomy.id, singular_name: taxonomy.singular_name }))
+}
+

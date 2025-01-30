@@ -76,10 +76,13 @@ export const getVideosQuery = async (
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||
-        video.title?.toLowerCase().includes(query.toLowerCase())
-      return evalQueryFilter && filterExpression ? evaluateExpression(filterExpression, tags) : true
+        video.title?.toLowerCase().includes(query.toLowerCase()) ||
+        tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+
+      return evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
     })
-  const startIndex = page * maxPage
+
+    const startIndex = page * maxPage
   const endIndex = startIndex + maxPage
 
   return {

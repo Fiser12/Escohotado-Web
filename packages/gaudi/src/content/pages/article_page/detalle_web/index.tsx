@@ -3,11 +3,9 @@ import { H1 } from "../../../../common/headers/H1";
 import { H4 } from "../../../../common/headers/H4";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { Tag } from "../../../../common/tag/tag";
-import { GridComments } from "../../../../common/comments/grid_comments";
-import { CommentCard } from "../../../../common/comments";
 import "./article-html-content.css";
 import Image from "next/image";
-import { CommentsSectionModel } from "hegel";
+import { CategoryModel } from "hegel";
 import { SocialMediaShare } from "../../../../common/social_media";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,11 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     textLink: string;
     coverHref: string;
     detailHref: string;
-    categories: {
-        id: string;
-        singular_name: string;
-        seed?: string | null
-    }[];
+    categories: CategoryModel[];
     children: React.ReactNode;
 }
 
