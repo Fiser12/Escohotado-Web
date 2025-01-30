@@ -35,6 +35,8 @@ import { searchPlugin } from '@payloadcms/plugin-search'
 import globals from '@/payload/globals/static_pages'
 import { uiCollections } from '@/payload/collections/ui'
 import { defaultLexical } from '@/lexical/defaultLexical'
+import { priceDeleted, subscriptionDeleted, subscriptionUpsert } from '@/payload/plugins/stripe'
+import { productDeleted } from '@/payload/plugins/stripe/product'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -65,6 +67,14 @@ export default buildConfig({
       isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test'),
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
+      webhooks: {
+        'price.deleted': async ({event}) => await priceDeleted(event.data.object),
+        'customer.subscription.created': async ({event}) => await subscriptionUpsert(event.data.object),
+        'customer.subscription.paused': async ({event}) => await subscriptionUpsert(event.data.object),
+        'customer.subscription.updated': async ({event}) => await subscriptionUpsert(event.data.object),
+        'customer.subscription.deleted': async ({event}) => await subscriptionDeleted(event.data.object),
+        'product.deleted': async ({event}) => await productDeleted(event.data.object)
+      }
     }),
     nestedDocsPlugin({
       collections: ['taxonomy'],

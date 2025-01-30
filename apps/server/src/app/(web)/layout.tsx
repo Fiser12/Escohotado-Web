@@ -34,7 +34,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
           />
           {children}
         </NuqsAdapter>
-        { Textures.map(it => it({})) }
+        { Textures.map((Element, index) => <Element key={index} />)}
+
       </body>
     </html>
   );
