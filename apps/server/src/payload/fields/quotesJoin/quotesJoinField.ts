@@ -6,5 +6,6 @@ export const quotesJoinField: Field = {
   collection: "quote",
   on: "source",
   defaultLimit: 10,
+  maxDepth: 2,
   defaultSort: "-createdAt"
 }
