@@ -1,19 +1,18 @@
 import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, COLLECTION_SLUG_VIDEO,  } from './collectionsSlugs'
-type ArticleWebId = { id: number; slug: string };
-type ArticlePdfId = { id: number };
-type BookId = { id: number; slug: string };
-type VideoId = { id: number };
-type QuoteId = { id: string };
+type ArticleWebId = { id: string; slug?: string | null };
+type ArticlePdfId = { id: string };
+type BookId = { id: string; slug?: string | null };
+type VideoId = { id: string };
 
 type ContentRelationType =
-  | { slug: typeof COLLECTION_SLUG_ARTICLE_WEB; value: ArticleWebId }
-  | { slug: typeof COLLECTION_SLUG_ARTICLE_PDF; value: ArticlePdfId }
-  | { slug: typeof COLLECTION_SLUG_BOOK; value: BookId }
-  | { slug: typeof COLLECTION_SLUG_VIDEO; value: VideoId };
+  | { collection: typeof COLLECTION_SLUG_ARTICLE_WEB; value: ArticleWebId }
+  | { collection: typeof COLLECTION_SLUG_ARTICLE_PDF; value: ArticlePdfId }
+  | { collection: typeof COLLECTION_SLUG_BOOK; value: BookId }
+  | { collection: typeof COLLECTION_SLUG_VIDEO; value: VideoId };
 
 
 export const generateDetailHref = (field: ContentRelationType): string => {
-  switch (field.slug) {
+  switch (field.collection) {
     case 'article_pdf':
       return `/articulos/pdf/${field.value.id}`;
     case 'article_web':

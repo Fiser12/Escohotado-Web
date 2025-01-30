@@ -1228,24 +1228,24 @@ export interface GridCardsBlock {
     | {
         value: (
           | {
-              relationTo: 'article_web';
-              value: string | ArticleWeb;
-            }
-          | {
               relationTo: 'article_pdf';
               value: string | ArticlePdf;
+            }
+          | {
+              relationTo: 'article_web';
+              value: string | ArticleWeb;
             }
           | {
               relationTo: 'book';
               value: string | Book;
             }
           | {
-              relationTo: 'video';
-              value: string | Video;
-            }
-          | {
               relationTo: 'quote';
               value: string | Quote;
+            }
+          | {
+              relationTo: 'video';
+              value: string | Video;
             }
         )[];
         id?: string | null;

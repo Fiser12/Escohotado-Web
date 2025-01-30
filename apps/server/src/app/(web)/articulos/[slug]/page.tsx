@@ -4,10 +4,10 @@ import { ArticleDetail, DetailBottomSection } from "gaudi/server";
 import { NextPage } from "next/types";
 import { Media, Quote, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { COLLECTION_SLUG_ARTICLE_WEB } from 'hegel/payload';
+import { COLLECTION_SLUG_ARTICLE_WEB, generateDetailHref } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
-import { generateDetailHref, mapQuoteCard } from '@/core/domain/mapping/mapCards';
+import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 
 interface Props {
   params: {
@@ -39,7 +39,7 @@ const Page: NextPage<Props> = async (props) => {
     title={article.title ?? "No title"}
     publishedAt={article.publishedAt as string}
     coverHref={(article.cover as Media | null)?.url ?? "#"}
-    detailHref={generateDetailHref({ relationTo: "article_web", value: article })}
+    detailHref={generateDetailHref({ collection: "article_web", value: article })}
     textLink={"Leer más"}
     categories={article.categories as Taxonomy[]}
   >
@@ -47,7 +47,7 @@ const Page: NextPage<Props> = async (props) => {
       <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
     }
     <DetailBottomSection
-      quotesModel={quotes.mapNotNull(mapQuoteCard)}
+      quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
       commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
     />
   </ArticleDetail>

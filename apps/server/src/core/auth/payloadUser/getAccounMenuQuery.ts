@@ -8,7 +8,7 @@ export const getAccountMenuQuery: (user?: UserModel | null) => MenuSection[] = (
         {
             items: [
                 { text: "Cuenta", href: "relativeUrls.user.profile" },
-                { text: "Suscripción", href: "subscriptions" }
+                { text: "Suscripción", href: "/subscriptions" }
             ]   
         }
     ];

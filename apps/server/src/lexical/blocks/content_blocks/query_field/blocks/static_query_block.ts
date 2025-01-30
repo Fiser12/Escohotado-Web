@@ -1,3 +1,4 @@
+import { collectionsContentsSlugs } from 'hegel/payload'
 import { Block } from 'payload'
 
 export const staticQueryBlock: Block = {
@@ -10,7 +11,7 @@ export const staticQueryBlock: Block = {
     {
       type: 'relationship',
       name: 'value',
-      relationTo: ['article_web', 'article_pdf', 'book', 'video', 'quote'],
+      relationTo: [...collectionsContentsSlugs],
       required: true,
       hasMany: true,
       admin: {

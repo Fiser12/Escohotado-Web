@@ -3,10 +3,10 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { DetailBottomSection, VideoDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { COLLECTION_SLUG_VIDEO } from 'hegel/payload';
+import { COLLECTION_SLUG_VIDEO, generateDetailHref } from 'hegel/payload';
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery';
 import { mapAnyToComment } from 'hegel';
-import { generateDetailHref, mapQuoteCard } from '@/core/domain/mapping/mapCards';
+import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { Quote } from 'payload-types';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
 
@@ -41,7 +41,7 @@ const Page: NextPage<Props> = async (props) => {
     <VideoDetail
       videoHref={href}
       title={video.title ?? "No title"}
-      detailHref={generateDetailHref({ relationTo: "video", value: video })}
+      detailHref={generateDetailHref({ collection: "video", value: video })}
       publishedAt={video.publishedAt as string}
       duration={video.duration ?? 0}
       categories={[]}
@@ -50,7 +50,7 @@ const Page: NextPage<Props> = async (props) => {
         <LexicalRenderer className="max-w-[48rem] mx-auto" data={video.content} />
       }
       <DetailBottomSection
-        quotesModel={quotes.mapNotNull(mapQuoteCard)}
+        quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
         commentsSectionModel={mapAnyToComment(video.forum_post_id, video.last_forum_posts ?? [])}
       />
     </VideoDetail>

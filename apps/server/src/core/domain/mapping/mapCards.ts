@@ -25,6 +25,7 @@ import { getArticlesQuery } from '@/core/content/getArticlesQuery'
 import { getVideosQuery } from '@/core/content/getVideosQuery'
 import { getQuotesQuery } from '@/core/content/getQuotesQuery'
 import { MediaHeaderModel } from 'node_modules/hegel/src/domain/content_model'
+import { generateDetailHref } from 'hegel/payload'
 
 type QueryFieldType = GridCardsBlock['queryField'][number]
 type ContentRelationType = Extract<
@@ -48,24 +49,10 @@ const mapRelationToFeatured = (
     case 'book':
       return mapBookCard(item.value)
     case 'quote':
-      return mapQuoteCard(item.value)
+      return mapQuoteCard(user)(item.value)
   }
 }
-export const generateDetailHref = (field: Exclude<ContentRelationType, { relationTo: 'quote'; value: string | Quote }>): string => {
-  if(typeof field.value === 'string') {
-    return ''
-  }
-  switch(field.relationTo) {
-    case 'article_pdf':
-      return `/articulos/pdf/${field.value.id}`
-    case 'article_web':
-      return `/articulos/${field.value.slug}`
-    case 'video':
-      return `/videos/${field.value.id}`
-    case 'book':
-      return `/biblioteca/${field.value.slug}`
-  }
-}
+
 export const mapArticleCard =
   (user: User | null) =>
   (item: ArticlePdf | ArticleWeb): ContentHeaderModel => {
@@ -80,7 +67,7 @@ export const mapArticleCard =
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
       coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
       detailHref: generateDetailHref({
-        relationTo: 'slug' in item ? `article_web` : `article_web`, 
+        collection: 'slug' in item ? `article_web` : `article_web`, 
         value: item
       }),
       href: 'url' in item ? item.url : undefined,
@@ -104,7 +91,7 @@ export const mapVideoCard =
       categories: [],
       hasPermission: href != null && href != '',
       coverHref: video.thumbnailUrl ?? IMAGE_ERROR,
-      detailHref: generateDetailHref({relationTo: "video", value: video}),
+      detailHref: generateDetailHref({collection: "video", value: video}),
       href: href,
     }
   }
@@ -123,12 +110,14 @@ const mapBookCard = (item: Book): ContentHeaderModel => {
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
-    detailHref: generateDetailHref({relationTo: "book", value: item}),
+    detailHref: generateDetailHref({collection: "book", value: item}),
     quote: item.description ?? 'No description',
     title: item.title ?? 'No title',
   }
 }
-export const mapQuoteCard = (item: Quote): QuoteHeaderModel => {
+export const mapQuoteCard = 
+(user: User | null) =>
+(item: Quote): QuoteHeaderModel => {
   const taxonomies = (item.categories ?? []) as Taxonomy[]
 
   return {
@@ -138,8 +127,13 @@ export const mapQuoteCard = (item: Quote): QuoteHeaderModel => {
     origen: item.source && typeof item.source.value !== "string" ? {
       title: item.source.value.title ?? "No title",
       type: item.source.relationTo,
-      hasPermissions: true,
-      detailHref: generateDetailHref(item.source)
+      hasPermissions: evalPermissionQuery(
+        user, 
+        'permissions_seeds' in item.source.value 
+          ? (item.source.value.permissions_seeds?.trim() ?? '') 
+          : ''
+        ),
+      detailHref: generateDetailHref({collection: item.source.relationTo, value: item.source.value})
     } : undefined,
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
@@ -165,7 +159,7 @@ const mapQueryField =
       const { querySize, sort, filter, filterByQuoteOrigin } = queryField
       const filterByOrigin = filterByQuoteOrigin?.value as any | null
       const quotes = await getQuotesQuery(0, querySize, sort, '', filterByOrigin?.id, filter)
-      return quotes.results.map((q) => mapQuoteCard(q))
+      return quotes.results.map((q) => mapQuoteCard(user)(q))
     } else if (queryField.blockType === 'videoQueryBlock') {
       const { querySize, sort, filter } = queryField
       const videos = await getVideosQuery(0, querySize, sort, '', filter)

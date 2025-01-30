@@ -1,6 +1,6 @@
 "use server";
 
-import { COLLECTION_SLUG_BOOK } from "hegel/payload";
+import { COLLECTION_SLUG_BOOK, generateDetailHref } from "hegel/payload";
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { BookDetail, DetailBottomSection } from "gaudi/server";
@@ -11,7 +11,7 @@ import { mapAnyToComment } from "hegel";
 import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
 import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
 import "hegel";
-import { generateDetailHref, mapQuoteCard } from "@/core/domain/mapping/mapCards";
+import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
 
 interface Props {
     params: {
@@ -52,7 +52,7 @@ const Page = async (props: Props) => {
     return (<BookDetail
         title={book.title ?? "No title"}
         description={book.description ?? "Empty"}
-        detailHref={generateDetailHref({ relationTo: "book", value: book })}
+        detailHref={generateDetailHref({ collection: "book", value: book })}
         author={getAuthorFromTaxonomies(book.categories as Taxonomy[])?.singular_name}
         coverHref={(book.cover as Media)?.url ?? "#"}
         langs={['es', 'en']}
@@ -61,7 +61,7 @@ const Page = async (props: Props) => {
     >
         {book.content && <LexicalRenderer data={book.content} />}
         <DetailBottomSection
-            quotesModel={quotes.mapNotNull(mapQuoteCard)}
+            quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
             commentsSectionModel={mapAnyToComment(book.forum_post_id, book.last_forum_posts ?? [])}
         />
     </BookDetail>

@@ -10,6 +10,7 @@ import {
   HeadingFeature,
   FeatureProviderServer,
 } from '@payloadcms/richtext-lexical'
+import { collectionsContentsWithDetailsSlugs } from 'hegel/payload'
 
 export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<any, any, any>[] => [
   HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
@@ -19,7 +20,7 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
   ItalicFeature(),
   BlocksFeature({ blocks: blocks() }),
   LinkFeature({
-    enabledCollections: ['article_pdf', 'article_web', 'video', 'book'],
+    enabledCollections: collectionsContentsWithDetailsSlugs,
     fields: ({ defaultFields }) => {
       const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
         if ('name' in field && field.name === 'url') return false

@@ -23,13 +23,13 @@ export const FeaturedQuote: React.FC<Props> = ({ className, quote, author, categ
       return (<div className={`base-container-axis-quote ${containerClass}`} {...rest}>
             <p className={`dynamic-text-quote ${quoteClass}`}>{quote}</p>
             <div className="flex flex-col gap-2">
-                  { origen &&
-                        <Tag text={origen.title} variant="primary" href={origen.detailHref}/>
-                  }
+                  { origen && <div className="flex flex-row">
+                        <Tag text={origen.title} variant="primary" href={origen.hasPermissions ? origen.detailHref : undefined}/>
+                  </div>}
                   <div className="flex flex-row gap-2 flex-wrap">
-                        { categories.map((category, index) => (
+                        { categories.map((category, index) => 
                               <Tag key={index} text={category.singular_name} variant="disabled"/>
-                        ))}
+                        )}
                   </div>
             </div>
       </div>);

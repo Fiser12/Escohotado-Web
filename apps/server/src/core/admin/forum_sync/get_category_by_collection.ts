@@ -1,3 +1,4 @@
+import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, COLLECTION_SLUG_VIDEO } from 'hegel/payload'
 import { CollectionSlug } from 'payload'
 
 const ARTICLE_FORUM_ID = '41'
@@ -29,9 +30,9 @@ const BOOK_FORUM_IDS_MAP: Record<string, number> = {
 const DEFAULT_FORUM_ID = '24'
 
 export const getCategoryByCollection = (collection: CollectionSlug, slug: string): string => {
-  if (collection === 'article_web' || collection === 'article_pdf') return ARTICLE_FORUM_ID
-  if (collection === 'video') return VIDEO_FORUM_ID
-  if (collection === 'book') {
+  if (collection === COLLECTION_SLUG_ARTICLE_WEB || collection === COLLECTION_SLUG_ARTICLE_PDF) return ARTICLE_FORUM_ID
+  if (collection === COLLECTION_SLUG_VIDEO) return VIDEO_FORUM_ID
+  if (collection === COLLECTION_SLUG_BOOK) {
     const forumId = BOOK_FORUM_IDS_MAP[slug]
     return forumId !== undefined ? forumId.toString() : DEFAULT_FORUM_ID
   }

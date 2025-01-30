@@ -1,3 +1,5 @@
+import { collectionsContentsWithDetailsSlugs } from "src/payload/collectionsSlugs";
+
 type ContentType = "article" | "quote" | "book" | "video" | "media";
 
 export interface ContentHeaderBaseModel {
@@ -29,7 +31,7 @@ export interface QuoteHeaderModel extends ContentHeaderBaseModel {
 
 export interface OrigenModel {
     title: string;
-    type: 'book' | 'video' | 'article_web' | 'article_pdf'
+    type: typeof collectionsContentsWithDetailsSlugs[number];
     detailHref: string
     hasPermissions: boolean
 }
