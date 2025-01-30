@@ -1,5 +1,5 @@
 'use server'
-import { COLLECTION_SLUG_VIDEO } from '@/payload/collections/config'
+import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Taxonomy, Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
@@ -24,7 +24,13 @@ export const getVideosQueryByTags = async (
   maxPage: number
 }> => {
   const filterExpression = tags.length !== 0 ? tags.map((tag) => `"${tag}"`).join(' || ') : null
-  return getVideosQuery(page, pageSize, sortBy as 'publishedAt' | 'popularity', query, filterExpression)
+  return getVideosQuery(
+    page,
+    pageSize,
+    sortBy as 'publishedAt' | 'popularity',
+    query,
+    filterExpression,
+  )
 }
 
 export const getVideosQuery = async (
@@ -77,12 +83,14 @@ export const getVideosQuery = async (
         query === null ||
         query.trim() === '' ||
         video.title?.toLowerCase().includes(query.toLowerCase()) ||
-        tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+        tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
 
-      return evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
+      return (
+        evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
+      )
     })
 
-    const startIndex = page * maxPage
+  const startIndex = page * maxPage
   const endIndex = startIndex + maxPage
 
   return {

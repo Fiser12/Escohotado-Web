@@ -2,7 +2,7 @@ import {
   COLLECTION_SLUG_USER,
   COLLECTION_SLUG_PRODUCTS,
   COLLECTION_SLUG_SUBSCRIPTIONS,
-} from '@/payload/collections/config'
+} from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { deleteForumPremiumRoleCommand } from '@/core/auth/keycloak/deleteForumPremiumRoleCommand'
 import { addForumPremiumRoleCommand } from '@/core/auth/keycloak/addForumPremiumRoleCommand'

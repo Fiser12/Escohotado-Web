@@ -1,8 +1,5 @@
 'use server'
-import {
-  COLLECTION_SLUG_ARTICLE_PDF,
-  COLLECTION_SLUG_ARTICLE_WEB,
-} from '@/payload/collections/config'
+import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { ArticlePdf, ArticleWeb, Book, Taxonomy } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
@@ -122,9 +119,11 @@ export const getArticlesQuery = async (
         query === null ||
         query.trim() === '' ||
         article.title?.toLowerCase().includes(query.toLowerCase()) ||
-        tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+        tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
 
-      return evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
+      return (
+        evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
+      )
     })
   const startIndex = page * maxPage
   const endIndex = startIndex + maxPage

@@ -7,16 +7,16 @@ import { YoutubeVideo } from './youtube_video_model'
 import { video as videoSchema } from '@/payload-generated-schema'
 import { eq } from '@payloadcms/db-postgres/drizzle'
 import { getPayload } from '@/payload/utils/getPayload'
-import { COLLECTION_SLUG_VIDEO } from '@/payload/collections/config'
+import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
 
 const getYoutubeVideos = async (
   playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',
-  uid: string = "19"
+  uid: string = '19',
 ): Promise<YoutubeVideo[]> => {
   const apiUrl = new URL(`/api/v3/get-youtube-videos/${playlistId}`, process.env.FORUM_URL)
   const token = process.env.NODEBB_TOKEN
   const body = JSON.stringify({
-    _uid: uid
+    _uid: uid,
   })
 
   const response = await fetch(apiUrl, {
@@ -25,7 +25,7 @@ const getYoutubeVideos = async (
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body
+    body,
   })
 
   if (!response.ok) {
@@ -36,7 +36,7 @@ const getYoutubeVideos = async (
   }
   console.log(`Request success`)
 
-  return await response.json() as YoutubeVideo[]
+  return (await response.json()) as YoutubeVideo[]
 }
 
 const getVideoURLsFromDatabase = async (payload: BasePayload): Promise<string[]> => {
@@ -56,22 +56,20 @@ export const youtubeVideoUpsert = async (
   video: YoutubeVideo,
   existingUrls: string[],
   upsert: boolean,
-): Promise<void> => {  
+): Promise<void> => {
   try {
     const url = `https://www.youtube.com/watch?v=${video.id}`
     if (upsert && existingUrls.includes(url)) {
       await payload.db.drizzle
         .update(videoSchema)
-        .set(
-          {
-            title: video.title,
-            publishedAt: video.publishedAt,
-            tags: video.tags,
-            thumbnailUrl: video.thumbnailUrl,
-            viewCount: video.viewCount,
-            duration: parseISODurationToSeconds(video.duration)
-          }
-        )
+        .set({
+          title: video.title,
+          publishedAt: video.publishedAt,
+          tags: video.tags,
+          thumbnailUrl: video.thumbnailUrl,
+          viewCount: video.viewCount,
+          duration: parseISODurationToSeconds(video.duration),
+        })
         .where(eq(videoSchema.url, url))
         .execute()
 
@@ -82,36 +80,34 @@ export const youtubeVideoUpsert = async (
 
     await payload.db.drizzle
       .insert(videoSchema)
-      .values(
-        {
-          url: url,
-          url_free: url,
-          title: video.title,
-          publishedAt: video.publishedAt,
-          tags: video.tags,
-          thumbnailUrl: video.thumbnailUrl,
-          viewCount: video.viewCount,
-          duration: parseISODurationToSeconds(video.duration)
-        }
-      )
+      .values({
+        url: url,
+        url_free: url,
+        title: video.title,
+        publishedAt: video.publishedAt,
+        tags: video.tags,
+        thumbnailUrl: video.thumbnailUrl,
+        viewCount: video.viewCount,
+        duration: parseISODurationToSeconds(video.duration),
+      })
       .execute()
-  
+
     payload.logger.warn(`Video created: ${video.id}: ${video.title}`)
   } catch (error) {
     payload.logger.error(`Error in payloadUpsert: ${error}`)
   }
 }
 function parseISODurationToSeconds(isoDuration: string): string {
-  const regex = /P(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?/;
-  const match = isoDuration.match(regex);
+  const regex = /P(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?/
+  const match = isoDuration.match(regex)
 
-  if (!match) throw new Error('Formato de duración no válido.');
+  if (!match) throw new Error('Formato de duración no válido.')
 
-  const hours = parseInt(match[1] || "0", 10);
-  const minutes = parseInt(match[2] || "0", 10);
-  const seconds = parseInt(match[3] || "0", 10);
+  const hours = parseInt(match[1] || '0', 10)
+  const minutes = parseInt(match[2] || '0', 10)
+  const seconds = parseInt(match[3] || '0', 10)
 
-  return String((hours * 3600) + (minutes * 60) + seconds);
+  return String(hours * 3600 + minutes * 60 + seconds)
 }
 
 const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
@@ -120,10 +116,12 @@ const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
 
   const videos = await getYoutubeVideos()
   const existingUrls = await getVideoURLsFromDatabase(payload)
-  const upsertPromises = videos.map(async (video) =>
-    await youtubeVideoUpsert(payload, video, existingUrls, upsert),
+  const upsertPromises = videos.map(
+    async (video) => await youtubeVideoUpsert(payload, video, existingUrls, upsert),
   )
-  upsertPromises.forEach((promise) => promise.catch((error) => payload.logger.error('Error en el upsert: ', error)))
+  upsertPromises.forEach((promise) =>
+    promise.catch((error) => payload.logger.error('Error en el upsert: ', error)),
+  )
   await Promise.all(upsertPromises)
   payload.logger.warn('Sincronización completada.')
 }

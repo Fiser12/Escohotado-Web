@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { isAnyone, isAdmin } from '../../fields/permissions/accessEvaluations'
-import { COLLECTION_SLUG_UI_GRID_CARDS } from '../config'
+import { COLLECTION_SLUG_UI_GRID_CARDS } from 'hegel/payload'
 
 export const gridCards: CollectionConfig = {
   slug: COLLECTION_SLUG_UI_GRID_CARDS,

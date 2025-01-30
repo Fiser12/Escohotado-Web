@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES } from '../config'
+import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES } from 'hegel/payload'
 import {
   permissionRelationship,
   cachePermissionSeedsHook,

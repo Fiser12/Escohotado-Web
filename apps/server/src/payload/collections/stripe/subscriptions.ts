@@ -3,7 +3,7 @@ import {
   COLLECTION_SLUG_SUBSCRIPTIONS,
   COLLECTION_SLUG_USER,
   COLLECTION_SLUG_PRODUCTS,
-} from '../config'
+} from 'hegel/payload'
 import { isAdminOrUserFieldMatchingCurrentUser, isAdmin } from '../../fields/permissions/accessEvaluations'
 
 const SubscriptionStatus = {

@@ -1,4 +1,4 @@
-import { COLLECTION_SLUG_BOOK } from '@/payload/collections/config'
+import { COLLECTION_SLUG_BOOK } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Book, Media } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'

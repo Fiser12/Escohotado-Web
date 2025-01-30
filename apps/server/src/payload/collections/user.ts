@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from './config'
+import { COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from 'hegel/payload'
 import { ADMIN_ACCESS_ROLES } from '@/payload/plugins/authjs/auth.config'
 import { isAdminOrCurrentUser, isAdmin } from '../fields/permissions/accessEvaluations'
 

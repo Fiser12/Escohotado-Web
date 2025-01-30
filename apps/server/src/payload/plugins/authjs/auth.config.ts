@@ -2,7 +2,7 @@ import { NextAuthConfig } from 'next-auth'
 import keycloak from 'next-auth/providers/keycloak'
 import jwt from 'jsonwebtoken'
 import { getPayload } from '@/payload/utils/getPayload'
-import { COLLECTION_SLUG_USER } from '@/payload/collections/config'
+import { COLLECTION_SLUG_USER } from 'hegel/payload'
 import { getUserInfoQuery } from '@/core/auth/keycloak/getUserInfoQuery'
 
 export const SESSION_STRATEGY = 'database' as 'jwt' | 'database'

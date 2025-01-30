@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_TAXONOMY } from '../config'
+import { COLLECTION_SLUG_TAXONOMY } from 'hegel/payload'
 import { v4 as uuid_v4 } from 'uuid'
 import { isAnyone, isAdmin } from '../../fields/permissions/accessEvaluations'
 import { slugField } from '@/payload/fields/slug'

@@ -1,4 +1,4 @@
-import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_VIDEO } from '../../config'
+import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_VIDEO } from 'hegel/payload'
 import { CollectionConfig } from 'payload'
 import { isAnyone, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'

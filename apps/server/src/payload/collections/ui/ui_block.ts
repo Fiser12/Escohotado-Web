@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { isAnyone, isAdmin } from '../../fields/permissions/accessEvaluations'
-import { COLLECTION_SLUG_UI_BLOCK } from '../config'
+import { COLLECTION_SLUG_UI_BLOCK } from 'hegel/payload'
 
 export const uiBLock: CollectionConfig = {
   slug: COLLECTION_SLUG_UI_BLOCK,

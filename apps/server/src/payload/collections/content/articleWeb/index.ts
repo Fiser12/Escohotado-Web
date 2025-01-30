@@ -1,5 +1,5 @@
 import { slugField } from '@/payload/fields/slug'
-import { COLLECTION_SLUG_ARTICLE_WEB } from '../../config'
+import { COLLECTION_SLUG_ARTICLE_WEB } from 'hegel/payload'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 

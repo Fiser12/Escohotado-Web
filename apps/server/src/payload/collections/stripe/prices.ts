@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS } from '../config'
+import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS } from 'hegel/payload'
 import { isAdminOrStripeActive, isAdmin } from '../../fields/permissions/accessEvaluations'
 
 export const PricingType = {

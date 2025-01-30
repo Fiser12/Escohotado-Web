@@ -3,7 +3,7 @@ import {
   permissionRelationship,
   cachePermissionSeedsHook,
 } from '@/payload/fields/permissions/permissionsRelationshipFields'
-import { COLLECTION_SLUG_MEDIA } from '../config'
+import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 import { checkReadPermissions, isAdmin } from '../../fields/permissions/accessEvaluations'
 import { taxonomyRelationship } from '../../fields/taxonomies/taxonomiesRelationshipFields'
 import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'

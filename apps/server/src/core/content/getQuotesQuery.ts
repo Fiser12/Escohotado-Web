@@ -1,6 +1,6 @@
 'use server'
 
-import { COLLECTION_SLUG_QUOTE } from '@/payload/collections/config'
+import { COLLECTION_SLUG_QUOTE } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Quote, Taxonomy, Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
@@ -18,13 +18,20 @@ export const getQuotesQueryByTags = async (
   tags: string[],
   page: number,
   sortBy: string,
-  filterByCollectionId?: string | null
+  filterByCollectionId?: string | null,
 ): Promise<{
   results: Quote[]
   maxPage: number
 }> => {
   const filterExpression = tags.length !== 0 ? tags.map((tag) => `"${tag}"`).join(' || ') : null
-  return getQuotesQuery(page, pageSize, sortBy as 'publishedAt' | 'popularity', query, filterByCollectionId, filterExpression)
+  return getQuotesQuery(
+    page,
+    pageSize,
+    sortBy as 'publishedAt' | 'popularity',
+    query,
+    filterByCollectionId,
+    filterExpression,
+  )
 }
 
 export const getQuotesQuery = async (
@@ -46,13 +53,14 @@ export const getQuotesQuery = async (
     collection: COLLECTION_SLUG_QUOTE,
     sort,
     pagination: false,
-    where: { id: { in: results } }
+    where: { id: { in: results } },
   })
 
   const quotes = quotesDocs.docs
     .filter((quote) => {
       if (filterByCollectionId) {
-        const id = typeof quote.source?.value === 'string' ? quote.source?.value : quote.source?.value.id
+        const id =
+          typeof quote.source?.value === 'string' ? quote.source?.value : quote.source?.value.id
         return id === filterByCollectionId
       }
       return true
@@ -64,12 +72,13 @@ export const getQuotesQuery = async (
           categories?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
         ),
       )
-      const value = typeof quote.source?.value === "string" ? null : quote.source?.value
+      const value = typeof quote.source?.value === 'string' ? null : quote.source?.value
       const originTags = Array.from(
         new Set<string>(
           value?.categories
             ?.cast<Taxonomy>()
-            ?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
+            ?.flatMap((category) => getSlugsFromTaxonomy(category))
+            .filter(Boolean),
         ),
       )
       const tags = [...quoteTags, ...originTags]
@@ -78,9 +87,11 @@ export const getQuotesQuery = async (
         query === null ||
         query.trim() === '' ||
         quote.quote.toLowerCase().includes(query.toLowerCase()) ||
-        tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
-        
-      return evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
+        tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
+
+      return (
+        evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
+      )
     })
   const startIndex = page * maxPage
   const endIndex = startIndex + maxPage

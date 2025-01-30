@@ -23,7 +23,7 @@ import {
   COLLECTION_SLUG_QUOTE,
   COLLECTION_SLUG_ARTICLE_WEB,
   COLLECTION_SLUG_BOOK,
-} from '@/payload/collections/config'
+} from 'hegel/payload'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
 import * as Sentry from '@sentry/nextjs'

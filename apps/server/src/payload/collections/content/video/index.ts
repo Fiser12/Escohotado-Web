@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_VIDEO } from '../../config'
+import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
 import {
   cachePermissionSeedsHook,
   permissionRelationship,

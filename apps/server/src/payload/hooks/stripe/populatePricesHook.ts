@@ -2,7 +2,7 @@ import { stripeBuilder, priceUpsert } from '@/payload/plugins/stripe'
 import { Price } from 'payload-types'
 import { CollectionBeforeChangeHook } from 'payload'
 import 'hegel'
-import { COLLECTION_SLUG_PRICES } from '../../collections/config'
+import { COLLECTION_SLUG_PRICES } from 'hegel/payload'
 
 export const populatePricesHook: CollectionBeforeChangeHook = async ({ data, req }) => {
   if (!data.stripeID.startsWith('prod_')) return data

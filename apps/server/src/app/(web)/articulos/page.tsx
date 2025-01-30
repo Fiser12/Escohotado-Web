@@ -1,4 +1,4 @@
-import { COLLECTION_SLUG_ARTICLE_PDF } from "@/payload/collections/config";
+import { COLLECTION_SLUG_ARTICLE_PDF } from "hegel/payload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
 import { convertContentModelToCard } from "hegel";

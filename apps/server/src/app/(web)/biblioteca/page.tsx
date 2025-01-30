@@ -1,4 +1,4 @@
-import { COLLECTION_SLUG_BOOK } from "@/payload/collections/config";
+import { COLLECTION_SLUG_BOOK } from "hegel/payload";
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, BookCard } from "gaudi/server";

@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isAnyone } from './accessEvaluations'
 import { v4 as uuid_v4 } from 'uuid'
-import { COLLECTION_SLUG_PERMISSION } from '../../collections/config'
+import { COLLECTION_SLUG_PERMISSION } from 'hegel/payload'
 
 const permision: CollectionConfig = {
   slug: COLLECTION_SLUG_PERMISSION,
