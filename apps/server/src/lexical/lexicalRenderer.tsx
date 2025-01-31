@@ -27,7 +27,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
-  blocks: blockRenderers
+  blocks: blockRenderers,
 })
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
