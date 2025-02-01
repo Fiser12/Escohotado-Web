@@ -5,13 +5,14 @@ export const searchElementsQuery = async (
   query: string,
   collections: string[],
   basePayload?: BasePayload,
-): Promise<{ collection: string; id: string }[]> => {
+): Promise<{ collection: string; id: string, tags: string[] }[]> => {
   const payload = basePayload ?? (await getPayload())
   const results = await payload.find({
     collection: 'search-results',
     depth: 1,
     select: {
       doc: true,
+      tags: true
     },
     pagination: false,
     ...(query
@@ -19,7 +20,10 @@ export const searchElementsQuery = async (
           where: {
             and: [
               {
-                or: [{ title: { like: query } }, { tags: { like: query } }],
+                or: [
+                  { title: { like: query } }, 
+                  { tags: { like: query } },
+                ],
               },
             ],
           },
@@ -28,5 +32,10 @@ export const searchElementsQuery = async (
   })
   return results.docs
     .filter((result) => collections.includes(result.doc?.relationTo))
-    .map((result) => ({ collection: result.doc.relationTo, id: result.doc.value as string }))
+    .map((result) => ({ 
+      collection: result.doc.relationTo, 
+      id: result.doc.value as string, 
+      tags: result.tags?.split(" ").filter(Boolean) ?? [] 
+    }
+  ))
 }

@@ -11,6 +11,7 @@ export async function SortSelectorSSR(props: Props) {
 
     return (
         <FilterBarNuqs
+            className="w-full"
             title="Ordenar por"
             queryKey="sort"
             multiple={false}

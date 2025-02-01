@@ -4,10 +4,8 @@ import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSecti
 import { convertContentModelToCard } from "hegel";
 import { Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { AutorBarSSR } from "@/ui/nuqs/autor_bar_ssr";
-import { MedioBarSSR } from "@/ui/nuqs/medio_bar_ssr";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { CommonArticle, getArticlesQueryByMediasAndAuthor } from "@/core/content/getArticlesQuery";
+import { CommonArticle, getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
@@ -17,13 +15,13 @@ import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
 import classNames from "classnames";
+import { TagsFilterBarSSR } from "@/ui/nuqs/tags_filter_bar_ssr";
 
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
-  autor: parseAsString.withDefault(''),
+  tags: parseAsString.withDefault(''),
   query: parseAsString.withDefault(''),
-  medio: parseAsString.withDefault('')
 })
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -31,11 +29,11 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const ArticlePage = async ({ searchParams, className, ...rest }: Props) => {
-  const { autor, medio, query } = await searchContentParamsCache.parse(searchParams)
-  const medioArray = medio.split(',').filter(Boolean)
+  const { tags, query } = await searchContentParamsCache.parse(searchParams)
+  const tagsArrays = tags.split(',').filter(Boolean)
   const user = await getCurrentUserQuery();
-  const articles = await getArticlesQueryByMediasAndAuthor(query, autor, medioArray, 0)
-  const lastArticles = await getArticlesQueryByMediasAndAuthor("", null, [], 0, 4);
+  const articles = await getArticlesQueryByTags(query, tagsArrays, 0)
+  const lastArticles = await getArticlesQueryByTags("", [], 0, 4);
   const books = await getBooksQuery(query, 0)
   const payload = await getPayload()
   const articulosDataPage = await payload.findGlobal({
@@ -56,7 +54,6 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
               src={escohotadoArticlesPortada.src}
               alt="Escohotado image"
               className="order-2 md:order-none"
-              layout="responsive"
               width={650}
               height={1080}
             />
@@ -85,8 +82,13 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
         <H2 label="Artículos" id="h2-articles" />
         <div className="flex flex-col sm:flex-row gap-3 items-end">
-          <AutorBarSSR />
-          <MedioBarSSR />
+          <TagsFilterBarSSR
+            collection={['article_web', 'article_pdf']}
+            query={query}
+            excludeSeeds={["autor", "revisar"]}
+            title='Etiquetas'
+            queryKey='tags'
+          />
           <SearchBarNuqs />
         </div>
         <GridCardsBlock
@@ -99,8 +101,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         />
         <DynamicLoadingArticles
           user={user}
-          autor={autor}
-          medioArray={medioArray}
+          tagsArrays={tagsArrays}
           query={query}
           maxPage={articles.maxPage}
         />

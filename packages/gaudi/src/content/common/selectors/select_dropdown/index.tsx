@@ -86,7 +86,7 @@ export const SelectDropdown: React.FC<Props> = ({
   }, []);
 
   const contentButton = classNames(
-    "w-full flex items-center justify-between gap-2"
+    "w-full flex items-center justify-between gap-2 whitespace-nowrap"
   );
 
   const menuContainerClass = classNames(

@@ -24,6 +24,7 @@ export const getQuotesQueryByTags = async (
   maxPage: number
 }> => {
   const filterExpression = tags.length !== 0 ? tags.map((tag) => `"${tag}"`).join(' || ') : null
+
   return getQuotesQuery(
     page,
     pageSize,
@@ -47,7 +48,7 @@ export const getQuotesQuery = async (
 }> => {
   const results = (await searchElementsQuery(query, [COLLECTION_SLUG_QUOTE])).map((item) => item.id)
   const payload = await getPayload()
-  const sort = sortBy == 'publishedAt' ? '-publishedAt' : '-publishedAt'
+  const sort = sortBy == 'publishedAt' ? '-createdAt' : '-createdAt'
 
   const quotesDocs = await payload.find({
     collection: COLLECTION_SLUG_QUOTE,
@@ -67,22 +68,12 @@ export const getQuotesQuery = async (
     })
     .filter((quote) => {
       const categories = quote.categories as Taxonomy[] | undefined
-      const quoteTags = Array.from(
+      const tags = Array.from(
         new Set<string>(
           categories?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
         ),
       )
       const value = typeof quote.source?.value === 'string' ? null : quote.source?.value
-      const originTags = Array.from(
-        new Set<string>(
-          value?.categories
-            ?.cast<Taxonomy>()
-            ?.flatMap((category) => getSlugsFromTaxonomy(category))
-            .filter(Boolean),
-        ),
-      )
-      const tags = [...quoteTags, ...originTags]
-
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||

@@ -1,51 +1,49 @@
 "use client";
 
-import { CommonArticle, getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
-import { mapArticleCard } from "@/core/domain/mapping/mapCards";
+import { getQuotesQueryByTags } from "@/core/content/getQuotesQuery";
+import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
 import { convertContentModelToCard } from "hegel";
 import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
-import { User } from "payload-types";
+import { Quote, User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user: User | null;
     query: string;
-    tagsArrays: string[];
+    tags: string[];
+    sortedBy: string;
     maxPage: number;
 }
 
-export const DynamicLoadingArticles: React.FC<Props> = ({ query, tagsArrays, maxPage, user, className, ...rest }) => {
-    const [articles, setArticles] = useState<Record<string, CommonArticle[]>>({});
+export const DynamicLoadingQuotes: React.FC<Props> = ({ query, maxPage, user, sortedBy, tags, className, ...rest }) => {
+    const [quotes, setQuotes] = useState<Record<string, Quote[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const observerRef = useRef<HTMLDivElement | null>(null);
-    const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article);
 
     useEffect(() => {
-        const loadArticles = async () => {
+        const load = async () => {
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newArticles = await getArticlesQueryByTags(query, tagsArrays, page);
-                setArticles((prev) => {
-                    return {
-                        ...prev,
-                        [page]: newArticles.results
-                    }
-                });
+                const newQuotes = await getQuotesQueryByTags(query, tags, page, sortedBy);
+                setQuotes((prev) => ({
+                    ...prev,
+                    [page]: newQuotes.results
+                }));
             } catch (error) {
                 console.error("Error loading articles:", error);
             } finally {
                 setLoading(false);
             }
         };
-        loadArticles();
-    }, [page, maxPage, query, tagsArrays]);
+        load();
+    }, [page, maxPage, query, sortedBy, tags]);
 
     useEffect(() => {
-        setArticles({});
+        setQuotes({});
         setPage(0);
-    }, [query, tagsArrays]);
+    }, [query, tags, sortedBy]);
 
     useEffect(() => {
         const currentObserverRef = observerRef.current;
@@ -63,19 +61,19 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, tagsArrays, max
             observer.disconnect();
         };
     }, [loading, page, maxPage]);
-
     return <div>
         <GridCardsBlock
             {...rest}
             features={Object
-                .values(articles)
+                .values(quotes)
                 .flat()
-                .map(articleCardMapper)
-                .map(convertContentModelToCard("col-span-2"))
-            }
-            className={`grid-cols-2 md:grid-cols-6 lg:grid-cols-8 ` + (className ?? "")}
+                .map(mapQuoteCard(user))
+                .map(convertContentModelToCard("col-span-3"))}
+            className={'grid-cols-3 md:grid-cols-6 lg:grid-cols-12 ' + (className ?? "")}
         />
         <div ref={observerRef} style={{ height: "20px", background: "transparent" }}></div>
-        {loading && <p>Loading more articles...</p>}
+        <div>
+            {loading && <p>Loading more quotes...</p>}
+        </div>
     </div>
 }

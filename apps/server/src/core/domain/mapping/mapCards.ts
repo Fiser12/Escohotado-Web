@@ -67,7 +67,7 @@ export const mapArticleCard =
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
       coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
       detailHref: generateDetailHref({
-        collection: 'slug' in item ? `article_web` : `article_web`, 
+        collection: 'slug' in item ? `article_web` : `article_pdf`, 
         value: item
       }),
       href: 'url' in item ? item.url : undefined,

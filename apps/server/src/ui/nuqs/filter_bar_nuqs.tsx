@@ -15,7 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 	showClearButton?: boolean;
 }
 
-export function FilterBarNuqs({queryKey, ...props}: Props) {
+export function FilterBarNuqs({queryKey, className, ...props}: Props) {
 	const [tags, setSearch] = useQueryState(
 		queryKey,
 		parseAsString
@@ -26,6 +26,7 @@ export function FilterBarNuqs({queryKey, ...props}: Props) {
 	return (
 		<SelectDropdown
 			{...props}
+			className={className}
 			showSelectionAtLabel={false}
 			color="white"
 			showClearButton={props.showClearButton ?? true}

@@ -15,32 +15,19 @@ export type CommonArticle = (ArticlePdf | ArticleWeb) & {
   hasPermission: boolean
 }
 
-export const getArticlesQueryByMediasAndAuthor = async (
+export const getArticlesQueryByTags = async (
   query: string,
-  autor: string | null,
-  medios: string[],
+  tags: string[],
   page: number,
   maxPage: number = pageSize,
 ): Promise<{
   results: CommonArticle[]
   maxPage: number
 }> => {
-  if (medios.length === 0 && !autor) {
+  if (tags.length === 0) {
     return getArticlesQuery(page, maxPage, 'publishedAt', query)
   }
-  if (autor && medios.length === 0) {
-    return getArticlesQuery(page, maxPage, 'publishedAt', query, `"${autor}"`)
-  }
-  if (!autor && medios.length !== 0) {
-    return getArticlesQuery(
-      page,
-      maxPage,
-      'publishedAt',
-      query,
-      medios.map((medio) => `"${medio}"`).join(' && '),
-    )
-  }
-  const filterExpression = `"${autor || true}" || (${medios.map((medio) => `"${medio}"`).join(' && ')})`
+  const filterExpression = `${tags.map((tag) => `"${tag}"`).join(' && ')}`
   return getArticlesQuery(page, maxPage, 'publishedAt', query, filterExpression)
 }
 
