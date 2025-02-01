@@ -13,8 +13,8 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { id: "1", singular_name: "Historia" },
-        { id: "2", singular_name: "Filosofía" },
+        { label: "Historia", id: "1" },
+        { label: "Filosofía", id: "2" },
       ],
       detailHref: "#",
       isPdf: false,
@@ -52,8 +52,8 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       hasPermission: true,
       href: "/",
       categories: [
-        { id: "1", singular_name: "Historia" },
-        { id: "2", singular_name: "Filosofía" },
+        { label: "Historia", id: "1" },
+        { label: "Filosofía", id: "2" },
       ],
     },
     {
@@ -68,8 +68,8 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { id: "1", singular_name: "Historia" },
-        { id: "2", singular_name: "Filosofía" },
+        { label: "Historia", id: "1" },
+        { label: "Filosofía", id: "2" },
       ],
     },
     {
@@ -84,8 +84,8 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { id: "1", singular_name: "Historia" },
-        { id: "2", singular_name: "Filosofía" },
+        { label: "Historia", id: "1" },
+        { label: "Filosofía", id: "2" },
       ],
     },
     {
@@ -100,8 +100,8 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { id: "1", singular_name: "Historia" },
-        { id: "2", singular_name: "Filosofía" },
+        { label: "Historia", id: "1" },
+        { label: "Filosofía", id: "2" },
       ],
     },
     {
@@ -116,8 +116,8 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { id: "1", singular_name: "Historia" },
-        { id: "2", singular_name: "Filosofía" },
+        { label: "Historia", id: "1" },
+        { label: "Filosofía", id: "2" },
       ],
     },
     {

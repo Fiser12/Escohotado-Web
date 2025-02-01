@@ -7,6 +7,7 @@ import { PlayIcon } from "../../../../common/icons/play_icon";
 import { BaseCardContainer } from "../../container_base";
 import { UnlockIcon } from "../../../../common/icons/unlock_icon";
 import "./style.css"
+import { CategoryModel } from "hegel";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -14,11 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   href: string;
   detailHref: string;
   publishedAt?: string | null;
-  categories?: {
-    id: string;
-    singular_name: string;
-    seed?: string | null;
-  }[];
+  categories?: CategoryModel[];
   unlockHref: string;
   hasPermission: boolean;
   className?: string;
@@ -74,10 +71,10 @@ export const FeaturedVideo: React.FC<Props> = ({hasPermission, publishedAt, clas
           <div className={`text-content-position-video ${textareaClass}`}>
             {categories && categories.length > 0 && (
               <div className={categoriesClass}>
-                {categories.map((category) => (
+                {categories.map((category, index) => (
                   <Tag
-                    key={category.id}
-                    text={category.singular_name}
+                    key={index}
+                    text={category.label}
                     variant={hasPermission ? 'primary' : 'disabled'}
                   />
                 ))}

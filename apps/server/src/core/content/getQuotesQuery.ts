@@ -6,6 +6,7 @@ import { Quote, Taxonomy, Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 import { evaluateExpression } from 'hegel'
 import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
+import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
 
 const pageSize = 20
 
@@ -23,15 +24,13 @@ export const getQuotesQueryByTags = async (
   results: Quote[]
   maxPage: number
 }> => {
-  const filterExpression = tags.length !== 0 ? tags.map((tag) => `"${tag}"`).join(' || ') : null
-
   return getQuotesQuery(
     page,
     pageSize,
     sortBy as 'publishedAt' | 'popularity',
     query,
     filterByCollectionId,
-    filterExpression,
+    generateFilterExpresionFromTags(tags, '&&')
   )
 }
 
@@ -69,11 +68,8 @@ export const getQuotesQuery = async (
     .filter((quote) => {
       const categories = quote.categories as Taxonomy[] | undefined
       const tags = Array.from(
-        new Set<string>(
-          categories?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
-        ),
+        new Set(categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
       )
-      const value = typeof quote.source?.value === 'string' ? null : quote.source?.value
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||

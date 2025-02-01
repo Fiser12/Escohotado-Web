@@ -48,8 +48,8 @@ const meta: Meta<typeof VideoDetail> = {
         duration: 0,
         videoHref: "https://www.youtube.com/watch?v=mV-4JUWcAC4",
         categories: [
-            { id: "1", singular_name: "Tecnología" },
-            { id: "2", singular_name: "Filosofía" },
+            { id: "1", label: "Tecnología" },
+            { id: "2", label: "Filosofía" },
         ]
     },
 };

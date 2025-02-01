@@ -50,8 +50,8 @@ const meta: Meta<typeof ArticleDetail> = {
         textLink: "Leer más",
         coverHref: "https://placehold.co/600x150",
         categories: [
-            { id: "1", singular_name: "Tecnología" },
-            { id: "2", singular_name: "Filosofía" },
+            { id: "1", label: "Tecnología" },
+            { id: "2", label: "Filosofía" },
         ]
     },
 };

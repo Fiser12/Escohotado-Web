@@ -46,7 +46,7 @@ export const FeaturedQuote: React.FC<Props> = ({ className, quote, author, categ
                   </div>}
                   <div className="flex flex-row gap-2 flex-wrap">
                         { categories.map((category, index) => 
-                              <Tag key={index} text={category.singular_name} variant="disabled"/>
+                              <Tag key={index} text={category.label} variant="disabled"/>
                         )}
                   </div>
             </div>

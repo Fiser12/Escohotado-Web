@@ -46,8 +46,8 @@ const meta: Meta<typeof FeaturedArticle> = {
             author: "Sample Author",
             coverHref: "https://placehold.co/400x400",
             categories: [
-                  { id: "1", singular_name: "Tecnología" },
-                  { id: "2", singular_name: "Filosofía" },
+                  { id: "1", label: "Tecnología" },
+                  { id: "2", label: "Filosofía" },
             ],
             hasPermission: true,
             isPdf: false,

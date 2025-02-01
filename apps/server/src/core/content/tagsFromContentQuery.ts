@@ -1,20 +1,15 @@
 'use server'
 import { getPayload } from '@/payload/utils/getPayload'
+import { CategoryModel } from 'hegel'
 import { collectionsContentsSlugs } from 'hegel/payload'
 import { Taxonomy } from 'payload-types'
-
-export type TagModel = { 
-  slug?: string | null; 
-  label: string, 
-  breadcrumb: string 
-}
+import { mapTaxonomyToCategoryModel } from '../domain/mapping/mapTaxonomyToCategoryModel'
 
 export const tagsFromContentQuery = async (
   collection: (typeof collectionsContentsSlugs)[number],
   query: string,
-  excludeSeeds: string[] = []
-
-): Promise<TagModel[]> => {
+  excludeSeeds: string[] = [],
+): Promise<CategoryModel[]> => {
   const payload = await getPayload()
   const queryFieldKey = collection === 'quote' ? 'quote' : 'title'
   const contentDocs = await payload.find({
@@ -34,12 +29,14 @@ export const tagsFromContentQuery = async (
         (quote) =>
           quote.categories
             ?.cast<Taxonomy>()
-            ?.filter((category) => !excludeSeeds.some((seed) => category.breadcrumbs?.some((breadcrumb) => breadcrumb.url?.includes(seed))))
-            ?.mapNotNull((category) => ({
-              slug: category.slug,
-              label: category.singular_name,
-              breadcrumb: category.breadcrumbs?.findLast(i => i.url?.includes(category.slug ?? ""))?.url ?? "",
-            }))
+            ?.filter(category =>
+              !excludeSeeds.some(
+                seed => category.breadcrumbs?.some(
+                  breadcrumb => breadcrumb.url?.includes(seed)
+                )
+              )
+            )
+            ?.mapNotNull(mapTaxonomyToCategoryModel)
             ?.flat() ?? [],
       )
       ?.flat() ?? []

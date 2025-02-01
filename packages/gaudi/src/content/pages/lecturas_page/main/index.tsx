@@ -25,8 +25,8 @@ export const ArticlePage = () => {
       type: "article",
       href: "/article/prohibicionismo-libertad",
       categories: [
-        { id: "1", singular_name: "Filosofía política" },
-        { id: "2", singular_name: "Políticas de drogas" },
+        { id: "1", label: "Filosofía política" },
+        { id: "2", label: "Políticas de drogas" },
       ],
       hasPermission: true,
     },
@@ -40,8 +40,8 @@ export const ArticlePage = () => {
       href: "/article/etica-y-politica-drogas",
       detailHref: "/article/etica-y-politica-drogas",
       categories: [
-        { id: "1", singular_name: "Ética" },
-        { id: "2", singular_name: "Filosofía" },
+        { id: "1", label: "Ética" },
+        { id: "2", label: "Filosofía" },
       ],
       hasPermission: true,
     },
@@ -55,8 +55,8 @@ export const ArticlePage = () => {
       coverHref: "https://placehold.co/300x150?text=Justicia+Social",
       href: "/article/legalizacion-justicia",
       categories: [
-        { id: "1", singular_name: "Justicia social" },
-        { id: "2", singular_name: "Política" },
+        { id: "1", label: "Justicia social" },
+        { id: "2", label: "Política" },
       ],
       hasPermission: false,
     },
@@ -68,8 +68,8 @@ export const ArticlePage = () => {
       coverHref: "https://placehold.co/300x150?text=Justicia+Social",
       href: "/article/legalizacion-justicia",
       categories: [
-        { id: "1", singular_name: "Justicia social" },
-        { id: "2", singular_name: "Política" },
+        { id: "1", label: "Justicia social" },
+        { id: "2", label: "Política" },
       ],
       id: "4",
       type: "article",

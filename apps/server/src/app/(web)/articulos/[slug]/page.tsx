@@ -8,6 +8,7 @@ import { COLLECTION_SLUG_ARTICLE_WEB, generateDetailHref } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
+import { mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
 
 interface Props {
   params: {
@@ -41,7 +42,7 @@ const Page: NextPage<Props> = async (props) => {
     coverHref={(article.cover as Media | null)?.url ?? "#"}
     detailHref={generateDetailHref({ collection: "article_web", value: article })}
     textLink={"Leer más"}
-    categories={article.categories as Taxonomy[]}
+    categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
   >
     {article.content &&
       <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />

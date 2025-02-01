@@ -1,5 +1,7 @@
 export type CategoryModel = {
-  id: string;
-  singular_name: string;
-  seed?: string | null;
+  id: string
+  slug?: string | null
+  label: string
+  breadcrumb?: string | null
 };
+

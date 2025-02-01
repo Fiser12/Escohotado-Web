@@ -1,6 +1,7 @@
 import { FilterBarNuqs } from "./filter_bar_nuqs";
 import { collectionsContentsSlugs } from "hegel/payload";
-import { TagModel, tagsFromContentQuery } from "@/core/content/tagsFromContentQuery";
+import { tagsFromContentQuery } from "@/core/content/tagsFromContentQuery";
+import { CategoryModel } from "hegel";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
     collection: (typeof collectionsContentsSlugs)[number][]
@@ -15,7 +16,7 @@ export async function TagsFilterBarSSR({collection, query, excludeSeeds = [], ..
         collection.map(async (collection) => await tagsFromContentQuery(collection, query, excludeSeeds))
     )).flat();
     
-    const tagsAsRecord: Record<string, TagModel> = {};
+    const tagsAsRecord: Record<string, CategoryModel> = {};
     taxonomies
         .filter((taxonomy) => taxonomy.slug)
         .forEach((taxonomy) => {

@@ -1,4 +1,5 @@
-import { collectionsContentsWithDetailsSlugs } from "src/payload/collectionsSlugs";
+import { collectionsContentsWithDetailsSlugs } from "../payload/collectionsSlugs";
+import { CategoryModel } from "./types/CategoryModel";
 
 type ContentType = "article" | "quote" | "book" | "video" | "media";
 
@@ -16,7 +17,7 @@ export interface ArticleHeaderModel extends ContentHeaderBaseModel {
     href?: string | null;
     isPdf: boolean;
     detailHref: string;
-    categories: Array<{ id: string; singular_name: string; }>;
+    categories: CategoryModel[];
 }
 
 export interface QuoteHeaderModel extends ContentHeaderBaseModel {
@@ -26,7 +27,7 @@ export interface QuoteHeaderModel extends ContentHeaderBaseModel {
     author: string;
     context?: string | null;
     origen?: OrigenModel | null;
-    categories: Array<{ id: string; singular_name: string; }>;
+    categories: CategoryModel[];
 }
 
 export interface OrigenModel {
@@ -53,7 +54,7 @@ export interface VideoHeaderModel extends ContentHeaderBaseModel {
     href: string | null;
     detailHref: string;
     publishedAt: string | null | undefined;
-    categories: Array<{ id: string; singular_name: string; }>;
+    categories: CategoryModel[];
 }
 
 export interface MediaHeaderModel extends ContentHeaderBaseModel {

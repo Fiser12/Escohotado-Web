@@ -1,4 +1,6 @@
+import { CategoryModel } from "hegel";
 import { Taxonomy } from "payload-types";
+import { mapTaxonomyToCategoryModel } from "../domain/mapping/mapTaxonomyToCategoryModel";
 
 
 export const getAuthorFromTaxonomies = (taxonomies: Taxonomy[]): Taxonomy | undefined => (
@@ -14,25 +16,25 @@ export const getAuthorsNamesFromTaxonomies = (taxonomies: Taxonomy[]): string =>
 
 export const getMediasFromTaxonomies = (
   taxonomies: Taxonomy[],
-): { id: string; singular_name: string }[] => {
+): CategoryModel[] => {
   return taxonomies
   .filter(taxonomy => taxonomy.breadcrumbs?.some(b => b.url?.includes("medio")) == true)
-  .map((taxonomy) => ({ id: taxonomy.id, singular_name: taxonomy.singular_name }))
+  .map(mapTaxonomyToCategoryModel)
 }
 
 export const getTopicsFromTaxonomies = (
   taxonomies: Taxonomy[],
-): { id: string; singular_name: string }[] => {
+): CategoryModel[] => {
   return taxonomies
   .filter(taxonomy => taxonomy.breadcrumbs?.some(b => b.url?.includes("tema")) == true)
-  .map((taxonomy) => ({ id: taxonomy.id, singular_name: taxonomy.singular_name }))
+  .map(mapTaxonomyToCategoryModel)
 }
 
 export const getSelectableTaxonomies = (
   taxonomies: Taxonomy[],
-): { id: string; singular_name: string }[] => {
+): CategoryModel[] => {
   return taxonomies
   .filter(taxonomy => taxonomy.selectable == true)
-  .map((taxonomy) => ({ id: taxonomy.id, singular_name: taxonomy.singular_name }))
+  .map(mapTaxonomyToCategoryModel)
 }
 

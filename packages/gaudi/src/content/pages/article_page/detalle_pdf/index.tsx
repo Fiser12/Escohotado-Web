@@ -47,7 +47,7 @@ export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, c
                                     <div className={tagDateContainerClass}>
                                           <div className={categoriesClass}>
                                                 {categories?.map((category, index) =>
-                                                      <Tag key={index} text={category.singular_name}></Tag>
+                                                      <Tag key={index} text={category.label}></Tag>
                                                 )}
                                           </div>
                                           <p className="text-gray-disabled">{formattedDate}</p>

@@ -37,8 +37,8 @@ const meta: Meta<typeof FeaturedVideo> = {
             publishedAt: "2024-11-18",
             coverHref: "https://placehold.co/300x200",
             categories: [
-                  { id: "1", singular_name: "Tecnología" },
-                  { id: "2", singular_name: "Filosofía" },
+                  { id: "1", label: "Tecnología" },
+                  { id: "2", label: "Filosofía" },
             ],
             hasPermission: true,
       },

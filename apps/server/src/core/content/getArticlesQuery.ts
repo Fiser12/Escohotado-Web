@@ -7,6 +7,7 @@ import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { evaluateExpression } from 'hegel'
 import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
+import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
 
 const pageSize = 40
 export type CommonArticle = (ArticlePdf | ArticleWeb) & {
@@ -27,8 +28,13 @@ export const getArticlesQueryByTags = async (
   if (tags.length === 0) {
     return getArticlesQuery(page, maxPage, 'publishedAt', query)
   }
-  const filterExpression = `${tags.map((tag) => `"${tag}"`).join(' && ')}`
-  return getArticlesQuery(page, maxPage, 'publishedAt', query, filterExpression)
+  return getArticlesQuery(
+    page, 
+    maxPage, 
+    'publishedAt', 
+    query, 
+    generateFilterExpresionFromTags(tags, '&&')
+  )
 }
 
 export const getArticlesQuery = async (
@@ -93,15 +99,9 @@ export const getArticlesQuery = async (
     )
     .filter((article) => {
       const categories = article.categories as Taxonomy[] | undefined
-      if (!categories) {
-        return true
-      }
       const tags = Array.from(
-        new Set<string>(
-          categories.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
-        ),
+        new Set(categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
       )
-
       const evalQueryFilter =
         query === null ||
         query.trim() === '' ||

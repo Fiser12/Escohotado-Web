@@ -7,6 +7,7 @@ import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedCo
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { evaluateExpression } from 'hegel'
 import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
+import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
 
 const pageSize = 20
 
@@ -23,13 +24,12 @@ export const getVideosQueryByTags = async (
   results: ResultVideo[]
   maxPage: number
 }> => {
-  const filterExpression = tags.length !== 0 ? tags.map((tag) => `"${tag}"`).join(' || ') : null
   return getVideosQuery(
     page,
     pageSize,
     sortBy as 'publishedAt' | 'popularity',
     query,
-    filterExpression,
+    generateFilterExpresionFromTags(tags, '&&'),
   )
 }
 
@@ -73,9 +73,7 @@ export const getVideosQuery = async (
     .filter((video) => {
       const categories = video.categories as Taxonomy[] | undefined
       const categoriesTags = Array.from(
-        new Set<string>(
-          categories?.flatMap((category) => getSlugsFromTaxonomy(category)).filter(Boolean),
-        ),
+        new Set<string>(categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
       )
       const youtubeTags = (video.tags ?? []) as string[]
       const tags = [...categoriesTags, ...youtubeTags]

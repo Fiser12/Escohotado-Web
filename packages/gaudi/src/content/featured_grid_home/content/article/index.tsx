@@ -70,7 +70,7 @@ export const FeaturedArticle: React.FC<Props> = ({
             <div className={`text-content-position-article w-full h-full flex flex-col justify-center gap-1`}>
               <div className={categoriesClass}>
                 {categories?.map((category, index) => (
-                  <Tag key={index} text={category.singular_name} variant={hasPermission ? 'primary' : 'disabled'}></Tag>
+                  <Tag key={index} text={category.label} variant={hasPermission ? 'primary' : 'disabled'}></Tag>
                 ))}
               </div>
               <p className={`dynamic-text-article ${titleClass}`}>{title}</p>

@@ -58,7 +58,7 @@ export const VideoDetail: React.FC<Props> = ({
                     <div className={tagDateContainerClass}>
                         <div className={categoriesClass}>
                             {categories?.map((category, index) =>
-                                <Tag key={index} text={category.singular_name}></Tag>
+                                <Tag key={index} text={category.label}></Tag>
                             )}
                         </div>
                         <div className="flex flex-col gap-2 items-end">
