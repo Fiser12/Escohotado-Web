@@ -6,6 +6,7 @@ import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
 import { HamburguerIcon } from "../icons/hamburguer_icon";
 import { BasicDropdown } from "../dropdown";
+import { OpenModalButton } from "./open_search_modal_button";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
     user: Optional<UserModel>
@@ -39,6 +40,7 @@ export const Header: React.FC<Props> = ({
                         <NavItem href="/articulos" text="Lecturas" tabindex={2} />
                         <NavItem href="/videos" text="Vídeos" tabindex={3} />
                         <BasicDropdown menuSections={catalogoSections} text="Catálogo" />
+                        <OpenModalButton />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
                         {user ? <UserDropdown

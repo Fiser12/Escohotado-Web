@@ -5,3 +5,4 @@ export { SelectBox } from "./content/common/selectors/select_box";
 export { Textures } from "./common/textures";
 export { SelectBoxes } from "./content/common/selectors/grid_select_boxes";
 export { ContentGridList } from "./content/common/content_grid_list";
+export { SearchModal } from "./common/search_modal";
