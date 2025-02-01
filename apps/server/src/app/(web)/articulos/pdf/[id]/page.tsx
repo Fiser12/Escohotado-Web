@@ -9,6 +9,7 @@ import { mapAnyToComment } from 'hegel';
 import { getAuthorFromTaxonomies } from '@/core/content/taxonomiesGetters';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
+import { mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
 
 interface Props {
   params: {
@@ -39,7 +40,7 @@ const Page: NextPage<Props> = async (props) => {
     publishedAt={articlePdf.publishedAt as string}
     detailHref={generateDetailHref({ collection: "article_pdf", value: articlePdf })}
     coverHref={(articlePdf.cover as Media | null)?.url ?? "#"}
-    categories={articlePdf.categories as Taxonomy[]}
+    categories={articlePdf.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
   >
     {articlePdf.content &&
       <LexicalRenderer className="max-w-[48rem] mx-auto" data={articlePdf.content} />

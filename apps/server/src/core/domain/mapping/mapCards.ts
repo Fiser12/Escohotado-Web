@@ -56,7 +56,7 @@ const mapRelationToFeatured = (
 export const mapArticleCard =
   (user: User | null) =>
   (item: ArticlePdf | ArticleWeb): ContentHeaderModel => {
-    const taxonomies = (item.categories ?? []) as Taxonomy[]
+    const taxonomies = item.categories?.cast<Taxonomy>() ?? []
     return {
       type: 'article',
       id: item.id,
