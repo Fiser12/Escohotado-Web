@@ -12,10 +12,28 @@
     },
     {
       "command": "pnpm --prefix apps/server run dev",
-      "name": "Run development server",
+      "name": "Debug server",
       "request": "launch",
       "type": "node-terminal"
+    },
+    {
+      "url": "http://localhost:3000",
+      "name": "Debug client",
+      "request": "launch",
+      "type": "msedge"
+    },
+    {
+      "name": "Debug",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm --prefix apps/server run dev",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithEdge"
+      }
     }
+
 
   ]
 }
