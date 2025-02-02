@@ -5,30 +5,24 @@ import { SearchModal } from "gaudi/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Props { }
+interface Props {
+  goBackTo?: string;
+ }
 
-export const SearchModalLayout: React.FC<Props> = () => {
-  const searchParams = useSearchParams();
+export const SearchModalLayout: React.FC<Props> = ({goBackTo}) => {
   const router = useRouter();
-  const isOpen = searchParams.get("isOpenSearch") === "true";
-  const pathname = usePathname();
-
-  const handleClose = () => {
-    const params = new URLSearchParams(searchParams);
-    params.delete("isOpenSearch");
-    const queryString = params.toString();
-    const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
-    router.replace(newUrl);
-  };
 
   return <AnimatePresence>
-    {isOpen && <motion.div
+    <motion.div
       className="fixed inset-0 backdrop-blur-xs bg-opacity-30 pt-20 p-5 flex justify-center items-start z-100"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      onClick={handleClose}
+      onClick={() => {
+        if(goBackTo) router.push(goBackTo);
+        else router.back();
+      }}
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
@@ -46,6 +40,6 @@ export const SearchModalLayout: React.FC<Props> = () => {
           secondsDelay={1}
         />
       </motion.div>
-    </motion.div>}
+    </motion.div>
   </AnimatePresence>
 };

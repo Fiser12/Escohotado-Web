@@ -2,13 +2,12 @@ import React from "react";
 import { Header } from "gaudi/server";
 import { signIn, signOut } from "@/payload/plugins/authjs/plugin";
 import { NuqsAdapter } from 'nuqs/adapters/next'
-import "../tailwind.css";
 import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { Textures } from "gaudi/client";
-import { SearchModalLayout } from "@/ui/nuqs/global_search/global_search_nuqs";
+import "../tailwind.css";
 
-const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
+const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> = async ({ children, modal }) => {
   const payloadUser = await getCurrentUserQuery()
   return (
     <html>
@@ -33,8 +32,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
             }}
             menuSections={getAccountMenuQuery(payloadUser)}
           />
+          {modal}
           {children}
-          <SearchModalLayout />
         </NuqsAdapter>
         { Textures.map((Element, index) => <Element key={index} />)}
       </body>
