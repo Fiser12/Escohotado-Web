@@ -13,9 +13,9 @@ import { mapArticleCard } from "@/core/domain/mapping/mapCards";
 import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
 import classNames from "classnames";
 import { TagsFilterBarSSR } from "@/ui/nuqs/tags_filter_bar_ssr";
+import { getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
 
 export const pageSize = 10;
 

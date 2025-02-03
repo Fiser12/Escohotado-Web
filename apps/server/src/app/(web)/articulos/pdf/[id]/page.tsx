@@ -6,10 +6,9 @@ import { Media, Quote, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_ARTICLE_PDF, generateDetailHref } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
-import { getAuthorFromTaxonomies } from '@/core/content/taxonomiesGetters';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
-import { mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
+import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
 
 interface Props {
   params: {

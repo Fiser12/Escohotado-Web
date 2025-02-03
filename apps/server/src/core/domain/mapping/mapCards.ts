@@ -6,7 +6,7 @@ import {
   getMediasFromTaxonomies,
   getSelectableTaxonomies,
   getTopicsFromTaxonomies,
-} from '@/core/content/taxonomiesGetters'
+} from './mapTaxonomyToCategoryModel'
 import { ContentCardModel, ContentHeaderModel, OrigenModel, QuoteHeaderModel } from 'hegel'
 import {
   Taxonomy,
