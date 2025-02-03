@@ -9,7 +9,7 @@ import { evaluateExpression } from 'hegel'
 import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
 import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
 
-const pageSize = 20
+const limit = 20
 
 export type ResultVideo = Video & {
   allowedHref: string | null
@@ -26,7 +26,7 @@ export const getVideosQueryByTags = async (
 }> => {
   return getVideosQuery(
     page,
-    pageSize,
+    limit,
     sortBy as 'publishedAt' | 'popularity',
     query,
     generateFilterExpresionFromTags(tags, '&&'),
@@ -35,7 +35,7 @@ export const getVideosQueryByTags = async (
 
 export const getVideosQuery = async (
   page: number = 0,
-  maxPage: number = pageSize,
+  limit: number,
   sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
   query: string = '',
   filterExpression?: string | null,
@@ -43,7 +43,15 @@ export const getVideosQuery = async (
   results: ResultVideo[]
   maxPage: number
 }> => {
-  const results = (await searchElementsQuery(query, [COLLECTION_SLUG_VIDEO])).map((item) => item.id)
+  const { results, lastPage } = await searchElementsQuery(
+    query, 
+    [COLLECTION_SLUG_VIDEO], 
+    page,
+    filterExpression, 
+    limit
+  )
+  if (results.length === 0) return { results: [], maxPage: lastPage }
+
   const payload = await getPayload()
   const user = await getCurrentUserQuery(payload)
   const sort = sortBy == 'publishedAt' ? '-publishedAt' : '-viewCount'
@@ -52,7 +60,7 @@ export const getVideosQuery = async (
     sort,
     pagination: false,
     where: {
-      id: { in: results },
+      id: { in: results.map(item => item.id) },
     },
   })
 
@@ -69,24 +77,8 @@ export const getVideosQuery = async (
         ...video,
         allowedHref,
       }
-    })
-    .filter((video) => {
-      const categories = video.categories as Taxonomy[] | undefined
-      const categoriesTags = Array.from(
-        new Set<string>(categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
-      )
-      const youtubeTags = (video.tags ?? []) as string[]
-      const tags = [...categoriesTags, ...youtubeTags]
+    }
+  )
 
-      return filterExpression ? evaluateExpression(filterExpression, tags) : true
-      
-    })
-
-  const startIndex = page * maxPage
-  const endIndex = startIndex + maxPage
-
-  return {
-    results: videos.slice(startIndex, endIndex),
-    maxPage: Math.ceil(videos.length / maxPage),
-  }
+  return { results: videos, maxPage: lastPage }
 }

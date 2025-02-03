@@ -7,7 +7,7 @@ import {
   getSelectableTaxonomies,
   getTopicsFromTaxonomies,
 } from './mapTaxonomyToCategoryModel'
-import { ContentCardModel, ContentHeaderModel, OrigenModel, QuoteHeaderModel } from 'hegel'
+import { ContentCardModel, ContentHeaderModel, QuoteHeaderModel } from 'hegel'
 import {
   Taxonomy,
   ArticlePdf,

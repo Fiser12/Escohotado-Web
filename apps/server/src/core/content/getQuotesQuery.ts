@@ -45,7 +45,9 @@ export const getQuotesQuery = async (
   results: Quote[]
   maxPage: number
 }> => {
-  const results = (await searchElementsQuery(query, [COLLECTION_SLUG_QUOTE])).map((item) => item.id)
+  const { results, lastPage } = (await searchElementsQuery(query, [COLLECTION_SLUG_QUOTE]))
+  if (results.length === 0) return { results: [], maxPage: lastPage }
+
   const payload = await getPayload()
   const sort = sortBy == 'publishedAt' ? '-createdAt' : '-createdAt'
 
@@ -53,7 +55,7 @@ export const getQuotesQuery = async (
     collection: COLLECTION_SLUG_QUOTE,
     sort,
     pagination: false,
-    where: { id: { in: results } },
+    where: { id: { in: results.map((item) => item.id) } },
   })
 
   const quotes = quotesDocs.docs
@@ -73,11 +75,6 @@ export const getQuotesQuery = async (
 
       return filterExpression ? evaluateExpression(filterExpression, tags) : true
     })
-  const startIndex = page * maxPage
-  const endIndex = startIndex + maxPage
 
-  return {
-    results: quotes.slice(startIndex, endIndex),
-    maxPage: Math.ceil(quotes.length / maxPage),
-  }
+    return { results: quotes, maxPage: lastPage }
 }

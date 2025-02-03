@@ -39,13 +39,14 @@ export const SearchModalLayout: React.FC<Props> = ({goBackTo}) => {
           maxItemSize={300}
           onTagClick={(tag) => console.log("Tag clicked", tag)}
           onType={async (value) => {
-            const items = await searchElementsQuery(
+            const { results } = await searchElementsQuery(
               value, 
               ["article_pdf", "article_web", "book", "video"], 
+              0,
               undefined, 
               20
             );
-            setItems(items.map(item => ({
+            setItems(results.map(item => ({
               id: item.id,
               href: item.href,
               icon: <p></p>,

@@ -34,7 +34,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
   const user = await getCurrentUserQuery();
   const articles = await getArticlesQueryByTags(query, tagsArrays, 0)
   const lastArticles = await getArticlesQueryByTags("", [], 0, 4);
-  const books = await getBooksQuery(query, 0)
+  const books = await getBooksQuery(query)
   const payload = await getPayload()
   const articulosDataPage = await payload.findGlobal({
     slug: "articulos_page"

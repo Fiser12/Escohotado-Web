@@ -17,17 +17,17 @@ export const getArticlesQueryByTags = async (
   query: string,
   tags: string[],
   page: number,
-  maxPage: number = pageSize,
+  limit: number = pageSize,
 ): Promise<{
   results: CommonArticle[]
   maxPage: number
 }> => {
   if (tags.length === 0) {
-    return getArticlesQuery(page, maxPage, 'publishedAt', query)
+    return getArticlesQuery(page, limit, 'publishedAt', query)
   }
   return getArticlesQuery(
     page, 
-    maxPage, 
+    limit, 
     'publishedAt', 
     query, 
     generateFilterExpresionFromTags(tags, '&&')
@@ -36,7 +36,7 @@ export const getArticlesQueryByTags = async (
 
 export const getArticlesQuery = async (
   page: number = 0,
-  maxPage: number = pageSize,
+  limit: number = pageSize,
   sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
   query: string = '',
   filterExpression?: string | null,
@@ -44,12 +44,17 @@ export const getArticlesQuery = async (
   results: CommonArticle[]
   maxPage: number
 }> => {
-  const results = await searchElementsQuery(query, [
-    COLLECTION_SLUG_ARTICLE_PDF,
-    COLLECTION_SLUG_ARTICLE_WEB,
-  ])
+  const { results, lastPage } = await searchElementsQuery(
+    query, 
+    [COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB],
+    page, 
+    filterExpression,
+    limit
+  )
+  if (results.length === 0) return { results: [], maxPage: lastPage }
+
   const payload = await getPayload()
-  const user = await getCurrentUserQuery(payload)
+
   const sort = sortBy == 'publishedAt' ? '-publishedAt' : '-publishedAt'
   const [articlesPDF, articlesWeb] = await Promise.all([
     payload.find({
@@ -88,24 +93,9 @@ export const getArticlesQuery = async (
   }))
 
   const articles = [...articlesPDFWithType, ...articlesWebWithType]
-    .sort(
-      (a, b) => new Date(b.publishedAt ?? '0').getTime() - new Date(a.publishedAt ?? '0').getTime(),
+    .sort((a, b) => 
+      new Date(b.publishedAt ?? '0').getTime() - new Date(a.publishedAt ?? '0').getTime()
     )
-    .filter((article) => {
-      const categories = article.categories as Taxonomy[] | undefined
-      const tags = Array.from(
-        new Set(categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
-      )
 
-      return (
-        (filterExpression ? evaluateExpression(filterExpression, tags) : true)
-      )
-    })
-  const startIndex = page * maxPage
-  const endIndex = startIndex + maxPage
-
-  return {
-    results: articles.slice(startIndex, endIndex),
-    maxPage: Math.ceil(articles.length / maxPage),
-  }
+  return { results: articles, maxPage: lastPage }
 }
