@@ -45,7 +45,7 @@ export const getQuotesQuery = async (
   results: Quote[]
   maxPage: number
 }> => {
-  const { results, lastPage } = (await searchElementsQuery(query, [COLLECTION_SLUG_QUOTE]))
+  const { results, lastPage } = (await searchElementsQuery(query, [COLLECTION_SLUG_QUOTE], undefined, filterExpression))
   if (results.length === 0) return { results: [], maxPage: lastPage }
 
   const payload = await getPayload()
@@ -55,26 +55,25 @@ export const getQuotesQuery = async (
     collection: COLLECTION_SLUG_QUOTE,
     sort,
     pagination: false,
+    depth: 1,
     where: { id: { in: results.map((item) => item.id) } },
   })
 
   const quotes = quotesDocs.docs
     .filter((quote) => {
       if (filterByCollectionId) {
-        const id =
-          typeof quote.source?.value === 'string' ? quote.source?.value : quote.source?.value.id
+        const id = typeof quote.source?.value === 'string' 
+        ? quote.source?.value 
+        : quote.source?.value.id
         return id === filterByCollectionId
       }
       return true
     })
-    .filter((quote) => {
-      const categories = quote.categories as Taxonomy[] | undefined
-      const tags = Array.from(
-        new Set(categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
-      )
-
-      return filterExpression ? evaluateExpression(filterExpression, tags) : true
-    })
-
-    return { results: quotes, maxPage: lastPage }
-}
+    const startIndex = page * maxPage
+    const endIndex = startIndex + maxPage
+  
+    return {
+      results: quotes.slice(startIndex, endIndex),
+      maxPage: Math.ceil(quotes.length / maxPage),
+    }
+  }

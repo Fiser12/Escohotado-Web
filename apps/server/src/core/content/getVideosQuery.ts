@@ -1,12 +1,10 @@
 'use server'
 import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
-import { Taxonomy, Video } from 'payload-types'
+import { Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
-import { evaluateExpression } from 'hegel'
-import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
 import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
 
 const limit = 20
