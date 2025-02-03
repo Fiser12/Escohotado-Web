@@ -1,15 +1,17 @@
 import type { s3Storage } from '@payloadcms/storage-s3'
-import { S3Client } from "@aws-sdk/client-s3";
+import { S3Client } from '@aws-sdk/client-s3'
+import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
+import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 
 export type S3StoragePlugin = Parameters<typeof s3Storage>[0]
 
 export const s3Client = new S3Client({
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
   },
-  region: process.env.AWS_REGION
-});
+  region: process.env.AWS_REGION,
+})
 
 export const S3_PLUGIN_CONFIG: S3StoragePlugin = {
   collections: {},
@@ -20,7 +22,23 @@ export const S3_PLUGIN_CONFIG: S3StoragePlugin = {
     forcePathStyle: true,
     credentials: {
       accessKeyId: process.env.S3_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!
-    }
-  }
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+    },
+  },
 }
+
+const config = s3StoragePlugin({
+  ...S3_PLUGIN_CONFIG,
+  collections: {
+    [COLLECTION_SLUG_MEDIA]: {
+      disableLocalStorage: true,
+      prefix: 'media',
+    },
+    [COLLECTION_SLUG_ARTICLE_PDF]: {
+      disableLocalStorage: true,
+      prefix: 'article_pdf',
+    },
+  },
+})
+
+export default config
