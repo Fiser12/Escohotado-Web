@@ -1,6 +1,6 @@
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 import { addContentHashToFile } from '../../../hooks/media/addContentHashToFileHook'
-import { COLLECTION_SLUG_ARTICLE_PDF } from 'hegel/payload'
+import { COLLECTION_SLUG_ARTICLE_PDF, routes } from 'hegel/payload'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 
 export const articlePDF = contentWithPermissionsCollectionBuilder({
@@ -17,7 +17,7 @@ export const articlePDF = contentWithPermissionsCollectionBuilder({
   },
   admin: {
     livePreview: {
-      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}/articulos/pdf/${data.id}`,
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.generateDetailHref({ collection: COLLECTION_SLUG_ARTICLE_PDF, value: { id: data.id } })}`,
     }  
   },
   fields: [

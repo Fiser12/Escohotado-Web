@@ -1,3 +1,4 @@
+import { routes } from "hegel";
 import { GlobalConfig } from "payload";
 
 export const ArticulosPage: GlobalConfig = {
@@ -12,7 +13,7 @@ export const ArticulosPage: GlobalConfig = {
     ],
     admin: {
       livePreview: {
-        url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}/articulos`,
+        url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.lecturasPageHref}`,
       }  
     }
   }

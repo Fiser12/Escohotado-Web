@@ -19,7 +19,15 @@ export const generateDetailHref = (field: ContentRelationType): string => {
       return `/videos/${field.value.id}`;
     case 'book':
       return `/biblioteca/${field.value.slug}`;
-    default:
-      return '';
-  }
+    case 'quote':
+      return `/cita/${field.value.slug}`;
+    }
 };
+
+export const routes = {
+  generateDetailHref,
+  subscriptionPageHref: "/subscriptions",
+  lecturasPageHref: "/lecturas",
+  videosPageHref: "/videos",
+  citasPageHref: "/citas",
+}

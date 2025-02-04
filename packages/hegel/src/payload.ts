@@ -19,5 +19,6 @@ export {
  } from './payload/collectionsSlugs'
 
  export {
-    generateDetailHref
+    generateDetailHref,
+    routes
  } from './payload/routesGenerator'

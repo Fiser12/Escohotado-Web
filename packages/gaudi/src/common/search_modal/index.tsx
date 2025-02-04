@@ -2,15 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tag } from '../tag/tag';
-import { CategoryModel } from 'hegel';
+import { CategoryModel, routes } from 'hegel';
 import { SearchIcon } from '../icons/search_icon';
 import { ChevronDownIcon } from '../icons/chevron_down_icon';
+import { LockIcon } from '../icons/lock_icon';
 import { ArticleIcon, BookIcon, VideoIcon, QuoteIcon } from '../../client';
 import { AllIcon } from '../icons/all_icon';
 
 export interface SearchedItem {
   id: string;
-  href: string;
+  href?: string | null;
   icon: React.ReactNode;
   title: string;
   tags: CategoryModel[];
@@ -70,7 +71,6 @@ export const SearchModal: React.FC<Props> = ({
   secondsDelay,
   onType,
   items,
-  onTagClick,
   maxItemSize,
   children,
   onFilterChange,
@@ -99,6 +99,7 @@ export const SearchModal: React.FC<Props> = ({
 
     return () => clearTimeout(timer);
   }, [searchTerm]);
+  const className="flex justify-start items-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
 
   return (
       <div className="w-full" onClick={(e) => e.stopPropagation()}>
@@ -121,7 +122,7 @@ export const SearchModal: React.FC<Props> = ({
               className="flex items-center bg-gray-200 text-gray-700 leading-tight focus:outline-none py-2 px-2 rounded-md"
             >
               <div className="h-6 w-6 mr-1">{getFilterIcon(filter)}</div>
-              <span className="ml-1">{getFilterLabel(filter)}</span>
+              <span className="ml-1 text-primary-900 text-xs font-body">{getFilterLabel(filter)}</span>
               <ChevronDownIcon />
             </button>
             {dropdownOpen && (
@@ -136,7 +137,7 @@ export const SearchModal: React.FC<Props> = ({
                     }}
                   >
                     <div className='h-6 w-6'>{getFilterIcon(option)}</div>
-                    <span className="ml-2">{getFilterLabel(option)}</span>
+                    <span className="ml-2 text-primary-900 text-xs font-body">{getFilterLabel(option)}</span>
                   </button>
                 ))}
               </div>
@@ -149,31 +150,23 @@ export const SearchModal: React.FC<Props> = ({
             className="py-3 text-sm"
             style={{ maxHeight: `${maxItemSize}px`, overflowY: 'auto' }}
           >
-            {items.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="flex justify-start items-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
-              >
-              <div className="flex-none h-6 w-6">
-                {item.icon}
-              </div>
+            {items.map((item, index) => {
+              const Content = <>
+                <div className="flex-none h-6 w-6">
+                  {item.icon}
+                </div>
                 <div className="ml-3 flex-grow font-medium line-clamp-2">{item.title}</div>
                 <div className="flex items-center space-x-2">
-                  {item.tags.map((tag, index) => (
-                    <Tag
-                      key={index}
-                      text={tag.label}
-                      variant="primary"
-                      onClick={() => onTagClick(tag)}
-                    />
-                  ))}
+                  { item.href == null && <div className='h-6 w-6'><LockIcon /> </div>}
                 </div>
-              </a>
-            ))}
-            {children}
-          </div> }
+              </>
+              return <a href={item.href ?? routes.subscriptionPageHref} key={index} className={className}>{Content}</a>
+            })}
+              {children}
+          </div>
+        }
         </div>
       </div>
   );
 };
+

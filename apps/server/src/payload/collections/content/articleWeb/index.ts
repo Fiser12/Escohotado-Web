@@ -1,5 +1,5 @@
 import { slugField } from '@/payload/fields/slug'
-import { COLLECTION_SLUG_ARTICLE_WEB } from 'hegel/payload'
+import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 
@@ -11,8 +11,11 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
   },
   admin: {
     livePreview: {
-      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}/articulos/${data.slug}`,
-    }  
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.generateDetailHref({ 
+        collection: COLLECTION_SLUG_ARTICLE_WEB, 
+        value: { id: data.id, slug: data.slug } 
+      })}`,
+    }
   },
   fields: [
     ...slugField("title"),

@@ -3,6 +3,7 @@ import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery
 import { NextResponse } from 'next/server'
 import { User } from 'payload-types'
 import Stripe from 'stripe'
+import { routes } from 'hegel'
 
 export async function GET(request: Request) {
   const payloadUser = await getCurrentUserQuery()
@@ -46,6 +47,6 @@ async function createPortalSession(
   return await stripe.billingPortal.sessions.create({
     flow_data: flowData,
     customer: customer.id,
-    return_url: `${url.origin}/subscriptions`,
+    return_url: `${url.origin}${routes.subscriptionPageHref}`,
   })
 }

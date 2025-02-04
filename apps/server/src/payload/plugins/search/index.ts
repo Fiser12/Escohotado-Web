@@ -15,20 +15,9 @@ const config: (config: Config) => Config = searchPlugin({
         slug: 'search-results',
         fields: ({ defaultFields }: any) => [
           ...defaultFields,
-          {
-            name: 'tags',
-            type: 'text',
-            admin: {
-              readOnly: true
-            }
-          },
-          {
-            name: 'href',
-            type: 'text',
-            admin: {
-              readOnly: true
-            }
-          },
+          { name: 'tags', type: 'text', admin: { readOnly: true } },
+          { name: 'permissions_seeds', type: 'text', admin: { readOnly: true } },
+          { name: 'href', type: 'text', admin: { readOnly: true } }
 
         ],
       },
@@ -54,7 +43,8 @@ const config: (config: Config) => Config = searchPlugin({
             collection: searchDoc.doc.relationTo, 
             value: { id: originalDoc.id, slug: originalDoc.slug } 
           }),
-          tags: tags + " " + (originalDoc.tags?.join(" ") ?? "")
+          tags: tags + " " + (originalDoc.tags?.join(" ") ?? ""),
+          permissions_seeds: originalDoc.permissions_seeds ?? ""
         }
       }
     }

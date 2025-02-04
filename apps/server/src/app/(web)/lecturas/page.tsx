@@ -1,4 +1,4 @@
-import { COLLECTION_SLUG_ARTICLE_PDF } from "hegel/payload";
+import { COLLECTION_SLUG_ARTICLE_PDF, routes } from "hegel/payload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
 import { convertContentModelToCard } from "hegel";
@@ -74,7 +74,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
           </div>
         </ContentWrapper>
       </div>
-      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="/subscriptions" coverHref={handwrittenBackground.src}></HighlightSection>
+      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href={routes.subscriptionPageHref} coverHref={handwrittenBackground.src}></HighlightSection>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
       {articulosDataPage.content &&
         <LexicalRenderer data={articulosDataPage.content} />

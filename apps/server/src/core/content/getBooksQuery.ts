@@ -1,6 +1,6 @@
-import { COLLECTION_SLUG_BOOK } from 'hegel/payload'
+import { COLLECTION_SLUG_BOOK, routes } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
-import { Book, Media } from 'payload-types'
+import { Media } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 
 interface BookDto {
@@ -26,7 +26,7 @@ export const getBooksQuery = async (query: string): Promise<BookDto[]> => {
     return {
       title: book.title ?? '',
       coverHref: cover?.url ?? '#',
-      link: `/biblioteca/${book.slug}`,
+      link: routes.generateDetailHref({ collection: COLLECTION_SLUG_BOOK, value: book })
     }
   })
 }

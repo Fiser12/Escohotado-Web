@@ -3,7 +3,7 @@ import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery
 import { NextResponse } from 'next/server'
 import { User } from 'payload-types'
 import Stripe from 'stripe'
-
+import { routes } from 'hegel'
 export async function GET(request: Request) {
   const payloadUser = await getCurrentUserQuery()
   const url = new URL(request.url)
@@ -23,8 +23,8 @@ async function createSubscriptionCheckout(
   const stripe = stripeBuilder()
 
   return await stripe.checkout.sessions.create({
-    success_url: `${url.origin}/subscriptions`,
-    cancel_url: `${url.origin}/subscriptions`,
+    success_url: `${url.origin}${routes.subscriptionPageHref}`,
+    cancel_url: `${url.origin}${routes.subscriptionPageHref}`,
     mode: 'subscription',
     customer_email: user.email,
     client_reference_id: user.id,

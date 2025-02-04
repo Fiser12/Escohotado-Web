@@ -1,14 +1,13 @@
 import React from 'react'
 
 import classNames from 'classnames'
-import { ContentCardModel } from "hegel"
+import { ContentCardModel, routes } from "hegel"
 import { FeaturedArticle } from './content/article'
 import { FeaturedQuote } from './content/quote'
 import { FeaturedBook } from './content/book'
 import { FeaturedVideo } from './content/video'
 import { FeaturedMedia } from './content/media'
 
-const unlockHref = '/subscriptions'
 export const renderFeatured = (item: ContentCardModel) => {
   switch (item.type) {
     case "article":
@@ -22,7 +21,7 @@ export const renderFeatured = (item: ContentCardModel) => {
           author={item.author}
           coverHref={item.coverHref}
           href={item.detailHref}
-          unlockHref={unlockHref}
+          unlockHref={routes.subscriptionPageHref}
           categories={item.categories}
         />
       );
@@ -61,7 +60,7 @@ export const renderFeatured = (item: ContentCardModel) => {
           href={item.href ?? "https://placehold.co/error"}
           publishedAt={item.publishedAt}
           categories={item.categories}
-          unlockHref={unlockHref}
+          unlockHref={routes.subscriptionPageHref}
         />
       );
     case "media":

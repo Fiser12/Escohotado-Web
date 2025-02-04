@@ -2,9 +2,11 @@
 
 import { getPayload } from '@/payload/utils/getPayload'
 import { evaluateExpression } from 'hegel';
+import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery';
+import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery';
 
 export type SearchCollection = "article_pdf" | "article_web" | "quote" | "book" | "video"
-type SearchResult = { collection: SearchCollection; id: string, title: string, href: string, tags: string[] }
+type SearchResult = { collection: SearchCollection; id: string, title: string, href?: string, tags: string[] }
 
 export const searchElementsQuery = async (
   query: string,
@@ -14,6 +16,8 @@ export const searchElementsQuery = async (
   limit?: number
 ): Promise<{results: SearchResult[], lastPage: number}> => {
   const payload = await getPayload()
+  const user = await getCurrentUserQuery(payload);
+
   const results = await payload.find({
     collection: 'search-results',
     depth: 1,
@@ -21,6 +25,7 @@ export const searchElementsQuery = async (
       title: true,
       doc: true,
       href: true,
+      permissions_seeds: true,
       tags: true
     },
     sort: '-priority',
@@ -52,7 +57,7 @@ export const searchElementsQuery = async (
     }
   ).map(result => ({ 
       collection: result.doc.relationTo, 
-      href: result.href ?? "#",
+      href: evalPermissionQuery(user, result.permissions_seeds?.trim() ?? '') ? result.href ?? "#" : undefined,
       id: result.doc.value as string, 
       title: result.title ?? "",
       tags: result.tags?.split(" ").filter(Boolean) ?? [] 

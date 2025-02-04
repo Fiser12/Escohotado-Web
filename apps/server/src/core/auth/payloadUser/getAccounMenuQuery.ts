@@ -1,4 +1,4 @@
-import { UserModel, MenuSection } from "hegel";
+import { UserModel, MenuSection, routes } from "hegel";
 
 export const getAccountMenuQuery: (user?: UserModel | null) => MenuSection[] = (user) => {
     if (!user) {
@@ -8,7 +8,7 @@ export const getAccountMenuQuery: (user?: UserModel | null) => MenuSection[] = (
         {
             items: [
                 { text: "Cuenta", href: "relativeUrls.user.profile" },
-                { text: "Suscripción", href: "/subscriptions" }
+                { text: "Suscripción", href: routes.subscriptionPageHref }
             ]   
         }
     ];

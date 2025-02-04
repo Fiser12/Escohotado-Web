@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { getPayload } from '@/payload/utils/getPayload';
 import { stripeBuilder } from '@/payload/plugins/stripe';
+import { routes } from 'hegel';
 
 export async function GET(request: Request) {
   const payloadUser = await getCurrentUserQuery()
@@ -21,5 +22,5 @@ export async function GET(request: Request) {
     },
     where: { stripeID: { equals: subscriptionId } },
   })
-  return NextResponse.redirect(`${url.origin}/subscriptions`, 303)
+  return NextResponse.redirect(`${url.origin}${routes.subscriptionPageHref}`, 303)
 }

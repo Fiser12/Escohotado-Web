@@ -23,3 +23,4 @@ export type {
   OrigenModel,
 } from "./domain/content_model";
 export { evaluateExpression } from "./domain/evaluateExpression";
+export { routes } from './payload/routesGenerator'

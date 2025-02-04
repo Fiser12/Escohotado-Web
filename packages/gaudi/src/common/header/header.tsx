@@ -1,6 +1,6 @@
 import { ContentWrapper } from "../content_wrapper/content_wrapper"
 import { Logo } from "./logo"
-import type { MenuSection, UserModel, Optional } from 'hegel';
+import { type MenuSection, type UserModel, type Optional, routes } from 'hegel';
 import { NavItem } from "./nav_item";
 import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
@@ -37,8 +37,9 @@ export const Header: React.FC<Props> = ({
                 <nav className="h-16 py-5 bg-white flex justify-between items-center">
                     <Logo tabIndex={0} />
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <NavItem href="/articulos" text="Lecturas" tabindex={2} />
-                        <NavItem href="/videos" text="Vídeos" tabindex={3} />
+                        <NavItem href={routes.lecturasPageHref} text="Lecturas" tabindex={2} />
+                        <NavItem href={routes.videosPageHref} text="Vídeos" tabindex={3} />
+                        <NavItem href={routes.citasPageHref} text="Citas" tabindex={4} />
                         <BasicDropdown menuSections={catalogoSections} text="Catálogo" />
                         <OpenModalButton />
                     </div>
