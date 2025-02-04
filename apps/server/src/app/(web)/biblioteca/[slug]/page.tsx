@@ -8,10 +8,10 @@ import { Media, Quote, Taxonomy } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/ui/nuqs/book_variants_selector_nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from "hegel";
-import { getAuthorFromTaxonomies } from "@/core/content/taxonomiesGetters";
 import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
 import "hegel";
 import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
+import { getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
 
 interface Props {
     params: {

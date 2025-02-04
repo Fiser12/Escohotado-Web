@@ -4,8 +4,6 @@ import 'hegel'
 
 import { BasePayload } from 'payload'
 import { YoutubeVideo } from './youtube_video_model'
-import { video as videoSchema } from '@/payload-generated-schema'
-import { eq } from '@payloadcms/db-postgres/drizzle'
 import { getPayload } from '@/payload/utils/getPayload'
 import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
 
@@ -60,37 +58,37 @@ export const youtubeVideoUpsert = async (
   try {
     const url = `https://www.youtube.com/watch?v=${video.id}`
     if (upsert && existingUrls.includes(url)) {
-      await payload.db.drizzle
-        .update(videoSchema)
-        .set({
+      await payload.update({
+        collection: 'video',
+        data: {
           title: video.title,
           publishedAt: video.publishedAt,
           tags: video.tags,
           thumbnailUrl: video.thumbnailUrl,
-          viewCount: video.viewCount,
-          duration: parseISODurationToSeconds(video.duration),
-        })
-        .where(eq(videoSchema.url, url))
-        .execute()
+          viewCount: Number(video.viewCount),
+          duration: Number(parseISODurationToSeconds(video.duration)),
+        },
+        where: { url: { equals: url } },
+      })
 
       payload.logger.warn(`Video updated: ${video.id}: ${video.title}`)
       return
     }
     if (existingUrls.includes(url)) return
 
-    await payload.db.drizzle
-      .insert(videoSchema)
-      .values({
+    await payload.create({
+      collection: 'video',
+      data: {
         url: url,
         url_free: url,
         title: video.title,
         publishedAt: video.publishedAt,
         tags: video.tags,
         thumbnailUrl: video.thumbnailUrl,
-        viewCount: video.viewCount,
-        duration: parseISODurationToSeconds(video.duration),
-      })
-      .execute()
+        viewCount: Number(video.viewCount),
+        duration: Number(parseISODurationToSeconds(video.duration)),
+      },
+    })
 
     payload.logger.warn(`Video created: ${video.id}: ${video.title}`)
   } catch (error) {
