@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchModalLayout } from "@/ui/nuqs/global_search/global_search_nuqs";
+import { SearchModalLayout } from "@/ui/dynamic-loading-lists/dynamic-global-search";
 
 const Page = () => {
 

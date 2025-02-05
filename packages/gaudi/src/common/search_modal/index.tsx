@@ -20,6 +20,7 @@ interface Props {
   onTagClick: (tag: CategoryModel) => void;
   items: SearchedItem[];
   maxItemSize: number;
+  children?: React.ReactNode;
 }
 
 export const SearchModal: React.FC<Props> = ({
@@ -29,6 +30,7 @@ export const SearchModal: React.FC<Props> = ({
   items,
   onTagClick,
   maxItemSize,
+  children
 }) => {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm ?? "");
 
@@ -41,7 +43,7 @@ export const SearchModal: React.FC<Props> = ({
   }, [searchTerm]);
 
   return (
-      <div className="w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full" onClick={(e) => e.stopPropagation()}>
         <div className="bg-white shadow-md rounded-lg px-3 py-2">
           <div className="flex items-center bg-gray-200 rounded-md">
             <div className="pl-2">
@@ -65,10 +67,12 @@ export const SearchModal: React.FC<Props> = ({
               <a
                 key={index}
                 href={item.href}
-                className="flex items-center justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
+                className="flex justify-start items-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
               >
+              <div className="flex-none h-6 w-6">
                 {item.icon}
-                <div className="flex-grow font-medium px-2">{item.title}</div>
+              </div>
+                <div className="ml-3 flex-grow font-medium">{item.title}</div>
                 <div className="flex items-center space-x-2">
                   {item.tags.map((tag, index) => (
                     <Tag
@@ -81,6 +85,7 @@ export const SearchModal: React.FC<Props> = ({
                 </div>
               </a>
             ))}
+            {children}
           </div> }
         </div>
       </div>
