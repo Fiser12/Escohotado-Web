@@ -19,7 +19,6 @@ export const users: CollectionConfig = {
     delete: isAdminOrCurrentUser,
   },
   fields: [
-    { name: 'name', type: 'text' },
     {
       name: 'roles',
       type: 'json',

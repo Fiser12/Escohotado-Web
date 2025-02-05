@@ -115,17 +115,17 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
+  id: string;
+  email: string;
+  emailVerified?: string | null;
   name?: string | null;
+  image?: string | null;
   roles?: string[];
   subscription?: {
     docs?: (string | Subscription)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   stripeCustomerId?: string | null;
-  id: string;
-  email: string;
-  image?: string | null;
-  emailVerified?: string | null;
   accounts?:
     | {
         id?: string | null;
@@ -138,13 +138,6 @@ export interface User {
     | {
         id?: string | null;
         sessionToken: string;
-        expires: string;
-      }[]
-    | null;
-  verificationTokens?:
-    | {
-        id?: string | null;
-        token: string;
         expires: string;
       }[]
     | null;
@@ -758,14 +751,14 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  id?: T;
+  email?: T;
+  emailVerified?: T;
   name?: T;
+  image?: T;
   roles?: T;
   subscription?: T;
   stripeCustomerId?: T;
-  id?: T;
-  email?: T;
-  image?: T;
-  emailVerified?: T;
   accounts?:
     | T
     | {
@@ -779,13 +772,6 @@ export interface UsersSelect<T extends boolean = true> {
     | {
         id?: T;
         sessionToken?: T;
-        expires?: T;
-      };
-  verificationTokens?:
-    | T
-    | {
-        id?: T;
-        token?: T;
         expires?: T;
       };
   updatedAt?: T;
