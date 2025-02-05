@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { SearchModal } from "gaudi/client";
+import { SearchModal, SearchOptions } from "gaudi/client";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { SearchedItem } from "gaudi/client";
 import { searchElementsQuery } from "@/core/content/searchElementsQuery";
 import { getIconByCollection } from "@/ui/getIconByCollection";
+import { mapSearchOptionsToCollections } from "@/core/domain/mapping/mapSearchOptionsToCollections";
 
 interface Props {
   goBackTo?: string;
@@ -21,15 +22,21 @@ export const SearchModalLayout: React.FC<Props> = ({ goBackTo }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const [filter, setFilter] = useState<SearchOptions>("all");
 
   const LIMIT = 20;
 
-  const fetchResults = async (query: string, pageNumber: number) => {
+  const fetchResults = async (
+    query: string,
+    filterValue: SearchOptions,
+    pageNumber: number
+) => {
     try {
+      const collections = mapSearchOptionsToCollections(filterValue);
       setLoading(true);
       const { results } = await searchElementsQuery(
         query,
-        ["article_pdf", "article_web", "book", "video"],
+        collections,
         pageNumber,
         undefined,
         LIMIT
@@ -65,8 +72,8 @@ export const SearchModalLayout: React.FC<Props> = ({ goBackTo }) => {
       setItems([]);
       return;
     }
-    fetchResults(searchQuery, page);
-  }, [searchQuery, page]);
+    fetchResults(searchQuery, filter, page);
+  }, [searchQuery, page, filter]);
 
 
   useEffect(() => {
@@ -103,6 +110,14 @@ export const SearchModalLayout: React.FC<Props> = ({ goBackTo }) => {
     setHasMore(true);
   };
 
+  const handleFilterChange = (newFilter: SearchOptions) => {
+    setFilter(newFilter);
+    setPage(0);
+    if (searchQuery.length >= 3) {
+      fetchResults(searchQuery, newFilter, 0);
+    }
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -129,10 +144,11 @@ export const SearchModalLayout: React.FC<Props> = ({ goBackTo }) => {
             maxItemSize={400}
             onTagClick={(tag) => console.log("Tag clicked", tag)}
             onType={handleOnType}
+            onFilterChange={handleFilterChange}
             secondsDelay={2}
           >
-            <div ref={loadMoreRef} style={{ height: "20px", background: "transparent" }}></div>
-            {loading && <p>Loading more results...</p>}
+            { hasMore && <div ref={loadMoreRef} style={{ height: "1px", background: "transparent" }}></div> }
+            { loading && <p>Loading more results...</p> }
           </SearchModal>
         </motion.div>
       </motion.div>

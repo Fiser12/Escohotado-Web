@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Tag } from '../tag/tag';
 import { CategoryModel } from 'hegel';
 import { SearchIcon } from '../icons/search_icon';
+import { ChevronDownIcon } from '../icons/chevron_down_icon';
+import { ArticleIcon, BookIcon, VideoIcon, QuoteIcon } from '../../client';
+import { AllIcon } from '../icons/all_icon';
 
 export interface SearchedItem {
   id: string;
@@ -12,6 +15,7 @@ export interface SearchedItem {
   title: string;
   tags: CategoryModel[];
 }
+export type SearchOptions = "all" | "article" | "book" | "video" | "quote";
 
 interface Props {
   initialSearchTerm?: string | null;
@@ -21,7 +25,45 @@ interface Props {
   items: SearchedItem[];
   maxItemSize: number;
   children?: React.ReactNode;
+  onFilterChange?: (filter: SearchOptions) => void;
+  initialFilter?: SearchOptions;
+
 }
+const getFilterIcon = (option: SearchOptions) => {
+  switch (option) {
+    case "all":
+      return (
+        <AllIcon />
+      );
+    case "article":
+      return <ArticleIcon />;
+    case "book":
+      return <BookIcon />;
+    case "video":
+      return <VideoIcon />;
+    case "quote":
+      return <QuoteIcon />;
+    default:
+      return null;
+  }
+};
+
+const getFilterLabel = (option: SearchOptions) => {
+  switch (option) {
+    case "all":
+      return "Todos";
+    case "article":
+      return "Artículo";
+    case "book":
+      return "Libros";
+    case "video":
+      return "Videos";
+    case "quote":
+      return "Citas";
+    default:
+      return "";
+  }
+};
 
 export const SearchModal: React.FC<Props> = ({
   initialSearchTerm,
@@ -30,9 +72,25 @@ export const SearchModal: React.FC<Props> = ({
   items,
   onTagClick,
   maxItemSize,
-  children
+  children,
+  onFilterChange,
+  initialFilter = "all"
 }) => {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm ?? "");
+  const [filter, setFilter] = useState<SearchOptions>(initialFilter);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const handleFilterChange = (value: SearchOptions) => {
+    setFilter(value);
+    if (onFilterChange) {
+      onFilterChange(value);
+    }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
+  const options: SearchOptions[] = ["all", "article", "book", "video", "quote"];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -57,6 +115,34 @@ export const SearchModal: React.FC<Props> = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+            <div className="relative ml-2">
+            <button
+              onClick={toggleDropdown}
+              className="flex items-center bg-gray-200 text-gray-700 leading-tight focus:outline-none py-2 px-2 rounded-md"
+            >
+              <div className="h-6 w-6 mr-1">{getFilterIcon(filter)}</div>
+              <span className="ml-1">{getFilterLabel(filter)}</span>
+              <ChevronDownIcon />
+            </button>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-1 w-full bg-white shadow-lg rounded-md z-10">
+                {options.map((option) => (
+                  <button
+                    key={option}
+                    className="w-full flex items-center px-3 py-2 hover:bg-gray-200"
+                    onClick={() => {
+                      handleFilterChange(option);
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    <div className='h-6 w-6'>{getFilterIcon(option)}</div>
+                    <span className="ml-2">{getFilterLabel(option)}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           </div>
 
         { items.length !== 0 && <div
@@ -72,7 +158,7 @@ export const SearchModal: React.FC<Props> = ({
               <div className="flex-none h-6 w-6">
                 {item.icon}
               </div>
-                <div className="ml-3 flex-grow font-medium">{item.title}</div>
+                <div className="ml-3 flex-grow font-medium line-clamp-2">{item.title}</div>
                 <div className="flex items-center space-x-2">
                   {item.tags.map((tag, index) => (
                     <Tag

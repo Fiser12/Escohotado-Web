@@ -3,7 +3,7 @@
 import { getPayload } from '@/payload/utils/getPayload'
 import { evaluateExpression } from 'hegel';
 
-type SearchCollection = "article_pdf" | "article_web" | "quote" | "book" | "video"
+export type SearchCollection = "article_pdf" | "article_web" | "quote" | "book" | "video"
 type SearchResult = { collection: SearchCollection; id: string, title: string, href: string, tags: string[] }
 
 export const searchElementsQuery = async (

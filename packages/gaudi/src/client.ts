@@ -5,7 +5,7 @@ export { SelectBox } from "./content/common/selectors/select_box";
 export { Textures } from "./common/textures";
 export { SelectBoxes } from "./content/common/selectors/grid_select_boxes";
 export { ContentGridList } from "./content/common/content_grid_list";
-export { SearchModal, type SearchedItem } from "./common/search_modal";
+export { SearchModal, type SearchedItem, type SearchOptions } from "./common/search_modal";
 export { ESFlag } from "./common/icons/flags/ES";
 export { ENFlag } from "./common/icons/flags/EN";
 export { TagIcon }  from "./common/icons/tag_icon";
