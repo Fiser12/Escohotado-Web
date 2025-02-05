@@ -25,11 +25,11 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./volumes/postgres:/var/lib/postgresql/data
+      - ./.docker/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=devsecret
       - POSTGRES_USER=admin
-      - POSTGRES_DB=escota_web
+      - POSTGRES_DB=escota_db
     networks:
       - outside
 
