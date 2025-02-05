@@ -91,6 +91,12 @@ export const SearchModal: React.FC<Props> = ({
   };
 
   const options: SearchOptions[] = ["all", "article", "book", "video", "quote"];
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {

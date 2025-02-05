@@ -3,19 +3,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { SearchModal, SearchOptions } from "gaudi/client";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import { SearchedItem } from "gaudi/client";
 import { searchElementsQuery } from "@/core/content/searchElementsQuery";
 import { getIconByCollection } from "@/ui/getIconByCollection";
 import { mapSearchOptionsToCollections } from "@/core/domain/mapping/mapSearchOptionsToCollections";
+import { AnimatedModal } from "../common/AnimateModal";
 
 interface Props {
   goBackTo?: string;
 }
 
 export const SearchModalLayout: React.FC<Props> = ({ goBackTo }) => {
-  const router = useRouter();
-
   const [items, setItems] = useState<SearchedItem[]>([]);
   const [page, setPage] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -23,6 +21,7 @@ export const SearchModalLayout: React.FC<Props> = ({ goBackTo }) => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const [filter, setFilter] = useState<SearchOptions>("all");
+  const router = useRouter();
 
   const LIMIT = 20;
 
@@ -30,7 +29,7 @@ export const SearchModalLayout: React.FC<Props> = ({ goBackTo }) => {
     query: string,
     filterValue: SearchOptions,
     pageNumber: number
-) => {
+  ) => {
     try {
       const collections = mapSearchOptionsToCollections(filterValue);
       setLoading(true);
@@ -118,40 +117,25 @@ export const SearchModalLayout: React.FC<Props> = ({ goBackTo }) => {
     }
   };
 
+  const onCloseModal = () => {
+    if (goBackTo) router.push(goBackTo);
+    else router.back();
+  }
+
   return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 backdrop-blur-xs bg-opacity-30 pt-20 p-5 flex justify-center items-start z-100"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        onClick={() => {
-          if (goBackTo) router.push(goBackTo);
-          else router.back();
-        }}
+    <AnimatedModal onClose={onCloseModal}>
+      <SearchModal
+        items={items}
+        maxItemSize={400}
+        onTagClick={(tag) => console.log("Tag clicked", tag)}
+        onType={handleOnType}
+        onFilterChange={handleFilterChange}
+        secondsDelay={2}
       >
-        <motion.div
-          onClick={(e) => e.stopPropagation()}
-          className="w-full max-w-xl"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.3 }}
-        >
-          <SearchModal
-            items={items}
-            maxItemSize={400}
-            onTagClick={(tag) => console.log("Tag clicked", tag)}
-            onType={handleOnType}
-            onFilterChange={handleFilterChange}
-            secondsDelay={2}
-          >
-            { hasMore && <div ref={loadMoreRef} style={{ height: "1px", background: "transparent" }}></div> }
-            { loading && <p>Loading more results...</p> }
-          </SearchModal>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+        {hasMore && <div ref={loadMoreRef} style={{ height: "1px", background: "transparent" }}></div>}
+        {loading && <p>Loading more results...</p>}
+      </SearchModal>
+    </AnimatedModal>
   );
 };
+
