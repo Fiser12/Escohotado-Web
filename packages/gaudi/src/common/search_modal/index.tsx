@@ -7,6 +7,7 @@ import { SearchIcon } from '../icons/search_icon';
 
 export interface SearchedItem {
   id: string;
+  href: string;
   icon: React.ReactNode;
   title: string;
   tags: CategoryModel[];
@@ -18,7 +19,6 @@ interface Props {
   onType: (value: string) => void;
   onTagClick: (tag: CategoryModel) => void;
   items: SearchedItem[];
-  /** Altura máxima (en píxeles) para la lista de items. A partir de ahí se muestra scroll vertical. */
   maxItemSize: number;
 }
 
@@ -38,7 +38,7 @@ export const SearchModal: React.FC<Props> = ({
     }, secondsDelay * 1000);
 
     return () => clearTimeout(timer);
-  }, [searchTerm, secondsDelay, onType]);
+  }, [searchTerm]);
 
   return (
       <div className="w-full max-w-md" onClick={(e) => e.stopPropagation()}>
@@ -61,9 +61,10 @@ export const SearchModal: React.FC<Props> = ({
             className="py-3 text-sm"
             style={{ maxHeight: `${maxItemSize}px`, overflowY: 'auto' }}
           >
-            {items.map((item) => (
-              <div
-                key={item.id}
+            {items.map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
                 className="flex items-center justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
               >
                 {item.icon}
@@ -78,7 +79,7 @@ export const SearchModal: React.FC<Props> = ({
                     />
                   ))}
                 </div>
-              </div>
+              </a>
             ))}
           </div> }
         </div>

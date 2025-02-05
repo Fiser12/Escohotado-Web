@@ -639,6 +639,7 @@ export interface SearchResult {
         value: string | Book;
       };
   tags?: string | null;
+  href?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1082,6 +1083,7 @@ export interface SearchResultsSelect<T extends boolean = true> {
   priority?: T;
   doc?: T;
   tags?: T;
+  href?: T;
   updatedAt?: T;
   createdAt?: T;
 }

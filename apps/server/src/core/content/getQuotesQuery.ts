@@ -70,15 +70,8 @@ export const getQuotesQuery = async (
       const tags = Array.from(
         new Set(categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
       )
-      const evalQueryFilter =
-        query === null ||
-        query.trim() === '' ||
-        quote.quote.toLowerCase().includes(query.toLowerCase()) ||
-        tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
 
-      return (
-        evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
-      )
+      return filterExpression ? evaluateExpression(filterExpression, tags) : true
     })
   const startIndex = page * maxPage
   const endIndex = startIndex + maxPage

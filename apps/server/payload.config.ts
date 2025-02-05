@@ -23,6 +23,7 @@ import {
   COLLECTION_SLUG_QUOTE,
   COLLECTION_SLUG_ARTICLE_WEB,
   COLLECTION_SLUG_BOOK,
+  generateDetailHref,
 } from 'hegel/payload'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { sentryPlugin } from '@payloadcms/plugin-sentry'
@@ -98,9 +99,17 @@ export default buildConfig({
             name: 'tags',
             type: 'text',
             admin: {
-              readOnly: true,
-            },
+              readOnly: true
+            }
           },
+          {
+            name: 'href',
+            type: 'text',
+            admin: {
+              readOnly: true
+            }
+          },
+
         ],
       },
       defaultPriorities: {
@@ -113,10 +122,14 @@ export default buildConfig({
         [COLLECTION_SLUG_ARTICLE_PDF]: (doc: any) =>
           doc.publishedAt ? new Date(doc.publishedAt).getTime() : 0,
       },
-      beforeSync: ({ originalDoc, searchDoc }: any) => {
+      beforeSync: ({ originalDoc, searchDoc, ...rest }: any) => {
         return {
           ...searchDoc,
           title: originalDoc.title ?? originalDoc.quote,
+          href: generateDetailHref({ 
+            collection: searchDoc.doc.relationTo, 
+            value: { id: originalDoc.id, slug: originalDoc.slug } 
+          }),
           tags: originalDoc.categories?.map(
             (cat: any) => cat.breadcrumbs?.map(
               (t: any) => t.url

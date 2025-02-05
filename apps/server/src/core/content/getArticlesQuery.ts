@@ -3,7 +3,6 @@ import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB } from 'hegel/
 import { getPayload } from '@/payload/utils/getPayload'
 import { ArticlePdf, ArticleWeb, Book, Taxonomy } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
-import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { evaluateExpression } from 'hegel'
 import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
@@ -12,8 +11,6 @@ import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFr
 const pageSize = 40
 export type CommonArticle = (ArticlePdf | ArticleWeb) & {
   type: string
-  url?: string | null
-  hasPermission: boolean
 }
 
 export const getArticlesQueryByTags = async (
@@ -83,14 +80,11 @@ export const getArticlesQuery = async (
 
   const articlesPDFWithType = articlesPDF.docs.map((article) => ({
     ...article,
-    type: COLLECTION_SLUG_ARTICLE_PDF,
-    hasPermission: evalPermissionQuery(user, article.permissions_seeds?.trim() ?? ''),
+    type: COLLECTION_SLUG_ARTICLE_PDF
   }))
   const articlesWebWithType = articlesWeb.docs.map((article) => ({
     ...article,
-    type: COLLECTION_SLUG_ARTICLE_WEB,
-    url: `/articulos/${article.slug}`,
-    hasPermission: evalPermissionQuery(user, article.permissions_seeds?.trim() ?? ''),
+    type: COLLECTION_SLUG_ARTICLE_WEB
   }))
 
   const articles = [...articlesPDFWithType, ...articlesWebWithType]
@@ -102,14 +96,9 @@ export const getArticlesQuery = async (
       const tags = Array.from(
         new Set(categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
       )
-      const evalQueryFilter =
-        query === null ||
-        query.trim() === '' ||
-        article.title?.toLowerCase().includes(query.toLowerCase()) ||
-        tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
 
       return (
-        evalQueryFilter && (filterExpression ? evaluateExpression(filterExpression, tags) : true)
+        (filterExpression ? evaluateExpression(filterExpression, tags) : true)
       )
     })
   const startIndex = page * maxPage

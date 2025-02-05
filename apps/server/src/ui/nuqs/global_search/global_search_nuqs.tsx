@@ -2,8 +2,10 @@
 
 import React from "react";
 import { SearchModal } from "gaudi/client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { SearchedItem } from "gaudi/client";
+import { searchElementsQuery } from "@/core/content/searchElementsQuery";
 
 interface Props {
   goBackTo?: string;
@@ -11,7 +13,7 @@ interface Props {
 
 export const SearchModalLayout: React.FC<Props> = ({goBackTo}) => {
   const router = useRouter();
-
+  const [items, setItems] = React.useState<SearchedItem[]>([]);
   return <AnimatePresence>
     <motion.div
       className="fixed inset-0 backdrop-blur-xs bg-opacity-30 pt-20 p-5 flex justify-center items-start z-100"
@@ -33,11 +35,25 @@ export const SearchModalLayout: React.FC<Props> = ({goBackTo}) => {
         transition={{ duration: 0.3 }}
       >
         <SearchModal
-          items={[]}
+          items={items}
           maxItemSize={300}
           onTagClick={(tag) => console.log("Tag clicked", tag)}
-          onType={(value) => console.log("Typing", value)}
-          secondsDelay={1}
+          onType={async (value) => {
+            const items = await searchElementsQuery(
+              value, 
+              ["article_pdf", "article_web", "book", "video"], 
+              undefined, 
+              20
+            );
+            setItems(items.map(item => ({
+              id: item.id,
+              href: item.href,
+              icon: <p></p>,
+              tags: [],
+              title: item.title
+            })));
+          }}
+          secondsDelay={2}
         />
       </motion.div>
     </motion.div>
