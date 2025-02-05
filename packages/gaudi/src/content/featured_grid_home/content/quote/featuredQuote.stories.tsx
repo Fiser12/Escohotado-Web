@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { FeaturedQuote } from ".";
 
 const meta: Meta<typeof FeaturedQuote> = {
-      title: "Molecules/Featured Home/Quote",
+      title: "Molecules/Featured Home",
       component: FeaturedQuote,
       argTypes: {
             quote: {
@@ -24,9 +24,24 @@ const meta: Meta<typeof FeaturedQuote> = {
             },
       },
       args: {
-            quote: '"Las drogas no son ni buenas ni malas, son sustancias que pueden usarse bien o mal, y el único antídoto real contra su mal uso es la educación."',
+            quote: '"Las drogas no son ni buenas ni malas, son sustancias que pueden usarse bien o mal, y el único antídoto real contra su mal uso es la educación. Las drogas no son ni buenas ni malas, son sustancias que pueden usarse bien o mal, y el único antídoto real contra su mal uso es la educación."',
             author: "Caos y Orden",
-            categories: []
+            categories: [
+                  {
+                        id: "1",
+                        label: "Drogas",
+                  },
+                  {
+                        id: "2",
+                        label: "Educación",
+                  },
+            ],
+            origen: {
+                  title: "Caos y Orden",
+                  type: "collections",
+                  detailHref: "/collections/caos-y-orden",
+                  hasPermissions: true,
+            }
       },
 };
 
@@ -34,17 +49,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Horizontal: Story = {
-      decorators: [
-            (Story) => (
-                  <div style={{ height: '350px', overflow: 'auto' }}>
-                        <Story />
-                  </div>
-            ),
-      ],
-};
-
-export const Vertical: Story = {
+export const Quote: Story = {
       decorators: [
             (Story) => (
                   <div style={{ width: '350px', overflow: 'auto' }}>
