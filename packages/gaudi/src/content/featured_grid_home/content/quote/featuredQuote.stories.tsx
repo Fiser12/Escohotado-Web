@@ -26,6 +26,7 @@ const meta: Meta<typeof FeaturedQuote> = {
       args: {
             quote: '"Las drogas no son ni buenas ni malas, son sustancias que pueden usarse bien o mal, y el único antídoto real contra su mal uso es la educación."',
             author: "Caos y Orden",
+            categories: []
       },
 };
 

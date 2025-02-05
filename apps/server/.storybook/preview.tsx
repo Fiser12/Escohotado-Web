@@ -1,10 +1,19 @@
 import type { Preview } from "@storybook/react";
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-
+import React from "react";
+import { Textures } from "gaudi/client";
 import "../src/app/tailwind.css";
-
 const preview: Preview = {
-  parameters: {
+	decorators: [
+		(Story) => (
+		  <>
+			<Story />
+			{ Textures.map((Element, index) => <Element key={index} />)}
+
+		  </>
+		),
+	  ],
+	  parameters: {
 		viewport: {
 			viewports: INITIAL_VIEWPORTS,
 			defaultViewport: 'reset'
