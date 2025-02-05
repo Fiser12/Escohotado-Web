@@ -827,6 +827,25 @@ export const ui_grid_cards = pgTable(
   }),
 )
 
+export const ui_block = pgTable(
+  'ui_block',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    title: varchar('title').notNull(),
+    block: jsonb('block').notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    ui_block_updated_at_idx: index('ui_block_updated_at_idx').on(columns.updatedAt),
+    ui_block_created_at_idx: index('ui_block_created_at_idx').on(columns.createdAt),
+  }),
+)
+
 export const permission = pgTable(
   'permission',
   {
@@ -854,6 +873,8 @@ export const search_results = pgTable(
     title: varchar('title'),
     priority: numeric('priority'),
     tags: varchar('tags'),
+    permissions_seeds: varchar('permissions_seeds'),
+    href: varchar('href'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -875,6 +896,7 @@ export const search_results_rels = pgTable(
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
     videoID: uuid('video_id'),
+    quoteID: uuid('quote_id'),
     article_webID: uuid('article_web_id'),
     article_pdfID: uuid('article_pdf_id'),
     bookID: uuid('book_id'),
@@ -884,6 +906,7 @@ export const search_results_rels = pgTable(
     parentIdx: index('search_results_rels_parent_idx').on(columns.parent),
     pathIdx: index('search_results_rels_path_idx').on(columns.path),
     search_results_rels_video_id_idx: index('search_results_rels_video_id_idx').on(columns.videoID),
+    search_results_rels_quote_id_idx: index('search_results_rels_quote_id_idx').on(columns.quoteID),
     search_results_rels_article_web_id_idx: index('search_results_rels_article_web_id_idx').on(
       columns.article_webID,
     ),
@@ -900,6 +923,11 @@ export const search_results_rels = pgTable(
       columns: [columns['videoID']],
       foreignColumns: [video.id],
       name: 'search_results_rels_video_fk',
+    }).onDelete('cascade'),
+    quoteIdFk: foreignKey({
+      columns: [columns['quoteID']],
+      foreignColumns: [quote.id],
+      name: 'search_results_rels_quote_fk',
     }).onDelete('cascade'),
     article_webIdFk: foreignKey({
       columns: [columns['article_webID']],
@@ -963,6 +991,7 @@ export const payload_locked_documents_rels = pgTable(
     videoID: uuid('video_id'),
     quoteID: uuid('quote_id'),
     ui_grid_cardsID: uuid('ui_grid_cards_id'),
+    ui_blockID: uuid('ui_block_id'),
     permissionID: varchar('permission_id'),
     'search-resultsID': uuid('search_results_id'),
   },
@@ -1006,6 +1035,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_ui_grid_cards_id_idx: index(
       'payload_locked_documents_rels_ui_grid_cards_id_idx',
     ).on(columns.ui_grid_cardsID),
+    payload_locked_documents_rels_ui_block_id_idx: index(
+      'payload_locked_documents_rels_ui_block_id_idx',
+    ).on(columns.ui_blockID),
     payload_locked_documents_rels_permission_id_idx: index(
       'payload_locked_documents_rels_permission_id_idx',
     ).on(columns.permissionID),
@@ -1076,6 +1108,11 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['ui_grid_cardsID']],
       foreignColumns: [ui_grid_cards.id],
       name: 'payload_locked_documents_rels_ui_grid_cards_fk',
+    }).onDelete('cascade'),
+    ui_blockIdFk: foreignKey({
+      columns: [columns['ui_blockID']],
+      foreignColumns: [ui_block.id],
+      name: 'payload_locked_documents_rels_ui_block_fk',
     }).onDelete('cascade'),
     permissionIdFk: foreignKey({
       columns: [columns['permissionID']],
@@ -1457,6 +1494,7 @@ export const relations_ui_grid_cards = relations(ui_grid_cards, ({ many }) => ({
     relationName: 'cards',
   }),
 }))
+export const relations_ui_block = relations(ui_block, () => ({}))
 export const relations_permission = relations(permission, () => ({}))
 export const relations_search_results_rels = relations(search_results_rels, ({ one }) => ({
   parent: one(search_results, {
@@ -1468,6 +1506,11 @@ export const relations_search_results_rels = relations(search_results_rels, ({ o
     fields: [search_results_rels.videoID],
     references: [video.id],
     relationName: 'video',
+  }),
+  quoteID: one(quote, {
+    fields: [search_results_rels.quoteID],
+    references: [quote.id],
+    relationName: 'quote',
   }),
   article_webID: one(article_web, {
     fields: [search_results_rels.article_webID],
@@ -1558,6 +1601,11 @@ export const relations_payload_locked_documents_rels = relations(
       references: [ui_grid_cards.id],
       relationName: 'ui_grid_cards',
     }),
+    ui_blockID: one(ui_block, {
+      fields: [payload_locked_documents_rels.ui_blockID],
+      references: [ui_block.id],
+      relationName: 'ui_block',
+    }),
     permissionID: one(permission, {
       fields: [payload_locked_documents_rels.permissionID],
       references: [permission.id],
@@ -1636,6 +1684,7 @@ type DatabaseSchema = {
   quote_rels: typeof quote_rels
   ui_grid_cards_cards: typeof ui_grid_cards_cards
   ui_grid_cards: typeof ui_grid_cards
+  ui_block: typeof ui_block
   permission: typeof permission
   search_results: typeof search_results
   search_results_rels: typeof search_results_rels
@@ -1673,6 +1722,7 @@ type DatabaseSchema = {
   relations_quote: typeof relations_quote
   relations_ui_grid_cards_cards: typeof relations_ui_grid_cards_cards
   relations_ui_grid_cards: typeof relations_ui_grid_cards
+  relations_ui_block: typeof relations_ui_block
   relations_permission: typeof relations_permission
   relations_search_results_rels: typeof relations_search_results_rels
   relations_search_results: typeof relations_search_results
