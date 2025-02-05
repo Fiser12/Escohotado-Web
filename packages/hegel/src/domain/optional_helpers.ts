@@ -8,7 +8,7 @@ export async function notNullAsync<T, U>(value: Optional<T>, fn: (val: T) => Pro
 }
 
 Array.prototype.mapNotNull = function <T, U>(callback: (value: T, index: number, array: T[]) => U | null | undefined): U[] {
-	return this.map(callback).filter((item) => item != null);
+	return this.map(callback).filter((item): item is U => item != null);
 };
 
 Array.prototype.cast = function <U>(
