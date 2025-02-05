@@ -2,7 +2,7 @@ import { COLLECTION_SLUG_PRODUCTS } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import type Stripe from 'stripe'
 import { payloadUpsert } from '../../utils/upsert'
-import { stripeBuilder } from '.'
+import { stripeBuilder } from '@/payload/plugins/stripe/stripe-builder'
 
 const logs = false
 

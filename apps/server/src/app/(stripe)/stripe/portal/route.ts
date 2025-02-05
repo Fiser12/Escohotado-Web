@@ -1,4 +1,4 @@
-import { stripeBuilder } from '@/payload/plugins/stripe'
+import { stripeBuilder } from '@/payload/plugins/stripe/stripe-builder'
 import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery'
 import { NextResponse } from 'next/server'
 import { User } from 'payload-types'

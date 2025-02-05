@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { getPayload } from '@/payload/utils/getPayload';
-import { stripeBuilder } from '@/payload/plugins/stripe';
+import { stripeBuilder } from '@/payload/plugins/stripe/stripe-builder'
 import { routes } from 'hegel';
 
 export async function GET(request: Request) {

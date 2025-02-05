@@ -3,17 +3,10 @@ export { priceUpsert, priceDeleted } from './price'
 export { subscriptionUpsert, subscriptionDeleted } from './subscription'
 export { checkoutSessionCompleted } from './checkout'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
-
-import Stripe from 'stripe';
 import { priceDeleted } from './price'
 import { productDeleted } from './product'
 import { subscriptionUpsert, subscriptionDeleted } from './subscription'
 
-export const stripeBuilder = (): Stripe  => {
-	return new Stripe(process.env.STRIPE_SECRET_KEY!, {
-		apiVersion: '2024-09-30.acacia'
-	})
-}
 
 const plugin = stripePlugin({
 	  isTestKey: process.env.STRIPE_SECRET_KEY?.includes('sk_test'),
