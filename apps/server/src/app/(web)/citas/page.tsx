@@ -2,7 +2,7 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, GridCardsBlock } from "gaudi/server";
 import { Quote } from "payload-types";
-import { getQuotesQuery, getQuotesQueryByTags } from "@/core/content/getQuotesQuery";
+import { getQuotesQueryByTags } from "@/core/content/getQuotesQuery";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SortSelectorSSR } from "@/ui/nuqs/sort_selector_ssr";
 import { convertContentModelToCard } from "hegel";
@@ -14,7 +14,6 @@ import { TagsFilterBarSSR } from '@/ui/nuqs/tags_filter_bar_ssr';
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),
   tags: parseAsString.withDefault(''),
-  sort: parseAsString.withDefault('popularity'),
 })
 
 interface Props {
@@ -24,11 +23,11 @@ interface Props {
 
 const Page = async ({ searchParams }: Props) => {
   const payload = await getPayload();
-  const { query, sort, tags } = await searchContentParamsCache.parse(searchParams)
+  const { query, tags } = await searchContentParamsCache.parse(searchParams)
 
   const [user, quotesResult ] = await Promise.all([
     getCurrentUserQuery(payload),
-    getQuotesQueryByTags(query, tags.split(",").filter(Boolean) ?? [], 0, sort),
+    getQuotesQueryByTags(query, tags.split(",").filter(Boolean) ?? [], 0, "publishedAt"),
   ]);
   const quoteCardMapper = (video: Quote) => mapQuoteCard(user)(video);
 
@@ -48,7 +47,6 @@ const Page = async ({ searchParams }: Props) => {
             title='Etiquetas'
             queryKey='tags'
           />
-          <SortSelectorSSR />
         </div>
       </div>
       <GridCardsBlock
@@ -59,7 +57,7 @@ const Page = async ({ searchParams }: Props) => {
       />
       <DynamicLoadingQuotes
         user={user}
-        sortedBy={sort}
+        sortedBy={"publishedAt"}
         tags={tags.split(",").filter(Boolean) ?? []}
         query={query}
         maxPage={quotesResult.maxPage}

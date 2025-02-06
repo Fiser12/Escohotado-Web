@@ -1,19 +1,22 @@
 import classNames from "classnames";
+import { HTMLInputTypeAttribute } from "react";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       label: string;
       text?: string;
       placeholder: string;
+      type: HTMLInputTypeAttribute | undefined;
       state?: 'enabled' | 'disabled';
+      name?: string;
       className?: string;
       children?: React.ReactNode;
 }
 
-export const InputForm: React.FC<Props> = ({className, state, placeholder, text, children, ...rest}) => {
+export const InputForm: React.FC<Props> = ({className, state, placeholder, text, children, name, type = "text", ...rest}) => {
 
       const containerClass = classNames(
-            'w-full p-1 flex items-center bg-white rounded border-solid font-normal text-base min-h-10',
             className,
+            'p-1 flex items-center bg-white rounded border-solid font-normal text-base min-h-10',
             {
                   // Enabled
                   'border border-primary-900': state === 'enabled',
@@ -30,7 +33,8 @@ export const InputForm: React.FC<Props> = ({className, state, placeholder, text,
       return (
             <div className={containerClass} {...rest}>
                   <input
-                        type="text"
+                        name={name}
+                        type={type}
                         placeholder={placeholder}
                         defaultValue={text}
                         disabled={state === 'disabled'}

@@ -15,6 +15,7 @@ export async function TagsFilterBarSSR({collection, query, excludeSeeds = [], ..
     const taxonomies = (await Promise.all(
         collection.map(async (collection) => await tagsFromContentQuery(collection, query, excludeSeeds))
     )).flat();
+    if(taxonomies.length === 0) return null;
     
     const tagsAsRecord: Record<string, CategoryModel> = {};
     taxonomies

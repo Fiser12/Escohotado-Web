@@ -11,7 +11,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user: User | null;
     query: string;
     tags: string[];
-    sortedBy: string;
+    sortedBy: 'publishedAt' | 'popularity';
     maxPage: number;
 }
 

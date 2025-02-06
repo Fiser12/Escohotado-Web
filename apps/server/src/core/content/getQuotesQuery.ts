@@ -18,7 +18,7 @@ export const getQuotesQueryByTags = async (
   query: string,
   tags: string[],
   page: number,
-  sortBy: string,
+  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
   filterByCollectionId?: string | null,
 ): Promise<{
   results: Quote[]

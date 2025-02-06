@@ -36,11 +36,12 @@ export const TextField: React.FC<Props> = ({className, label, text, placeholder,
         <div className={textFieldClass}>
             <label className={labelClass}>{label}</label>
             <InputForm
+                type='text'
                 label={label}
                 text={text}
                 placeholder={placeholder}
                 state={state}
-                className='pr-2.5'
+                className='w-full pr-2.5'
             >
                 {icon && <span className={iconClass}>{icon}</span>}
             </InputForm>

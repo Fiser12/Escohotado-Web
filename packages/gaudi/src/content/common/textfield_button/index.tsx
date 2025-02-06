@@ -8,14 +8,17 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
       placeholder: string;
       state?: 'enabled' | 'disabled';
       className?: string;
+      name?: string;
       href: string;
       icon?: React.ReactNode;
 }
 
-export const TextFieldButton: React.FC<Props> = ({label, text, placeholder, state, href, buttonText, icon, ...rest}) => {
+export const TextFieldButton: React.FC<Props> = ({label, text, placeholder, state, href, buttonText, icon, name, ...rest}) => {
 
       return (
             <InputForm
+                  type="text"
+                  name={name}
                   label={label}
                   text={text}
                   placeholder={placeholder}
