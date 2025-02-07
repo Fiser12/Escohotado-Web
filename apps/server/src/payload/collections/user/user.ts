@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from 'hegel/payload'
 import { ADMIN_ACCESS_ROLES } from '@/payload/plugins/authjs/auth.config'
-import { isAdminOrCurrentUser, isAdmin } from '../fields/permissions/accessEvaluations'
+import { isAdminOrCurrentUser, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
+import { User } from 'payload-types'
+import syncNewsletterSubscription from '@/core/newsletter/syncNewsletterSubscription'
 
 const ADMIN_AUTH_GROUP = 'Auth'
 
@@ -32,6 +34,29 @@ export const users: CollectionConfig = {
       ],
     },
     {
+      label: 'Subscripción a la newsletter',
+      name: "isSubscribedToNewsletter",
+      type: "checkbox",
+      required: true,
+      defaultValue: true,
+      hooks: {
+        afterChange: [
+          async ({ data, previousDoc }): Promise<void> => {
+            if(!data 
+              || !data.email
+              || data.isSubscribedToNewsletter === previousDoc.isSubscribedToNewsletter 
+            ) return
+
+            await syncNewsletterSubscription({
+              email: data.email, 
+              name: data.name , 
+              isSubscribedToNewsletter: data.isSubscribedToNewsletter
+            })
+          }
+        ]
+      }
+    },
+    {
       name: 'subscription',
       type: 'join',
       collection: COLLECTION_SLUG_SUBSCRIPTIONS,
@@ -41,3 +66,4 @@ export const users: CollectionConfig = {
     { name: 'stripeCustomerId', type: 'text', admin: { readOnly: true, position: 'sidebar' } },
   ],
 } as const
+

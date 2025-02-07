@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
       children?: React.ReactNode;
 }
 
-export const InputForm: React.FC<Props> = ({className, state, placeholder, text, children, name, type = "text", ...rest}) => {
+export const InputForm: React.FC<Props> = ({className, state, placeholder, text = "", children, name, type = "text", ...rest}) => {
 
       const containerClass = classNames(
             className,

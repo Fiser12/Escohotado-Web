@@ -121,6 +121,7 @@ export interface User {
   name?: string | null;
   image?: string | null;
   roles?: string[];
+  isSubscribedToNewsletter: boolean;
   subscription?: {
     docs?: (string | Subscription)[] | null;
     hasNextPage?: boolean | null;
@@ -757,6 +758,7 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   image?: T;
   roles?: T;
+  isSubscribedToNewsletter?: T;
   subscription?: T;
   stripeCustomerId?: T;
   accounts?:

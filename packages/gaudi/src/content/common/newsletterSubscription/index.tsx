@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { H3 } from "../../../common/headers/H3";
-import { TextFieldButton } from "../textfield_button";
 import { EmailIcon } from "../../../common/icons/email_icon";
 import { InputForm } from "../../../common/input";
 import { MainButton } from "../../../common/main_button/main_button";
@@ -13,7 +12,13 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
             className
       )
 
-      return <form method="post" action={process.env.NEWSLETTER_FORM_URL} className={divClass} {...rest}>
+      return <form 
+            method="post" 
+            action={`${process.env.NEWSLETTER_URL}/subscription/form`} 
+            className={divClass} 
+            target="_blank" 
+            {...rest}
+      >
             <div className="flex flex-col justify-baseline items-center gap-8 max-w-[600px] mx-auto">
             <H3 label="¡Únete a nuestra comunidad del conocimiento!" className="text-primary-100" />
             <input type="hidden" name="nonce" />
@@ -22,7 +27,6 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
             <div className="flex md:flex-row flex-col gap-4 w-full">
             <InputForm
                   label={"name"}
-                  text={""}
                   name={"name"}
                   type="text"
                   placeholder={"Nombre"}
@@ -32,7 +36,6 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
             </InputForm>
             <InputForm
                   label={"email"}
-                  text={""}
                   name={"email"}
                   type="email"
                   placeholder={"Email"}
@@ -47,5 +50,4 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
             </div>
             </div>
       </form>
-
 };
