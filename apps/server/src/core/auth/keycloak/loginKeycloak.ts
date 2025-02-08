@@ -8,7 +8,7 @@ export const loginKeycloak = async (): Promise<{ token: string }> => {
   urlencoded.append('username', 'ruben')
   urlencoded.append('password', process.env.KEYCLOAK_ADMIN_PASSWORD ?? '')
   const response = await fetch(
-    'https://auth.nexolabs.xyz/realms/Escohotado/protocol/openid-connect/token',
+    `https://${process.env.KC_HOSTNAME}/realms/${process.env.KC_REALM}/protocol/openid-connect/token`,
     {
       method: 'POST',
       headers: headers,

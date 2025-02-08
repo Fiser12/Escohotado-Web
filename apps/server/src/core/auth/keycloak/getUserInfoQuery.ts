@@ -1,5 +1,5 @@
 export async function getUserInfoQuery(accessToken: string): Promise<string[]> {
-  const userInfoUrl = `${process.env.PUBLIC_AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/userinfo`
+  const userInfoUrl = `https://${process.env.KC_HOSTNAME}/realms/${process.env.KC_REALM}/protocol/openid-connect/userinfo`
 
   const response = await fetch(userInfoUrl, {
     method: 'GET',

@@ -19,7 +19,7 @@ export const authConfig: NextAuthConfig = {
       id: 'keycloak',
       clientId: process.env.AUTH_KEYCLOAK_ID,
       clientSecret: process.env.AUTH_KEYCLOAK_SECRET,
-      issuer: process.env.PUBLIC_AUTH_KEYCLOAK_ISSUER,
+      issuer: `https://${process.env.KC_HOSTNAME}/realms/${process.env.KC_REALM}`,
       profile(profile, tokens) {
         if (tokens.access_token) {
           const decodedToken = jwt.decode(tokens.access_token)
