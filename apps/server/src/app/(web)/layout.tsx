@@ -6,6 +6,7 @@ import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery"
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { Textures } from "gaudi/client";
 import "../tailwind.css";
+import { routes } from "hegel";
 
 const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> = async ({ children, modal }) => {
   const payloadUser = await getCurrentUserQuery()
@@ -28,7 +29,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
             }}
             signOut={async () => {
               "use server";
-              await signOut();
+              await signOut({redirectTo: routes.homePageHref});
             }}
             menuSections={getAccountMenuQuery(payloadUser)}
           />

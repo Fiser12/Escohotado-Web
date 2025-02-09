@@ -73,7 +73,7 @@
     "@tailwindcss/postcss": "4.0.0-beta.9",
     "@tailwindcss/typography": "^0.5.15",
     "@types/jsonwebtoken": "^9.0.7",
-    "@types/node": "^20.14.9",
+    "@types/node": "^22.13.1",
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc",
     "eslint": "^8.57.0",

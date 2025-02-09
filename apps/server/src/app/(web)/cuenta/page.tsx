@@ -2,6 +2,9 @@ import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { MainButton } from "gaudi/client";
+import { ContentWrapper, H1 } from "gaudi/server";
+import { signOut } from "@/payload/plugins/authjs/plugin";
+import { routes } from "hegel";
 
 const Page = async () => {
   const payload = await getPayload();
@@ -9,26 +12,31 @@ const Page = async () => {
   if (!user) return null
 
   return (
-    <div>
-         <a>
-            <MainButton text="Cambiar datos de usuario">
+    <ContentWrapper className="flex flex-col items-right gap-6 pt-10">
+      <H1 className="text-2xl font-bold" label="Preferencias de la cuenta" />
+      <a href={routes.keycloak.account}>
+        <MainButton className="max-w-60" text="Cambiar datos de usuario" />
+      </a>
 
-            </MainButton>
-        </a>
+      <a href={routes.keycloak.changePassword}>
+        <MainButton text="Cambiar contraseña" />
+      </a>
 
-        <a>
-            <MainButton text="Cambiar contraseña">
+      <a href={routes.keycloak.security}>
+        <MainButton text="Seguridad" />
+      </a>
+      <a 
+        href={routes.keycloak.logout} 
+        target="_blank" 
+        onClick={async () => {
+          "use server";
+          await signOut({redirectTo: routes.homePageHref});
+        }}
+      >
+        <MainButton text="Cerrar sesión" />
+      </a>
 
-            </MainButton>
-        </a>
-
-        <a href={`https://${process.env.KC_HOSTNAME}`}>
-            <MainButton text="Seguridad">
-
-            </MainButton>
-        </a>
-
-    </div>
+    </ContentWrapper>
   );
 };
 

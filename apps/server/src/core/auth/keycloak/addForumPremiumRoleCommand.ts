@@ -1,3 +1,4 @@
+import { forumClientId, permissionSlugs, routes } from 'hegel'
 import { loginKeycloak } from './loginKeycloak'
 
 export const addForumPremiumRoleCommand = async (userId: string): Promise<void> => {
@@ -7,14 +8,14 @@ export const addForumPremiumRoleCommand = async (userId: string): Promise<void> 
   headers.append('Authorization', `Bearer ${token}`)
 
   fetch(
-    `https://${process.env.KC_HOSTNAME}/admin/realms/${process.env.KC_REALM}/users/${userId}/role-mappings/clients/154dd48a-eb9c-480b-a4e7-f47680a61b7e`,
+    routes.keycloak.roleMappingApi(userId, forumClientId),
     {
       method: 'POST',
       headers: headers,
       body: JSON.stringify([
         {
           id: 'b845e658-d9b4-4905-8203-aee0aea110d4',
-          name: 'foro_premium',
+          name: permissionSlugs.foroPremium,
         },
       ]),
       redirect: 'follow',

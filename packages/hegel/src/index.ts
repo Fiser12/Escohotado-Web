@@ -24,3 +24,4 @@ export type {
 } from "./domain/content_model";
 export { evaluateExpression } from "./domain/evaluateExpression";
 export { routes } from './payload/routesGenerator'
+export { permissionSlugs, forumClientId } from './payload/keycloakPermissionSlugs'

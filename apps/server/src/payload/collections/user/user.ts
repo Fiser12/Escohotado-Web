@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from 'hegel/payload'
-import { ADMIN_ACCESS_ROLES } from '@/payload/plugins/authjs/auth.config'
 import { isAdminOrCurrentUser, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
 import { User } from 'payload-types'
 import syncNewsletterSubscription from '@/core/newsletter/syncNewsletterSubscription'
+import { permissionSlugs } from 'hegel'
 
 const ADMIN_AUTH_GROUP = 'Auth'
 
@@ -14,7 +14,7 @@ export const users: CollectionConfig = {
     useAsTitle: 'email',
   },
   access: {
-    admin: async ({ req }) => req?.user?.roles?.includes(ADMIN_ACCESS_ROLES) == true,
+    admin: async ({ req }) => req?.user?.roles?.includes(permissionSlugs.webAdmin) == true,
     read: isAdminOrCurrentUser,
     create: isAdmin,
     update: isAdminOrCurrentUser,

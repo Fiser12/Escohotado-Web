@@ -1,3 +1,5 @@
+import { routes } from "hegel"
+
 export const loginKeycloak = async (): Promise<{ token: string }> => {
   const headers = new Headers()
   headers.append('Content-Type', 'application/x-www-form-urlencoded')
@@ -8,7 +10,7 @@ export const loginKeycloak = async (): Promise<{ token: string }> => {
   urlencoded.append('username', 'ruben')
   urlencoded.append('password', process.env.KEYCLOAK_ADMIN_PASSWORD ?? '')
   const response = await fetch(
-    `https://${process.env.KC_HOSTNAME}/realms/${process.env.KC_REALM}/protocol/openid-connect/token`,
+    routes.keycloak.loginApi,
     {
       method: 'POST',
       headers: headers,

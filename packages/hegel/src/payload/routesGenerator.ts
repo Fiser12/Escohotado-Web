@@ -23,11 +23,23 @@ export const generateDetailHref = (field: ContentRelationType): string => {
       return `/cita/${field.value.slug}`;
     }
 };
+const keyloakIssuer = `https://${process.env.KC_HOSTNAME}/realms/${process.env.KC_REALM}`
 
 export const routes = {
   generateDetailHref,
   subscriptionPageHref: "/subscriptions",
+  accountPageHref: "/cuenta",
   lecturasPageHref: "/lecturas",
   videosPageHref: "/videos",
   citasPageHref: "/citas",
+  homePageHref: "/",
+  keycloak: {
+    issuer: keyloakIssuer,
+    account: `${keyloakIssuer}/account`,
+    changePassword: `${keyloakIssuer}/account/account-security/signing-in`,
+    security: `${keyloakIssuer}/account/account-security/device-activity`,
+    logout: `${keyloakIssuer}/protocol/openid-connect/logout`,
+    loginApi: `${keyloakIssuer}/protocol/openid-connect/token`,
+    roleMappingApi: (userId: string, clientId: string) => `${keyloakIssuer}/users/${userId}/role-mappings/clients/${clientId}`
+  }
 }

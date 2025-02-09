@@ -1,3 +1,4 @@
+import { permissionSlugs } from "hegel"
 import { Access } from "payload"
 import { Subscription } from "payload-types"
 
@@ -14,18 +15,18 @@ export const checkReadPermissions: Access = (props) => {
 
 
 export const isAdmin: Access = ({ req }) => {
-  return req?.user?.roles?.includes('admin') || false
+  return req?.user?.roles?.includes(permissionSlugs.webAdmin) || false
 }
 
 export const isAdminOrCurrentUser: Access = ({ req }) => {
-  if (req?.user?.roles?.includes('admin') == true) return true
+  if (req?.user?.roles?.includes(permissionSlugs.webAdmin) == true) return true
   return { id: { equals: req.user?.id } }
 }
 
 export const isAnyone: Access = () => true
 
 export const isAdminOrPublished: Access = ({ req: { user } }) => {
-  if (user && user?.roles?.includes('admin')) {
+  if (user && user?.roles?.includes(permissionSlugs.webAdmin)) {
     return true
   }
 
@@ -37,7 +38,7 @@ export const isAdminOrPublished: Access = ({ req: { user } }) => {
 }
 
 export const isAdminOrStripeActive: Access = ({ req: { user } }) => {
-  if (user && user?.roles?.includes('admin')) {
+  if (user && user?.roles?.includes(permissionSlugs.webAdmin)) {
     return true
   }
 

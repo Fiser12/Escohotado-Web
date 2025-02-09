@@ -4,6 +4,7 @@ export type MenuItem = {
     text: string;
     action?: () => Promise<void>;
     href?: string;
+    target?: "_black" | "_self" | "_parent" | "_top";
     icon?: string;
 }
 

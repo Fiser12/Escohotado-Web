@@ -44,20 +44,22 @@ export const BasicMenu: React.FC<Props> = ({
                                 className="w-full px-5 py-3 flex flex-col justify-start items-center gap-2.5 hover:bg-gray-light active:bg-primary-50 focus:bg-primary-50"
                             >
                                 <div className="flex self-stretch h-3.5 justify-start items-center gap-1">
-                                    {action ? (
+                                    {href ? (
+                                        <Link
+                                            href={href}
+                                            target={item.target}
+                                            onClick={action}
+                                            className="text-primary-900 text-xs font-normal font-body leading-3"
+                                        >
+                                            {item.text}
+                                        </Link>
+                                    ) : action ? (
                                         <button
                                             onClick={action}
                                             className="text-primary-900 text-xs font-normal font-body leading-3"
                                         >
                                             {item.text}
                                         </button>
-                                    ) : href ? (
-                                        <Link
-                                            href={href}
-                                            className="text-primary-900 text-xs font-normal font-body leading-3"
-                                        >
-                                            {item.text}
-                                        </Link>
                                     ) : null}
                                 </div>
                             </div>

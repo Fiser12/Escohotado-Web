@@ -48,7 +48,13 @@ export const Header: React.FC<Props> = ({
                             user={user}
                             menuSections={[
                                 ...menuSections,
-                                { items: [{ text: "Cerrar sesión", action: signOut }] }
+                                { items: [{ 
+                                    text: "Cerrar sesión", 
+                                    action: signOut,
+                                    target: "_black",
+                                    href: routes.keycloak.logout 
+                                }] 
+                            }
                             ]}
                         /> : <form
                             action={async () => {

@@ -1,4 +1,4 @@
-import { UserModel, MenuSection, routes } from "hegel";
+import { UserModel, MenuSection, routes, permissionSlugs } from "hegel";
 
 export const getAccountMenuQuery: (user?: UserModel | null) => MenuSection[] = (user) => {
     if (!user) {
@@ -7,12 +7,12 @@ export const getAccountMenuQuery: (user?: UserModel | null) => MenuSection[] = (
     let sections: MenuSection[] = [
         {
             items: [
-                { text: "Cuenta", href: "relativeUrls.user.profile" },
+                { text: "Cuenta", href: routes.accountPageHref },
                 { text: "Suscripción", href: routes.subscriptionPageHref }
             ]   
         }
     ];
-    if(user.roles.includes("admin")) {
+    if(user.roles.includes(permissionSlugs.webAdmin)) {
         sections.push({
             title: "Administración",
             items: [

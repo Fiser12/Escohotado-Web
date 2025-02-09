@@ -1,3 +1,4 @@
+import { permissionSlugs } from "../payload/keycloakPermissionSlugs";
 import type { MenuSection } from "../domain/header_submenu_model.js";
 import type { UserModel } from "../domain/user-model.js";
 
@@ -13,7 +14,7 @@ export const mockAdminUser: UserModel = {
     name: "name",
     email: "email@fake.com",
     image: "https://fake.com/image.jpg",
-    roles: ["admin"]
+    roles: [permissionSlugs.webAdmin]
 }
 
 export function menuSectionsLoaderMock(user: UserModel | null): MenuSection[] {
@@ -28,7 +29,7 @@ export function menuSectionsLoaderMock(user: UserModel | null): MenuSection[] {
             ]   
         }
     ];
-    if(user.roles.includes("admin")) {
+    if(user.roles.includes(permissionSlugs.webAdmin)) {
         sections.push({
             title: "Administración",
             items: [
