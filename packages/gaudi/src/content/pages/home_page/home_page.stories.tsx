@@ -24,7 +24,22 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       id: "2",
       type: "quote",
       className: "col-span-1 md:col-span-2 lg:col-span-1",
-      categories: [],
+      origen: {
+            title: "Caos y Orden",
+            type: "book",
+            detailHref: "/collections/caos-y-orden",
+            hasPermissions: true,
+      },
+      categories: [
+        {
+          id: "1",
+          label: "Drogas",
+        },
+        {
+          id: "2",
+          label: "Educación",
+        },
+      ],
       context: null,
       quote:
         "La libertad no es algo que se nos dé, sino algo que conquistamos; no es una gracia ni un privilegio, sino una responsabilidad. Ser libre significa asumir la propia vida con todas sus consecuencias, sin delegar en otros las decisiones fundamentales, y sin buscar excusas en el destino o en la sociedad. Solo quien es capaz de enfrentarse a sus miedos y contradicciones puede aspirar a la libertad.",
