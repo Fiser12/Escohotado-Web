@@ -6,7 +6,6 @@ export { ContentWrapper } from "./common/content_wrapper/content_wrapper";
 export { Header } from "./common/header/header";
 export { SubscriptionCard } from "./subscription/subscription_card";
 export { default as storybookHelpers } from "./storybook-helpers";
-export { ToggleButtonGroup } from "./common/toggle_button_group/toggle_button_group";
 export { SubscriptionsGroupCard } from "./subscription/subscriptions_card_group";
 export { BookCard } from "./content/book/cards";
 export { ArticleDetail } from "./content/pages/article_page/detalle_web";

@@ -2,9 +2,10 @@ import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { MainButton } from "gaudi/client";
-import { ContentWrapper, H1 } from "gaudi/server";
+import { ContentWrapper, H1, H4 } from "gaudi/server";
 import { signOut } from "@/payload/plugins/authjs/plugin";
 import { routes } from "hegel";
+import { NewsletterToggleButton } from "@/ui/payload_admin/newsletter_toggle_button";
 
 const Page = async () => {
   const payload = await getPayload();
@@ -14,6 +15,10 @@ const Page = async () => {
   return (
     <ContentWrapper className="flex flex-col items-right gap-6 pt-10">
       <H1 className="text-2xl font-bold" label="Preferencias de la cuenta" />
+      <div className="flex flex-row gap-6">
+        <H4 label="Subscripción a la newsletter" className="self-center" />
+        <NewsletterToggleButton newsletterIsActive={user.isSubscribedToNewsletter} />
+      </div>
       <a href={routes.keycloak.account}>
         <MainButton className="max-w-60" text="Cambiar datos de usuario" />
       </a>

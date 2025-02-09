@@ -51,12 +51,12 @@ export const ToggleButtonGroup: React.FC<Props> = ({
               className={classNames(
                 'relative flex text-xs h-8 rounded-full gap-1 transition-colors duration-150 ease-in-out font-montserrat justify-center items-center mx-2',
                 {
-                  'text-black font-bold': selected === option.id,
-                  'text-neutral-400 font-normal': selected !== option.id,
+                  'text-black font-bold': index === activeIndex,
+                  'text-neutral-400 font-normal': index !== activeIndex,
                 }
               )}
               onClick={() => handleClick(option, index)}
-              aria-pressed={selected === option.id}
+              aria-pressed={index === activeIndex}
             >
               {option.label}
               {option.sublabel && (
