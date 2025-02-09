@@ -1,25 +1,32 @@
 "use client"
+
 import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
 import { CategoryModel, OrigenModel } from "hegel";
 import "./style.css";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLinkIcon } from "../../../../common/icons/arrow_link";
-import { ModalQuote } from "./Modal/modalQuote";
-import { MainButton } from "../../../../client";
-import { CloseXIcon } from "../../../../common/icons/closex_icon";
 import { EyeIcon } from "../../../../common/icons/eye_icon";
+import Link from "next/link";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
+      id: string;
       quote: string;
       author: string;
       origen?: OrigenModel | null;
       categories: CategoryModel[];
 }
 
-export const FeaturedQuote: React.FC<Props> = ({ className, quote, author, categories, origen, ...rest }) => {
+export const FeaturedQuote: React.FC<Props> = ({ 
+      id,
+      className, 
+      quote, 
+      author, 
+      categories,
+      origen, 
+      ...rest 
+}) => {
       const [isOverflowing, setIsOverflowing] = useState(false);
-      const [isModalOpen, setIsModalOpen] = useState(false);
       const textRef = useRef<HTMLParagraphElement>(null);
       useEffect(() => {
             const checkOverflow = () => {
@@ -58,25 +65,13 @@ export const FeaturedQuote: React.FC<Props> = ({ className, quote, author, categ
                                     <Tag key={index} text={category.label} variant="disabled" />
                               )}
                         </div>
-                        {isOverflowing && <button onClick={() => setIsModalOpen(true)}>
+                        {isOverflowing && <Link href={`/cita/${id}`}>
                               <div className="bg-primary-500 p-1 rounded-full">
                                     <EyeIcon className="w-6 text-white" />
                               </div>
-                        </button>
+                        </Link>
                         }
                   </div>
-                  <ModalQuote isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                        <div className="h-full flex flex-col justify-center gap-5 p-3">
-                              <h2 className="text-m font-bold font-body text-gray-dark">Cita completa</h2>
-                              <p className="font-handwritten text-2xl lg:text-xl">{quote}</p>
-                              <p className="text-m text-primary-900  font-display">- {author}</p>
-                              <div className="flex flex-row gap-2 flex-wrap">
-                              {categories.map((category, index) =>
-                                    <Tag key={index} text={category.label} variant="disabled" />
-                              )}
-                        </div>
-                        </div>
-                  </ModalQuote>
             </div>
       );
 };

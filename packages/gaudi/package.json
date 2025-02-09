@@ -43,6 +43,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "atropos": "^2.0.2",
+    "framer-motion": "^12.3.0",
     "classnames": "^2.5.1",
     "embla-carousel": "^8.5.2",
     "embla-carousel-autoplay": "^8.5.2",

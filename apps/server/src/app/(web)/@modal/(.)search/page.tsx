@@ -1,10 +1,11 @@
-"use client";
+import { SearchModalLayout } from "@/ui/modal-layouts/SearchModalLayout";
+import { NextPage } from "next";
 
-import { SearchModalLayout } from "@/ui/dynamic-loading-lists/dynamic-global-search";
-
-const Page = () => {
+const Page: NextPage<{}> = () => {
 
   return <SearchModalLayout/>
 }
 
 export default Page;
+
+

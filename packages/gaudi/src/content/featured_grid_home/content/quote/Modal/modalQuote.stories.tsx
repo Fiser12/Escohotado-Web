@@ -20,12 +20,7 @@ const meta: Meta = {
                   description: "Indicates if the modal is open",
                   control: "boolean",
                   type: { name: "boolean", required: true },
-            },
-            children: {
-                  description: "Content to display inside the modal",
-                  control: "text",
-                  type: { name: "React.ReactNode", required: true },
-            },
+            }
     }
 };
 

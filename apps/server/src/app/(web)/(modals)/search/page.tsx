@@ -1,9 +1,13 @@
-import { SearchModalLayout } from "@/ui/dynamic-loading-lists/dynamic-global-search";
+import { routes } from "hegel";
 import HomePage from "@/app/(web)/page";
+import { SearchModalLayout } from "@/ui/modal-layouts/SearchModalLayout";
+
 const Page = async () => {
   return <>
     <HomePage/>
-    <SearchModalLayout goBackTo="/"/>
+    <SearchModalLayout 
+      goBackTo={routes.nextJS.homePageHref}
+    />
   </>
 };
 
