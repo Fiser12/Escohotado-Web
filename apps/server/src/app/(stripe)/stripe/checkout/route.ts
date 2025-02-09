@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 import { User } from 'payload-types'
 import Stripe from 'stripe'
 import { routes } from 'hegel'
+
 export async function GET(request: Request) {
   const payloadUser = await getCurrentUserQuery()
   const url = new URL(request.url)
@@ -23,8 +24,8 @@ async function createSubscriptionCheckout(
   const stripe = stripeBuilder()
 
   return await stripe.checkout.sessions.create({
-    success_url: `${url.origin}${routes.nextJS.subscriptionPageHref}`,
-    cancel_url: `${url.origin}${routes.nextJS.subscriptionPageHref}`,
+    success_url: `${process.env.DOMAIN}${routes.nextJS.subscriptionPageHref}`,
+    cancel_url: `${process.env.DOMAIN}${routes.nextJS.subscriptionPageHref}`,
     mode: 'subscription',
     customer_email: user.email,
     client_reference_id: user.id,

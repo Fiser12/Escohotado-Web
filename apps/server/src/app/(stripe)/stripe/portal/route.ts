@@ -47,6 +47,6 @@ async function createPortalSession(
   return await stripe.billingPortal.sessions.create({
     flow_data: flowData,
     customer: customer.id,
-    return_url: `${url.origin}${routes.nextJS.subscriptionPageHref}`,
+    return_url: `${process.env.DOMAIN}${routes.nextJS.subscriptionPageHref}`,
   })
 }
