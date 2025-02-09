@@ -30,7 +30,7 @@ const Page = async () => {
         target="_blank" 
         onClick={async () => {
           "use server";
-          await signOut({redirectTo: routes.homePageHref});
+          await signOut({redirectTo: routes.nextJS.homePageHref});
         }}
       >
         <MainButton text="Cerrar sesión" />

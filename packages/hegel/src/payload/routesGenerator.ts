@@ -26,13 +26,23 @@ export const generateDetailHref = (field: ContentRelationType): string => {
 const keyloakIssuer = `https://${process.env.KC_HOSTNAME}/realms/${process.env.KC_REALM}`
 
 export const routes = {
-  generateDetailHref,
-  subscriptionPageHref: "/subscriptions",
-  accountPageHref: "/cuenta",
-  lecturasPageHref: "/lecturas",
-  videosPageHref: "/videos",
-  citasPageHref: "/citas",
-  homePageHref: "/",
+  nextJS: {
+    generateDetailHref,
+    subscriptionPageHref: "/subscriptions",
+    accountPageHref: "/cuenta",
+    lecturasPageHref: "/lecturas",
+    videosPageHref: "/videos",
+    citasPageHref: "/citas",
+    homePageHref: "/"
+  },
+  newsletter: {
+    newsletterSubscriptionForm: `${process.env.NEWSLETTER_URL}/subscription/form`,
+    newsletterSubscribersApi: `${process.env.NEWSLETTER_URL}/api/subscribers`
+  },
+  nodeBB: {
+    syncTopicsApi: `${process.env.FORUM_URL}/api/v3/posts-sync`,
+    getYoutubeVideosApi: (playlistId: string) => `${process.env.FORUM_URL}/api/v3/get-youtube-videos/${playlistId}`
+  },
   keycloak: {
     issuer: keyloakIssuer,
     account: `${keyloakIssuer}/account`,

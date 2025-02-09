@@ -25,7 +25,7 @@ import { getArticlesQuery } from '@/core/content/getArticlesQuery'
 import { getVideosQuery } from '@/core/content/getVideosQuery'
 import { getQuotesQuery } from '@/core/content/getQuotesQuery'
 import { MediaHeaderModel } from 'node_modules/hegel/src/domain/content_model'
-import { generateDetailHref } from 'hegel/payload'
+import { routes } from 'hegel/payload'
 
 type QueryFieldType = GridCardsBlock['queryField'][number]
 type ContentRelationType = Extract<
@@ -66,7 +66,7 @@ export const mapArticleCard =
       author: getAuthorsNamesFromTaxonomies(taxonomies),
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
       coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
-      detailHref: generateDetailHref({
+      detailHref: routes.nextJS.generateDetailHref({
         collection: 'slug' in item ? `article_web` : `article_pdf`, 
         value: item
       }),
@@ -91,7 +91,7 @@ export const mapVideoCard =
       categories: [],
       hasPermission: href != null && href != '',
       coverHref: video.thumbnailUrl ?? IMAGE_ERROR,
-      detailHref: generateDetailHref({collection: "video", value: video}),
+      detailHref: routes.nextJS.generateDetailHref({collection: "video", value: video}),
       href: href,
     }
   }
@@ -110,7 +110,7 @@ const mapBookCard = (item: Book): ContentHeaderModel => {
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
-    detailHref: generateDetailHref({collection: "book", value: item}),
+    detailHref: routes.nextJS.generateDetailHref({collection: "book", value: item}),
     quote: item.description ?? 'No description',
     title: item.title ?? 'No title',
   }
@@ -133,7 +133,7 @@ export const mapQuoteCard =
           ? (item.source.value.permissions_seeds?.trim() ?? '') 
           : ''
         ),
-      detailHref: generateDetailHref({collection: item.source.relationTo, value: item.source.value})
+      detailHref: routes.nextJS.generateDetailHref({collection: item.source.relationTo, value: item.source.value})
     } : undefined,
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),

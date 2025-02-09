@@ -21,7 +21,7 @@ export const renderFeatured = (item: ContentCardModel) => {
           author={item.author}
           coverHref={item.coverHref}
           href={item.detailHref}
-          unlockHref={routes.subscriptionPageHref}
+          unlockHref={routes.nextJS.subscriptionPageHref}
           categories={item.categories}
         />
       );
@@ -60,7 +60,7 @@ export const renderFeatured = (item: ContentCardModel) => {
           href={item.href ?? "https://placehold.co/error"}
           publishedAt={item.publishedAt}
           categories={item.categories}
-          unlockHref={routes.subscriptionPageHref}
+          unlockHref={routes.nextJS.subscriptionPageHref}
         />
       );
     case "media":

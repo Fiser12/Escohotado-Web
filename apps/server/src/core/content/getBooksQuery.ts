@@ -26,7 +26,7 @@ export const getBooksQuery = async (query: string): Promise<BookDto[]> => {
     return {
       title: book.title ?? '',
       coverHref: cover?.url ?? '#',
-      link: routes.generateDetailHref({ collection: COLLECTION_SLUG_BOOK, value: book })
+      link: routes.nextJS.generateDetailHref({ collection: COLLECTION_SLUG_BOOK, value: book })
     }
   })
 }

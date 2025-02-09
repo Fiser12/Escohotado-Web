@@ -5,13 +5,13 @@ import 'hegel'
 import { BasePayload } from 'payload'
 import { YoutubeVideo } from './youtube_video_model'
 import { getPayload } from '@/payload/utils/getPayload'
-import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
+import { COLLECTION_SLUG_VIDEO, routes } from 'hegel/payload'
 
 const getYoutubeVideos = async (
   playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',
   uid: string = '19',
 ): Promise<YoutubeVideo[]> => {
-  const apiUrl = new URL(`/api/v3/get-youtube-videos/${playlistId}`, process.env.FORUM_URL)
+  const apiUrl = new URL(routes.nodeBB.getYoutubeVideosApi(playlistId))
   const token = process.env.NODEBB_TOKEN
   const body = JSON.stringify({
     _uid: uid,

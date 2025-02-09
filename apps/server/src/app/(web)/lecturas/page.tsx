@@ -74,7 +74,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
           </div>
         </ContentWrapper>
       </div>
-      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href={routes.subscriptionPageHref} coverHref={handwrittenBackground.src}></HighlightSection>
+      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href={routes.nextJS.subscriptionPageHref} coverHref={handwrittenBackground.src}></HighlightSection>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
       {articulosDataPage.content &&
         <LexicalRenderer data={articulosDataPage.content} />

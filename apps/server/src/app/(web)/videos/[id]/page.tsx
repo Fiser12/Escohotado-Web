@@ -3,7 +3,7 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { DetailBottomSection, VideoDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { COLLECTION_SLUG_VIDEO, generateDetailHref } from 'hegel/payload';
+import { COLLECTION_SLUG_VIDEO, routes } from 'hegel/payload';
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery';
 import { mapAnyToComment } from 'hegel';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
@@ -41,7 +41,7 @@ const Page: NextPage<Props> = async (props) => {
     <VideoDetail
       videoHref={href}
       title={video.title ?? "No title"}
-      detailHref={generateDetailHref({ collection: "video", value: video })}
+      detailHref={routes.nextJS.generateDetailHref({ collection: "video", value: video })}
       publishedAt={video.publishedAt as string}
       duration={video.duration ?? 0}
       categories={[]}

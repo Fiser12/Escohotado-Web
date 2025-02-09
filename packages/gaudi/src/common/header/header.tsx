@@ -37,9 +37,9 @@ export const Header: React.FC<Props> = ({
                 <nav className="h-16 py-5 bg-white flex justify-between items-center">
                     <Logo tabIndex={0} />
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <NavItem href={routes.lecturasPageHref} text="Lecturas" tabindex={2} />
-                        <NavItem href={routes.videosPageHref} text="Vídeos" tabindex={3} />
-                        <NavItem href={routes.citasPageHref} text="Citas" tabindex={4} />
+                        <NavItem href={routes.nextJS.lecturasPageHref} text="Lecturas" tabindex={2} />
+                        <NavItem href={routes.nextJS.videosPageHref} text="Vídeos" tabindex={3} />
+                        <NavItem href={routes.nextJS.citasPageHref} text="Citas" tabindex={4} />
                         <BasicDropdown menuSections={catalogoSections} text="Catálogo" />
                         <OpenModalButton />
                     </div>

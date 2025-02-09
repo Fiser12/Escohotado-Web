@@ -11,7 +11,7 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
   },
   admin: {
     livePreview: {
-      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.generateDetailHref({ 
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.nextJS.generateDetailHref({ 
         collection: COLLECTION_SLUG_ARTICLE_WEB, 
         value: { id: data.id, slug: data.slug } 
       })}`,

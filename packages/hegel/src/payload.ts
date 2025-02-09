@@ -18,7 +18,4 @@ export {
     collectionsSlugs
  } from './payload/collectionsSlugs'
 
- export {
-    generateDetailHref,
-    routes
- } from './payload/routesGenerator'
+ export { routes } from './payload/routesGenerator'

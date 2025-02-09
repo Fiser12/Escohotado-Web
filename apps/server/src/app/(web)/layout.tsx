@@ -29,7 +29,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
             }}
             signOut={async () => {
               "use server";
-              await signOut({redirectTo: routes.homePageHref});
+              await signOut({redirectTo: routes.nextJS.homePageHref});
             }}
             menuSections={getAccountMenuQuery(payloadUser)}
           />

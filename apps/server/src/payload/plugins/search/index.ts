@@ -1,6 +1,6 @@
 import { getSlugsFromTaxonomy } from "@/core/domain/getSlugsFromTaxonomy";
 import { searchPlugin } from "@payloadcms/plugin-search";
-import { COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_BOOK, generateDetailHref } from "hegel/payload";
+import { COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_BOOK, routes } from "hegel/payload";
 import { Config } from "payload";
 
 const config: (config: Config) => Config = searchPlugin({
@@ -39,7 +39,7 @@ const config: (config: Config) => Config = searchPlugin({
         return {
           ...searchDoc,
           title: originalDoc.title ?? originalDoc.quote,
-          href: generateDetailHref({ 
+          href: routes.nextJS.generateDetailHref({ 
             collection: searchDoc.doc.relationTo, 
             value: { id: originalDoc.id, slug: originalDoc.slug } 
           }),

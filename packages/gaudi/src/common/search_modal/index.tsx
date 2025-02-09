@@ -166,7 +166,7 @@ export const SearchModal: React.FC<Props> = ({
                   { item.href == null && <div className='h-6 w-6'><LockIcon /> </div>}
                 </div>
               </>
-              return <a href={item.href ?? routes.subscriptionPageHref} key={index} className={className}>{Content}</a>
+              return <a href={item.href ?? routes.nextJS.subscriptionPageHref} key={index} className={className}>{Content}</a>
             })}
               {children}
           </div>

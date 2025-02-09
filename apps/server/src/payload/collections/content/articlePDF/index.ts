@@ -17,7 +17,7 @@ export const articlePDF = contentWithPermissionsCollectionBuilder({
   },
   admin: {
     livePreview: {
-      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.generateDetailHref({ collection: COLLECTION_SLUG_ARTICLE_PDF, value: { id: data.id } })}`,
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.nextJS.generateDetailHref({ collection: COLLECTION_SLUG_ARTICLE_PDF, value: { id: data.id } })}`,
     }  
   },
   fields: [

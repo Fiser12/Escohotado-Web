@@ -1,6 +1,6 @@
 "use server";
 
-import { COLLECTION_SLUG_BOOK, generateDetailHref } from "hegel/payload";
+import { COLLECTION_SLUG_BOOK, routes } from "hegel/payload";
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { BookDetail, DetailBottomSection } from "gaudi/server";
@@ -52,7 +52,7 @@ const Page = async (props: Props) => {
     return (<BookDetail
         title={book.title ?? "No title"}
         description={book.description ?? "Empty"}
-        detailHref={generateDetailHref({ collection: "book", value: book })}
+        detailHref={routes.nextJS.generateDetailHref({ collection: "book", value: book })}
         author={getAuthorFromTaxonomies(book.categories as Taxonomy[])?.singular_name}
         coverHref={(book.cover as Media)?.url ?? "#"}
         langs={['es', 'en']}

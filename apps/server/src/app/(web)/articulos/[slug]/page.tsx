@@ -4,7 +4,7 @@ import { ArticleDetail, DetailBottomSection } from "gaudi/server";
 import { NextPage } from "next/types";
 import { Media, Quote, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { COLLECTION_SLUG_ARTICLE_WEB, generateDetailHref } from 'hegel/payload';
+import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
@@ -40,7 +40,7 @@ const Page: NextPage<Props> = async (props) => {
     title={article.title ?? "No title"}
     publishedAt={article.publishedAt as string}
     coverHref={(article.cover as Media | null)?.url ?? "#"}
-    detailHref={generateDetailHref({ collection: "article_web", value: article })}
+    detailHref={routes.nextJS.generateDetailHref({ collection: "article_web", value: article })}
     textLink={"Leer más"}
     categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
   >

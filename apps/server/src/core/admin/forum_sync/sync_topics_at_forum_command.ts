@@ -1,3 +1,4 @@
+import { routes } from "hegel";
 import { BasePayload } from "payload";
 interface Topic {
   id: string
@@ -23,7 +24,7 @@ export const syncTopicsAtForumCommand = async (
   items: Topic[],
   uid: string = "19"
 ): Promise<TopicResonse[]> => {
-  const apiUrl = new URL('/api/v3/posts-sync', process.env.FORUM_URL)
+  const apiUrl = new URL(routes.nodeBB.syncTopicsApi)
   const token = process.env.NODEBB_TOKEN
   const requestBody = JSON.stringify({
     items,

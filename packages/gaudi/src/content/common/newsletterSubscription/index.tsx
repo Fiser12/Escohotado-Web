@@ -3,6 +3,7 @@ import { H3 } from "../../../common/headers/H3";
 import { EmailIcon } from "../../../common/icons/email_icon";
 import { InputForm } from "../../../common/input";
 import { MainButton } from "../../../common/main_button/main_button";
+import { routes } from "hegel";
 
 interface Props extends React.HTMLAttributes<HTMLAnchorElement> { }
 
@@ -14,7 +15,7 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
 
       return <form 
             method="post" 
-            action={`${process.env.NEWSLETTER_URL}/subscription/form`} 
+            action={routes.newsletter.newsletterSubscriptionForm} 
             className={divClass} 
             target="_blank" 
             {...rest}

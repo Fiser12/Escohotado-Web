@@ -7,8 +7,8 @@ export const getAccountMenuQuery: (user?: UserModel | null) => MenuSection[] = (
     let sections: MenuSection[] = [
         {
             items: [
-                { text: "Cuenta", href: routes.accountPageHref },
-                { text: "Suscripción", href: routes.subscriptionPageHref }
+                { text: "Cuenta", href: routes.nextJS.accountPageHref },
+                { text: "Suscripción", href: routes.nextJS.subscriptionPageHref }
             ]   
         }
     ];

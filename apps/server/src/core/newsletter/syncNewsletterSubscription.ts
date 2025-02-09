@@ -1,10 +1,11 @@
+import { routes } from "hegel";
+
 type Props = {
   email: string
   name?: string | null;
   isSubscribedToNewsletter: boolean
 }
 
-const API_BASE_URL = `${process.env.NEWSLETTER_URL}/api/subscribers`;
 const USERNAME = 'api_admin'
 const TOKEN = process.env.NEWSLETTER_API_TOKEN
 const SUBSCRIBERS_LIST_ID = Number(process.env.NEWSLETTER_SUBSCRIBERS_LIST_ID)
@@ -19,7 +20,7 @@ const getAuthHeader = (): HeadersInit => {
 
 export const getNewsletterSubscriberId = async (email: string): Promise<number | null> => {
   const query = `subscribers.email = '${email}'`
-  const url = `${API_BASE_URL}?query=${encodeURIComponent(query)}`
+  const url = `${routes.newsletter.newsletterSubscribersApi}?query=${encodeURIComponent(query)}`
 
   const response = await fetch(url, {
     method: 'GET',
@@ -36,7 +37,7 @@ export const getNewsletterSubscriberId = async (email: string): Promise<number |
 }
 
 export const createNewsletterSubscriber = async (email: string, name?: string | null): Promise<any> => {
-  const url = API_BASE_URL
+  const url = routes.newsletter.newsletterSubscribersApi
   const body = JSON.stringify({ 
     name,
     email, 
@@ -57,7 +58,7 @@ export const createNewsletterSubscriber = async (email: string, name?: string | 
 }
 
 export const deleteNewsletterSubscriber = async (subscriberId: number): Promise<any> => {
-  const url = `${API_BASE_URL}/${subscriberId}`
+  const url = `${routes.newsletter.newsletterSubscribersApi}/${subscriberId}`
 
   const response = await fetch(url, {
     method: 'DELETE',
