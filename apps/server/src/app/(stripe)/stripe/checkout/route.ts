@@ -24,8 +24,8 @@ async function createSubscriptionCheckout(
   const stripe = stripeBuilder()
 
   return await stripe.checkout.sessions.create({
-    success_url: `${process.env.DOMAIN}${routes.nextJS.subscriptionPageHref}`,
-    cancel_url: `${process.env.DOMAIN}${routes.nextJS.subscriptionPageHref}`,
+    success_url: `${process.env.DOMAIN}${routes.nextJS.subscriptionPageHref}?refresh=true`,
+    cancel_url: `${process.env.DOMAIN}${routes.nextJS.subscriptionPageHref}?refresh=true`,
     mode: 'subscription',
     customer_email: user.email,
     client_reference_id: user.id,
