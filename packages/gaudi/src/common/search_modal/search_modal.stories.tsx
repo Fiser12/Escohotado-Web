@@ -3,6 +3,7 @@ import React from "react";
 import { SearchModal, SearchedItem } from ".";
 import storybookHelpers from "../../storybook-helpers";
 import { CategoryModel } from "hegel";
+import { title } from "process";
 
 const tags: CategoryModel[] = [
   {
@@ -50,7 +51,7 @@ const defaultItems: SearchedItem[] = [
 ];
 
 const meta: Meta<typeof SearchModal> = {
-  title: "Molecules/SearchModal",
+  title: "Molecules/Modals",
   component: SearchModal,
   args: {
     secondsDelay: 0.5,
@@ -75,5 +76,6 @@ type Story = StoryObj<typeof meta>;
 
 export default meta;
 
-export const Default: Story = { parameters: {} };
-export const Mobile: Story = { parameters: storybookHelpers.mobileParameters };
+export const Default: Story = {
+  name: "Search",
+};
