@@ -69,6 +69,10 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
       trialStart: trial_start ? new Date(trial_start * 1000).toISOString() : null,
       trialEnd: trial_end ? new Date(trial_end * 1000).toISOString() : null,
     }
+    await payload.delete({
+      collection: COLLECTION_SLUG_SUBSCRIPTIONS,
+      where: { user: { equals: userID } }
+    })
 
     await payloadUpsert({
       collection: COLLECTION_SLUG_SUBSCRIPTIONS,
@@ -91,19 +95,19 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
 
 export const subscriptionDeleted = async (subscription: Stripe.Subscription) => {
   const payload = await getPayload()
-  const { id: stripeSubscriptionID } = subscription
+  const { id } = subscription
 
   try {
     await payload.delete({
       collection: COLLECTION_SLUG_SUBSCRIPTIONS,
       where: {
-        stripeSubscriptionId: { equals: stripeSubscriptionID },
+        stripeID: { equals: id },
       },
     })
     await deleteForumPremiumRoleCommand(subscription.metadata.keycloakUserId ?? 'ERROR')
     if (logs)
       payload.logger.info(
-        `✅ Successfully deleted subscription with Stripe ID: ${stripeSubscriptionID}`,
+        `✅ Successfully deleted subscription with Stripe ID: ${id}`,
       )
   } catch (error) {
     payload.logger.error(`- Error deleting subscription: ${error}`)
