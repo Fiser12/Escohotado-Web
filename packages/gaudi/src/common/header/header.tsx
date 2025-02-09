@@ -5,7 +5,6 @@ import { NavItem } from "./nav_item";
 import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
 import { HamburguerIcon } from "../icons/hamburguer_icon";
-import { BasicDropdown } from "../dropdown";
 import { OpenModalButton } from "./open_search_modal_button";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
@@ -22,15 +21,6 @@ export const Header: React.FC<Props> = ({
     menuSections,
     ...rest
 }) => {
-    const catalogoSections: MenuSection[] = [
-        {
-            items: [
-                { text: "La Emboscadura", href: "https://laemboscadura.com/" },
-                { text: "Políticamente Incorrecto", href: "#" },
-            ],
-        },
-    ];
-
     return (
         <header {...rest}>
             <ContentWrapper>
@@ -40,7 +30,6 @@ export const Header: React.FC<Props> = ({
                         <NavItem href={routes.nextJS.lecturasPageHref} text="Lecturas" tabindex={2} />
                         <NavItem href={routes.nextJS.videosPageHref} text="Vídeos" tabindex={3} />
                         <NavItem href={routes.nextJS.citasPageHref} text="Citas" tabindex={4} />
-                        <BasicDropdown menuSections={catalogoSections} text="Catálogo" />
                         <OpenModalButton />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">

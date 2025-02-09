@@ -13,6 +13,7 @@ interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   author: string;
   categories: CategoryModel[];
   goBackTo?: string;
+  onCloseModal: () => void;
 }
 
 export const ModalQuote: React.FC<ModalProps> = ({
@@ -22,20 +23,18 @@ export const ModalQuote: React.FC<ModalProps> = ({
   categories,
   className,
   goBackTo,
+  onCloseModal,
   ...rest
 }) => {
-  const router = useRouter();
   const containerClass = classNames(
     className,
     "fixed inset-0 flex items-center justify-center z-[999]"
   );
-  const onCloseModal = () => {
-    if (goBackTo) router.push(goBackTo);
-    else router.back();
-  }
-
   return (
-    <AnimatedModal onClose={onCloseModal} className={containerClass} {...rest}
+    <AnimatedModal 
+      onClose={onCloseModal} 
+      className={containerClass} 
+      {...rest}
       modalContent={(setIsClosed) => (
         <div className="bg-white p-4 m-4 rounded shadow-m max-w-[37.5rem] relative z-10 shadow-md">
           <button
