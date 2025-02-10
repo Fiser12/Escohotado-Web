@@ -892,7 +892,6 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "taxonomy_select".
  */
 export interface TaxonomySelect<T extends boolean = true> {
-  id?: T;
   selectable?: T;
   singular_name?: T;
   plural_name?: T;

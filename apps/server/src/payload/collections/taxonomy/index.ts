@@ -22,12 +22,6 @@ const taxonomy: CollectionConfig = {
   },
   fields: [
     {
-      name: 'id',
-      type: 'text',
-      defaultValue: uuid_v4,
-      admin: { position: 'sidebar', readOnly: true },
-    },
-    {
       name: 'selectable',
       type: 'checkbox',
       defaultValue: true,
