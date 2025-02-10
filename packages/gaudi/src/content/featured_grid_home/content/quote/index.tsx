@@ -26,18 +26,6 @@ export const FeaturedQuote: React.FC<Props> = ({
       origen, 
       ...rest 
 }) => {
-      const [isOverflowing, setIsOverflowing] = useState(false);
-      const textRef = useRef<HTMLParagraphElement>(null);
-      useEffect(() => {
-            const checkOverflow = () => {
-                  if (textRef.current) {
-                        setIsOverflowing(textRef.current.scrollHeight > textRef.current.clientHeight);
-                  }
-            };
-            checkOverflow();
-            window.addEventListener("resize", checkOverflow);
-            return () => window.removeEventListener("resize", checkOverflow);
-      }, [quote]);
 
       const containerClass = classNames(
             className,
@@ -57,7 +45,7 @@ export const FeaturedQuote: React.FC<Props> = ({
                         </a>
                   }
                   <div className="h-full flex items-center">
-                        <p ref={textRef} className={`dynamic-text-quote ${quoteClass} line-clamp-3`}>{quote}</p>
+                        <p className={`dynamic-text-quote ${quoteClass} line-clamp-4`}>{quote}</p>
                   </div>
                   <div className="w-full flex justify-between items-center mb-4">
                         <div className="flex flex-row gap-2 flex-wrap">
@@ -65,12 +53,11 @@ export const FeaturedQuote: React.FC<Props> = ({
                                     <Tag key={index} text={category.label} variant="disabled" />
                               )}
                         </div>
-                        {isOverflowing && <Link href={`/cita/${id}`}>
+                        <Link href={`/cita/${id}`}>
                               <div className="bg-primary-500 p-1 rounded-full">
                                     <EyeIcon className="w-6 text-white" />
                               </div>
                         </Link>
-                        }
                   </div>
             </div>
       );
