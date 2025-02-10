@@ -21,6 +21,7 @@ const getAuthHeader = (): HeadersInit => {
 export const getNewsletterSubscriberId = async (email: string): Promise<number | null> => {
   const query = `subscribers.email = '${email}'`
   const url = `${routes.newsletter.newsletterSubscribersApi}?query=${encodeURIComponent(query)}`
+  console.log('url to request fetch get', url)
 
   const response = await fetch(url, {
     method: 'GET',
@@ -42,7 +43,8 @@ export const createNewsletterSubscriber = async (email: string, name?: string | 
     name,
     email, 
     lists: [SUBSCRIBERS_LIST_ID] 
-})
+  })
+  console.log('url to request fetch, create', url)
 
   const response = await fetch(url, {
     method: 'POST',
@@ -59,6 +61,7 @@ export const createNewsletterSubscriber = async (email: string, name?: string | 
 
 export const deleteNewsletterSubscriber = async (subscriberId: number): Promise<any> => {
   const url = `${routes.newsletter.newsletterSubscribersApi}/${subscriberId}`
+  console.log('url to request fetch, delete', url)
 
   const response = await fetch(url, {
     method: 'DELETE',
@@ -86,7 +89,11 @@ const syncNewsletterSubscription = async (props: Props): Promise<void> => {
       console.warn('El usuario ya tiene el mismo estado de suscripción')
     }
   } catch (error) {
-    console.error('Error sincronizando la suscripción al newsletter:', error)
+    console.error(
+      'Error sincronizando la suscripción al newsletter:', 
+      error, 
+      props,
+    )
   }
 }
 
