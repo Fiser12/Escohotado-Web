@@ -12,7 +12,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     publishedAt: string;
     author?: string;
-    textLink: string;
     coverHref: string;
     detailHref: string;
     categories: CategoryModel[];
@@ -59,8 +58,8 @@ export const ArticleDetail: React.FC<Props> = ({
                     className="object-cover"
                 />
             </div>
-            <ContentWrapper className="flex flex-col gap-12">
-                <div className="border-b-2 border-gray-light pb-9 md:pb-10 flex flex-col gap-6 md:gap-10">
+            <ContentWrapper className="flex flex-col ">
+                <div className="md:pb-10 flex flex-col gap-6 md:gap-10">
                     <div className="flex flex-col gap-2">
                         <H4 label={author ?? ""}></H4>
                         <H1 label={title ?? "No title"} />
@@ -74,7 +73,7 @@ export const ArticleDetail: React.FC<Props> = ({
                         <p className="text-gray-disabled">{formattedDate}</p>
                     </div>
                 </div>
-                <div className="border-t-2 border-gray-light flex justify-between items-center py-5">
+                <div className="border-b-2 border-gray-light flex justify-between items-center pb-5">
                     <SocialMediaShare 
                         textToShare={`Quiero compartir con vosotros el artículo ${author ? `de ${author}`: ""}: ${title}`} 
                         relativeLink={detailHref} 

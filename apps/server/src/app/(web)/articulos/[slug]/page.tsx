@@ -9,6 +9,8 @@ import { mapAnyToComment } from 'hegel';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
+import { ContentProtected } from '@/ui/contentProtected';
+import { FreemiumHighlightSection } from 'gaudi/client';
 
 interface Props {
   params: {
@@ -41,11 +43,12 @@ const Page: NextPage<Props> = async (props) => {
     publishedAt={article.publishedAt as string}
     coverHref={(article.cover as Media | null)?.url ?? "#"}
     detailHref={routes.nextJS.generateDetailHref({ collection: "article_web", value: article })}
-    textLink={"Leer más"}
     categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
   >
     {article.content &&
-      <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
+      <ContentProtected fallback={<FreemiumHighlightSection />} >
+        <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
+      </ContentProtected>
     }
     <DetailBottomSection
       quotesModel={quotes.mapNotNull(mapQuoteCard(user))}

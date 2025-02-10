@@ -4,12 +4,13 @@ import { ContentWrapper, H2, GridCardsBlock } from "gaudi/server";
 import { Quote } from "payload-types";
 import { getQuotesQueryByTags } from "@/core/content/getQuotesQuery";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { SortSelectorSSR } from "@/ui/nuqs/sort_selector_ssr";
-import { convertContentModelToCard } from "hegel";
+import { convertContentModelToCard, routes } from "hegel";
 import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
 import { DynamicLoadingQuotes } from '@/ui/dynamic-loading-lists/dynamic-loading-quotes';
 import { TagsFilterBarSSR } from '@/ui/nuqs/tags_filter_bar_ssr';
+import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
+import { redirect } from 'next/navigation';
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),
@@ -30,6 +31,8 @@ const Page = async ({ searchParams }: Props) => {
     getQuotesQueryByTags(query, tags.split(",").filter(Boolean) ?? [], 0, "publishedAt"),
   ]);
   const quoteCardMapper = (video: Quote) => mapQuoteCard(user)(video);
+  const hasPermission = evalPermissionQuery(user, "basic");
+  if (!hasPermission) return redirect(routes.nextJS.subscriptionPageHref);
 
   return (
     <ContentWrapper

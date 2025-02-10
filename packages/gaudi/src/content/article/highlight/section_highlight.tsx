@@ -1,17 +1,17 @@
 import classNames from "classnames";
 import { H4 } from "../../../common/headers/H4";
-import { MainButton } from "../../../common/main_button/main_button";
 import Image from "next/image";
-import Link from 'next/link';
+import { routes } from "hegel";
+import Link from "next/link";
+import { MainButton } from "../../../common/main_button/main_button";
+import handwrittenBackground from "../../../assets/images/handwritting-bg.jpg";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     description: string;
-    textButton: string;
-    href: string;
     coverHref: string;
 }
 
-export const HighlightSection: React.FC<Props> = ({coverHref, textButton, href, description, className, ...rest}) => {
+export const HighlightSection: React.FC<Props> = ({coverHref, description, className, children, ...rest}) => {
     const containerClass = classNames(
         'w-full bg-black py-12.5 px-5 text-white relative overflow-hidden',
         className
@@ -26,10 +26,18 @@ export const HighlightSection: React.FC<Props> = ({coverHref, textButton, href, 
             />
             <div className="relative z-10 flex flex-col justify-center items-center gap-7.5">
                 <H4 label={description} className="text-white text-center"></H4>
-                <Link href={href}>
-                    <MainButton text={textButton} color="secondary" type="line"></MainButton>
-                </Link>
+                {children}
             </div>
         </div>
     );
 };
+
+export const FreemiumHighlightSection: React.FC<{}> = () => (
+    <HighlightSection 
+        description="¿Te gustaría acceder al contenido exclusivo de Escohotado?" 
+        coverHref={handwrittenBackground.src}>
+        <Link href={routes.nextJS.subscriptionPageHref}>
+            <MainButton text={"Accede al contenido completo"} color="secondary" type="line" className="max-w-70"></MainButton>
+        </Link>
+    </HighlightSection>
+)

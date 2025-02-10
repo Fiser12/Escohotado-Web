@@ -14,13 +14,14 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
       author?: string;
       href?: string | null;
       detailHref: string;
+      hasPermission: boolean;
       categories: CategoryModel[];
       coverHref?: string;
       children: React.ReactNode;
 }
 
 
-export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, categories, href, children, coverHref, detailHref, ...rest}) => {
+export const ArticleDetailPdf: React.FC<Props> = ({ publishedAt, author, title, categories, href, children, coverHref, hasPermission, detailHref, ...rest }) => {
       const tagDateContainerClass = classNames(
             'flex flex-col md:flex-row gap-3 justify-between'
       );
@@ -54,20 +55,18 @@ export const ArticleDetailPdf: React.FC<Props> = ({publishedAt, author, title, c
                                     </div>
                               </div>
                               <div className="flex justify-between items-center py-5">
-                                    {href &&
-                                          <div className="mt-6">
-                                                <a href={href ?? "#"} target="_blank">
-                                                      <MainButton
-                                                            text="Descargar PDF"
-                                                            icon={<DownloadDocIcon />}
-                                                      />
-                                                </a>
-                                          </div>
+                                    {hasPermission && href &&
+                                          <a href={href ?? "#"} target="_blank">
+                                                <MainButton
+                                                      text="Descargar PDF"
+                                                      icon={<DownloadDocIcon />}
+                                                />
+                                          </a>
                                     }
-                                    <SocialMediaShare 
-                                          textToShare={`Quiero compartir con vosotros el artículo ${author ? `de ${author}`: ""}: ${title}`} 
-                                          relativeLink={detailHref} 
-                                          tags={["Artículo", author?.replace(" ", "")].mapNotNull(it => it)} 
+                                    <SocialMediaShare
+                                          textToShare={`Quiero compartir con vosotros el artículo ${author ? `de ${author}` : ""}: ${title}`}
+                                          relativeLink={detailHref}
+                                          tags={["Artículo", author?.replace(" ", "")].mapNotNull(it => it)}
                                     />
                               </div>
                         </div>

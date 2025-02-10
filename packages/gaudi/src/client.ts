@@ -17,3 +17,4 @@ export { VideoIcon } from "./common/icons/searchbar/video_icon";
 export { ToggleButtonGroup } from "./common/toggle_button_group/toggle_button_group";
 export { AnimatedModal } from "./common/animated-modal";
 export { ModalQuote } from "./content/featured_grid_home/content/quote/Modal/modalQuote";
+export { HighlightSection, FreemiumHighlightSection } from "./content/article/highlight/section_highlight";

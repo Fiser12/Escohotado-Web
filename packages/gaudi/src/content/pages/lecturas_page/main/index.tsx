@@ -11,6 +11,7 @@ import handwrittenBackground from "../../../../assets/images/handwritting-bg.jpg
 import drinkEscohotado from "../../../../assets/images/antonio-escohotado-lecturas.png";
 import { GridCardsBlock } from "../../../featured_grid_home/GridCardsBlock";
 import { convertContentModelToCard, ArticleHeaderModel } from "hegel";
+import { MainButton } from "../../../../common/main_button/main_button";
 
 export const ArticlePage = () => {
 
@@ -139,7 +140,9 @@ export const ArticlePage = () => {
           </div>
         </ContentWrapper>
       </div>
-      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href="#" coverHref={handwrittenBackground.src}></HighlightSection>
+      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" coverHref={handwrittenBackground.src}>
+          <MainButton text="Suscribete"/>
+      </HighlightSection>
       <div className="@container w-full pt-12.5">
         <CarouselBook books={booksExample} title="Obras de Antonio Escohotado" />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">

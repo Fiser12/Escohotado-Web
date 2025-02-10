@@ -9,6 +9,7 @@ import { OpenModalButton } from "./open_search_modal_button";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
     user: Optional<UserModel>
+    hasPermission: boolean
     menuSections: MenuSection[]
     signIn: () => Promise<void>
     signOut: () => Promise<void>
@@ -19,6 +20,7 @@ export const Header: React.FC<Props> = ({
     signIn,
     signOut,
     menuSections,
+    hasPermission,
     ...rest
 }) => {
     return (
@@ -29,7 +31,9 @@ export const Header: React.FC<Props> = ({
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
                         <NavItem href={routes.nextJS.lecturasPageHref} text="Lecturas" tabindex={2} />
                         <NavItem href={routes.nextJS.videosPageHref} text="Vídeos" tabindex={3} />
-                        <NavItem href={routes.nextJS.citasPageHref} text="Citas" tabindex={4} />
+                        { hasPermission &&
+                            <NavItem href={routes.nextJS.citasPageHref} text="Citas" tabindex={4} />
+                        }
                         <OpenModalButton />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">

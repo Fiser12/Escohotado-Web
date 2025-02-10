@@ -1,6 +1,7 @@
 import { COLLECTION_SLUG_ARTICLE_PDF, routes } from "hegel/payload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, HighlightSection, CarouselBook, escohotadoArticlesPortada } from "gaudi/server";
+import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton } from "gaudi/server";
+import { FreemiumHighlightSection, HighlightSection } from "gaudi/client";
 import { convertContentModelToCard } from "hegel";
 import { Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
@@ -16,6 +17,8 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import classNames from "classnames";
 import { TagsFilterBarSSR } from "@/ui/nuqs/tags_filter_bar_ssr";
 import { getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
+import { ContentProtected } from "@/ui/contentProtected";
+import Link from "next/link";
 
 export const pageSize = 10;
 
@@ -74,7 +77,15 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
           </div>
         </ContentWrapper>
       </div>
-      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" textButton="Accede al contenido completo" href={routes.nextJS.subscriptionPageHref} coverHref={handwrittenBackground.src}></HighlightSection>
+      <ContentProtected 
+        fallback={<FreemiumHighlightSection/>}
+      >
+        <HighlightSection description="Accede a las citas de Escohotado" coverHref={handwrittenBackground.src}>
+            <Link href={routes.nextJS.citasPageHref}>
+                <MainButton text={"Ir a las citas"} color="secondary" type="line"></MainButton>
+            </Link>
+        </HighlightSection>
+      </ContentProtected>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
       {articulosDataPage.content &&
         <LexicalRenderer data={articulosDataPage.content} />

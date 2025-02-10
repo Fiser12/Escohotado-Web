@@ -27,9 +27,9 @@ const Page: NextPage<Props> = async (props) => {
       id,
     })
   ]);
-  const hasPermissions = evalPermissionQuery(user, 'basic');
+  const hasPermission = evalPermissionQuery(user, 'basic');
   const quotes = (articlePdf?.quotes?.docs ?? [])
-    .slice(0, hasPermissions ? 3 : 0)
+    .slice(0, hasPermission ? 3 : 0)
     .cast<Quote>()
 
   return <ArticleDetailPdf
@@ -37,6 +37,7 @@ const Page: NextPage<Props> = async (props) => {
     href={articlePdf.url}
     author={getAuthorFromTaxonomies(articlePdf.categories as Taxonomy[])?.singular_name}
     publishedAt={articlePdf.publishedAt as string}
+    hasPermission={hasPermission}
     detailHref={routes.nextJS.generateDetailHref({ collection: "article_pdf", value: articlePdf })}
     coverHref={(articlePdf.cover as Media | null)?.url ?? "#"}
     categories={articlePdf.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}

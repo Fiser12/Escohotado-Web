@@ -7,9 +7,11 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { Textures } from "gaudi/client";
 import "../tailwind.css";
 import { routes } from "hegel";
+import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
 
 const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> = async ({ children, modal }) => {
   const payloadUser = await getCurrentUserQuery()
+  const hasPermission = evalPermissionQuery(payloadUser, 'basic');
   return (
     <html>
       <head>
@@ -22,6 +24,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
       <body>
         <NuqsAdapter>
           <Header
+            hasPermission={hasPermission}
             user={payloadUser}
             signIn={async () => {
               "use server";

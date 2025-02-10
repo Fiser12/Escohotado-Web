@@ -5,6 +5,7 @@ import { Tag } from "../../../../common/tag/tag";
 import { CategoryModel } from "hegel";
 import { VideoEmbed } from "../../../../common/video_embed/video_embed";
 import { SocialMediaShare } from "../../../../common/social_media";
+import { FreemiumHighlightSection } from "../../../../client";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -50,8 +51,9 @@ export const VideoDetail: React.FC<Props> = ({
     return (
         <div className={containerClass} {...rest}>
             <ContentWrapper className="flex flex-col gap-12">
-                {videoHref &&
-                    <VideoEmbed url={videoHref} />
+                {videoHref ?
+                    <VideoEmbed url={videoHref} /> :
+                    <FreemiumHighlightSection />
                 }
                 <div className="flex flex-col gap-6 md:gap-10">
                     <H3 label={title ?? "No title"} />

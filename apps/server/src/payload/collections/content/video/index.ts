@@ -85,41 +85,26 @@ export const video: CollectionConfig = {
       label: 'Thumbnail URL',
       name: 'thumbnailUrl',
       type: 'text',
-      admin: {
-        readOnly: true,
-      },
     },
     {
       name: 'title',
       type: 'text',
       localized: true,
-      admin: {
-        readOnly: true,
-      },
     },
     {
       name: 'viewCount',
       label: 'Vistas',
       type: 'number',
-      admin: {
-        readOnly: true,
-      }
     },
     {
       name: 'duration',
       label: 'Duración (segundos)',
       type: 'number',
-      admin: {
-        readOnly: true,
-      }
     },
     {
       name: 'publishedAt',
       label: 'Fecha de publicación',
       type: 'date',
-      admin: {
-        readOnly: true,
-      },
     },
     taxonomyRelationship,
     forumPostsCacheField,

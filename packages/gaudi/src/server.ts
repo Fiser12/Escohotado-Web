@@ -13,7 +13,6 @@ export { ArticleDetailPdf } from "./content/pages/article_page/detalle_pdf";
 export { VideoDetail } from "./content/pages/video_page/detalle";
 export { ContentGridList } from "./content/common/content_grid_list";
 export { HeadlineCard } from "./content/article/cards/article_headline_card";
-export { HighlightSection } from "./content/article/highlight/section_highlight";
 export { CarouselBook } from "./content/book/carousel";
 export { MainButton } from "./common/main_button/main_button";
 export { BookDetail } from "./content/pages/book_page/detail";
