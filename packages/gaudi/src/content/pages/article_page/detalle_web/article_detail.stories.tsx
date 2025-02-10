@@ -39,7 +39,6 @@ const meta: Meta<typeof ArticleDetail> = {
     argTypes: {
         title: { control: "text", description: "Title of the article" },
         author: { control: "text", description: "Author of the article" },
-        textLink: { control: "text", description: "Text for the link" },
         coverHref: { control: "text", description: "Image URL for the cover" },
         publishedAt: { control: "text", description: "Publication date" },
     },
@@ -47,7 +46,6 @@ const meta: Meta<typeof ArticleDetail> = {
         title: "Sample Article Title",
         author: "Sample Article Author",
         publishedAt: "2024-11-18",
-        textLink: "Leer más",
         coverHref: "https://placehold.co/600x150",
         categories: [
             { id: "1", label: "Tecnología" },
