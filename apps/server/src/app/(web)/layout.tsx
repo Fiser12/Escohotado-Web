@@ -19,7 +19,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
         <link rel="icon" href="/icons/favicon.ico" />
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key={process.env.AHREFS_PUBLIC_KEY} async></script>
       </head>
       <body>
         <NuqsAdapter>
