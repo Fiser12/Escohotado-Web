@@ -9,6 +9,7 @@ import { mapAnyToComment } from 'hegel';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { Quote } from 'payload-types';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
+import { SEOContentWrapper } from 'gaudi/client';
 
 interface Props {
   params: {
@@ -37,7 +38,12 @@ const Page: NextPage<Props> = async (props) => {
     .slice(0, hasPermissions ? 3 : 0)
     .cast<Quote>()
 
-  return (
+  return <SEOContentWrapper
+    title={video?.title ?? "No title"}
+    description={video?.content_html ?? ""}
+    imageHref={video?.thumbnailUrl ?? "#"}
+    ogType="video"
+  >
     <VideoDetail
       videoHref={href}
       title={video.title ?? "No title"}
@@ -54,7 +60,7 @@ const Page: NextPage<Props> = async (props) => {
         commentsSectionModel={mapAnyToComment(video.forum_post_id, video.last_forum_posts ?? [])}
       />
     </VideoDetail>
-  );
+    </SEOContentWrapper>
 };
 
 export default Page;

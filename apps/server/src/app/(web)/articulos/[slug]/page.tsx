@@ -10,7 +10,7 @@ import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
 import { ContentProtected } from '@/ui/contentProtected';
-import { FreemiumHighlightSection } from 'gaudi/client';
+import { FreemiumHighlightSection, SEOContentWrapper } from 'gaudi/client';
 
 interface Props {
   params: {
@@ -37,24 +37,31 @@ const Page: NextPage<Props> = async (props) => {
   const quotes = (article?.quotes?.docs ?? [])
     .slice(0, hasPermissions ? 3 : 0)
     .cast<Quote>()
-
-  return <ArticleDetail
-    title={article.title ?? "No title"}
-    publishedAt={article.publishedAt as string}
-    coverHref={(article.cover as Media | null)?.url ?? "#"}
-    detailHref={routes.nextJS.generateDetailHref({ collection: "article_web", value: article })}
-    categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
+  const cover = (article.cover as Media | null)?.url ?? "#"
+  return <SEOContentWrapper
+    title={article?.title ?? "No title"}
+    description={article.content_html ?? ""}
+    imageHref={cover}
+    ogType="article"
   >
-    {article.content &&
-      <ContentProtected fallback={<FreemiumHighlightSection />} >
-        <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
-      </ContentProtected>
-    }
-    <DetailBottomSection
-      quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
-      commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
-    />
-  </ArticleDetail>
+    <ArticleDetail
+      title={article.title ?? "No title"}
+      publishedAt={article.publishedAt as string}
+      coverHref={(article.cover as Media | null)?.url ?? "#"}
+      detailHref={routes.nextJS.generateDetailHref({ collection: "article_web", value: article })}
+      categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
+    >
+      {article.content &&
+        <ContentProtected fallback={<FreemiumHighlightSection />} >
+          <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
+        </ContentProtected>
+      }
+      <DetailBottomSection
+        quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
+        commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
+      />
+    </ArticleDetail>
+  </SEOContentWrapper>
 };
 
 export default Page;

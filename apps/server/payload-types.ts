@@ -324,7 +324,6 @@ export interface ArticlePdf {
   permissions_seeds?: string | null;
   cover: string | Media;
   title: string;
-  description?: string | null;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   content?: {
@@ -342,6 +341,7 @@ export interface ArticlePdf {
     };
     [k: string]: unknown;
   } | null;
+  content_html?: string | null;
   quotes?: {
     docs?: (string | Quote)[] | null;
     hasNextPage?: boolean | null;
@@ -407,9 +407,9 @@ export interface Book {
   id: string;
   cover: string | Media;
   title: string;
-  description?: string | null;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
+  description?: string | null;
   content?: {
     root: {
       type: string;
@@ -425,6 +425,7 @@ export interface Book {
     };
     [k: string]: unknown;
   } | null;
+  content_html?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   Ediciones?:
@@ -474,6 +475,7 @@ export interface Video {
     };
     [k: string]: unknown;
   } | null;
+  content_html?: string | null;
   url: string;
   permissions?: (string | Permission)[] | null;
   url_free?: string | null;
@@ -521,7 +523,6 @@ export interface ArticleWeb {
   permissions_seeds?: string | null;
   cover: string | Media;
   title: string;
-  description?: string | null;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   slug?: string | null;
@@ -541,6 +542,7 @@ export interface ArticleWeb {
     };
     [k: string]: unknown;
   } | null;
+  content_html?: string | null;
   quotes?: {
     docs?: (string | Quote)[] | null;
     hasNextPage?: boolean | null;
@@ -918,10 +920,10 @@ export interface ArticlePdfSelect<T extends boolean = true> {
   permissions_seeds?: T;
   cover?: T;
   title?: T;
-  description?: T;
   publishedAt?: T;
   categories?: T;
   content?: T;
+  content_html?: T;
   quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
@@ -948,12 +950,12 @@ export interface ArticleWebSelect<T extends boolean = true> {
   permissions_seeds?: T;
   cover?: T;
   title?: T;
-  description?: T;
   publishedAt?: T;
   categories?: T;
   slug?: T;
   slugLock?: T;
   content?: T;
+  content_html?: T;
   quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
@@ -968,10 +970,11 @@ export interface ArticleWebSelect<T extends boolean = true> {
 export interface BookSelect<T extends boolean = true> {
   cover?: T;
   title?: T;
-  description?: T;
   publishedAt?: T;
   categories?: T;
+  description?: T;
   content?: T;
+  content_html?: T;
   slug?: T;
   slugLock?: T;
   Ediciones?:
@@ -995,6 +998,7 @@ export interface BookSelect<T extends boolean = true> {
  */
 export interface VideoSelect<T extends boolean = true> {
   content?: T;
+  content_html?: T;
   url?: T;
   permissions?: T;
   url_free?: T;

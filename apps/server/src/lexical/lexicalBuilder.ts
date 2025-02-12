@@ -9,6 +9,7 @@ import {
   BlocksFeature,
   HeadingFeature,
   FeatureProviderServer,
+  HTMLConverterFeature,
 } from '@payloadcms/richtext-lexical'
 import { collectionsContentsWithDetailsSlugs } from 'hegel/payload'
 
@@ -41,6 +42,7 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
       ]
     },
   }),
+  HTMLConverterFeature({})
 ]
 
 export function buildLexical(blocks: () => Block[]): Config['editor'] {

@@ -72,11 +72,6 @@ export function contentCollectionBuilder(
         localized: true,
       },
       {
-        name: 'description',
-        type: 'textarea',
-        localized: true,
-      },
-      {
         name: 'publishedAt',
         label: 'Fecha de publicación',
         type: 'date',

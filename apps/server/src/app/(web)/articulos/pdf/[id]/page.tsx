@@ -9,6 +9,7 @@ import { mapAnyToComment } from 'hegel';
 import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
+import { SEOContentWrapper } from 'gaudi/client';
 
 interface Props {
   params: {
@@ -32,24 +33,32 @@ const Page: NextPage<Props> = async (props) => {
     .slice(0, hasPermission ? 3 : 0)
     .cast<Quote>()
 
-  return <ArticleDetailPdf
-    title={articlePdf.title ?? "No title"}
-    href={articlePdf.url}
-    author={getAuthorFromTaxonomies(articlePdf.categories as Taxonomy[])?.singular_name}
-    publishedAt={articlePdf.publishedAt as string}
-    hasPermission={hasPermission}
-    detailHref={routes.nextJS.generateDetailHref({ collection: "article_pdf", value: articlePdf })}
-    coverHref={(articlePdf.cover as Media | null)?.url ?? "#"}
-    categories={articlePdf.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
+  const cover = (articlePdf?.cover as Media | null)?.url ?? "#"
+  return <SEOContentWrapper
+    title={articlePdf?.title ?? "No title"}
+    description={articlePdf?.content_html ?? ""}
+    imageHref={cover}
+    ogType="article"
   >
-    {articlePdf.content &&
-      <LexicalRenderer className="max-w-[48rem] mx-auto" data={articlePdf.content} />
-    }
-    <DetailBottomSection
-      quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
-      commentsSectionModel={mapAnyToComment(articlePdf.forum_post_id, articlePdf.last_forum_posts ?? [])}
-    />
-  </ArticleDetailPdf>
+    <ArticleDetailPdf
+      title={articlePdf.title ?? "No title"}
+      href={articlePdf.url}
+      author={getAuthorFromTaxonomies(articlePdf.categories as Taxonomy[])?.singular_name}
+      publishedAt={articlePdf.publishedAt as string}
+      hasPermission={hasPermission}
+      detailHref={routes.nextJS.generateDetailHref({ collection: "article_pdf", value: articlePdf })}
+      coverHref={(articlePdf.cover as Media | null)?.url ?? "#"}
+      categories={articlePdf.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
+    >
+      {articlePdf.content &&
+        <LexicalRenderer className="max-w-[48rem] mx-auto" data={articlePdf.content} />
+      }
+      <DetailBottomSection
+        quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
+        commentsSectionModel={mapAnyToComment(articlePdf.forum_post_id, articlePdf.last_forum_posts ?? [])}
+      />
+    </ArticleDetailPdf>
+  </SEOContentWrapper>
 };
 
 export default Page;

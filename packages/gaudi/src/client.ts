@@ -18,3 +18,4 @@ export { ToggleButtonGroup } from "./common/toggle_button_group/toggle_button_gr
 export { AnimatedModal } from "./common/animated-modal";
 export { ModalQuote } from "./content/featured_grid_home/content/quote/Modal/modalQuote";
 export { HighlightSection, FreemiumHighlightSection } from "./content/article/highlight/section_highlight";
+export { SEOContentWrapper } from "./common/seo_content_wrapper";

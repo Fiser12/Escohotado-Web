@@ -12,6 +12,7 @@ import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery
 import "hegel";
 import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
 import { getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
+import { SEOContentWrapper } from "gaudi/client";
 
 interface Props {
     params: {
@@ -49,23 +50,31 @@ const Page = async (props: Props) => {
         url: edition.link ?? "#"
     })) ?? [];
     if (!book) return <p>Error Cargando el documento</p>
-    return (<BookDetail
-        title={book.title ?? "No title"}
-        description={book.description ?? "Empty"}
-        detailHref={routes.nextJS.generateDetailHref({ collection: "book", value: book })}
-        author={getAuthorFromTaxonomies(book.categories as Taxonomy[])?.singular_name}
-        coverHref={(book.cover as Media)?.url ?? "#"}
-        langs={['es', 'en']}
-        bookButtons={<BookVariantsSelectorNuqs options={options} />}
-        link={book.Ediciones?.[0].link ?? "#"}
+    const cover = (book?.cover as Media | null)?.url ?? "#"
+
+    return <SEOContentWrapper
+        title={book?.title ?? "No title"}
+        description={book?.description ?? ""}
+        imageHref={cover}
+        ogType="video"
     >
-        {book.content && <LexicalRenderer data={book.content} />}
-        <DetailBottomSection
-            quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
-            commentsSectionModel={mapAnyToComment(book.forum_post_id, book.last_forum_posts ?? [])}
-        />
-    </BookDetail>
-    );
+        <BookDetail
+            title={book.title ?? "No title"}
+            description={book.description ?? "Empty"}
+            detailHref={routes.nextJS.generateDetailHref({ collection: "book", value: book })}
+            author={getAuthorFromTaxonomies(book.categories as Taxonomy[])?.singular_name}
+            coverHref={(book.cover as Media)?.url ?? "#"}
+            langs={['es', 'en']}
+            bookButtons={<BookVariantsSelectorNuqs options={options} />}
+            link={book.Ediciones?.[0].link ?? "#"}
+        >
+            {book.content && <LexicalRenderer data={book.content} />}
+            <DetailBottomSection
+                quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
+                commentsSectionModel={mapAnyToComment(book.forum_post_id, book.last_forum_posts ?? [])}
+            />
+        </BookDetail>
+    </SEOContentWrapper>
 };
 
 export default Page;

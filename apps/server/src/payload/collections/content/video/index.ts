@@ -9,6 +9,7 @@ import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations
 import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
+import { lexicalHTML } from '@payloadcms/richtext-lexical'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()
 export const video: CollectionConfig = {
@@ -49,6 +50,7 @@ export const video: CollectionConfig = {
       name: 'content',
       type: 'richText',
     },
+    lexicalHTML('content', { name: 'content_html' }),
     {
       type: 'row',
       fields: [
