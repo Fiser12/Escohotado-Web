@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: escohotado-web
+  labels:
+    app: escohotado-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: escohotado-web
+  template:
+    metadata:
+      labels:
+        app: escohotado-web
+    spec:
+      containers:
+      - name: web
+        image: ghcr.io/fiser12/escohotado-web
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: app-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: escohotado-web
+spec:
+  selector:
+    app: escohotado-web
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: escohotado-web-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: escohotado-web
+            port:
+              number: 80

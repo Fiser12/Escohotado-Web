@@ -1,0 +1,105 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nodebb-build-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nodebb-uploads-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nodebb-config-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guerrilla-de-la-concordia
+  labels:
+    app: guerrilla-de-la-concordia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guerrilla-de-la-concordia
+  template:
+    metadata:
+      labels:
+        app: guerrilla-de-la-concordia
+    spec:
+      containers:
+      - name: forum
+        image: ghcr.io/fiser12/guerrilla-de-la-concordia
+        ports:
+        - containerPort: 4567
+        envFrom:
+        - secretRef:
+            name: app-secrets
+        volumeMounts:
+        - name: nodebb-build
+          mountPath: /usr/src/app/build
+        - name: nodebb-uploads
+          mountPath: /usr/src/app/public/uploads
+        - name: nodebb-config
+          mountPath: /opt/config
+      volumes:
+      - name: nodebb-build
+        persistentVolumeClaim:
+          claimName: nodebb-build-pvc
+      - name: nodebb-uploads
+        persistentVolumeClaim:
+          claimName: nodebb-uploads-pvc
+      - name: nodebb-config
+        persistentVolumeClaim:
+          claimName: nodebb-config-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guerrilla-de-la-concordia
+spec:
+  selector:
+    app: guerrilla-de-la-concordia
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 4567
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: forum-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: foro.localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: guerrilla-de-la-concordia
+            port:
+              number: 80

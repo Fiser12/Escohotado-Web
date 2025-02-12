@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newsletter-listmonk
+  labels:
+    app: newsletter-listmonk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newsletter-listmonk
+  template:
+    metadata:
+      labels:
+        app: newsletter-listmonk
+    spec:
+      containers:
+      - name: newsletter
+        image: listmonk/listmonk:latest
+        ports:
+        - containerPort: 9000
+        envFrom:
+        - secretRef:
+            name: app-secrets
+        command: [ "sh", "-c", "./listmonk --install --idempotent --yes --config '' && ./listmonk --upgrade --yes --config '' && ./listmonk --config ''" ]
+        volumeMounts:
+        - name: listmonk-uploads
+          mountPath: /listmonk/uploads
+      volumes:
+      - name: listmonk-uploads
+        persistentVolumeClaim:
+          claimName: listmonk-uploads-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: newsletter-listmonk
+spec:
+  selector:
+    app: newsletter-listmonk
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: newsletter-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: newsletter.nexolabs.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: newsletter-listmonk
+            port:
+              number: 80
