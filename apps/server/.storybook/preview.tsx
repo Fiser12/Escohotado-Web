@@ -3,13 +3,13 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import React from "react";
 import { Textures } from "gaudi/client";
 import "../src/app/tailwind.css";
+
 const preview: Preview = {
 	decorators: [
 		(Story) => (
 		  <>
 			<Story />
 			{ Textures.map((Element, index) => <Element key={index} />)}
-
 		  </>
 		),
 	  ],

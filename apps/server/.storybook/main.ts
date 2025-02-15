@@ -12,7 +12,7 @@ function getAbsolutePath(value: string): any {
 const config: StorybookConfig = {
   stories: [
     '../../../packages/gaudi/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    '../../../packages/gaudi/src/**/*.mdx'
+    '../../../packages/gaudi/src/**/*.mdx',
   ],
   staticDirs: ['../public'],
   addons: [
@@ -21,9 +21,12 @@ const config: StorybookConfig = {
     getAbsolutePath('@storybook/addon-essentials'),
     getAbsolutePath('@storybook/addon-interactions'),
   ],
+  docs: {
+    defaultName: 'Docs',
+  },
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
-  }
+  },
 }
 export default config
