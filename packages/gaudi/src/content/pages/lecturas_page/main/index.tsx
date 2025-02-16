@@ -141,7 +141,7 @@ export const ArticlePage = () => {
         </ContentWrapper>
       </div>
       <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" coverHref={handwrittenBackground.src}>
-          <MainButton text="Suscribete"/>
+          <MainButton text="Suscribete" color="secondary"/>
       </HighlightSection>
       <div className="@container w-full pt-12.5">
         <CarouselBook books={booksExample} title="Obras de Antonio Escohotado" />

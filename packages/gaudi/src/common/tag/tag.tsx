@@ -16,14 +16,15 @@ export const Tag: React.FC<Props> = ({
     className,
     children,
     href,
-    isActive= true,
+    isActive = true,
     ...rest
 }) => {
     const tagClass = classNames(
-        'px-3 py-1 rounded flex justify-center items-center text-center font-body text-xs inline-flex min-w-14 text-primary-900 gap-2',
+        'px-3 py-1 rounded flex justify-center items-center text-center font-body text-xs inline-flex min-w-14 gap-2',
         className,
         {
-            'bg-gray-200': !isActive,
+            'text-primary-900': isActive,
+            'bg-gray-200 text-gray-dark': !isActive,
             'bg-white': variant === 'light' && isActive,
             'bg-primary-50': variant === 'primary' && isActive,
         }
@@ -32,7 +33,7 @@ export const Tag: React.FC<Props> = ({
         {children}
         {text}
     </div>
-    if(!href) return Content;
+    if (!href) return Content;
 
     return <a href={href}>{Content}</a>
 };

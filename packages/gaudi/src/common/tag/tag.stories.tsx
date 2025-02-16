@@ -39,6 +39,9 @@ const meta: Meta<typeof Tag> = {
             control: 'text',
         },
     },
+    args: {
+        text: 'Sample tag',
+    },
 };
 
 export default meta;
@@ -49,7 +52,6 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
     name: 'Primary',
     args: {
-        text: 'Sample tag',
         variant: 'primary',
     },
 };
@@ -63,7 +65,6 @@ export const Light: Story = {
         },
     },
     args: {
-        text: 'Sample tag',
         variant: 'light',
     },
 };
@@ -75,9 +76,6 @@ export const All: Story = {
             default: 'Gray',
         },
     },
-    args: {
-        text: 'Sample tag',
-    },
     render: (args) => (
         <div className="flex gap-4 flex-wrap">
             <Tag {...args} />
@@ -85,4 +83,3 @@ export const All: Story = {
         </div>
     ),
 }
-

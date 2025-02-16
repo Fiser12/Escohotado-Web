@@ -27,6 +27,6 @@ export const Highlight: Story = {
     args: {
         description: "¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?",
         coverHref: "https://placehold.co/1920x300",
-        children: <MainButton text="Suscribete"/>
+        children: <MainButton text="Suscribete" color="secondary" />
     },
 };
