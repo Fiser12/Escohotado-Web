@@ -27,11 +27,16 @@ const meta: Meta<typeof MainButton> = {
         },
     },
     argTypes: {
+        text: {
+            control: 'text',
+        },
         type: {
-            control: {
-                type: 'select',
-                options: ['fill', 'line'],
-            },
+            options: [ 'fill', 'line' ],
+            control: { type: 'select' },
+        },
+        color: {
+            option: ['primary', 'secondary'],
+            control: { type: 'select' },
         },
         className: {
             control: 'text',

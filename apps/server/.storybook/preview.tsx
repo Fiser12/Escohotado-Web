@@ -7,17 +7,25 @@ import "../src/app/tailwind.css";
 const preview: Preview = {
 	decorators: [
 		(Story) => (
-		  <>
-			<Story />
-			{ Textures.map((Element, index) => <Element key={index} />)}
-		  </>
+			<>
+				<Story />
+				{Textures.map((Element, index) => <Element key={index} />)}
+			</>
 		),
-	  ],
-	  parameters: {
+	],
+	parameters: {
+		backgrounds: {
+			values: [
+				{ name: 'Dark', value: '#001827' },
+				{ name: 'Light', value: '#FFFFFF' },
+				{ name: 'Gray', value: '#F4F4F4' },
+			],
+			default: 'Light',
+		},
 		viewport: {
 			viewports: INITIAL_VIEWPORTS,
 			defaultViewport: 'reset'
-		},  
+		},
 		actions: { argTypesRegex: "^on[A-Z].*" },
 		controls: {
 			matchers: {
@@ -27,10 +35,10 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
-			  order: ['Components', 'Organism', 'Molecules', 'Atoms', 'Pages'],
+				order: ['Components', 'Organism', 'Molecules', 'Atoms', 'Pages'],
 			},
 		},
-  },
+	},
 };
 
 export default preview;
