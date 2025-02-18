@@ -50,7 +50,7 @@ export const FeaturedQuote: React.FC<Props> = ({
                   <div className="w-full flex justify-between items-center mb-4">
                         <div className="flex flex-row gap-2 flex-wrap">
                               {categories.map((category, index) =>
-                                    <Tag key={index} text={category.label} variant="disabled" />
+                                    <Tag key={index} text={category.label} isActive={false} />
                               )}
                         </div>
                         <Link href={`/cita/${id}`}>

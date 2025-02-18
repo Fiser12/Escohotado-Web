@@ -4,8 +4,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     text: string;
     className?: string;
     href?: string;
-    isActive: boolean;
-    variant: 'light' | 'primary';
+    isActive?: boolean;
+    variant?: 'light' | 'primary';
 }
 
 /** Used for cards mainly, they are used to dynamically redirect to categories */

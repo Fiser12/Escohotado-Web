@@ -49,7 +49,7 @@ export const ModalQuote: React.FC<ModalProps> = ({
               <p className="text-m text-primary-900  font-display">- {author}</p>
               <div className="flex flex-row gap-2 flex-wrap">
                 {categories.map((category, index) =>
-                  <Tag key={index} text={category.label} variant="disabled" />
+                  <Tag key={index} text={category.label} isActive={false} />
                 )}
               </div>
             </div>

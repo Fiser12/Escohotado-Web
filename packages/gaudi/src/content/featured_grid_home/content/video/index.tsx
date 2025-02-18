@@ -75,7 +75,8 @@ export const FeaturedVideo: React.FC<Props> = ({hasPermission, publishedAt, clas
                   <Tag
                     key={index}
                     text={category.label}
-                    variant={hasPermission ? 'primary' : 'disabled'}
+                    variant={hasPermission ? 'primary' : undefined}
+                    isActive={hasPermission}
                   />
                 ))}
               </div>
