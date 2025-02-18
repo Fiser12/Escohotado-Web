@@ -9,7 +9,7 @@ interface Props<T> {
 }
 
 const generateTopicHref = (forumTopicId: string) => {
-      return `https://foro.laemboscadura.com/topic/${forumTopicId}`;
+      return `${process.env.FORUM_URL}/topic/${forumTopicId}`;
 }
 export const GridComments: React.FC<Props<any>> = ({ 
       items, 
