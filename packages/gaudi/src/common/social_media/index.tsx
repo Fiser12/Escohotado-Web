@@ -4,6 +4,7 @@ import { WhatssapIcon } from "../icons/social/whatsap_icon";
 import { InstagramIcon } from "../icons/social/instagram_icon";
 import { FacebookIcon } from "../icons/social/facebook_icon";
 import { XIcon } from "../icons/social/x_icon";
+import { MagenitcEffect } from "../../effects/magnetic-effect";
 
 
 interface Props {
@@ -60,8 +61,10 @@ const SocialCircle = (props: Props2) => {
     'w-11 h-11 rounded-full flex justify-center items-center flex-wrap bg-gray-100 text-primary-900 hover:bg-gray-300 transition-colors duration-200'
   );
   return (
-    <a href={props.targetShare} target="_blank" rel="noreferrer">
+    <MagenitcEffect>
+      <a href={props.targetShare} target="_blank" rel="noreferrer">
       <div className={circleClass}>{props.children}</div>
-    </a>
+      </a>
+    </MagenitcEffect>
   );
 };

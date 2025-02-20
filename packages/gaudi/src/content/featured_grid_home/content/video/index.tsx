@@ -8,6 +8,7 @@ import { BaseCardContainer } from "../../container_base";
 import { UnlockIcon } from "../../../../common/icons/unlock_icon";
 import "./style.css"
 import { CategoryModel } from "hegel";
+import { MagenitcEffect } from "../../../../effects/magnetic-effect";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -63,8 +64,10 @@ export const FeaturedVideo: React.FC<Props> = ({hasPermission, publishedAt, clas
             alt={title}
             className={imageClass}
           />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-dark hover:text-primary-400 rounded-full bg-white w-[50px] h-[50px] items-center justify-center shadow-xl">
-            {hasPermission ? <PlayIcon className="p-4 translate-x-[2px]" /> : <LockIcon className={`icon-animation p-3`} />}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+            <MagenitcEffect className="text-gray-dark hover:text-primary-400 rounded-full bg-white w-[50px] h-[50px] items-center justify-center shadow-xl">
+              {hasPermission ? <PlayIcon className="p-4 translate-x-[2px]" /> : <LockIcon className={`icon-animation p-3`} />}
+            </MagenitcEffect>
           </div>
         </div>
         <div className={contentClass}>
