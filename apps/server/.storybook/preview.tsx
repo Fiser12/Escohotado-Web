@@ -9,7 +9,7 @@ const preview: Preview = {
 		(Story) => (
 			<>
 				<Story />
-				{Textures.map((Element, index) => <Element key={index} />)}
+				{Textures.map((Element: any, index) => <Element key={index} />)}
 			</>
 		),
 	],

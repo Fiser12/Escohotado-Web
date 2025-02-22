@@ -1,5 +1,4 @@
 import { NewsletterSubscription } from "../../common/newsletterSubscription";
-import { Footer } from "../../common/footer";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 import { GridCardsBlock } from "../../featured_grid_home/GridCardsBlock";
 import HomeHero from "../../../common/home_hero"
@@ -22,7 +21,6 @@ export const HomePage = ({ featuredItems, description, buttons, ...rest }: Props
         </ContentWrapper>
       </div>
       <NewsletterSubscription />
-      <Footer />
     </div>
   );
 };
