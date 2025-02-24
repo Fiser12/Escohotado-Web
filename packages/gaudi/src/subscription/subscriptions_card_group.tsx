@@ -41,17 +41,25 @@ export enum SubscriptionButtonActionType {
     change = 'change',
     select = 'select'
 }
+const defaultOptions: IntervalOptions[] = [
+    { id: 'month', label: 'Pago mensual' },
+    { id: 'year', label: 'Pago anual', sublabel: 'ahorra 10%' }
+  ];
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     products: Product[];
+    signIn: () => Promise<void>;
+    loggedIn: boolean;
     subscription?: Subscription;
-    options: IntervalOptions[];
+    options?: IntervalOptions[];
 }
 
 export const SubscriptionsGroupCard: React.FC<Props> = ({
     products,
+    signIn,
     subscription,
-    options,
+    loggedIn,
+    options = defaultOptions,
     ...rest
 }) => {
     const [selected, setSelected] = useState(options[0]!.id);
@@ -75,6 +83,8 @@ export const SubscriptionsGroupCard: React.FC<Props> = ({
                             mainCard={product.metadata?.prominent === 'true'}
                         >
                             <SubscriptionButton
+                                signIn={signIn}
+                                loggedIn={loggedIn}
                                 href={subscriptionButtonHref(
                                     calculateButtonActionType(price.stripeID, subscription),
                                     price.stripeID,

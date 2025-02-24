@@ -6,7 +6,7 @@ type Props = {
   isSubscribedToNewsletter: boolean
 }
 
-const USERNAME = 'api_admin'
+const USERNAME = 'admin_api'
 const TOKEN = process.env.NEWSLETTER_API_TOKEN
 const SUBSCRIBERS_LIST_ID = Number(process.env.NEWSLETTER_SUBSCRIBERS_LIST_ID)
 
