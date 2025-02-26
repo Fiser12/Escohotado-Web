@@ -22,7 +22,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
         <script src="https://analytics.ahrefs.com/analytics.js" data-key={process.env.AHREFS_PUBLIC_KEY} async></script>
         <meta name="ahrefs-site-verification" content={process.env.AHREF_VERIFICATION_KEY}/>
       </head>
-      <body className="grid min-h-dvh grid-rows-[auto_1fr_auto]">
+      <body className="min-h-dvh flex flex-col">
         <NuqsAdapter>
           <Header
             hasPermission={hasPermission}
@@ -38,7 +38,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
             menuSections={getAccountMenuQuery(payloadUser)}
           />
           {modal}
-          <main className="flex flex-col gap-4">
+          <main className="flex flex-col flex-1">
             {children}
           </main>
           <Footer />
