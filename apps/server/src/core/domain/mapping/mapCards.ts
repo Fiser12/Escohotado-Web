@@ -37,7 +37,7 @@ const mapRelationToFeatured = (
   user: User | null,
   item: ContentRelationType,
 ): ContentHeaderModel | null => {
-  if (typeof item.value === 'string') {
+  if (typeof item.value === 'number') {
     return null
   }
   switch (item.relationTo) {
@@ -124,7 +124,7 @@ export const mapQuoteCard =
     type: 'quote',
     categories: getSelectableTaxonomies(taxonomies),
     context: item.context,
-    origen: item.source && typeof item.source.value !== "string" ? {
+    origen: item.source && typeof item.source.value !== "number" ? {
       title: item.source.value.title ?? "No title",
       type: item.source.relationTo,
       hasPermissions: evalPermissionQuery(

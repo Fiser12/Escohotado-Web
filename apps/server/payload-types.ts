@@ -71,7 +71,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {
     articulos_page: ArticulosPage;
@@ -123,7 +123,7 @@ export interface User {
   roles?: string[];
   isSubscribedToNewsletter: boolean;
   subscription?: {
-    docs?: (string | Subscription)[] | null;
+    docs?: (number | Subscription)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   stripeCustomerId?: string | null;
@@ -150,9 +150,9 @@ export interface User {
  * via the `definition` "subscriptions".
  */
 export interface Subscription {
-  id: string;
+  id: number;
   user: string | User;
-  product: string | Product;
+  product: number | Product;
   status: 'trialing' | 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'paused';
   created?: string | null;
   currentPeriodStart?: string | null;
@@ -184,7 +184,7 @@ export interface Subscription {
  * via the `definition` "products".
  */
 export interface Product {
-  id: string;
+  id: number;
   stripeID: string;
   type?: ('good' | 'service') | null;
   active: boolean;
@@ -196,7 +196,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  prices?: (string | Price)[] | null;
+  prices?: (number | Price)[] | null;
   metadata?:
     | {
         [k: string]: unknown;
@@ -212,7 +212,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  permissions?: (string | Permission)[] | null;
+  permissions?: (number | Permission)[] | null;
   permissions_seeds?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -222,11 +222,11 @@ export interface Product {
  * via the `definition` "prices".
  */
 export interface Price {
-  id: string;
+  id: number;
   stripeID: string;
   stripeProductId: string;
   product?: {
-    docs?: (string | Product)[] | null;
+    docs?: (number | Product)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   active: boolean;
@@ -254,8 +254,9 @@ export interface Price {
  * via the `definition` "permission".
  */
 export interface Permission {
-  id: string;
-  slug: string;
+  id: number;
+  slug?: string | null;
+  slugLock?: boolean | null;
   title: string;
   updatedAt: string;
   createdAt: string;
@@ -265,7 +266,7 @@ export interface Permission {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   title?: string | null;
   rawContent?: string | null;
   prefix?: string | null;
@@ -296,16 +297,16 @@ export interface Media {
  * via the `definition` "taxonomy".
  */
 export interface Taxonomy {
-  id: string;
+  id: number;
   selectable?: boolean | null;
   singular_name: string;
   plural_name?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
-  parent?: (string | null) | Taxonomy;
+  parent?: (number | null) | Taxonomy;
   breadcrumbs?:
     | {
-        doc?: (string | null) | Taxonomy;
+        doc?: (number | null) | Taxonomy;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -319,13 +320,13 @@ export interface Taxonomy {
  * via the `definition` "article_pdf".
  */
 export interface ArticlePdf {
-  id: string;
-  permissions?: (string | Permission)[] | null;
+  id: number;
+  permissions?: (number | Permission)[] | null;
   permissions_seeds?: string | null;
-  cover?: (string | null) | Media;
+  cover?: (number | null) | Media;
   title: string;
   publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
+  categories?: (number | Taxonomy)[] | null;
   content?: {
     root: {
       type: string;
@@ -342,7 +343,7 @@ export interface ArticlePdf {
     [k: string]: unknown;
   } | null;
   quotes?: {
-    docs?: (string | Quote)[] | null;
+    docs?: (number | Quote)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   forum_post_id?: string | null;
@@ -374,27 +375,27 @@ export interface ArticlePdf {
  * via the `definition` "quote".
  */
 export interface Quote {
-  id: string;
+  id: number;
   quote: string;
   context?: string | null;
   source?:
     | ({
         relationTo: 'book';
-        value: string | Book;
+        value: number | Book;
       } | null)
     | ({
         relationTo: 'video';
-        value: string | Video;
+        value: number | Video;
       } | null)
     | ({
         relationTo: 'article_pdf';
-        value: string | ArticlePdf;
+        value: number | ArticlePdf;
       } | null)
     | ({
         relationTo: 'article_web';
-        value: string | ArticleWeb;
+        value: number | ArticleWeb;
       } | null);
-  categories?: (string | Taxonomy)[] | null;
+  categories?: (number | Taxonomy)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -403,12 +404,12 @@ export interface Quote {
  * via the `definition` "book".
  */
 export interface Book {
-  id: string;
+  id: number;
   title: string;
   publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
+  categories?: (number | Taxonomy)[] | null;
   description?: string | null;
-  cover: string | Media;
+  cover: number | Media;
   content?: {
     root: {
       type: string;
@@ -435,7 +436,7 @@ export interface Book {
       }[]
     | null;
   quotes?: {
-    docs?: (string | Quote)[] | null;
+    docs?: (number | Quote)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   forum_post_id?: string | null;
@@ -457,7 +458,7 @@ export interface Book {
  * via the `definition` "video".
  */
 export interface Video {
-  id: string;
+  id: number;
   content?: {
     root: {
       type: string;
@@ -474,10 +475,10 @@ export interface Video {
     [k: string]: unknown;
   } | null;
   url: string;
-  permissions?: (string | Permission)[] | null;
+  permissions?: (number | Permission)[] | null;
   url_free?: string | null;
   quotes?: {
-    docs?: (string | Quote)[] | null;
+    docs?: (number | Quote)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   permissions_seeds?: string | null;
@@ -495,7 +496,7 @@ export interface Video {
   viewCount?: number | null;
   duration?: number | null;
   publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
+  categories?: (number | Taxonomy)[] | null;
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -515,13 +516,13 @@ export interface Video {
  * via the `definition` "article_web".
  */
 export interface ArticleWeb {
-  id: string;
-  permissions?: (string | Permission)[] | null;
+  id: number;
+  permissions?: (number | Permission)[] | null;
   permissions_seeds?: string | null;
-  cover?: (string | null) | Media;
+  cover?: (number | null) | Media;
   title: string;
   publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
+  categories?: (number | Taxonomy)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
   content?: {
@@ -542,7 +543,7 @@ export interface ArticleWeb {
   source?: string | null;
   preview_content?: string | null;
   quotes?: {
-    docs?: (string | Quote)[] | null;
+    docs?: (number | Quote)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   forum_post_id?: string | null;
@@ -564,7 +565,7 @@ export interface ArticleWeb {
  * via the `definition` "ui_grid_cards".
  */
 export interface UiGridCard {
-  id: string;
+  id: number;
   title?: string | null;
   tailwindGridClassNames?: string | null;
   cards?:
@@ -581,7 +582,7 @@ export interface UiGridCard {
  * via the `definition` "ui_block".
  */
 export interface UiBlock {
-  id: string;
+  id: number;
   title: string;
   block: {
     root: {
@@ -608,29 +609,29 @@ export interface UiBlock {
  * via the `definition` "search-results".
  */
 export interface SearchResult {
-  id: string;
+  id: number;
   title?: string | null;
   priority?: number | null;
   doc:
     | {
         relationTo: 'video';
-        value: string | Video;
+        value: number | Video;
       }
     | {
         relationTo: 'quote';
-        value: string | Quote;
+        value: number | Quote;
       }
     | {
         relationTo: 'article_web';
-        value: string | ArticleWeb;
+        value: number | ArticleWeb;
       }
     | {
         relationTo: 'article_pdf';
-        value: string | ArticlePdf;
+        value: number | ArticlePdf;
       }
     | {
         relationTo: 'book';
-        value: string | Book;
+        value: number | Book;
       };
   tags?: string | null;
   permissions_seeds?: string | null;
@@ -643,7 +644,7 @@ export interface SearchResult {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
@@ -651,59 +652,59 @@ export interface PayloadLockedDocument {
       } | null)
     | ({
         relationTo: 'prices';
-        value: string | Price;
+        value: number | Price;
       } | null)
     | ({
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'subscriptions';
-        value: string | Subscription;
+        value: number | Subscription;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'taxonomy';
-        value: string | Taxonomy;
+        value: number | Taxonomy;
       } | null)
     | ({
         relationTo: 'article_pdf';
-        value: string | ArticlePdf;
+        value: number | ArticlePdf;
       } | null)
     | ({
         relationTo: 'article_web';
-        value: string | ArticleWeb;
+        value: number | ArticleWeb;
       } | null)
     | ({
         relationTo: 'book';
-        value: string | Book;
+        value: number | Book;
       } | null)
     | ({
         relationTo: 'video';
-        value: string | Video;
+        value: number | Video;
       } | null)
     | ({
         relationTo: 'quote';
-        value: string | Quote;
+        value: number | Quote;
       } | null)
     | ({
         relationTo: 'ui_grid_cards';
-        value: string | UiGridCard;
+        value: number | UiGridCard;
       } | null)
     | ({
         relationTo: 'ui_block';
-        value: string | UiBlock;
+        value: number | UiBlock;
       } | null)
     | ({
         relationTo: 'permission';
-        value: string | Permission;
+        value: number | Permission;
       } | null)
     | ({
         relationTo: 'search-results';
-        value: string | SearchResult;
+        value: number | SearchResult;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -718,7 +719,7 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
     value: string | User;
@@ -741,7 +742,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -1056,8 +1057,8 @@ export interface UiBlockSelect<T extends boolean = true> {
  * via the `definition` "permission_select".
  */
 export interface PermissionSelect<T extends boolean = true> {
-  id?: T;
   slug?: T;
+  slugLock?: T;
   title?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1113,7 +1114,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "articulos_page".
  */
 export interface ArticulosPage {
-  id: string;
+  id: number;
   content?: {
     root: {
       type: string;
@@ -1137,7 +1138,7 @@ export interface ArticulosPage {
  * via the `definition` "home_page".
  */
 export interface HomePage {
-  id: string;
+  id: number;
   content?: {
     root: {
       type: string;
@@ -1161,7 +1162,7 @@ export interface HomePage {
  * via the `definition` "videos_page".
  */
 export interface VideosPage {
-  id: string;
+  id: number;
   content?: {
     root: {
       type: string;
@@ -1220,23 +1221,23 @@ export interface GridCardsBlock {
         value: (
           | {
               relationTo: 'article_pdf';
-              value: string | ArticlePdf;
+              value: number | ArticlePdf;
             }
           | {
               relationTo: 'article_web';
-              value: string | ArticleWeb;
+              value: number | ArticleWeb;
             }
           | {
               relationTo: 'book';
-              value: string | Book;
+              value: number | Book;
             }
           | {
               relationTo: 'quote';
-              value: string | Quote;
+              value: number | Quote;
             }
           | {
               relationTo: 'video';
-              value: string | Video;
+              value: number | Video;
             }
         )[];
         id?: string | null;
@@ -1246,7 +1247,7 @@ export interface GridCardsBlock {
     | {
         value: {
           relationTo: 'media';
-          value: string | Media;
+          value: number | Media;
         }[];
         id?: string | null;
         blockName?: string | null;
@@ -1273,19 +1274,19 @@ export interface GridCardsBlock {
         filterByQuoteOrigin?:
           | ({
               relationTo: 'book';
-              value: string | Book;
+              value: number | Book;
             } | null)
           | ({
               relationTo: 'video';
-              value: string | Video;
+              value: number | Video;
             } | null)
           | ({
               relationTo: 'article_pdf';
-              value: string | ArticlePdf;
+              value: number | ArticlePdf;
             } | null)
           | ({
               relationTo: 'article_web';
-              value: string | ArticleWeb;
+              value: number | ArticleWeb;
             } | null);
         querySize: number;
         sort: 'publishedAt' | 'popularity';
@@ -1294,7 +1295,7 @@ export interface GridCardsBlock {
         blockType: 'quoteQueryBlock';
       }
   )[];
-  gridCards: string | UiGridCard;
+  gridCards: number | UiGridCard;
   id?: string | null;
   blockName?: string | null;
   blockType: 'grid_cards_block';
@@ -1396,7 +1397,7 @@ export interface NewsletterSubscriptionBlock {
  */
 export interface BookCarouselBlock {
   title: string;
-  books: (string | Book)[];
+  books: (number | Book)[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'books_carousel_block';
@@ -1408,7 +1409,7 @@ export interface BookCarouselBlock {
 export interface UIBlock {
   uiBlock?: {
     relationTo: 'ui_block';
-    value: string | UiBlock;
+    value: number | UiBlock;
   } | null;
   id?: string | null;
   blockName?: string | null;

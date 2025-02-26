@@ -29,7 +29,7 @@ export const renderFeatured = (item: ContentCardModel) => {
       return (
         <FeaturedQuote
           key={item.id}
-          id={item.id}
+          itemId={item.id}
           origen={item.origen}
           className={item.className}
           categories={item.categories}

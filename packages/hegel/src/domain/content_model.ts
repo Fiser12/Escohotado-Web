@@ -4,7 +4,7 @@ import { CategoryModel } from "./types/CategoryModel";
 type ContentType = "article" | "quote" | "book" | "video" | "media";
 
 export interface ContentHeaderBaseModel {
-    id: string;
+    id: number;
     type: ContentType;
 }
 
@@ -22,7 +22,6 @@ export interface ArticleHeaderModel extends ContentHeaderBaseModel {
 
 export interface QuoteHeaderModel extends ContentHeaderBaseModel {
     type: "quote";
-    id: string;
     quote: string;
     author: string;
     context?: string | null;
