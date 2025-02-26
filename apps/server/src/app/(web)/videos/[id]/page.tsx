@@ -40,7 +40,7 @@ const Page: NextPage<Props> = async (props) => {
 
   return <SEOContentWrapper
     title={video?.title ?? "No title"}
-    description={video?.content_html ?? ""}
+    description={""}
     imageHref={video?.thumbnailUrl ?? "#"}
     ogType="video"
   >

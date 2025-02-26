@@ -322,7 +322,7 @@ export interface ArticlePdf {
   id: string;
   permissions?: (string | Permission)[] | null;
   permissions_seeds?: string | null;
-  cover: string | Media;
+  cover?: (string | null) | Media;
   title: string;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
@@ -404,11 +404,11 @@ export interface Quote {
  */
 export interface Book {
   id: string;
-  cover: string | Media;
   title: string;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
   description?: string | null;
+  cover: string | Media;
   content?: {
     root: {
       type: string;
@@ -518,7 +518,7 @@ export interface ArticleWeb {
   id: string;
   permissions?: (string | Permission)[] | null;
   permissions_seeds?: string | null;
-  cover: string | Media;
+  cover?: (string | null) | Media;
   title: string;
   publishedAt?: string | null;
   categories?: (string | Taxonomy)[] | null;
@@ -966,11 +966,11 @@ export interface ArticleWebSelect<T extends boolean = true> {
  * via the `definition` "book_select".
  */
 export interface BookSelect<T extends boolean = true> {
-  cover?: T;
   title?: T;
   publishedAt?: T;
   categories?: T;
   description?: T;
+  cover?: T;
   content?: T;
   slug?: T;
   slugLock?: T;

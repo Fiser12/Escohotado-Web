@@ -25,7 +25,19 @@ export function contentWithPermissionsCollectionBuilder(
       ...contentCollection.hooks,
       beforeChange: [...(contentCollection.hooks?.beforeChange ?? []), cachePermissionSeedsHook()],
     },
-    fields: [...permissionRelationship(), ...(contentCollection.fields ?? [])],
+    fields: [
+      ...permissionRelationship(), 
+      {
+        name: 'cover',
+        type: 'upload',
+        relationTo: COLLECTION_SLUG_MEDIA,
+        hasMany: false,
+        filterOptions: {
+          mimeType: { contains: 'image' },
+        },
+      },
+      ...(contentCollection.fields ?? [])
+    ]
   }
 }
 
@@ -55,16 +67,6 @@ export function contentCollectionBuilder(
       ...config.hooks
     },
     fields: [
-      {
-        name: 'cover',
-        type: 'upload',
-        relationTo: COLLECTION_SLUG_MEDIA,
-        hasMany: false,
-        required: true,
-        filterOptions: {
-          mimeType: { contains: 'image' },
-        },
-      },
       {
         name: 'title',
         type: 'text',

@@ -62,7 +62,7 @@ export const mapArticleCard =
       id: item.id,
       title: item.title,
       isPdf: 'url' in item,
-      hasPermission: evalPermissionQuery(user, item.permissions_seeds?.trim() ?? ''),
+      hasPermission: evalPermissionQuery(user, item.permissions_seeds?.trim() ?? '' as any),
       author: getAuthorsNamesFromTaxonomies(taxonomies),
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
       coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
@@ -131,7 +131,7 @@ export const mapQuoteCard =
         user, 
         'permissions_seeds' in item.source.value 
           ? (item.source.value.permissions_seeds?.trim() ?? '') 
-          : ''
+          : '' as any
         ),
       detailHref: routes.nextJS.generateDetailHref({collection: item.source.relationTo, value: item.source.value})
     } : undefined,

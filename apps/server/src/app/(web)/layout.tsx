@@ -38,7 +38,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
             menuSections={getAccountMenuQuery(payloadUser)}
           />
           {modal}
-          <main className="flex flex-col flex-1">
+          <main className="flex flex-col flex-grow">
             {children}
           </main>
           <Footer />

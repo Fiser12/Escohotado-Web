@@ -36,7 +36,7 @@ const Page: NextPage<Props> = async (props) => {
   const cover = (articlePdf?.cover as Media | null)?.url ?? "#"
   return <SEOContentWrapper
     title={articlePdf?.title ?? "No title"}
-    description={articlePdf?.content_html ?? ""}
+    description={""}
     imageHref={cover}
     ogType="article"
   >
