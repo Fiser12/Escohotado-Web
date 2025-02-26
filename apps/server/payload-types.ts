@@ -341,7 +341,6 @@ export interface ArticlePdf {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
   quotes?: {
     docs?: (string | Quote)[] | null;
     hasNextPage?: boolean | null;
@@ -425,7 +424,6 @@ export interface Book {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   Ediciones?:
@@ -475,7 +473,6 @@ export interface Video {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
   url: string;
   permissions?: (string | Permission)[] | null;
   url_free?: string | null;
@@ -542,7 +539,8 @@ export interface ArticleWeb {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
+  source?: string | null;
+  preview_content?: string | null;
   quotes?: {
     docs?: (string | Quote)[] | null;
     hasNextPage?: boolean | null;
@@ -923,7 +921,6 @@ export interface ArticlePdfSelect<T extends boolean = true> {
   publishedAt?: T;
   categories?: T;
   content?: T;
-  content_html?: T;
   quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
@@ -955,7 +952,8 @@ export interface ArticleWebSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   content?: T;
-  content_html?: T;
+  source?: T;
+  preview_content?: T;
   quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
@@ -974,7 +972,6 @@ export interface BookSelect<T extends boolean = true> {
   categories?: T;
   description?: T;
   content?: T;
-  content_html?: T;
   slug?: T;
   slugLock?: T;
   Ediciones?:
@@ -998,7 +995,6 @@ export interface BookSelect<T extends boolean = true> {
  */
 export interface VideoSelect<T extends boolean = true> {
   content?: T;
-  content_html?: T;
   url?: T;
   permissions?: T;
   url_free?: T;

@@ -2,7 +2,6 @@ import { slugField } from '@/payload/fields/slug'
 import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
-import { lexicalHTML } from '@payloadcms/richtext-lexical'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
@@ -25,7 +24,16 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       name: 'content',
       type: 'richText',
     },
-    lexicalHTML('content', { name: 'content_html' }),
+    {
+      label: 'Fuente',
+      name: 'source',
+      type: 'text',
+    },
+    {
+      name: 'preview_content',
+      type: 'textarea',
+      label: 'Contenido de vista previa'
+    },
     quotesJoinField,
   ]
 })
