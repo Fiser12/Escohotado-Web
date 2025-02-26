@@ -23,6 +23,29 @@ export const SearchBar: React.FC<Props> = ({initialValue, applyText, className, 
         'min-w-[200px]',
         className
     )
+    const buttonClass = classNames(
+        'rounded-r-lg',
+        'bg-primary-300',
+        'text-white',
+        'focus:bg-primary-500',
+        'focus:shadow-none',
+        'active:bg-primary-400',
+        'disabled:pointer-events-none',
+        'disabled:opacity-50',
+        'disabled:shadow-none',
+        'py-2',
+        'px-4',
+        'border',
+        'border-transparent',
+        'font-body',
+        'text-center',
+        'text-sm',
+        'transition-all',
+        'shadow-md',
+        'hover:shadow-lg',
+        'hover:bg-primary-100',
+        'active:shadow-none'
+    )
     return (
         <form 
             {...rest}
@@ -42,24 +65,7 @@ export const SearchBar: React.FC<Props> = ({initialValue, applyText, className, 
                     className="w-full bg-transparent placeholder:text-gray-disabled text-black font-body text-sm border border-primary-300 rounded-l-lg pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-primary-500 hover:border-primary-500 shadow-sm focus:shadow"
                     placeholder="Buscar..."
                 />
-                <button
-                    className="
-                    rounded-r-lg 
-                    bg-primary-300 
-                    text-white 
-                    focus:bg-primary-500 
-                    focus:shadow-none 
-                    active:bg-primary-400 
-                    disabled:pointer-events-none 
-                    disabled:opacity-50 
-                    disabled:shadow-none
-                    py-2 px-4 
-                    border border-transparent font-body text-center text-sm 
-                    transition-all shadow-md hover:shadow-lg 
-                    hover:bg-primary-100 
-                    active:shadow-none"
-                    type="submit"
-                >
+                <button className={buttonClass} type="submit">
                     Buscar
                 </button>
             </div>
