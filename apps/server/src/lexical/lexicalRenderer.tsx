@@ -11,6 +11,7 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 import classNames from 'classnames'
 import { blockRenderers } from './blockRenderers'
+import { ContentWrapper } from 'gaudi/server'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -37,14 +38,16 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export function LexicalRenderer(props: Props) {
   const { className, ...rest } = props
   return (
-    <RichTextWithoutBlocks
-      converters={jsxConverters}
-      className={classNames(
-        "max-w-none",
-        "w-full",
-        className,
-      )}
-      {...rest}
-    />
+    <ContentWrapper>
+      <RichTextWithoutBlocks
+        converters={jsxConverters}
+        className={classNames(
+          "max-w-none",
+          "w-full",
+          className,
+        )}
+        {...rest}
+      />
+    </ContentWrapper>
   )
 }
