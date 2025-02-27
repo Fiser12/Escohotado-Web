@@ -7,17 +7,35 @@ import {
   lexicalEditor,
   UnderlineFeature,
   BlocksFeature,
+  BlockquoteFeature,
   HeadingFeature,
   FeatureProviderServer,
   HTMLConverterFeature,
+  IndentFeature,
+  FixedToolbarFeature,
+  StrikethroughFeature,
+  HorizontalRuleFeature,
+  InlineToolbarFeature,
+  UploadFeature,
+  AlignFeature,
+  InlineCodeFeature
 } from '@payloadcms/richtext-lexical'
 import { collectionsContentsWithDetailsSlugs } from 'hegel/payload'
 
 export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<any, any, any>[] => [
   HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+  InlineToolbarFeature(),
   ParagraphFeature(),
+  AlignFeature(),
+  UploadFeature(),
   UnderlineFeature(),
+  BlockquoteFeature(),
+  IndentFeature(),
+  StrikethroughFeature(),
+  FixedToolbarFeature(),
   BoldFeature(),
+  InlineCodeFeature(),
+  HorizontalRuleFeature(),
   ItalicFeature(),
   BlocksFeature({ blocks: blocks() }),
   LinkFeature({

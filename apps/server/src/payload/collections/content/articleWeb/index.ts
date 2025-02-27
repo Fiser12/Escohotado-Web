@@ -2,6 +2,7 @@ import { slugField } from '@/payload/fields/slug'
 import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
+import { defaultLexical } from '@/lexical/defaultLexical'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
@@ -23,6 +24,7 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
+      editor: defaultLexical
     },
     {
       label: 'Fuente',
