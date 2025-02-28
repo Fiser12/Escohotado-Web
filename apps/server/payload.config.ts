@@ -35,6 +35,20 @@ export default buildConfig({
     supportedLanguages: { es, en },
     fallbackLanguage: 'es',
   },
+  localization: {
+    locales: [
+      {
+        label: 'English',
+        code: 'en',
+      },
+      {
+        label: 'Español',
+        code: 'es'
+      },
+    ],
+    defaultLocale: 'es',
+    fallback: true
+  },
   cors: ['https://checkout.stripe.com', `${process.env.NEXT_PUBLIC_SITE_URL}` || ''],
   csrf: ['https://checkout.stripe.com', process.env.NEXT_PUBLIC_SITE_URL || ''],
   admin: {

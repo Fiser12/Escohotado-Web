@@ -1,5 +1,5 @@
 export type CategoryModel = {
-  id: string
+  id: number
   slug?: string | null
   label: string
   breadcrumb?: string | null

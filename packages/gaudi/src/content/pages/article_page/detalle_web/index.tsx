@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     publishedAt: string;
     author?: string;
-    coverHref: string;
+    coverHref?: string | null;
     detailHref: string;
     categories: CategoryModel[];
     children: React.ReactNode;
@@ -50,6 +50,7 @@ export const ArticleDetail: React.FC<Props> = ({
 
     return (
         <div className={containerClass} {...rest}>
+            { coverHref &&
             <div className="relative w-full h-[200px] md:h-[350px]">
                 <Image
                     fill
@@ -58,6 +59,8 @@ export const ArticleDetail: React.FC<Props> = ({
                     className="object-cover"
                 />
             </div>
+
+            }
             <ContentWrapper className="flex flex-col ">
                 <div className="md:pb-10 flex flex-col gap-6 md:gap-10">
                     <div className="flex flex-col gap-2">

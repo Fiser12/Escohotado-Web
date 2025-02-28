@@ -48,6 +48,7 @@ export const video: CollectionConfig = {
       label: 'Contenido',
       name: 'content',
       type: 'richText',
+      localized: true
     },
     {
       type: 'row',
@@ -56,6 +57,7 @@ export const video: CollectionConfig = {
           label: 'URL Vídeo (Privada)',
           name: 'url',
           type: 'text',
+          localized: true,
           required: true,
           unique: true,
         },
@@ -66,6 +68,7 @@ export const video: CollectionConfig = {
       label: 'URL Vídeo YT (Pública)',
       name: 'url_free',
       type: 'text',
+      localized: true,
       admin: {
         readOnly: true,
       },

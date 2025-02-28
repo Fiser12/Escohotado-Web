@@ -24,7 +24,6 @@ const permision: CollectionConfig = {
     {
       name: 'title',
       type: 'text',
-      localized: true,
       required: true,
     },
   ],

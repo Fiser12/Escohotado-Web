@@ -83,7 +83,7 @@ export interface Config {
     home_page: HomePageSelect<false> | HomePageSelect<true>;
     videos_page: VideosPageSelect<false> | VideosPageSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'es';
   user: User & {
     collection: 'users';
   };
@@ -541,7 +541,21 @@ export interface ArticleWeb {
     [k: string]: unknown;
   } | null;
   source?: string | null;
-  preview_content?: string | null;
+  preview_content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   quotes?: {
     docs?: (number | Quote)[] | null;
     hasNextPage?: boolean | null;

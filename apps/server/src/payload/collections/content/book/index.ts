@@ -33,6 +33,7 @@ export const book = contentCollectionBuilder({
     {
       label: 'Contenido',
       name: 'content',
+      localized: true,
       type: 'richText',
     },
     ...slugField("title"),
@@ -74,4 +75,4 @@ export const book = contentCollectionBuilder({
     },
     quotesJoinField
   ]
-})
+}, true)

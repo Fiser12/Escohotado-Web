@@ -24,18 +24,21 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
+      localized: true,
       editor: defaultLexical
     },
     {
       label: 'Fuente',
       name: 'source',
+      localized: true,
       type: 'text',
     },
     {
       name: 'preview_content',
-      type: 'textarea',
+      localized: true,
+      type: 'richText',
       label: 'Contenido de vista previa'
     },
     quotesJoinField,
   ]
-})
+}, true)

@@ -28,11 +28,13 @@ export const quote: CollectionConfig = {
         label: 'Cita',
         name: 'quote',
         type: 'textarea',
+        localized: true,
         required: true
       },
       {
         label: 'Contexto',
         name: 'context',
+        localized: true,
         type: 'text'
       },
       {

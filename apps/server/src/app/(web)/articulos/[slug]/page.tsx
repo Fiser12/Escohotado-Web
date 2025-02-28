@@ -31,23 +31,25 @@ const Page: NextPage<Props> = async (props) => {
       }
     })
   ]);
+
   const article = articles.docs[0];
 
   const hasPermissions = evalPermissionQuery(user, 'basic');
   const quotes = (article?.quotes?.docs ?? [])
     .slice(0, hasPermissions ? 3 : 0)
     .cast<Quote>()
-  const cover = (article.cover as Media | null)?.url ?? "#"
+  const cover = (article.cover as Media | null)?.url
+
   return <SEOContentWrapper
     title={article?.title ?? "No title"}
-    description={article.preview_content ?? ""}
+    description={""}
     imageHref={cover}
     ogType="article"
   >
     <ArticleDetail
       title={article.title ?? "No title"}
       publishedAt={article.publishedAt as string}
-      coverHref={(article.cover as Media | null)?.url ?? "#"}
+      coverHref={(article.cover as Media | null)?.url}
       detailHref={routes.nextJS.generateDetailHref({ collection: "article_web", value: article })}
       categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
     >

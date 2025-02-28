@@ -27,6 +27,7 @@ export const uiBLock: CollectionConfig = {
     },
     {
         type: 'richText',
+        localized: true,
         name: 'block',
         label: 'Bloque',
         required: true

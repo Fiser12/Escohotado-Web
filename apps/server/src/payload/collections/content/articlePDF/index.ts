@@ -10,7 +10,7 @@ export const articlePDF = contentWithPermissionsCollectionBuilder({
     plural: 'Artículos PDF',
   },
   upload: {
-    mimeTypes: ['application/pdf'],
+    mimeTypes: ['application/pdf']
   },
   hooks: {
     beforeOperation: [addContentHashToFile]
@@ -25,6 +25,7 @@ export const articlePDF = contentWithPermissionsCollectionBuilder({
       label: 'Contenido',
       name: 'content',
       type: 'richText',
+      localized: true
     },
     quotesJoinField,    
   ]

@@ -42,6 +42,7 @@ export function LexicalRenderer(props: Props) {
       <RichTextWithoutBlocks
         converters={jsxConverters}
         className={classNames(
+          'article-html-content',
           "max-w-none",
           "w-full",
           className,

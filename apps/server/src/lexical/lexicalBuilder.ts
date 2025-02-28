@@ -18,6 +18,8 @@ import {
   InlineToolbarFeature,
   UploadFeature,
   AlignFeature,
+  SubscriptFeature,
+  SuperscriptFeature,
   InlineCodeFeature
 } from '@payloadcms/richtext-lexical'
 import { collectionsContentsWithDetailsSlugs } from 'hegel/payload'
@@ -33,6 +35,8 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
   IndentFeature(),
   StrikethroughFeature(),
   FixedToolbarFeature(),
+  SubscriptFeature(),
+  SuperscriptFeature(),
   BoldFeature(),
   InlineCodeFeature(),
   HorizontalRuleFeature(),
