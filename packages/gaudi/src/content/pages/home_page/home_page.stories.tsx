@@ -5,7 +5,7 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
   gridClassname: "grid-cols-1 md:grid-cols-4",
   features: [
     {
-      id: "1",
+      id: 1,
       type: "article",
       className: "col-span-1 md:col-span-2 lg:col-span-3",
       title: "El origen de la civilización",
@@ -13,15 +13,15 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { label: "Historia", id: "1" },
-        { label: "Filosofía", id: "2" },
+        { label: "Historia", id: 1 },
+        { label: "Filosofía", id: 2 },
       ],
       detailHref: "#",
       isPdf: false,
       hasPermission: true,
     },
     {
-      id: "2",
+      id: 2,
       type: "quote",
       className: "col-span-1 md:col-span-2 lg:col-span-1",
       origen: {
@@ -32,11 +32,11 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       },
       categories: [
         {
-          id: "1",
+          id: 1,
           label: "Drogas",
         },
         {
-          id: "2",
+          id: 2,
           label: "Educación",
         },
       ],
@@ -46,7 +46,7 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       author: "Antonio Escohotado",
     },
     {
-      id: "3",
+      id: 3,
       type: "book",
       className: "col-span-1 md:col-span-3",
       title: "Confesiones de un opiófilo",
@@ -57,7 +57,7 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/300x400",
     },
     {
-      id: "4",
+      id: 4,
       type: "video",
       className: "col-span-1 md:col-span-1",
       title: "250.000 agradecimientos escohotadianos a todos los emboscados",
@@ -67,12 +67,12 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       hasPermission: true,
       href: "/",
       categories: [
-        { label: "Historia", id: "1" },
-        { label: "Filosofía", id: "2" },
+        { label: "Historia", id: 1 },
+        { label: "Filosofía", id: 2 },
       ],
     },
     {
-      id: "5",
+      id: 5,
       type: "article",
       className: "col-span-1 md:col-span-2 lg:col-span-3",
       title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
@@ -83,12 +83,12 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { label: "Historia", id: "1" },
-        { label: "Filosofía", id: "2" },
+        { label: "Historia", id: 1 },
+        { label: "Filosofía", id: 2 },
       ],
     },
     {
-      id: "6",
+      id: 6,
       type: "article",
       className: "col-span-1 row-span-2",
       title: "El origen de la civilización",
@@ -99,12 +99,12 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { label: "Historia", id: "1" },
-        { label: "Filosofía", id: "2" },
+        { label: "Historia", id: 1 },
+        { label: "Filosofía", id: 2 },
       ],
     },
     {
-      id: "7",
+      id: 7,
       type: "article",
       className: "col-span-1 md:col-span-2",
       title: "El origen de la civilización",
@@ -115,12 +115,12 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { label: "Historia", id: "1" },
-        { label: "Filosofía", id: "2" },
+        { label: "Historia", id: 1 },
+        { label: "Filosofía", id: 2 },
       ],
     },
     {
-      id: "8",
+      id: 8,
       type: "article",
       className: "col-span-1",
       detailHref: "#",
@@ -131,12 +131,12 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/600x800",
       href: "/",
       categories: [
-        { label: "Historia", id: "1" },
-        { label: "Filosofía", id: "2" },
+        { label: "Historia", id: 1 },
+        { label: "Filosofía", id: 2 },
       ],
     },
     {
-      id: "9",
+      id: 9,
       type: "book",
       className: "col-span-1 row-span-1 md:row-span-2 md:col-span-2",
       title: "Confesiones de un opiófilo",
@@ -147,7 +147,7 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/300x400",
     },
     {
-      id: "10",
+      id: 10,
       type: "book",
       className: "col-span-1 md:col-span-2",
       detailHref: "#",
@@ -158,7 +158,7 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/300x400",
     },
     {
-      id: "11",
+      id: 11,
       type: "book",
       className: "",
       title: "Confesiones de un opiófilo",
@@ -169,7 +169,7 @@ const featuredItem: { gridClassname: string, features: ContentCardModel[] } = {
       coverHref: "https://placehold.co/300x400",
     },
     {
-      id: "12",
+      id: 12,
       type: "book",
       className: "",
       detailHref: "#",
