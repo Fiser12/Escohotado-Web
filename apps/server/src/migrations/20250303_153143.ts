@@ -7,6 +7,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_prices_interval" AS ENUM('day', 'week', 'month', 'year');
   CREATE TYPE "public"."enum_products_type" AS ENUM('good', 'service');
   CREATE TYPE "public"."enum_subscriptions_status" AS ENUM('trialing', 'active', 'canceled', 'incomplete', 'incomplete_expired', 'past_due', 'unpaid', 'paused');
+  CREATE TYPE "public"."enum_article_web_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum__article_web_v_version_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum__article_web_v_published_locale" AS ENUM('en', 'es');
   CREATE TYPE "public"."enum_book_ediciones_variant" AS ENUM('audiobook', 'ebook', 'book');
   CREATE TYPE "public"."enum_book_ediciones_language" AS ENUM('es', 'en');
   CREATE TABLE IF NOT EXISTS "users_accounts" (
@@ -217,20 +220,61 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"last_forum_sync" timestamp(3) with time zone,
   	"last_forum_posts" jsonb,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
-  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"_status" "enum_article_web_status" DEFAULT 'draft'
   );
   
   CREATE TABLE IF NOT EXISTS "article_web_locales" (
-  	"title" varchar NOT NULL,
+  	"title" varchar,
   	"content" jsonb,
   	"source" varchar,
-  	"preview_content" varchar,
+  	"preview_content" jsonb,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
   );
   
   CREATE TABLE IF NOT EXISTS "article_web_rels" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"order" integer,
+  	"parent_id" integer NOT NULL,
+  	"path" varchar NOT NULL,
+  	"permission_id" integer,
+  	"taxonomy_id" integer
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_article_web_v" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"parent_id" integer,
+  	"version_permissions_seeds" varchar DEFAULT '',
+  	"version_cover_id" integer,
+  	"version_published_at" timestamp(3) with time zone,
+  	"version_slug" varchar,
+  	"version_slug_lock" boolean DEFAULT true,
+  	"version_forum_post_id" varchar,
+  	"version_last_forum_sync" timestamp(3) with time zone,
+  	"version_last_forum_posts" jsonb,
+  	"version_updated_at" timestamp(3) with time zone,
+  	"version_created_at" timestamp(3) with time zone,
+  	"version__status" "enum__article_web_v_version_status" DEFAULT 'draft',
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"snapshot" boolean,
+  	"published_locale" "enum__article_web_v_published_locale",
+  	"latest" boolean
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_article_web_v_locales" (
+  	"version_title" varchar,
+  	"version_content" jsonb,
+  	"version_source" varchar,
+  	"version_preview_content" jsonb,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_locale" "_locales" NOT NULL,
+  	"_parent_id" integer NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS "_article_web_v_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
@@ -636,6 +680,42 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
+   ALTER TABLE "_article_web_v" ADD CONSTRAINT "_article_web_v_parent_id_article_web_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."article_web"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_article_web_v" ADD CONSTRAINT "_article_web_v_version_cover_id_media_id_fk" FOREIGN KEY ("version_cover_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_article_web_v_locales" ADD CONSTRAINT "_article_web_v_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_article_web_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_article_web_v_rels" ADD CONSTRAINT "_article_web_v_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."_article_web_v"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_article_web_v_rels" ADD CONSTRAINT "_article_web_v_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_article_web_v_rels" ADD CONSTRAINT "_article_web_v_rels_taxonomy_fk" FOREIGN KEY ("taxonomy_id") REFERENCES "public"."taxonomy"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
    ALTER TABLE "book_ediciones" ADD CONSTRAINT "book_ediciones_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."book"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -964,12 +1044,30 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "article_web_slug_idx" ON "article_web" USING btree ("slug");
   CREATE INDEX IF NOT EXISTS "article_web_updated_at_idx" ON "article_web" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "article_web_created_at_idx" ON "article_web" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "article_web__status_idx" ON "article_web" USING btree ("_status");
   CREATE UNIQUE INDEX IF NOT EXISTS "article_web_locales_locale_parent_id_unique" ON "article_web_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "article_web_rels_order_idx" ON "article_web_rels" USING btree ("order");
   CREATE INDEX IF NOT EXISTS "article_web_rels_parent_idx" ON "article_web_rels" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "article_web_rels_path_idx" ON "article_web_rels" USING btree ("path");
   CREATE INDEX IF NOT EXISTS "article_web_rels_permission_id_idx" ON "article_web_rels" USING btree ("permission_id");
   CREATE INDEX IF NOT EXISTS "article_web_rels_taxonomy_id_idx" ON "article_web_rels" USING btree ("taxonomy_id");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_parent_idx" ON "_article_web_v" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_version_version_cover_idx" ON "_article_web_v" USING btree ("version_cover_id");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_version_version_slug_idx" ON "_article_web_v" USING btree ("version_slug");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_version_version_updated_at_idx" ON "_article_web_v" USING btree ("version_updated_at");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_version_version_created_at_idx" ON "_article_web_v" USING btree ("version_created_at");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_version_version__status_idx" ON "_article_web_v" USING btree ("version__status");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_created_at_idx" ON "_article_web_v" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_updated_at_idx" ON "_article_web_v" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_snapshot_idx" ON "_article_web_v" USING btree ("snapshot");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_published_locale_idx" ON "_article_web_v" USING btree ("published_locale");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_latest_idx" ON "_article_web_v" USING btree ("latest");
+  CREATE UNIQUE INDEX IF NOT EXISTS "_article_web_v_locales_locale_parent_id_unique" ON "_article_web_v_locales" USING btree ("_locale","_parent_id");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_rels_order_idx" ON "_article_web_v_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_rels_parent_idx" ON "_article_web_v_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_rels_path_idx" ON "_article_web_v_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_rels_permission_id_idx" ON "_article_web_v_rels" USING btree ("permission_id");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_rels_taxonomy_id_idx" ON "_article_web_v_rels" USING btree ("taxonomy_id");
   CREATE INDEX IF NOT EXISTS "book_ediciones_order_idx" ON "book_ediciones" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "book_ediciones_parent_id_idx" ON "book_ediciones" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "book_cover_idx" ON "book" USING btree ("cover_id");
@@ -1078,6 +1176,9 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "article_web" CASCADE;
   DROP TABLE "article_web_locales" CASCADE;
   DROP TABLE "article_web_rels" CASCADE;
+  DROP TABLE "_article_web_v" CASCADE;
+  DROP TABLE "_article_web_v_locales" CASCADE;
+  DROP TABLE "_article_web_v_rels" CASCADE;
   DROP TABLE "book_ediciones" CASCADE;
   DROP TABLE "book" CASCADE;
   DROP TABLE "book_locales" CASCADE;
@@ -1112,6 +1213,9 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_prices_interval";
   DROP TYPE "public"."enum_products_type";
   DROP TYPE "public"."enum_subscriptions_status";
+  DROP TYPE "public"."enum_article_web_status";
+  DROP TYPE "public"."enum__article_web_v_version_status";
+  DROP TYPE "public"."enum__article_web_v_published_locale";
   DROP TYPE "public"."enum_book_ediciones_variant";
   DROP TYPE "public"."enum_book_ediciones_language";`)
 }

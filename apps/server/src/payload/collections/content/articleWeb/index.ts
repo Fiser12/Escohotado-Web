@@ -6,6 +6,7 @@ import { defaultLexical } from '@/lexical/defaultLexical'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
+  
   labels: {
     singular: 'Articulo Web',
     plural: 'Artículos Web',
@@ -17,6 +18,9 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
         value: { id: data.id, slug: data.slug } 
       })}`,
     }
+  },
+  versions: {
+    drafts: true
   },
   fields: [
     ...slugField("title"),
