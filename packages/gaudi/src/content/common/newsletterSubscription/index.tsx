@@ -20,12 +20,13 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
             target="_blank"
             {...rest}
       >
-            <div className="flex flex-col justify-baseline items-center gap-8 max-w-[600px] mx-auto">
+            <div className="flex flex-col items-start gap-8 max-w-[600px] mx-auto">
                   <H3 label="¡Únete a nuestra comunidad del conocimiento!" className="text-primary-100" />
                   <input type="hidden" name="nonce" />
                   <input type="hidden" name="l" value="d5e07ef4-a728-4003-b3a7-c803298ae4ce" />
                   <p className="text-white font-body">Introduce tu email para recibir nuestra newsletter con las últimas reflexiones filosóficas, análisis históricos y exploraciones sobre el capitalismo y las drogas, al estilo de Antonio Escohotado.</p>
                   <div className="flex md:flex-row flex-col gap-4 w-full">
+                        <div className="flex gap-2">
                         <InputForm
                               label={"name"}
                               name={"name"}
@@ -45,6 +46,7 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
                               {...rest}
                         >
                         </InputForm>
+                        </div>
                         <button type="submit">
                               <MainButton text={"Suscribirse"} color="secondary" icon={<EmailIcon />} className="h-full" />
                         </button>
