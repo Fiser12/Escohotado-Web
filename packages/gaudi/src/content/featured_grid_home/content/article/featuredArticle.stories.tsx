@@ -35,11 +35,6 @@ const meta: Meta<typeof FeaturedArticle> = {
                   defaultValue: true,
                   description: "If the user has permission to access",
             },
-            isPdf: {
-                  control: "boolean",
-                  defaultValue: true,
-                  description: "If the content is a PDF",
-            },
       },
       args: {
             title: "Sample Article Title",
@@ -50,7 +45,6 @@ const meta: Meta<typeof FeaturedArticle> = {
                   { id: 2, label: "Filosofía" },
             ],
             hasPermission: true,
-            isPdf: false,
       },
 };
 

@@ -65,7 +65,7 @@ export const mapArticleCard =
       hasPermission: evalPermissionQuery(user, item.permissions_seeds?.trim() ?? '' as any),
       author: getAuthorsNamesFromTaxonomies(taxonomies),
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
-      coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
+      coverHref: (item.cover as Media)?.url,
       detailHref: routes.nextJS.generateDetailHref({
         collection: 'slug' in item ? `article_web` : `article_pdf`, 
         value: item

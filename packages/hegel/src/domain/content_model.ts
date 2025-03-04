@@ -12,7 +12,7 @@ export interface ArticleHeaderModel extends ContentHeaderBaseModel {
     type: "article";
     title: string;
     author: string;
-    coverHref: string;
+    coverHref?: string | null;
     hasPermission: boolean;
     href?: string | null;
     isPdf: boolean;

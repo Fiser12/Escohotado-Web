@@ -16,7 +16,6 @@ export const renderFeatured = (item: ContentCardModel) => {
           key={item.id}
           className={item.className}
           title={item.title}
-          isPdf={item.isPdf}
           hasPermission={item.hasPermission}
           author={item.author}
           coverHref={item.coverHref}
