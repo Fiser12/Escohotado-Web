@@ -11,15 +11,30 @@ import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
 import { ContentProtected } from '@/ui/contentProtected';
 import { FreemiumHighlightSection, SEOContentWrapper } from 'gaudi/client';
+import { createSearchParamsCache, parseAsString } from "nuqs/server";
+import { TypedLocale } from 'payload';
+
+export const searchContentParamsCache = createSearchParamsCache({
+  locale: parseAsString.withDefault('es'),
+})
 
 interface Props {
   params: {
     slug: string;
   };
+  searchParams: Record<string, string>;
+
 }
 
-const Page: NextPage<Props> = async (props) => {
-  const { slug } = await props.params;
+const parseLocale = (locale: string): TypedLocale => {
+  if (locale === 'es') return 'es';
+  if (locale === 'en') return 'en';
+  return 'es';
+}
+
+const Page: NextPage<Props> = async ({ params, searchParams }) => {
+  const { slug } = await params;
+  const { locale } = await searchContentParamsCache.parse(searchParams)
 
   const payload = await getPayload();
   const [user, articles] = await Promise.all([
@@ -28,10 +43,15 @@ const Page: NextPage<Props> = async (props) => {
       collection: COLLECTION_SLUG_ARTICLE_WEB,
       where: {
         slug: { equals: slug }
-      }
+      },
+      locale: parseLocale(locale)
     })
   ]);
-  const article = articles.docs[0];
+  const article = articles.docs.at(0);
+  // @ts-ignore
+  const locales = article?.locales ?? [] as string[];
+  if(!article) return null;
+
   const hasBasicPermission = evalPermissionQuery(user, 'basic');
   const quotes = (article?.quotes?.docs ?? [])
     .slice(0, hasBasicPermission ? 3 : 0)
@@ -45,6 +65,8 @@ const Page: NextPage<Props> = async (props) => {
   >
     <ArticleDetail
       title={article.title ?? "No title"}
+      locales={locales}
+      currentLocale={locale}
       publishedAt={article.publishedAt as string}
       coverHref={(article.cover as Media | null)?.url}
       detailHref={routes.nextJS.generateDetailHref({ collection: "article_web", value: article })}

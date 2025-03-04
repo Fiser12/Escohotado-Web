@@ -22,6 +22,16 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
   versions: {
     drafts: true
   },
+  hooks: {
+    beforeRead: [
+      async ({ doc }) => {
+        return {
+          ...doc,
+          locales: Object.keys(doc.content || [])
+        }
+      }   
+    ]
+  },
   fields: [
     ...slugField("title"),
     {

@@ -7,9 +7,13 @@ import "./article-html-content.css";
 import Image from "next/image";
 import { CategoryModel } from "hegel";
 import { SocialMediaShare } from "../../../../common/social_media";
+import Link from "next/link";
+import { FlagWithLabels } from "../../../../common/icons/flags/Flags";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
+    currentLocale: string;
+    locales: string[];
     publishedAt: string;
     author?: string;
     coverHref?: string | null;
@@ -25,6 +29,8 @@ export const ArticleDetail: React.FC<Props> = ({
     coverHref,
     categories,
     detailHref,
+    locales,
+    currentLocale,
     children,
     className,
     ...rest
@@ -58,9 +64,7 @@ export const ArticleDetail: React.FC<Props> = ({
                     alt={title}
                     className="object-cover"
                 />
-            </div>
-
-            }
+            </div> }
             <ContentWrapper className="flex flex-col ">
                 <div className="md:pb-10 flex flex-col gap-6 md:gap-10">
                     <div className="flex flex-col gap-2">
@@ -82,6 +86,15 @@ export const ArticleDetail: React.FC<Props> = ({
                         relativeLink={detailHref} 
                         tags={["Artículo", author?.replace(" ", "")].mapNotNull(it => it)} 
                     />
+                    <div className="flex gap-3">
+                    { locales
+                    .filter(locale => locale !== currentLocale)
+                    .map(locale => (
+                        <Link key={locale} href={detailHref + `?locale=${locale}`}> 
+                            <FlagWithLabels locale={locale} className="h-7 w-7" />
+                        </Link>
+                    ))}
+                    </div>
                 </div>
             </ContentWrapper>
             {children}
