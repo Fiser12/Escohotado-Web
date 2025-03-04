@@ -72,6 +72,7 @@ export const getArticlesQuery = async (
     payload.find({
       collection: COLLECTION_SLUG_ARTICLE_WEB,
       sort,
+      draft: false,
       pagination: false,
       where: {
         id: {
