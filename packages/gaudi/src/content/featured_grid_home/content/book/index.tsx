@@ -15,7 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export const FeaturedBook: React.FC<Props> = ({className, detailHref, coverHref, title, quote, author, ...rest}) => {
       const containerClass = classNames(className, 'w-full h-full px-4 py-6');
-      const containerImageClass = classNames('w-full aspect-[2/3] mx-auto');
+      const containerImageClass = classNames('w-full mx-auto');
       const ImageClass = classNames('object-cover');
       const contentClass = classNames('w-full flex flex-col justify-center items-center gap-2');
       const titleClass = classNames("w-full line-clamp-3 font-display");

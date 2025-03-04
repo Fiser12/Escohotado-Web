@@ -5,7 +5,7 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr);
 }
-.text-content-position-video {
+.title-section-position-video {
   justify-content: start;
 }
 .dynamic-text-video {
@@ -19,7 +19,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
-  .text-content-position-video {
+  .title-section-position-video {
     justify-content: center;
   }
 }
@@ -27,6 +27,7 @@
 @container (max-width: 599px) {
   .image-container-video {
     aspect-ratio: 16 / 9;
+    overflow: hidden;
   }
   .image-container-video img {
     object-fit: cover;

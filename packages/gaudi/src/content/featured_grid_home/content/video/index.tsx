@@ -8,7 +8,6 @@ import { BaseCardContainer } from "../../container_base";
 import { UnlockIcon } from "../../../../common/icons/unlock_icon";
 import "./style.css"
 import { CategoryModel } from "hegel";
-import { MagenitcEffect } from "../../../../effects/magnetic-effect";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -22,9 +21,9 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export const FeaturedVideo: React.FC<Props> = ({hasPermission, publishedAt, className, detailHref, coverHref, title, categories, unlockHref, ...rest}) => {
+export const FeaturedVideo: React.FC<Props> = ({ hasPermission, publishedAt, className, detailHref, coverHref, title, categories, unlockHref, ...rest }) => {
 
-  const containerClass = classNames("w-full h-full min-h-[300px] gap-1");
+  const containerClass = classNames("w-full min-h-[300px] h-full gap-1");
   const containerImageClass = classNames("w-full rounded overflow-hidden relative");
   const imageClass = classNames(
     "w-full h-full object-cover",
@@ -34,9 +33,9 @@ export const FeaturedVideo: React.FC<Props> = ({hasPermission, publishedAt, clas
     }
   );
   const contentClass = classNames(
-    "flex flex-col justify-between px-2 py-4 gap-2"
+    "h-full flex flex-col justify-between px-2 py-4 gap-2"
   );
-  const textareaClass = classNames("h-full flex flex-col justify-center gap-2.5");
+  const textareaClass = classNames("h-full flex flex-col gap-2.5");
   const titleClass = classNames(
     "line-clamp-3 font-body",
     {
@@ -64,27 +63,27 @@ export const FeaturedVideo: React.FC<Props> = ({hasPermission, publishedAt, clas
             alt={title}
             className={imageClass}
           />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-            <MagenitcEffect className="text-gray-dark hover:text-primary-400 rounded-full bg-white w-[50px] h-[50px] items-center justify-center shadow-xl">
-              {hasPermission ? <PlayIcon className="p-4 translate-x-[2px]" /> : <LockIcon className={`icon-animation p-3`} />}
-            </MagenitcEffect>
+          <div className="group absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-dark hover:text-primary-400 rounded-full bg-white w-[50px] h-[50px] flex items-center justify-center shadow-xl cursor-pointer transition duration-200 hover:scale-110 motion-reduce:hover:transform-none">
+            {hasPermission ? <PlayIcon className="translate-x-[2px] w-[18px] pt-[2px] transition duration-400 ease-in-out group-hover:scale-75  " /> : <LockIcon className={`icon-animation p-3`} />}
           </div>
         </div>
         <div className={contentClass}>
-          <div className={`text-content-position-video ${textareaClass}`}>
-            {categories && categories.length > 0 && (
-              <div className={categoriesClass}>
-                {categories.map((category, index) => (
-                  <Tag
-                    key={index}
-                    text={category.label}
-                    variant={hasPermission ? 'primary' : undefined}
-                    isActive={hasPermission}
-                  />
-                ))}
-              </div>
-            )}
-            <p className={`dynamic-text-video ${titleClass}`}>{title}</p>
+          <div className={textareaClass}>
+            <div className={`h-full flex flex-col gap-2 title-section-position-video`}>
+              <p className={`dynamic-text-video ${titleClass}`}>{title}</p>
+              {categories && categories.length > 0 && (
+                <div className={categoriesClass}>
+                  {categories.map((category, index) => (
+                    <Tag
+                      key={index}
+                      text={category.label}
+                      variant={hasPermission ? 'primary' : undefined}
+                      isActive={hasPermission}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
             <p className="font-body text-xs text-gray-dark mt-1">{formattedDate}</p>
           </div>
           {!hasPermission &&
