@@ -16,7 +16,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   hasPermission: boolean;
   className?: string;
   isPdf: boolean;
-  unlockHref: string;
 }
 
 export const FeaturedArticle: React.FC<Props> = ({
@@ -28,7 +27,6 @@ export const FeaturedArticle: React.FC<Props> = ({
   author,
   href,
   isPdf,
-  unlockHref,
   ...rest
 }) => {
   const containerClass = classNames("w-full h-full");
@@ -80,7 +78,7 @@ export const FeaturedArticle: React.FC<Props> = ({
           {!hasPermission &&
             <div className="group flex justify-end items-center gap-1.5 text-primary-400">
               <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
-              <Link text="Desbloquear" href={unlockHref} />
+              <Link text="Desbloquear" href={href} />
             </div>
           }
         </div>

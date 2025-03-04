@@ -21,7 +21,6 @@ export const renderFeatured = (item: ContentCardModel) => {
           author={item.author}
           coverHref={item.coverHref}
           href={item.detailHref}
-          unlockHref={routes.nextJS.subscriptionPageHref}
           categories={item.categories}
         />
       );

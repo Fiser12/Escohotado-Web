@@ -31,15 +31,12 @@ const Page: NextPage<Props> = async (props) => {
       }
     })
   ]);
-
   const article = articles.docs[0];
-
-  const hasPermissions = evalPermissionQuery(user, 'basic');
+  const hasBasicPermission = evalPermissionQuery(user, 'basic');
   const quotes = (article?.quotes?.docs ?? [])
-    .slice(0, hasPermissions ? 3 : 0)
+    .slice(0, hasBasicPermission ? 3 : 0)
     .cast<Quote>()
   const cover = (article.cover as Media | null)?.url
-
   return <SEOContentWrapper
     title={article?.title ?? "No title"}
     description={""}
@@ -54,7 +51,10 @@ const Page: NextPage<Props> = async (props) => {
       categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
     >
       {article.content &&
-        <ContentProtected fallback={<FreemiumHighlightSection />} >
+        <ContentProtected 
+          fallback={<BlockedContentArea content={article.preview_content} />} 
+          permissions_seeds={article.permissions_seeds}
+        >
           <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
         </ContentProtected>
       }
@@ -64,6 +64,20 @@ const Page: NextPage<Props> = async (props) => {
       />
     </ArticleDetail>
   </SEOContentWrapper>
+};
+
+const BlockedContentArea: React.FC<{ content: any }> = ({ content }) => {
+  return (
+    <div className="flex flex-col">
+      <div className="relative w-full overflow-hidden">
+        <div className="relative">
+          <LexicalRenderer className="max-w-[48rem] mx-auto" data={content} />
+        </div>
+        <div className="absolute bottom-0 left-0 w-full h-50 bg-gradient-to-b from-transparent to-white pointer-events-none" />
+      </div>
+      <FreemiumHighlightSection />
+    </div>
+  );
 };
 
 export default Page;

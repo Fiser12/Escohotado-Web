@@ -30,7 +30,7 @@ export const ArticleDetail: React.FC<Props> = ({
     ...rest
 }) => {
     const containerClass = classNames(
-        'bg-white text-black flex flex-col gap-12 md:gap-16',
+        'bg-white text-black flex flex-col gap-12 md:gap-16 mb-15',
         className
     );
 

@@ -78,6 +78,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         </ContentWrapper>
       </div>
       <ContentProtected 
+        permissions_seeds={"basic"}
         fallback={<FreemiumHighlightSection/>}
       >
         <HighlightSection description="Accede a las citas de Escohotado" coverHref={handwrittenBackground.src}>

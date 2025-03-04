@@ -18,6 +18,8 @@ import {
   InlineToolbarFeature,
   UploadFeature,
   AlignFeature,
+  OrderedListFeature,
+  UnorderedListFeature,
   SubscriptFeature,
   SuperscriptFeature,
   InlineCodeFeature
@@ -33,6 +35,8 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
   UnderlineFeature(),
   BlockquoteFeature(),
   IndentFeature(),
+  OrderedListFeature(),
+  UnorderedListFeature(),
   StrikethroughFeature(),
   FixedToolbarFeature(),
   SubscriptFeature(),
