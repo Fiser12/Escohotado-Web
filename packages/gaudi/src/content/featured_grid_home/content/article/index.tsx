@@ -41,7 +41,7 @@ export const FeaturedArticle: React.FC<Props> = ({
     }
   );
   const contentClass = classNames("w-full h-full flex flex-col justify-between p-2 gap-2");
-  const textareaClass = classNames("h-full flex flex-col gap-2");
+  const textareaClass = classNames("h-full flex flex-col gap-4");
   const categoriesClass = classNames("flex flex-wrap gap-1");
   const authorClass = classNames("text-xs text-gray-dark");
   const titleClass = classNames(
@@ -67,22 +67,24 @@ export const FeaturedArticle: React.FC<Props> = ({
         }
         <div className={contentClass}>
           <div className={textareaClass}>
-            <div className={`text-content-position-article w-full h-full flex flex-col justify-center gap-1`}>
+            <div className={`text-content-position-article w-full flex flex-col justify-center gap-3`}>
+              <p className={`dynamic-text-article ${titleClass}`}>{title}</p>
               <div className={categoriesClass}>
                 {categories?.map((category, index) => (
                   <Tag key={index} text={category.label} variant={hasPermission ? 'primary' : undefined} isActive={hasPermission}></Tag>
                 ))}
               </div>
-              <p className={`dynamic-text-article ${titleClass}`}>{title}</p>
             </div>
             <p className={`author-margin-article ${authorClass} ${hasPermission && 'mb-3'}`}>{author}</p>
           </div>
-          {!hasPermission &&
-            <div className="group flex justify-end items-center gap-1.5 text-primary-400">
-              <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
-              <Link text="Desbloquear" href={unlockHref} />
-            </div>
-          }
+          <div className="h-4 group text-primary-400 flex items-center pt-2">
+            {!hasPermission &&
+              <div className="w-full flex justify-end items-center gap-1.5">
+                <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
+                <Link text="Desbloquear" href={unlockHref} />
+              </div>
+            }
+          </div>
         </div>
       </div>
     </BaseCardContainer>
