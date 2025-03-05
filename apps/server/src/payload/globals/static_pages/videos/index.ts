@@ -8,6 +8,7 @@ export const VideosPage: GlobalConfig = {
       {
         name: 'content',
         type: 'richText',
+        localized: true
       }
     ],
     admin: {

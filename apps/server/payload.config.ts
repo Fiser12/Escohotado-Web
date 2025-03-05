@@ -21,7 +21,6 @@ export default buildConfig({
   collections,
   globals,
   db: postgresAdapter({
-    idType: 'uuid',
     prodMigrations: migrations,
     pool: {
       connectionString: process.env.DATABASE_URL,
@@ -35,6 +34,20 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { es, en },
     fallbackLanguage: 'es',
+  },
+  localization: {
+    locales: [
+      {
+        label: 'English',
+        code: 'en',
+      },
+      {
+        label: 'Español',
+        code: 'es'
+      },
+    ],
+    defaultLocale: 'es',
+    fallback: true
   },
   cors: ['https://checkout.stripe.com', `${process.env.NEXT_PUBLIC_SITE_URL}` || ''],
   csrf: ['https://checkout.stripe.com', process.env.NEXT_PUBLIC_SITE_URL || ''],

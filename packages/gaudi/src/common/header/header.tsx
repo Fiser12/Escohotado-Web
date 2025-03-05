@@ -62,7 +62,7 @@ export const Header: React.FC<Props> = ({
                         }
                     </div>
                     <div className="lg:hidden md:block">
-                        <HamburguerIcon></HamburguerIcon>
+                        <HamburguerIcon />
                     </div>
                 </nav>
             </ContentWrapper>

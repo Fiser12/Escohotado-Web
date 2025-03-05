@@ -1,29 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { VideoDetail } from ".";
 
-const comments = [
-    {
-        user: "Juan Pérez",
-        date: "2024-11-21",
-        comment: "¡Excelente artículo! Muy informativo. Me gustó cómo abordaste el tema con tanta profundidad y claridad. Espero ver más contenido de este tipo en el futuro.",
-    },
-    {
-        user: "María López",
-        date: "2024-11-22",
-        comment: "No estoy de acuerdo con algunos puntos mencionados, especialmente en lo que respecta a la interpretación de los datos. Sería interesante ver una comparación con otras fuentes para tener una perspectiva más completa.",
-    },
-    {
-        user: "Carlos Sánchez",
-        date: "2024-11-23",
-        comment: "Gracias por compartir esta información. He estado investigando sobre este tema durante un tiempo y tus aportes me han ayudado a entender mejor los conceptos clave. ¡Sigue así!",
-    },
-    {
-        user: "Lucía Gómez",
-        date: "2024-11-24",
-        comment: "Interesante perspectiva, lo consideraré en mis próximos proyectos. Me gustaría saber más sobre cómo aplicaste estas técnicas en casos reales. ¿Tienes ejemplos adicionales que puedas compartir?",
-    },
-];
-
 const meta: Meta<typeof VideoDetail> = {
     title: "Pages/Videos/Detail",
     component: VideoDetail,
@@ -48,8 +25,8 @@ const meta: Meta<typeof VideoDetail> = {
         duration: 0,
         videoHref: "https://www.youtube.com/watch?v=mV-4JUWcAC4",
         categories: [
-            { id: "1", label: "Tecnología" },
-            { id: "2", label: "Filosofía" },
+            { id: 1, label: "Tecnología" },
+            { id: 2, label: "Filosofía" },
         ]
     },
 };

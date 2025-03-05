@@ -6,10 +6,65 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
+
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     users: User;
     prices: Price;
@@ -17,7 +72,7 @@ export interface Config {
     subscriptions: Subscription;
     media: Media;
     taxonomy: Taxonomy;
-    article_pdf: ArticlePdf;
+    pdf: Pdf;
     article_web: ArticleWeb;
     book: Book;
     video: Video;
@@ -37,9 +92,6 @@ export interface Config {
     prices: {
       product: 'products';
     };
-    article_pdf: {
-      quotes: 'quote';
-    };
     article_web: {
       quotes: 'quote';
     };
@@ -57,7 +109,7 @@ export interface Config {
     subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     taxonomy: TaxonomySelect<false> | TaxonomySelect<true>;
-    article_pdf: ArticlePdfSelect<false> | ArticlePdfSelect<true>;
+    pdf: PdfSelect<false> | PdfSelect<true>;
     article_web: ArticleWebSelect<false> | ArticleWebSelect<true>;
     book: BookSelect<false> | BookSelect<true>;
     video: VideoSelect<false> | VideoSelect<true>;
@@ -71,7 +123,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {
     articulos_page: ArticulosPage;
@@ -83,7 +135,7 @@ export interface Config {
     home_page: HomePageSelect<false> | HomePageSelect<true>;
     videos_page: VideosPageSelect<false> | VideosPageSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'es';
   user: User & {
     collection: 'users';
   };
@@ -123,9 +175,10 @@ export interface User {
   roles?: string[];
   isSubscribedToNewsletter: boolean;
   subscription?: {
-    docs?: (string | Subscription)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Subscription)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   stripeCustomerId?: string | null;
   accounts?:
     | {
@@ -150,9 +203,9 @@ export interface User {
  * via the `definition` "subscriptions".
  */
 export interface Subscription {
-  id: string;
+  id: number;
   user: string | User;
-  product: string | Product;
+  product: number | Product;
   status: 'trialing' | 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'paused';
   created?: string | null;
   currentPeriodStart?: string | null;
@@ -184,7 +237,7 @@ export interface Subscription {
  * via the `definition` "products".
  */
 export interface Product {
-  id: string;
+  id: number;
   stripeID: string;
   type?: ('good' | 'service') | null;
   active: boolean;
@@ -196,7 +249,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  prices?: (string | Price)[] | null;
+  prices?: (number | Price)[] | null;
   metadata?:
     | {
         [k: string]: unknown;
@@ -212,7 +265,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  permissions?: (string | Permission)[] | null;
+  permissions?: (number | Permission)[] | null;
   permissions_seeds?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -222,13 +275,14 @@ export interface Product {
  * via the `definition` "prices".
  */
 export interface Price {
-  id: string;
+  id: number;
   stripeID: string;
   stripeProductId: string;
   product?: {
-    docs?: (string | Product)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Product)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   active: boolean;
   description?: string | null;
   unitAmount: number;
@@ -254,8 +308,9 @@ export interface Price {
  * via the `definition` "permission".
  */
 export interface Permission {
-  id: string;
-  slug: string;
+  id: number;
+  slug?: string | null;
+  slugLock?: boolean | null;
   title: string;
   updatedAt: string;
   createdAt: string;
@@ -265,7 +320,7 @@ export interface Permission {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   title?: string | null;
   rawContent?: string | null;
   prefix?: string | null;
@@ -296,16 +351,16 @@ export interface Media {
  * via the `definition` "taxonomy".
  */
 export interface Taxonomy {
-  id: string;
+  id: number;
   selectable?: boolean | null;
   singular_name: string;
   plural_name?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
-  parent?: (string | null) | Taxonomy;
+  parent?: (number | null) | Taxonomy;
   breadcrumbs?:
     | {
-        doc?: (string | null) | Taxonomy;
+        doc?: (number | null) | Taxonomy;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -316,47 +371,13 @@ export interface Taxonomy {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "article_pdf".
+ * via the `definition` "pdf".
  */
-export interface ArticlePdf {
-  id: string;
-  permissions?: (string | Permission)[] | null;
-  permissions_seeds?: string | null;
-  cover: string | Media;
+export interface Pdf {
+  id: number;
   title: string;
-  publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  content_html?: string | null;
-  quotes?: {
-    docs?: (string | Quote)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  forum_post_id?: string | null;
-  last_forum_sync?: string | null;
-  last_forum_posts?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  permissions?: (number | Permission)[] | null;
+  permissions_seeds?: string | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -372,44 +393,18 @@ export interface ArticlePdf {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "quote".
+ * via the `definition` "article_web".
  */
-export interface Quote {
-  id: string;
-  quote: string;
-  context?: string | null;
-  source?:
-    | ({
-        relationTo: 'book';
-        value: string | Book;
-      } | null)
-    | ({
-        relationTo: 'video';
-        value: string | Video;
-      } | null)
-    | ({
-        relationTo: 'article_pdf';
-        value: string | ArticlePdf;
-      } | null)
-    | ({
-        relationTo: 'article_web';
-        value: string | ArticleWeb;
-      } | null);
-  categories?: (string | Taxonomy)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "book".
- */
-export interface Book {
-  id: string;
-  cover: string | Media;
+export interface ArticleWeb {
+  id: number;
+  permissions?: (number | Permission)[] | null;
+  permissions_seeds?: string | null;
+  cover?: (number | null) | Media;
   title: string;
   publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
-  description?: string | null;
+  categories?: (number | Taxonomy)[] | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   content?: {
     root: {
       type: string;
@@ -425,7 +420,94 @@ export interface Book {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
+  source?: string | null;
+  preview_content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  document?: (number | null) | Pdf;
+  quotes?: {
+    docs?: (number | Quote)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  forum_post_id?: string | null;
+  last_forum_sync?: string | null;
+  last_forum_posts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote".
+ */
+export interface Quote {
+  id: number;
+  quote: string;
+  context?: string | null;
+  source?:
+    | ({
+        relationTo: 'book';
+        value: number | Book;
+      } | null)
+    | ({
+        relationTo: 'video';
+        value: number | Video;
+      } | null)
+    | ({
+        relationTo: 'article_web';
+        value: number | ArticleWeb;
+      } | null);
+  categories?: (number | Taxonomy)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "book".
+ */
+export interface Book {
+  id: number;
+  title: string;
+  publishedAt?: string | null;
+  categories?: (number | Taxonomy)[] | null;
+  description?: string | null;
+  cover: number | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   slug?: string | null;
   slugLock?: boolean | null;
   Ediciones?:
@@ -437,9 +519,10 @@ export interface Book {
       }[]
     | null;
   quotes?: {
-    docs?: (string | Quote)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Quote)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -459,7 +542,7 @@ export interface Book {
  * via the `definition` "video".
  */
 export interface Video {
-  id: string;
+  id: number;
   content?: {
     root: {
       type: string;
@@ -475,14 +558,14 @@ export interface Video {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
   url: string;
-  permissions?: (string | Permission)[] | null;
+  permissions?: (number | Permission)[] | null;
   url_free?: string | null;
   quotes?: {
-    docs?: (string | Quote)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Quote)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   permissions_seeds?: string | null;
   tags?:
     | {
@@ -498,55 +581,7 @@ export interface Video {
   viewCount?: number | null;
   duration?: number | null;
   publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
-  forum_post_id?: string | null;
-  last_forum_sync?: string | null;
-  last_forum_posts?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "article_web".
- */
-export interface ArticleWeb {
-  id: string;
-  permissions?: (string | Permission)[] | null;
-  permissions_seeds?: string | null;
-  cover: string | Media;
-  title: string;
-  publishedAt?: string | null;
-  categories?: (string | Taxonomy)[] | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  content_html?: string | null;
-  quotes?: {
-    docs?: (string | Quote)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+  categories?: (number | Taxonomy)[] | null;
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -566,7 +601,7 @@ export interface ArticleWeb {
  * via the `definition` "ui_grid_cards".
  */
 export interface UiGridCard {
-  id: string;
+  id: number;
   title?: string | null;
   tailwindGridClassNames?: string | null;
   cards?:
@@ -583,7 +618,7 @@ export interface UiGridCard {
  * via the `definition` "ui_block".
  */
 export interface UiBlock {
-  id: string;
+  id: number;
   title: string;
   block: {
     root: {
@@ -610,29 +645,25 @@ export interface UiBlock {
  * via the `definition` "search-results".
  */
 export interface SearchResult {
-  id: string;
+  id: number;
   title?: string | null;
   priority?: number | null;
   doc:
     | {
         relationTo: 'video';
-        value: string | Video;
+        value: number | Video;
       }
     | {
         relationTo: 'quote';
-        value: string | Quote;
+        value: number | Quote;
       }
     | {
         relationTo: 'article_web';
-        value: string | ArticleWeb;
-      }
-    | {
-        relationTo: 'article_pdf';
-        value: string | ArticlePdf;
+        value: number | ArticleWeb;
       }
     | {
         relationTo: 'book';
-        value: string | Book;
+        value: number | Book;
       };
   tags?: string | null;
   permissions_seeds?: string | null;
@@ -645,7 +676,7 @@ export interface SearchResult {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
@@ -653,59 +684,59 @@ export interface PayloadLockedDocument {
       } | null)
     | ({
         relationTo: 'prices';
-        value: string | Price;
+        value: number | Price;
       } | null)
     | ({
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'subscriptions';
-        value: string | Subscription;
+        value: number | Subscription;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'taxonomy';
-        value: string | Taxonomy;
+        value: number | Taxonomy;
       } | null)
     | ({
-        relationTo: 'article_pdf';
-        value: string | ArticlePdf;
+        relationTo: 'pdf';
+        value: number | Pdf;
       } | null)
     | ({
         relationTo: 'article_web';
-        value: string | ArticleWeb;
+        value: number | ArticleWeb;
       } | null)
     | ({
         relationTo: 'book';
-        value: string | Book;
+        value: number | Book;
       } | null)
     | ({
         relationTo: 'video';
-        value: string | Video;
+        value: number | Video;
       } | null)
     | ({
         relationTo: 'quote';
-        value: string | Quote;
+        value: number | Quote;
       } | null)
     | ({
         relationTo: 'ui_grid_cards';
-        value: string | UiGridCard;
+        value: number | UiGridCard;
       } | null)
     | ({
         relationTo: 'ui_block';
-        value: string | UiBlock;
+        value: number | UiBlock;
       } | null)
     | ({
         relationTo: 'permission';
-        value: string | Permission;
+        value: number | Permission;
       } | null)
     | ({
         relationTo: 'search-results';
-        value: string | SearchResult;
+        value: number | SearchResult;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -720,7 +751,7 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
     value: string | User;
@@ -743,7 +774,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -913,21 +944,12 @@ export interface TaxonomySelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "article_pdf_select".
+ * via the `definition` "pdf_select".
  */
-export interface ArticlePdfSelect<T extends boolean = true> {
+export interface PdfSelect<T extends boolean = true> {
+  title?: T;
   permissions?: T;
   permissions_seeds?: T;
-  cover?: T;
-  title?: T;
-  publishedAt?: T;
-  categories?: T;
-  content?: T;
-  content_html?: T;
-  quotes?: T;
-  forum_post_id?: T;
-  last_forum_sync?: T;
-  last_forum_posts?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -955,26 +977,28 @@ export interface ArticleWebSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   content?: T;
-  content_html?: T;
+  source?: T;
+  preview_content?: T;
+  document?: T;
   quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "book_select".
  */
 export interface BookSelect<T extends boolean = true> {
-  cover?: T;
   title?: T;
   publishedAt?: T;
   categories?: T;
   description?: T;
+  cover?: T;
   content?: T;
-  content_html?: T;
   slug?: T;
   slugLock?: T;
   Ediciones?:
@@ -998,7 +1022,6 @@ export interface BookSelect<T extends boolean = true> {
  */
 export interface VideoSelect<T extends boolean = true> {
   content?: T;
-  content_html?: T;
   url?: T;
   permissions?: T;
   url_free?: T;
@@ -1060,8 +1083,8 @@ export interface UiBlockSelect<T extends boolean = true> {
  * via the `definition` "permission_select".
  */
 export interface PermissionSelect<T extends boolean = true> {
-  id?: T;
   slug?: T;
+  slugLock?: T;
   title?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1117,7 +1140,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "articulos_page".
  */
 export interface ArticulosPage {
-  id: string;
+  id: number;
   content?: {
     root: {
       type: string;
@@ -1141,7 +1164,7 @@ export interface ArticulosPage {
  * via the `definition` "home_page".
  */
 export interface HomePage {
-  id: string;
+  id: number;
   content?: {
     root: {
       type: string;
@@ -1165,7 +1188,7 @@ export interface HomePage {
  * via the `definition` "videos_page".
  */
 export interface VideosPage {
-  id: string;
+  id: number;
   content?: {
     root: {
       type: string;
@@ -1223,24 +1246,20 @@ export interface GridCardsBlock {
     | {
         value: (
           | {
-              relationTo: 'article_pdf';
-              value: string | ArticlePdf;
-            }
-          | {
               relationTo: 'article_web';
-              value: string | ArticleWeb;
+              value: number | ArticleWeb;
             }
           | {
               relationTo: 'book';
-              value: string | Book;
+              value: number | Book;
             }
           | {
               relationTo: 'quote';
-              value: string | Quote;
+              value: number | Quote;
             }
           | {
               relationTo: 'video';
-              value: string | Video;
+              value: number | Video;
             }
         )[];
         id?: string | null;
@@ -1250,7 +1269,7 @@ export interface GridCardsBlock {
     | {
         value: {
           relationTo: 'media';
-          value: string | Media;
+          value: number | Media;
         }[];
         id?: string | null;
         blockName?: string | null;
@@ -1277,19 +1296,15 @@ export interface GridCardsBlock {
         filterByQuoteOrigin?:
           | ({
               relationTo: 'book';
-              value: string | Book;
+              value: number | Book;
             } | null)
           | ({
               relationTo: 'video';
-              value: string | Video;
-            } | null)
-          | ({
-              relationTo: 'article_pdf';
-              value: string | ArticlePdf;
+              value: number | Video;
             } | null)
           | ({
               relationTo: 'article_web';
-              value: string | ArticleWeb;
+              value: number | ArticleWeb;
             } | null);
         querySize: number;
         sort: 'publishedAt' | 'popularity';
@@ -1298,7 +1313,7 @@ export interface GridCardsBlock {
         blockType: 'quoteQueryBlock';
       }
   )[];
-  gridCards: string | UiGridCard;
+  gridCards: number | UiGridCard;
   id?: string | null;
   blockName?: string | null;
   blockType: 'grid_cards_block';
@@ -1400,7 +1415,7 @@ export interface NewsletterSubscriptionBlock {
  */
 export interface BookCarouselBlock {
   title: string;
-  books: (string | Book)[];
+  books: (number | Book)[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'books_carousel_block';
@@ -1412,7 +1427,7 @@ export interface BookCarouselBlock {
 export interface UIBlock {
   uiBlock?: {
     relationTo: 'ui_block';
-    value: string | UiBlock;
+    value: number | UiBlock;
   } | null;
   id?: string | null;
   blockName?: string | null;

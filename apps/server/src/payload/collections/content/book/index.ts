@@ -1,8 +1,7 @@
 import { slugField } from '@/payload/fields/slug'
-import { COLLECTION_SLUG_BOOK } from 'hegel/payload'
+import { COLLECTION_SLUG_BOOK, COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 import { contentCollectionBuilder } from '../content_collection_builder'
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
-import { lexicalHTML } from '@payloadcms/richtext-lexical'
 
 export const book = contentCollectionBuilder({
   slug: COLLECTION_SLUG_BOOK,
@@ -22,11 +21,21 @@ export const book = contentCollectionBuilder({
       localized: true,
     },
     {
+      name: 'cover',
+      type: 'upload',
+      relationTo: COLLECTION_SLUG_MEDIA,
+      hasMany: false,
+      required: true,
+      filterOptions: {
+        mimeType: { contains: 'image' },
+      },
+    },
+    {
       label: 'Contenido',
       name: 'content',
+      localized: true,
       type: 'richText',
     },
-    lexicalHTML('content', { name: 'content_html' }),
     ...slugField("title"),
     {
       type: "array",
@@ -66,4 +75,4 @@ export const book = contentCollectionBuilder({
     },
     quotesJoinField
   ]
-})
+}, true)

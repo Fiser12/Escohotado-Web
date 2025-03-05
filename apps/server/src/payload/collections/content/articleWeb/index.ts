@@ -2,10 +2,11 @@ import { slugField } from '@/payload/fields/slug'
 import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
-import { lexicalHTML } from '@payloadcms/richtext-lexical'
+import { defaultLexical } from '@/lexical/defaultLexical'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,
+  
   labels: {
     singular: 'Articulo Web',
     plural: 'Artículos Web',
@@ -18,14 +19,47 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       })}`,
     }
   },
+  versions: {
+    drafts: true
+  },
+  hooks: {
+    beforeRead: [
+      async ({ doc }) => {
+        return {
+          ...doc,
+          locales: Object.keys(doc.content || [])
+        }
+      }   
+    ]
+  },
   fields: [
     ...slugField("title"),
     {
       label: 'Contenido',
       name: 'content',
       type: 'richText',
+      localized: true,
+      editor: defaultLexical
     },
-    lexicalHTML('content', { name: 'content_html' }),
+    {
+      label: 'Fuente',
+      name: 'source',
+      localized: true,
+      type: 'text',
+    },
+    {
+      name: 'preview_content',
+      localized: true,
+      type: 'richText',
+      label: 'Contenido de vista previa'
+    },
+    {
+      name: 'document',
+      type: 'upload',
+      relationTo: 'pdf',
+      hasMany: false,
+      localized: true
+    },
     quotesJoinField,
   ]
-})
+}, true)

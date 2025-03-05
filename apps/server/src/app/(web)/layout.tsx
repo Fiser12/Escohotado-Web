@@ -4,10 +4,10 @@ import { signIn, signOut } from "@/payload/plugins/authjs/plugin";
 import { NuqsAdapter } from 'nuqs/adapters/next'
 import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { Textures } from "gaudi/client";
-import "../tailwind.css";
+import { Footer, Textures } from "gaudi/client";
 import { routes } from "hegel";
 import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
+import "../tailwind.css";
 
 const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> = async ({ children, modal }) => {
   const payloadUser = await getCurrentUserQuery()
@@ -22,7 +22,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
         <script src="https://analytics.ahrefs.com/analytics.js" data-key={process.env.AHREFS_PUBLIC_KEY} async></script>
         <meta name="ahrefs-site-verification" content={process.env.AHREF_VERIFICATION_KEY}/>
       </head>
-      <body>
+      <body className="min-h-dvh flex flex-col">
         <NuqsAdapter>
           <Header
             hasPermission={hasPermission}
@@ -38,7 +38,10 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
             menuSections={getAccountMenuQuery(payloadUser)}
           />
           {modal}
-          {children}
+          <main className="flex flex-col flex-grow">
+            {children}
+          </main>
+          <Footer />
         </NuqsAdapter>
         { Textures.map((Element, index) => <Element key={index} />)}
       </body>

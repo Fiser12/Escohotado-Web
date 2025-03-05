@@ -9,7 +9,7 @@ import { EyeIcon } from "../../../../common/icons/eye_icon";
 import Link from "next/link";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-      id: string;
+      itemId: number;
       quote: string;
       author: string;
       origen?: OrigenModel | null;
@@ -17,7 +17,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const FeaturedQuote: React.FC<Props> = ({ 
-      id,
+      itemId,
       className, 
       quote, 
       author, 
@@ -52,7 +52,7 @@ export const FeaturedQuote: React.FC<Props> = ({
                                     <Tag key={index} text={category.label} isActive={true} />
                               )}
                         </div>
-                        <Link href={`/cita/${id}`}>
+                        <Link href={`/cita/${itemId}`}>
                               <div className="bg-white p-1 rounded-full">
                                     <EyeIcon className="w-6 text-primary-900" />
                               </div>

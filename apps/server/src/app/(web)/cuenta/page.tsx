@@ -19,10 +19,12 @@ const Page = async () => {
         <H4 label="Subscripción a la newsletter" className="self-center" />
         <NewsletterToggleButton newsletterIsActive={user.isSubscribedToNewsletter} />
       </div>
+      <a href={routes.nextJS.subscriptionPageHref}>
+        <MainButton className="max-w-60" text="Gestionar subscripción" />
+      </a>
       <a href={routes.keycloak.account}>
         <MainButton className="max-w-60" text="Cambiar datos de usuario" />
       </a>
-
       <a href={routes.keycloak.changePassword}>
         <MainButton text="Cambiar contraseña" />
       </a>
@@ -40,7 +42,6 @@ const Page = async () => {
       >
         <MainButton text="Cerrar sesión" />
       </a>
-
     </ContentWrapper>
   );
 };

@@ -2,7 +2,7 @@
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     description: string
-    imageHref: string;
+    imageHref?: string | null;
     ogType: string;
 }
 
@@ -12,7 +12,9 @@ export const SEOContentWrapper: React.FC<Props> = ({ children, title, descriptio
     return <>
         <title>{title}</title>
         <meta property="og:title" content={title} />
-        <meta property="og:image" content={imageHref} />
+        { imageHref &&
+            <meta property="og:image" content={imageHref} />
+        }
         <meta property="og:description" content={seoDescription} />
         <meta name="description" content={seoDescription} />
         <meta property="og:type" content={ogType} />

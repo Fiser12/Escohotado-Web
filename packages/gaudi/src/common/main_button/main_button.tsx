@@ -23,8 +23,8 @@ export const MainButton: React.FC<Props> = ({
         className,
         {
             // Fill
-            'bg-primary-900 text-white hover:bg-black': type === 'fill' && color === 'primary',
-            'bg-primary-300 text-white hover:bg-primary-400': type === 'fill' && color === 'secondary',
+            'border border-primary-900 bg-primary-900 text-white hover:bg-black': type === 'fill' && color === 'primary',
+            'border border-primary-300 bg-primary-300 text-white hover:bg-primary-400': type === 'fill' && color === 'secondary',
             // Line
             'border border-primary-900 text-primary-900': type === 'line' && color === 'primary',
             'border border-primary-300 text-primary-300': type === 'line' && color === 'secondary',

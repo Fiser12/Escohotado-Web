@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Tag } from '../tag/tag';
 import { CategoryModel, routes } from 'hegel';
 import { SearchIcon } from '../icons/search_icon';
 import { ChevronDownIcon } from '../icons/chevron_down_icon';
@@ -10,7 +9,7 @@ import { ArticleIcon, BookIcon, VideoIcon, QuoteIcon } from '../../client';
 import { AllIcon } from '../icons/all_icon';
 
 export interface SearchedItem {
-  id: string;
+  id: number;
   href?: string | null;
   icon: React.ReactNode;
   title: string;

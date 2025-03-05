@@ -35,22 +35,16 @@ const meta: Meta<typeof FeaturedArticle> = {
                   defaultValue: true,
                   description: "If the user has permission to access",
             },
-            isPdf: {
-                  control: "boolean",
-                  defaultValue: true,
-                  description: "If the content is a PDF",
-            },
       },
       args: {
             title: "Sample Article Title",
             author: "Sample Author",
             coverHref: "https://placehold.co/400x400",
             categories: [
-                  { id: "1", label: "Tecnología" },
-                  { id: "2", label: "Filosofía" },
+                  { id: 1, label: "Tecnología" },
+                  { id: 2, label: "Filosofía" },
             ],
             hasPermission: true,
-            isPdf: false,
       },
 };
 

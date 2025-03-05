@@ -9,7 +9,6 @@ import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations
 import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
 import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
-import { lexicalHTML } from '@payloadcms/richtext-lexical'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()
 export const video: CollectionConfig = {
@@ -49,8 +48,8 @@ export const video: CollectionConfig = {
       label: 'Contenido',
       name: 'content',
       type: 'richText',
+      localized: true
     },
-    lexicalHTML('content', { name: 'content_html' }),
     {
       type: 'row',
       fields: [
@@ -58,6 +57,7 @@ export const video: CollectionConfig = {
           label: 'URL Vídeo (Privada)',
           name: 'url',
           type: 'text',
+          localized: true,
           required: true,
           unique: true,
         },
@@ -68,6 +68,7 @@ export const video: CollectionConfig = {
       label: 'URL Vídeo YT (Pública)',
       name: 'url_free',
       type: 'text',
+      localized: true,
       admin: {
         readOnly: true,
       },

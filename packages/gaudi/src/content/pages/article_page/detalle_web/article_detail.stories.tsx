@@ -48,8 +48,8 @@ const meta: Meta<typeof ArticleDetail> = {
         publishedAt: "2024-11-18",
         coverHref: "https://placehold.co/600x150",
         categories: [
-            { id: "1", label: "Tecnología" },
-            { id: "2", label: "Filosofía" },
+            { id: 1, label: "Tecnología" },
+            { id: 2, label: "Filosofía" },
         ]
     },
 };

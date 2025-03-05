@@ -5,8 +5,8 @@ import { evaluateExpression } from 'hegel';
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery';
 import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery';
 
-export type SearchCollection = "article_pdf" | "article_web" | "quote" | "book" | "video"
-type SearchResult = { collection: SearchCollection; id: string, title: string, href?: string, tags: string[] }
+export type SearchCollection = "article_web" | "quote" | "book" | "video"
+type SearchResult = { collection: SearchCollection; id: number, title: string, href?: string, tags: string[] }
 
 export const searchElementsQuery = async (
   query: string,
@@ -57,8 +57,8 @@ export const searchElementsQuery = async (
     }
   ).map(result => ({ 
       collection: result.doc.relationTo, 
-      href: evalPermissionQuery(user, result.permissions_seeds?.trim() ?? '') ? result.href ?? "#" : undefined,
-      id: result.doc.value as string, 
+      href: evalPermissionQuery(user, result.permissions_seeds?.trim() ?? '' as any) ? result.href ?? "#" : undefined,
+      id: result.doc.value as number, 
       title: result.title ?? "",
       tags: result.tags?.split(" ").filter(Boolean) ?? [] 
     }

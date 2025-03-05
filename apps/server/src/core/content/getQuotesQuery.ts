@@ -62,9 +62,9 @@ export const getQuotesQuery = async (
   const quotes = quotesDocs.docs
     .filter((quote) => {
       if (filterByCollectionId) {
-        const id = typeof quote.source?.value === 'string' 
+        const id = typeof quote.source?.value === 'number' 
         ? quote.source?.value 
-        : quote.source?.value.id
+        : String(quote.source?.value.id)
         return id === filterByCollectionId
       }
       return true

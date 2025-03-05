@@ -28,11 +28,11 @@ const meta: Meta<typeof FeaturedQuote> = {
             author: "Caos y Orden",
             categories: [
                   {
-                        id: "1",
+                        id: 1,
                         label: "Drogas",
                   },
                   {
-                        id: "2",
+                        id: 2,
                         label: "Educación",
                   },
             ],
