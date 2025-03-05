@@ -2,7 +2,7 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ArticleDetail, DetailBottomSection } from "gaudi/server";
 import { NextPage } from "next/types";
-import { Media, Quote, Taxonomy } from "payload-types";
+import { Media, Pdf, Quote, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
@@ -23,7 +23,6 @@ interface Props {
     slug: string;
   };
   searchParams: Record<string, string>;
-
 }
 
 const parseLocale = (locale: string): TypedLocale => {
@@ -51,7 +50,8 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
   // @ts-ignore
   const locales = article?.locales ?? [] as string[];
   if(!article) return null;
-
+  const document = article.document as Pdf | null
+  const downloadUrl = evalPermissionQuery(user, document?.permissions_seeds) ? document?.url : null;
   const hasBasicPermission = evalPermissionQuery(user, 'basic');
   const quotes = (article?.quotes?.docs ?? [])
     .slice(0, hasBasicPermission ? 3 : 0)
@@ -66,6 +66,7 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
     <ArticleDetail
       title={article.title ?? "No title"}
       locales={locales}
+      downloadUrl={downloadUrl}
       currentLocale={locale}
       publishedAt={article.publishedAt as string}
       coverHref={(article.cover as Media | null)?.url}

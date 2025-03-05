@@ -53,6 +53,13 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       type: 'richText',
       label: 'Contenido de vista previa'
     },
+    {
+      name: 'document',
+      type: 'upload',
+      relationTo: 'pdf',
+      hasMany: false,
+      localized: true
+    },
     quotesJoinField,
   ]
 }, true)

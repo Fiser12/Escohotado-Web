@@ -5,7 +5,7 @@ export const COLLECTION_SLUG_PERMISSION = 'permission' as const
 export const COLLECTION_SLUG_PRODUCTS = 'products' as const
 export const COLLECTION_SLUG_PRICES = 'prices' as const
 export const COLLECTION_SLUG_SUBSCRIPTIONS = 'subscriptions' as const
-export const COLLECTION_SLUG_ARTICLE_PDF = 'article_pdf' as const
+export const COLLECTION_SLUG_PDF = 'pdf' as const
 export const COLLECTION_SLUG_ARTICLE_WEB = 'article_web' as const
 export const COLLECTION_SLUG_BOOK = 'book' as const
 export const COLLECTION_SLUG_QUOTE = 'quote' as const
@@ -14,14 +14,12 @@ export const COLLECTION_SLUG_UI_GRID_CARDS = 'ui_grid_cards' as const
 export const COLLECTION_SLUG_UI_BLOCK = 'ui_block' as const
 
 export const collectionsContentsSlugs = [
-    COLLECTION_SLUG_ARTICLE_PDF,
     COLLECTION_SLUG_ARTICLE_WEB,
     COLLECTION_SLUG_BOOK,
     COLLECTION_SLUG_QUOTE,
     COLLECTION_SLUG_VIDEO,
 ]
 export const collectionsContentsWithDetailsSlugs = [
-    COLLECTION_SLUG_ARTICLE_PDF,
     COLLECTION_SLUG_ARTICLE_WEB,
     COLLECTION_SLUG_BOOK,
     COLLECTION_SLUG_VIDEO,

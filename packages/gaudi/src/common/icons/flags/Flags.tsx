@@ -1,3 +1,4 @@
+import { MainButton } from "../../main_button/main_button";
 import { ENFlag } from "./EN";
 import { ESFlag } from "./ES";
 
@@ -13,9 +14,11 @@ export const Flag: React.FC<Props> = ({ locale, className }) => {
 
 export const FlagWithLabels: React.FC<Props> = ({ locale }) => {
     return (
-        <div className="flex gap-2">
-            { locale == "es" ? <p>Spanish</p> : <p>Inglés</p> }
-            <Flag locale={locale} />
-        </div>
+        <MainButton 
+            type={"line"}
+            className="flex gap-2" 
+            text={locale == "en" ? "Read in English" : "Leer en Español"}
+            icon={<Flag locale={locale} />}
+        />
     )
 }

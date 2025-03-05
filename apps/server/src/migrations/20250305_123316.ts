@@ -170,16 +170,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_parent_id" integer NOT NULL
   );
   
-  CREATE TABLE IF NOT EXISTS "article_pdf" (
+  CREATE TABLE IF NOT EXISTS "pdf" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"permissions_seeds" varchar DEFAULT '',
-  	"cover_id" integer,
   	"title" varchar NOT NULL,
-  	"published_at" timestamp(3) with time zone,
-  	"forum_post_id" varchar,
-  	"last_forum_sync" timestamp(3) with time zone,
-  	"last_forum_posts" jsonb,
-  	"prefix" varchar DEFAULT 'article_pdf',
+  	"permissions_seeds" varchar DEFAULT '',
+  	"prefix" varchar DEFAULT 'pdf',
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"url" varchar,
@@ -193,20 +188,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"focal_y" numeric
   );
   
-  CREATE TABLE IF NOT EXISTS "article_pdf_locales" (
-  	"content" jsonb,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
-  );
-  
-  CREATE TABLE IF NOT EXISTS "article_pdf_rels" (
+  CREATE TABLE IF NOT EXISTS "pdf_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
-  	"permission_id" integer,
-  	"taxonomy_id" integer
+  	"permission_id" integer
   );
   
   CREATE TABLE IF NOT EXISTS "article_web" (
@@ -229,6 +216,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"content" jsonb,
   	"source" varchar,
   	"preview_content" jsonb,
+  	"document_id" integer,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
@@ -269,6 +257,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"version_content" jsonb,
   	"version_source" varchar,
   	"version_preview_content" jsonb,
+  	"version_document_id" integer,
   	"id" serial PRIMARY KEY NOT NULL,
   	"_locale" "_locales" NOT NULL,
   	"_parent_id" integer NOT NULL
@@ -377,7 +366,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"path" varchar NOT NULL,
   	"book_id" integer,
   	"video_id" integer,
-  	"article_pdf_id" integer,
   	"article_web_id" integer,
   	"taxonomy_id" integer
   );
@@ -445,7 +433,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"video_id" integer,
   	"quote_id" integer,
   	"article_web_id" integer,
-  	"article_pdf_id" integer,
   	"book_id" integer
   );
   
@@ -467,7 +454,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"subscriptions_id" integer,
   	"media_id" integer,
   	"taxonomy_id" integer,
-  	"article_pdf_id" integer,
+  	"pdf_id" integer,
   	"article_web_id" integer,
   	"book_id" integer,
   	"video_id" integer,
@@ -620,37 +607,25 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "article_pdf" ADD CONSTRAINT "article_pdf_cover_id_media_id_fk" FOREIGN KEY ("cover_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "pdf_rels" ADD CONSTRAINT "pdf_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."pdf"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "article_pdf_locales" ADD CONSTRAINT "article_pdf_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."article_pdf"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "article_pdf_rels" ADD CONSTRAINT "article_pdf_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."article_pdf"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "article_pdf_rels" ADD CONSTRAINT "article_pdf_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "article_pdf_rels" ADD CONSTRAINT "article_pdf_rels_taxonomy_fk" FOREIGN KEY ("taxonomy_id") REFERENCES "public"."taxonomy"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "pdf_rels" ADD CONSTRAINT "pdf_rels_permission_fk" FOREIGN KEY ("permission_id") REFERENCES "public"."permission"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
    ALTER TABLE "article_web" ADD CONSTRAINT "article_web_cover_id_media_id_fk" FOREIGN KEY ("cover_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "article_web_locales" ADD CONSTRAINT "article_web_locales_document_id_pdf_id_fk" FOREIGN KEY ("document_id") REFERENCES "public"."pdf"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -687,6 +662,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   DO $$ BEGIN
    ALTER TABLE "_article_web_v" ADD CONSTRAINT "_article_web_v_version_cover_id_media_id_fk" FOREIGN KEY ("version_cover_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+   WHEN duplicate_object THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "_article_web_v_locales" ADD CONSTRAINT "_article_web_v_locales_version_document_id_pdf_id_fk" FOREIGN KEY ("version_document_id") REFERENCES "public"."pdf"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -794,12 +775,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "quote_rels" ADD CONSTRAINT "quote_rels_article_pdf_fk" FOREIGN KEY ("article_pdf_id") REFERENCES "public"."article_pdf"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
    ALTER TABLE "quote_rels" ADD CONSTRAINT "quote_rels_article_web_fk" FOREIGN KEY ("article_web_id") REFERENCES "public"."article_web"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -854,12 +829,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "search_results_rels" ADD CONSTRAINT "search_results_rels_article_pdf_fk" FOREIGN KEY ("article_pdf_id") REFERENCES "public"."article_pdf"("id") ON DELETE cascade ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
    ALTER TABLE "search_results_rels" ADD CONSTRAINT "search_results_rels_book_fk" FOREIGN KEY ("book_id") REFERENCES "public"."book"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -908,7 +877,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_article_pdf_fk" FOREIGN KEY ("article_pdf_id") REFERENCES "public"."article_pdf"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_pdf_fk" FOREIGN KEY ("pdf_id") REFERENCES "public"."pdf"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -1030,21 +999,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "taxonomy_updated_at_idx" ON "taxonomy" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "taxonomy_created_at_idx" ON "taxonomy" USING btree ("created_at");
   CREATE UNIQUE INDEX IF NOT EXISTS "taxonomy_locales_locale_parent_id_unique" ON "taxonomy_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "article_pdf_cover_idx" ON "article_pdf" USING btree ("cover_id");
-  CREATE INDEX IF NOT EXISTS "article_pdf_updated_at_idx" ON "article_pdf" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "article_pdf_created_at_idx" ON "article_pdf" USING btree ("created_at");
-  CREATE UNIQUE INDEX IF NOT EXISTS "article_pdf_filename_idx" ON "article_pdf" USING btree ("filename");
-  CREATE UNIQUE INDEX IF NOT EXISTS "article_pdf_locales_locale_parent_id_unique" ON "article_pdf_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX IF NOT EXISTS "article_pdf_rels_order_idx" ON "article_pdf_rels" USING btree ("order");
-  CREATE INDEX IF NOT EXISTS "article_pdf_rels_parent_idx" ON "article_pdf_rels" USING btree ("parent_id");
-  CREATE INDEX IF NOT EXISTS "article_pdf_rels_path_idx" ON "article_pdf_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "article_pdf_rels_permission_id_idx" ON "article_pdf_rels" USING btree ("permission_id");
-  CREATE INDEX IF NOT EXISTS "article_pdf_rels_taxonomy_id_idx" ON "article_pdf_rels" USING btree ("taxonomy_id");
+  CREATE INDEX IF NOT EXISTS "pdf_updated_at_idx" ON "pdf" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "pdf_created_at_idx" ON "pdf" USING btree ("created_at");
+  CREATE UNIQUE INDEX IF NOT EXISTS "pdf_filename_idx" ON "pdf" USING btree ("filename");
+  CREATE INDEX IF NOT EXISTS "pdf_rels_order_idx" ON "pdf_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "pdf_rels_parent_idx" ON "pdf_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "pdf_rels_path_idx" ON "pdf_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "pdf_rels_permission_id_idx" ON "pdf_rels" USING btree ("permission_id");
   CREATE INDEX IF NOT EXISTS "article_web_cover_idx" ON "article_web" USING btree ("cover_id");
   CREATE INDEX IF NOT EXISTS "article_web_slug_idx" ON "article_web" USING btree ("slug");
   CREATE INDEX IF NOT EXISTS "article_web_updated_at_idx" ON "article_web" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "article_web_created_at_idx" ON "article_web" USING btree ("created_at");
   CREATE INDEX IF NOT EXISTS "article_web__status_idx" ON "article_web" USING btree ("_status");
+  CREATE INDEX IF NOT EXISTS "article_web_document_idx" ON "article_web_locales" USING btree ("document_id","_locale");
   CREATE UNIQUE INDEX IF NOT EXISTS "article_web_locales_locale_parent_id_unique" ON "article_web_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "article_web_rels_order_idx" ON "article_web_rels" USING btree ("order");
   CREATE INDEX IF NOT EXISTS "article_web_rels_parent_idx" ON "article_web_rels" USING btree ("parent_id");
@@ -1062,6 +1029,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_article_web_v_snapshot_idx" ON "_article_web_v" USING btree ("snapshot");
   CREATE INDEX IF NOT EXISTS "_article_web_v_published_locale_idx" ON "_article_web_v" USING btree ("published_locale");
   CREATE INDEX IF NOT EXISTS "_article_web_v_latest_idx" ON "_article_web_v" USING btree ("latest");
+  CREATE INDEX IF NOT EXISTS "_article_web_v_version_version_document_idx" ON "_article_web_v_locales" USING btree ("version_document_id","_locale");
   CREATE UNIQUE INDEX IF NOT EXISTS "_article_web_v_locales_locale_parent_id_unique" ON "_article_web_v_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX IF NOT EXISTS "_article_web_v_rels_order_idx" ON "_article_web_v_rels" USING btree ("order");
   CREATE INDEX IF NOT EXISTS "_article_web_v_rels_parent_idx" ON "_article_web_v_rels" USING btree ("parent_id");
@@ -1096,7 +1064,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "quote_rels_path_idx" ON "quote_rels" USING btree ("path");
   CREATE INDEX IF NOT EXISTS "quote_rels_book_id_idx" ON "quote_rels" USING btree ("book_id");
   CREATE INDEX IF NOT EXISTS "quote_rels_video_id_idx" ON "quote_rels" USING btree ("video_id");
-  CREATE INDEX IF NOT EXISTS "quote_rels_article_pdf_id_idx" ON "quote_rels" USING btree ("article_pdf_id");
   CREATE INDEX IF NOT EXISTS "quote_rels_article_web_id_idx" ON "quote_rels" USING btree ("article_web_id");
   CREATE INDEX IF NOT EXISTS "quote_rels_taxonomy_id_idx" ON "quote_rels" USING btree ("taxonomy_id");
   CREATE INDEX IF NOT EXISTS "ui_grid_cards_cards_order_idx" ON "ui_grid_cards_cards" USING btree ("_order");
@@ -1118,7 +1085,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "search_results_rels_video_id_idx" ON "search_results_rels" USING btree ("video_id");
   CREATE INDEX IF NOT EXISTS "search_results_rels_quote_id_idx" ON "search_results_rels" USING btree ("quote_id");
   CREATE INDEX IF NOT EXISTS "search_results_rels_article_web_id_idx" ON "search_results_rels" USING btree ("article_web_id");
-  CREATE INDEX IF NOT EXISTS "search_results_rels_article_pdf_id_idx" ON "search_results_rels" USING btree ("article_pdf_id");
   CREATE INDEX IF NOT EXISTS "search_results_rels_book_id_idx" ON "search_results_rels" USING btree ("book_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
@@ -1132,7 +1098,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_subscriptions_id_idx" ON "payload_locked_documents_rels" USING btree ("subscriptions_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_taxonomy_id_idx" ON "payload_locked_documents_rels" USING btree ("taxonomy_id");
-  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_article_pdf_id_idx" ON "payload_locked_documents_rels" USING btree ("article_pdf_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_pdf_id_idx" ON "payload_locked_documents_rels" USING btree ("pdf_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_article_web_id_idx" ON "payload_locked_documents_rels" USING btree ("article_web_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_book_id_idx" ON "payload_locked_documents_rels" USING btree ("book_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_video_id_idx" ON "payload_locked_documents_rels" USING btree ("video_id");
@@ -1170,9 +1136,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "taxonomy_breadcrumbs" CASCADE;
   DROP TABLE "taxonomy" CASCADE;
   DROP TABLE "taxonomy_locales" CASCADE;
-  DROP TABLE "article_pdf" CASCADE;
-  DROP TABLE "article_pdf_locales" CASCADE;
-  DROP TABLE "article_pdf_rels" CASCADE;
+  DROP TABLE "pdf" CASCADE;
+  DROP TABLE "pdf_rels" CASCADE;
   DROP TABLE "article_web" CASCADE;
   DROP TABLE "article_web_locales" CASCADE;
   DROP TABLE "article_web_rels" CASCADE;

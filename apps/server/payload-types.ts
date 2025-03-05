@@ -72,7 +72,7 @@ export interface Config {
     subscriptions: Subscription;
     media: Media;
     taxonomy: Taxonomy;
-    article_pdf: ArticlePdf;
+    pdf: Pdf;
     article_web: ArticleWeb;
     book: Book;
     video: Video;
@@ -92,9 +92,6 @@ export interface Config {
     prices: {
       product: 'products';
     };
-    article_pdf: {
-      quotes: 'quote';
-    };
     article_web: {
       quotes: 'quote';
     };
@@ -112,7 +109,7 @@ export interface Config {
     subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     taxonomy: TaxonomySelect<false> | TaxonomySelect<true>;
-    article_pdf: ArticlePdfSelect<false> | ArticlePdfSelect<true>;
+    pdf: PdfSelect<false> | PdfSelect<true>;
     article_web: ArticleWebSelect<false> | ArticleWebSelect<true>;
     book: BookSelect<false> | BookSelect<true>;
     video: VideoSelect<false> | VideoSelect<true>;
@@ -374,9 +371,31 @@ export interface Taxonomy {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "article_pdf".
+ * via the `definition` "pdf".
  */
-export interface ArticlePdf {
+export interface Pdf {
+  id: number;
+  title: string;
+  permissions?: (number | Permission)[] | null;
+  permissions_seeds?: string | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article_web".
+ */
+export interface ArticleWeb {
   id: number;
   permissions?: (number | Permission)[] | null;
   permissions_seeds?: string | null;
@@ -384,6 +403,8 @@ export interface ArticlePdf {
   title: string;
   publishedAt?: string | null;
   categories?: (number | Taxonomy)[] | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   content?: {
     root: {
       type: string;
@@ -399,6 +420,23 @@ export interface ArticlePdf {
     };
     [k: string]: unknown;
   } | null;
+  source?: string | null;
+  preview_content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  document?: (number | null) | Pdf;
   quotes?: {
     docs?: (number | Quote)[];
     hasNextPage?: boolean;
@@ -415,18 +453,9 @@ export interface ArticlePdf {
     | number
     | boolean
     | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -444,10 +473,6 @@ export interface Quote {
     | ({
         relationTo: 'video';
         value: number | Video;
-      } | null)
-    | ({
-        relationTo: 'article_pdf';
-        value: number | ArticlePdf;
       } | null)
     | ({
         relationTo: 'article_web';
@@ -573,71 +598,6 @@ export interface Video {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "article_web".
- */
-export interface ArticleWeb {
-  id: number;
-  permissions?: (number | Permission)[] | null;
-  permissions_seeds?: string | null;
-  cover?: (number | null) | Media;
-  title: string;
-  publishedAt?: string | null;
-  categories?: (number | Taxonomy)[] | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  source?: string | null;
-  preview_content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  quotes?: {
-    docs?: (number | Quote)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  forum_post_id?: string | null;
-  last_forum_sync?: string | null;
-  last_forum_posts?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ui_grid_cards".
  */
 export interface UiGridCard {
@@ -702,10 +662,6 @@ export interface SearchResult {
         value: number | ArticleWeb;
       }
     | {
-        relationTo: 'article_pdf';
-        value: number | ArticlePdf;
-      }
-    | {
         relationTo: 'book';
         value: number | Book;
       };
@@ -747,8 +703,8 @@ export interface PayloadLockedDocument {
         value: number | Taxonomy;
       } | null)
     | ({
-        relationTo: 'article_pdf';
-        value: number | ArticlePdf;
+        relationTo: 'pdf';
+        value: number | Pdf;
       } | null)
     | ({
         relationTo: 'article_web';
@@ -988,20 +944,12 @@ export interface TaxonomySelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "article_pdf_select".
+ * via the `definition` "pdf_select".
  */
-export interface ArticlePdfSelect<T extends boolean = true> {
+export interface PdfSelect<T extends boolean = true> {
+  title?: T;
   permissions?: T;
   permissions_seeds?: T;
-  cover?: T;
-  title?: T;
-  publishedAt?: T;
-  categories?: T;
-  content?: T;
-  quotes?: T;
-  forum_post_id?: T;
-  last_forum_sync?: T;
-  last_forum_posts?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1031,6 +979,7 @@ export interface ArticleWebSelect<T extends boolean = true> {
   content?: T;
   source?: T;
   preview_content?: T;
+  document?: T;
   quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
@@ -1297,10 +1246,6 @@ export interface GridCardsBlock {
     | {
         value: (
           | {
-              relationTo: 'article_pdf';
-              value: number | ArticlePdf;
-            }
-          | {
               relationTo: 'article_web';
               value: number | ArticleWeb;
             }
@@ -1356,10 +1301,6 @@ export interface GridCardsBlock {
           | ({
               relationTo: 'video';
               value: number | Video;
-            } | null)
-          | ({
-              relationTo: 'article_pdf';
-              value: number | ArticlePdf;
             } | null)
           | ({
               relationTo: 'article_web';

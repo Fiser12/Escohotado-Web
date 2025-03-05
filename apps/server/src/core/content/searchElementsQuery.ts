@@ -5,7 +5,7 @@ import { evaluateExpression } from 'hegel';
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery';
 import { evalPermissionQuery } from '../auth/permissions/evalPermissionQuery';
 
-export type SearchCollection = "article_pdf" | "article_web" | "quote" | "book" | "video"
+export type SearchCollection = "article_web" | "quote" | "book" | "video"
 type SearchResult = { collection: SearchCollection; id: number, title: string, href?: string, tags: string[] }
 
 export const searchElementsQuery = async (

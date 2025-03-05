@@ -1,7 +1,7 @@
 import type { s3Storage } from '@payloadcms/storage-s3'
 import { S3Client } from '@aws-sdk/client-s3'
 import { s3Storage as s3StoragePlugin } from '@payloadcms/storage-s3'
-import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_MEDIA } from 'hegel/payload'
+import { COLLECTION_SLUG_PDF, COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 
 export type S3StoragePlugin = Parameters<typeof s3Storage>[0]
 
@@ -34,9 +34,9 @@ const config = s3StoragePlugin({
       disableLocalStorage: true,
       prefix: 'media',
     },
-    [COLLECTION_SLUG_ARTICLE_PDF]: {
+    [COLLECTION_SLUG_PDF]: {
       disableLocalStorage: true,
-      prefix: 'article_pdf',
+      prefix: 'pdf',
     },
   },
 })

@@ -9,6 +9,8 @@ import { CategoryModel } from "hegel";
 import { SocialMediaShare } from "../../../../common/social_media";
 import Link from "next/link";
 import { FlagWithLabels } from "../../../../common/icons/flags/Flags";
+import { MainButton } from "../../../../client";
+import { DownloadDocIcon } from "../../../../common/icons/download_doc_icon";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -18,6 +20,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     author?: string;
     coverHref?: string | null;
     detailHref: string;
+    downloadUrl?: string | null;
     categories: CategoryModel[];
     children: React.ReactNode;
 }
@@ -28,6 +31,7 @@ export const ArticleDetail: React.FC<Props> = ({
     title,
     coverHref,
     categories,
+    downloadUrl,
     detailHref,
     locales,
     currentLocale,
@@ -87,13 +91,17 @@ export const ArticleDetail: React.FC<Props> = ({
                         tags={["Artículo", author?.replace(" ", "")].mapNotNull(it => it)} 
                     />
                     <div className="flex gap-3">
-                    { locales
-                    .filter(locale => locale !== currentLocale)
-                    .map(locale => (
-                        <Link key={locale} href={detailHref + `?locale=${locale}`}> 
-                            <FlagWithLabels locale={locale} className="h-7 w-7" />
-                        </Link>
-                    ))}
+                        { locales
+                            .filter(locale => locale !== currentLocale)
+                            .map(locale => <Link key={locale} href={detailHref + `?locale=${locale}`}> 
+                                <FlagWithLabels locale={locale} className="h-7 w-7" />
+                            </Link>) 
+                        }
+                        {downloadUrl && 
+                            <a href={downloadUrl} target="_blank">
+                                <MainButton text="Descargar PDF" icon={<DownloadDocIcon />} />
+                            </a>
+                        }
                     </div>
                 </div>
             </ContentWrapper>
