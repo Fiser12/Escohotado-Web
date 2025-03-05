@@ -6,7 +6,7 @@ const featuredGrid01: { gridClassname: string, features: ContentCardModel[] } = 
       gridClassname: "grid-cols-1 sm:grid-cols-4 md:grid-cols-5",
       features: [
             {
-                  id: "1",
+                  id: 1,
                   type: "video",
                   className: "col-span-1 sm:col-span-4 md:col-span-2 row-span-1 lg:row-span-2",
                   title: "250.000 agradecimientos escohotadianos a todos los emboscados",
@@ -16,12 +16,12 @@ const featuredGrid01: { gridClassname: string, features: ContentCardModel[] } = 
                   hasPermission: true,
                   href: "/",
                   categories: [
-                        { label: "Historia", id: "1" },
-                        { label: "Filosofía", id: "2" },
+                        { label: "Historia", id: 1 },
+                        { label: "Filosofía", id: 2 },
                   ],
             },
             {
-                  id: "2",
+                  id: 2,
                   type: "article",
                   className: "col-span-1 sm:col-span-2 md:col-span-3  row-span-2 md:row-span-1",
                   title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
@@ -32,12 +32,12 @@ const featuredGrid01: { gridClassname: string, features: ContentCardModel[] } = 
                   coverHref: "https://placehold.co/600x800",
                   href: "/",
                   categories: [
-                        { label: "Historia", id: "1" },
-                        { label: "Filosofía", id: "2" },
+                        { label: "Historia", id: 1 },
+                        { label: "Filosofía", id: 2 },
                   ],
             },
             {
-                  id: "3",
+                  id: 3,
                   type: "article",
                   className: "col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1",
                   title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
@@ -48,12 +48,12 @@ const featuredGrid01: { gridClassname: string, features: ContentCardModel[] } = 
                   coverHref: "https://placehold.co/600x800",
                   href: "/",
                   categories: [
-                        { label: "Historia", id: "1" },
-                        { label: "Filosofía", id: "2" },
+                        { label: "Historia", id: 1 },
+                        { label: "Filosofía", id: 2 },
                   ],
             },
             {
-                  id: "4",
+                  id: 4,
                   type: "quote",
                   className: "col-span-1 sm:col-span-2",
                   origen: {
@@ -64,11 +64,11 @@ const featuredGrid01: { gridClassname: string, features: ContentCardModel[] } = 
                   },
                   categories: [
                         {
-                              id: "1",
+                              id: 1,
                               label: "Drogas",
                         },
                         {
-                              id: "2",
+                              id: 2,
                               label: "Educación",
                         },
                   ],
@@ -84,7 +84,7 @@ const featuredGrid02: { gridClassname: string, features: ContentCardModel[] } = 
       gridClassname: "grid-cols-1 sm:grid-cols-4 md:grid-cols-5",
       features: [
             {
-                  id: "1",
+                  id: 1,
                   type: "quote",
                   className: "col-span-1 sm:col-span-2",
                   origen: {
@@ -95,11 +95,11 @@ const featuredGrid02: { gridClassname: string, features: ContentCardModel[] } = 
                   },
                   categories: [
                         {
-                              id: "1",
+                              id: 1,
                               label: "Drogas",
                         },
                         {
-                              id: "2",
+                              id: 2,
                               label: "Educación",
                         },
                   ],
@@ -109,7 +109,7 @@ const featuredGrid02: { gridClassname: string, features: ContentCardModel[] } = 
                   author: "Antonio Escohotado",
             },
             {
-                  id: "2",
+                  id: 2,
                   type: "article",
                   className: "col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1",
                   title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
@@ -120,12 +120,12 @@ const featuredGrid02: { gridClassname: string, features: ContentCardModel[] } = 
                   coverHref: "https://placehold.co/600x800",
                   href: "/",
                   categories: [
-                        { label: "Historia", id: "1" },
-                        { label: "Filosofía", id: "2" },
+                        { label: "Historia", id: 1 },
+                        { label: "Filosofía", id: 2 },
                   ],
             },
             {
-                  id: "3",
+                  id: 3,
                   type: "book",
                   className: "col-span-1 sm:col-span-4 md:col-span-2 row-span-2",
                   title: "Confesiones de un opiófilo",
@@ -136,7 +136,7 @@ const featuredGrid02: { gridClassname: string, features: ContentCardModel[] } = 
                   coverHref: "https://placehold.co/300x400",
             },
             {
-                  id: "4",
+                  id: 4,
                   type: "video",
                   className: "col-span-1 sm:col-span-4 md:col-span-3",
                   title: "250.000 agradecimientos escohotadianos a todos los emboscados",
@@ -146,8 +146,8 @@ const featuredGrid02: { gridClassname: string, features: ContentCardModel[] } = 
                   hasPermission: true,
                   href: "/",
                   categories: [
-                        { label: "Historia", id: "1" },
-                        { label: "Filosofía", id: "2" },
+                        { label: "Historia", id: 1 },
+                        { label: "Filosofía", id: 2 },
                   ],
             },
       ]

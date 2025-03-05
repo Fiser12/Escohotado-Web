@@ -77,7 +77,7 @@ export const FeaturedArticle: React.FC<Props> = ({
             {!hasPermission &&
               <div className="w-full flex justify-end items-center gap-1.5">
                 <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
-                <Link text="Desbloquear" href={unlockHref} />
+                <Link text="Desbloquear" href={href} />
               </div>
             }
           </div>
