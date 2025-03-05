@@ -10,13 +10,11 @@ import { CategoryModel } from "hegel";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   author?: string;
-  coverHref: string;
+  coverHref?: string | null;
   href: string;
   categories: CategoryModel[];
   hasPermission: boolean;
   className?: string;
-  isPdf: boolean;
-  unlockHref: string;
 }
 
 export const FeaturedArticle: React.FC<Props> = ({
@@ -27,8 +25,6 @@ export const FeaturedArticle: React.FC<Props> = ({
   coverHref,
   author,
   href,
-  isPdf,
-  unlockHref,
   ...rest
 }) => {
   const containerClass = classNames("w-full h-full");
@@ -54,8 +50,8 @@ export const FeaturedArticle: React.FC<Props> = ({
 
   return (
     <BaseCardContainer className={`base-container-axis-article ${className}`} href={hasPermission ? href : null} {...rest}>
-      <div className={`${!isPdf && 'grid-axis-control-content-article'} ${containerClass}`}>
-        {!isPdf &&
+      <div className={`${coverHref && 'grid-axis-control-content-article'} ${containerClass}`}>
+        {coverHref &&
           <div className={`image-control-article ${containerImageClass}`}>
             <Image
               fill
@@ -80,7 +76,7 @@ export const FeaturedArticle: React.FC<Props> = ({
           {!hasPermission &&
             <div className="group flex justify-end items-center gap-1.5 text-primary-400">
               <UnlockIcon className="w-3 mb-1 group-hover:animate-bounce" />
-              <Link text="Desbloquear" href={unlockHref} />
+              <Link text="Desbloquear" href={href} />
             </div>
           }
         </div>

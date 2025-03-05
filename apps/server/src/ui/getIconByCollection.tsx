@@ -3,7 +3,6 @@ import { collectionsContentsSlugs } from "hegel/payload";
 
 export const getIconByCollection = (collection: typeof collectionsContentsSlugs[number]): React.ReactNode => {
     switch(collection) {
-      case "article_pdf":
       case "article_web":
         return <ArticleIcon/>;
       case "book":

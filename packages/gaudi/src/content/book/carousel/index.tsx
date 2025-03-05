@@ -7,6 +7,7 @@ import { BookCard } from '../cards';
 import { H2 } from '../../../common/headers/H2';
 import { ContentWrapper } from '../../../common/content_wrapper/content_wrapper';
 import { NextButton, PrevButton, usePrevNextButtons } from './carousel-arrow';
+import "./styles.css";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -41,7 +42,7 @@ export const CarouselBook: React.FC<Props> = ({ className, title, books, ...rest
     'flex items-start max-h-90 md:max-h-120 pt-5 md:pt-8'
   );
   const divClass = classNames(
-    "w-full flex flex-col pb-10 pt-10",
+    "ignore-wrapper pb-10 pt-10",
     className
   );
 

@@ -1,9 +1,9 @@
-import { COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_VIDEO } from 'hegel/payload'
+import { COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_VIDEO } from 'hegel/payload'
 import { CollectionConfig } from 'payload'
 import { isAnyone, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
 
-export const quoteOriginRelationTo = [COLLECTION_SLUG_BOOK, COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_PDF, COLLECTION_SLUG_ARTICLE_WEB]
+export const quoteOriginRelationTo = [COLLECTION_SLUG_BOOK, COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_ARTICLE_WEB]
 
 export const quote: CollectionConfig = {
     slug: COLLECTION_SLUG_QUOTE,
@@ -28,11 +28,13 @@ export const quote: CollectionConfig = {
         label: 'Cita',
         name: 'quote',
         type: 'textarea',
+        localized: true,
         required: true
       },
       {
         label: 'Contexto',
         name: 'context',
+        localized: true,
         type: 'text'
       },
       {

@@ -4,9 +4,9 @@ import { SearchOptions } from "node_modules/gaudi/src/common/search_modal";
 export const mapSearchOptionsToCollections = (option: SearchOptions): SearchCollection[] => {
   switch (option) {
     case "all":
-      return ["article_pdf", "article_web", "book", "video", "quote"];
+      return ["article_web", "book", "video", "quote"];
     case "article":
-      return ["article_pdf", "article_web"];
+      return ["article_web"];
     case "book":
       return ["book"];
     case "video":

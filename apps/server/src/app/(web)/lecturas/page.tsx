@@ -1,12 +1,12 @@
-import { COLLECTION_SLUG_ARTICLE_PDF, routes } from "hegel/payload";
+import { routes } from "hegel/payload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton } from "gaudi/server";
 import { FreemiumHighlightSection, HighlightSection } from "gaudi/client";
 import { convertContentModelToCard } from "hegel";
-import { Taxonomy } from "payload-types";
+import { ArticleWeb, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { CommonArticle, getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
+import { getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
 import { getBooksQuery } from "@/core/content/getBooksQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
@@ -42,7 +42,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
   const articulosDataPage = await payload.findGlobal({
     slug: "articulos_page"
   })
-  const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article);
+  const articleCardMapper = (article: ArticleWeb) => mapArticleCard(user)(article);
   const divClass = classNames(
     "w-full bg-gray-light",
     className
@@ -69,7 +69,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
                   author={authorName}
                   href="#"
                   title={article.title ?? "No title"}
-                  textLink={article.type === COLLECTION_SLUG_ARTICLE_PDF ? "Descargar" : "Leer más"}
+                  textLink={"Leer más"}
                 />
               })
               }
@@ -78,6 +78,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         </ContentWrapper>
       </div>
       <ContentProtected 
+        permissions_seeds={"basic"}
         fallback={<FreemiumHighlightSection/>}
       >
         <HighlightSection description="Accede a las citas de Escohotado" coverHref={handwrittenBackground.src}>
@@ -94,7 +95,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         <H2 label="Artículos" id="h2-articles" />
         <div className="flex flex-col sm:flex-row gap-3 items-end">
           <TagsFilterBarSSR
-            collection={['article_web', 'article_pdf']}
+            collection={['article_web']}
             query={query}
             excludeSeeds={["autor", "revisar"]}
             title='Etiquetas'

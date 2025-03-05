@@ -26,6 +26,7 @@ export const WrapperBlock: Block = {
       label: 'Contenido',
       name: 'content',
       type: 'richText',
+      localized: true,
       editor,
     },
   ],

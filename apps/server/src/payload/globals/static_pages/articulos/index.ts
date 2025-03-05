@@ -9,11 +9,12 @@ export const ArticulosPage: GlobalConfig = {
       {
         name: 'content',
         type: 'richText',
+        localized: true
       }
     ],
     admin: {
       livePreview: {
-        url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.lecturasPageHref}`,
+        url: ({ data }) => `${process.env.NEXT_PUBLIC_SERVER_URL}${routes.nextJS.lecturasPageHref}`,
       }  
     }
   }

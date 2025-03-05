@@ -11,8 +11,9 @@ import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
 
 export function contentWithPermissionsCollectionBuilder(
   config: Partial<CollectionConfig> & { slug: string },
+  localized?: boolean
 ): CollectionConfig {
-  const contentCollection = contentCollectionBuilder(config)
+  const contentCollection = contentCollectionBuilder(config, localized)
   return {
     ...contentCollection,
     access: {
@@ -43,6 +44,7 @@ export function contentWithPermissionsCollectionBuilder(
 
 export function contentCollectionBuilder(
   config: Partial<CollectionConfig> & { slug: string },
+  localized?: boolean
 ): CollectionConfig {
   return {
     ...config,
@@ -68,10 +70,11 @@ export function contentCollectionBuilder(
     },
     fields: [
       {
+        label: 'Título',
         name: 'title',
         type: 'text',
         required: true,
-        localized: true,
+        localized: localized ?? false,
       },
       {
         name: 'publishedAt',

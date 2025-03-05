@@ -16,12 +16,10 @@ export const renderFeatured = (item: ContentCardModel) => {
           key={item.id}
           className={item.className}
           title={item.title}
-          isPdf={item.isPdf}
           hasPermission={item.hasPermission}
           author={item.author}
           coverHref={item.coverHref}
           href={item.detailHref}
-          unlockHref={routes.nextJS.subscriptionPageHref}
           categories={item.categories}
         />
       );
@@ -29,7 +27,7 @@ export const renderFeatured = (item: ContentCardModel) => {
       return (
         <FeaturedQuote
           key={item.id}
-          id={item.id}
+          itemId={item.id}
           origen={item.origen}
           className={item.className}
           categories={item.categories}

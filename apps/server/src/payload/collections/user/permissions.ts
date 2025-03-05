@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
-import { v4 as uuid_v4 } from 'uuid'
 import { COLLECTION_SLUG_PERMISSION } from 'hegel/payload'
 import { isAnyone, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
+import { slugField } from '@/payload/fields/slug'
 
 const permision: CollectionConfig = {
   slug: COLLECTION_SLUG_PERMISSION,
@@ -20,22 +20,10 @@ const permision: CollectionConfig = {
     group: 'Auth',
   },
   fields: [
-    {
-      name: 'id',
-      type: 'text',
-      defaultValue: uuid_v4,
-      admin: { position: 'sidebar', readOnly: true },
-    },
-    {
-      name: 'slug',
-      unique: true,
-      type: 'text',
-      required: true,
-    },
+    ...slugField(),
     {
       name: 'title',
       type: 'text',
-      localized: true,
       required: true,
     },
   ],

@@ -7,13 +7,20 @@ import "./article-html-content.css";
 import Image from "next/image";
 import { CategoryModel } from "hegel";
 import { SocialMediaShare } from "../../../../common/social_media";
+import Link from "next/link";
+import { FlagWithLabels } from "../../../../common/icons/flags/Flags";
+import { MainButton } from "../../../../client";
+import { DownloadDocIcon } from "../../../../common/icons/download_doc_icon";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
+    currentLocale: string;
+    locales: string[];
     publishedAt: string;
     author?: string;
-    coverHref: string;
+    coverHref?: string | null;
     detailHref: string;
+    downloadUrl?: string | null;
     categories: CategoryModel[];
     children: React.ReactNode;
 }
@@ -24,13 +31,16 @@ export const ArticleDetail: React.FC<Props> = ({
     title,
     coverHref,
     categories,
+    downloadUrl,
     detailHref,
+    locales,
+    currentLocale,
     children,
     className,
     ...rest
 }) => {
     const containerClass = classNames(
-        'bg-white text-black flex flex-col gap-12 md:gap-16',
+        'bg-white text-black flex flex-col gap-12 md:gap-16 mb-15',
         className
     );
 
@@ -50,6 +60,7 @@ export const ArticleDetail: React.FC<Props> = ({
 
     return (
         <div className={containerClass} {...rest}>
+            { coverHref &&
             <div className="relative w-full h-[200px] md:h-[350px]">
                 <Image
                     fill
@@ -57,7 +68,7 @@ export const ArticleDetail: React.FC<Props> = ({
                     alt={title}
                     className="object-cover"
                 />
-            </div>
+            </div> }
             <ContentWrapper className="flex flex-col ">
                 <div className="md:pb-10 flex flex-col gap-6 md:gap-10">
                     <div className="flex flex-col gap-2">
@@ -79,6 +90,19 @@ export const ArticleDetail: React.FC<Props> = ({
                         relativeLink={detailHref} 
                         tags={["Artículo", author?.replace(" ", "")].mapNotNull(it => it)} 
                     />
+                    <div className="flex gap-3">
+                        { locales
+                            .filter(locale => locale !== currentLocale)
+                            .map(locale => <Link key={locale} href={detailHref + `?locale=${locale}`}> 
+                                <FlagWithLabels locale={locale} className="h-7 w-7" />
+                            </Link>) 
+                        }
+                        {downloadUrl && 
+                            <a href={downloadUrl} target="_blank">
+                                <MainButton text="Descargar PDF" icon={<DownloadDocIcon />} />
+                            </a>
+                        }
+                    </div>
                 </div>
             </ContentWrapper>
             {children}

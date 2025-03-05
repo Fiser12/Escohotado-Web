@@ -10,7 +10,6 @@ import {
 import { ContentCardModel, ContentHeaderModel, QuoteHeaderModel } from 'hegel'
 import {
   Taxonomy,
-  ArticlePdf,
   ArticleWeb,
   Media,
   Video,
@@ -36,12 +35,11 @@ type ContentRelationType = Extract<
 const mapRelationToFeatured = (
   user: User | null,
   item: ContentRelationType,
-): ContentHeaderModel | null => {
-  if (typeof item.value === 'string') {
+): ContentHeaderModel | null  => {
+  if (typeof item.value === 'number') {
     return null
   }
   switch (item.relationTo) {
-    case 'article_pdf':
     case 'article_web':
       return mapArticleCard(user)(item.value)
     case 'video':
@@ -55,7 +53,7 @@ const mapRelationToFeatured = (
 
 export const mapArticleCard =
   (user: User | null) =>
-  (item: ArticlePdf | ArticleWeb): ContentHeaderModel => {
+  (item: ArticleWeb): ContentHeaderModel => {
     const taxonomies = item.categories?.cast<Taxonomy>() ?? []
     return {
       type: 'article',
@@ -65,12 +63,11 @@ export const mapArticleCard =
       hasPermission: evalPermissionQuery(user, item.permissions_seeds?.trim() ?? '' as any),
       author: getAuthorsNamesFromTaxonomies(taxonomies),
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
-      coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
+      coverHref: (item.cover as Media)?.url,
       detailHref: routes.nextJS.generateDetailHref({
-        collection: 'slug' in item ? `article_web` : `article_pdf`, 
+        collection: 'article_web', 
         value: item
-      }),
-      href: 'url' in item ? item.url : undefined,
+      })
     }
   }
 export const mapVideoCard =
@@ -124,7 +121,7 @@ export const mapQuoteCard =
     type: 'quote',
     categories: getSelectableTaxonomies(taxonomies),
     context: item.context,
-    origen: item.source && typeof item.source.value !== "string" ? {
+    origen: item.source && typeof item.source.value !== "number" ? {
       title: item.source.value.title ?? "No title",
       type: item.source.relationTo,
       hasPermissions: evalPermissionQuery(

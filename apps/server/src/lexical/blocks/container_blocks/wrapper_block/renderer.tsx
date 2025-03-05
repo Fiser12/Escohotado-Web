@@ -12,6 +12,6 @@ export const renderer = async ({ node }: any) => {
       );
   
   return <ContentWrapper backgroundClassname={className} >
-    <LexicalRenderer data={node.fields.content} className='article-html-content' />
+    <LexicalRenderer data={node.fields.content} />
   </ContentWrapper>
 }

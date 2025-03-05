@@ -8,6 +8,7 @@ export const HomePage: GlobalConfig = {
       {
         name: 'content',
         type: 'richText',
+        localized: true
       }
     ],
     admin: {

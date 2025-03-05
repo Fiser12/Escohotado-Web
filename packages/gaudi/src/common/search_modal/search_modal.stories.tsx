@@ -7,42 +7,42 @@ import { title } from "process";
 
 const tags: CategoryModel[] = [
   {
-    id: "1",
+    id: 1,
     label: "Team"
   }
 ]
 
 const defaultItems: SearchedItem[] = [
   {
-    id: "1",
+    id: 1,
     icon: <span className="bg-gray-400 h-2 w-2 m-2 rounded-full" />,
     title: "Tighten Co.",
     tags: tags,
     href: "#"
   },
   {
-    id: "2",
+    id: 2,
     icon: <span className="bg-green-400 h-2 w-2 m-2 rounded-full" />,
     title: "Taylor Otwell",
     tags: tags,
     href: "#"
   },
   {
-    id: "3",
+    id: 3,
     icon: <span className="bg-gray-400 h-2 w-2 m-2 rounded-full" />,
     title: "Adam Wathan",
     tags: [],
     href: "#"
   },
   {
-    id: "4",
+    id: 4,
     icon: <span className="bg-gray-400 h-2 w-2 m-2 rounded-full" />,
     title: "Duke Street Studio Inc.",
     tags: tags,
     href: "#"
   },
   {
-    id: "5",
+    id: 5,
     icon: <span className="bg-green-400 h-2 w-2 m-2 rounded-full" />,
     title: "Jeffrey Wey",
     tags: tags,

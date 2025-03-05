@@ -1,0 +1,5 @@
+/* In your Tailwind CSS file (e.g., globals or a components file) */
+.ignore-wrapper {
+    @apply relative left-1/2 -translate-x-1/2 w-screen max-w-none;
+}
+  
