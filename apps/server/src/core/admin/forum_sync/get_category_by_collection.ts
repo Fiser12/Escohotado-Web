@@ -2,7 +2,7 @@ import { COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, COLLECTION_SLUG_VIDE
 import { CollectionSlug } from 'payload'
 
 const ARTICLE_FORUM_ID = '41'
-const VIDEO_FORUM_ID = '40'
+const VIDEO_FORUM_ID = '44'
 const BOOK_FORUM_IDS_MAP: Record<string, number> = {
   'el-libro-de-los-venenos': 38,
   'aprendiendo-de-las-drogas': 36,
