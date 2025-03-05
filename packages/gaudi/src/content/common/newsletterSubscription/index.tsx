@@ -25,30 +25,30 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
                   <input type="hidden" name="nonce" />
                   <input type="hidden" name="l" value="d5e07ef4-a728-4003-b3a7-c803298ae4ce" />
                   <p className="text-white font-body">Introduce tu email para recibir nuestra newsletter con las últimas reflexiones filosóficas, análisis históricos y exploraciones sobre el capitalismo y las drogas, al estilo de Antonio Escohotado.</p>
-                  <div className="flex md:flex-row flex-col gap-4 w-full">
-                        <div className="flex gap-2">
-                        <InputForm
-                              label={"name"}
-                              name={"name"}
-                              type="text"
-                              placeholder={"Nombre"}
-                              state={"enabled"}
-                              {...rest}
-                        >
-                        </InputForm>
-                        <InputForm
-                              label={"email"}
-                              name={"email"}
-                              type="email"
-                              placeholder={"Email"}
-                              className="w-full"
-                              state={"enabled"}
-                              {...rest}
-                        >
-                        </InputForm>
+                  <div className="flex md:flex-row flex-col gap-7 md:gap-4 w-full">
+                        <div className="flex gap-2 flex-col sm:flex-row">
+                              <InputForm
+                                    label={"name"}
+                                    name={"name"}
+                                    type="text"
+                                    placeholder={"Nombre"}
+                                    state={"enabled"}
+                                    {...rest}
+                              >
+                              </InputForm>
+                              <InputForm
+                                    label={"email"}
+                                    name={"email"}
+                                    type="email"
+                                    placeholder={"Email"}
+                                    className="w-full"
+                                    state={"enabled"}
+                                    {...rest}
+                              >
+                              </InputForm>
                         </div>
                         <button type="submit">
-                              <MainButton text={"Suscribirse"} color="secondary" icon={<EmailIcon />} className="h-full" />
+                              <MainButton text={"Suscribirse"} color="secondary" icon={<EmailIcon />} className="h-full w-full" />
                         </button>
                   </div>
             </div>
