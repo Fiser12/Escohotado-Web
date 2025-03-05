@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
 import { CategoryModel, OrigenModel } from "hegel";
 import "./style.css";
-import { useEffect, useRef, useState } from "react";
 import { ArrowLinkIcon } from "../../../../common/icons/arrow_link";
 import { EyeIcon } from "../../../../common/icons/eye_icon";
 import Link from "next/link";
@@ -50,12 +49,12 @@ export const FeaturedQuote: React.FC<Props> = ({
                   <div className="w-full flex justify-between items-center mb-4">
                         <div className="flex flex-row gap-2 flex-wrap">
                               {categories.map((category, index) =>
-                                    <Tag key={index} text={category.label} isActive={false} />
+                                    <Tag key={index} text={category.label} isActive={true} />
                               )}
                         </div>
                         <Link href={`/cita/${id}`}>
-                              <div className="bg-primary-500 p-1 rounded-full">
-                                    <EyeIcon className="w-6 text-white" />
+                              <div className="bg-white p-1 rounded-full">
+                                    <EyeIcon className="w-6 text-primary-900" />
                               </div>
                         </Link>
                   </div>
