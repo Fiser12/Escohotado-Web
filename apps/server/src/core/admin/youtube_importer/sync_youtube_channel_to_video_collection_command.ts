@@ -114,28 +114,14 @@ const syncYoutubeChannelToVideoCollectionCommand = async (upsert: boolean) => {
 
   const videos = await getYoutubeVideos()
   const existingUrls = await getVideoURLsFromDatabase(payload)
-  const chunkArray = <T>(arr: T[], size: number): T[][] => {
-    return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
-      arr.slice(i * size, i * size + size)
-    );
-  };
-
-  const videoBatches: YoutubeVideo[][] = chunkArray(videos, 20);
-
-  for (const batch of videoBatches) {
-    const upsertPromises = batch.map(async (video) => 
-      await youtubeVideoUpsert(payload, video, existingUrls, upsert)
-    );
-    
-    try {
-      await Promise.all(upsertPromises);
-    } catch (error) {
-      payload.logger.error('Error en el upsert por lotes: ', error);
-    }
-  }
-
-  payload.logger.warn('Sincronización completada.');
-
+  const upsertPromises = videos.map(
+    async (video) => await youtubeVideoUpsert(payload, video, existingUrls, upsert),
+  )
+  upsertPromises.forEach((promise) =>
+    promise.catch((error) => payload.logger.error('Error en el upsert: ', error)),
+  )
+  await Promise.all(upsertPromises)
+  payload.logger.warn('Sincronización completada.')
 }
 
 export default syncYoutubeChannelToVideoCollectionCommand
