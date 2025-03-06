@@ -52,10 +52,6 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
   if(!article) return null;
   const document = article.document as Pdf | null
   const downloadUrl = evalPermissionQuery(user, document?.permissions_seeds) ? document?.url : null;
-  const hasBasicPermission = evalPermissionQuery(user, 'basic');
-  const quotes = (article?.quotes?.docs ?? [])
-    .slice(0, hasBasicPermission ? 3 : 0)
-    .cast<Quote>()
   const cover = (article.cover as Media | null)?.url
   return <SEOContentWrapper
     title={article?.title ?? "No title"}
@@ -82,7 +78,7 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
         </ContentProtected>
       }
       <DetailBottomSection
-        quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
+        quotesModel={[]}
         commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
       />
     </ArticleDetail>

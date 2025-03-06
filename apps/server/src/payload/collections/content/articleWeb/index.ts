@@ -60,7 +60,6 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
       relationTo: 'pdf',
       hasMany: false,
       localized: true
-    },
-    quotesJoinField,
+    }
   ]
 }, true)

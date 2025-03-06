@@ -92,9 +92,6 @@ export interface Config {
     prices: {
       product: 'products';
     };
-    article_web: {
-      quotes: 'quote';
-    };
     book: {
       quotes: 'quote';
     };
@@ -437,11 +434,6 @@ export interface ArticleWeb {
     [k: string]: unknown;
   } | null;
   document?: (number | null) | Pdf;
-  quotes?: {
-    docs?: (number | Quote)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -456,31 +448,6 @@ export interface ArticleWeb {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "quote".
- */
-export interface Quote {
-  id: number;
-  quote: string;
-  context?: string | null;
-  source?:
-    | ({
-        relationTo: 'book';
-        value: number | Book;
-      } | null)
-    | ({
-        relationTo: 'video';
-        value: number | Video;
-      } | null)
-    | ({
-        relationTo: 'article_web';
-        value: number | ArticleWeb;
-      } | null);
-  categories?: (number | Taxonomy)[] | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -534,6 +501,31 @@ export interface Book {
     | number
     | boolean
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote".
+ */
+export interface Quote {
+  id: number;
+  quote: string;
+  context?: string | null;
+  source?:
+    | ({
+        relationTo: 'book';
+        value: number | Book;
+      } | null)
+    | ({
+        relationTo: 'video';
+        value: number | Video;
+      } | null)
+    | ({
+        relationTo: 'article_web';
+        value: number | ArticleWeb;
+      } | null);
+  categories?: (number | Taxonomy)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -980,7 +972,6 @@ export interface ArticleWebSelect<T extends boolean = true> {
   source?: T;
   preview_content?: T;
   document?: T;
-  quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;
