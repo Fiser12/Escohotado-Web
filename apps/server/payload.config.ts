@@ -35,6 +35,15 @@ export default buildConfig({
     supportedLanguages: { es, en },
     fallbackLanguage: 'es',
   },
+  logger: {
+    options: {
+      level: 'debug'
+
+    }
+  },  
+  graphQL: {
+    disable: true
+  },
   localization: {
     locales: [
       {

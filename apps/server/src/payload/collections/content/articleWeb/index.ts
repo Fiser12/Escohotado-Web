@@ -20,7 +20,8 @@ export const articleWeb = contentWithPermissionsCollectionBuilder({
     }
   },
   versions: {
-    drafts: true
+    drafts: true,
+    maxPerDoc: 5
   },
   hooks: {
     beforeRead: [
