@@ -153,6 +153,91 @@ const featuredGrid02: { gridClassname: string, features: ContentCardModel[] } = 
       ]
 };
 
+const featuredGrid03: { gridClassname: string, features: ContentCardModel[] } = {
+      gridClassname: "grid-cols-1 sm:grid-cols-4 lg:grid-cols-5",
+      features: [
+            {
+                  id: "1",
+                  type: "video",
+                  className: "col-span-1 sm:col-span-4 md:col-span-2 row-span-1 lg:row-span-2",
+                  title: "250.000 agradecimientos escohotadianos a todos los emboscados",
+                  publishedAt: "2024-11-18",
+                  coverHref: "https://placehold.co/300x200",
+                  detailHref: "#",
+                  hasPermission: true,
+                  href: "/",
+                  categories: [
+                        { label: "Historia", id: "1" },
+                        { label: "Filosofía", id: "2" },
+                  ],
+            },
+            {
+                  id: "2",
+                  type: "article",
+                  className: "col-span-1 sm:col-span-2 lg:col-span-2",
+                  title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
+                  author: "Antonio Escohotado",
+                  detailHref: "#",
+                  hasPermission: true,
+                  isPdf: true,
+                  coverHref: "https://placehold.co/600x800",
+                  href: "/",
+                  categories: [
+                        { label: "Historia", id: "1" },
+                        { label: "Filosofía", id: "2" },
+                  ],
+            },
+            {
+                  id: "3",
+                  type: "article",
+                  className: "col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-1",
+                  title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
+                  author: "Antonio Escohotado",
+                  detailHref: "#",
+                  hasPermission: true,
+                  isPdf: true,
+                  coverHref: "https://placehold.co/600x800",
+                  href: "/",
+                  categories: [
+                        { label: "Historia", id: "1" },
+                        { label: "Filosofía", id: "2" },
+                  ],
+            },
+            {
+                  id: "4",
+                  type: "article",
+                  className: "col-span-1 sm:col-span-2 lg:col-span-1",
+                  title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
+                  author: "Antonio Escohotado",
+                  detailHref: "#",
+                  hasPermission: true,
+                  isPdf: true,
+                  coverHref: "https://placehold.co/600x800",
+                  href: "/",
+                  categories: [
+                        { label: "Historia", id: "1" },
+                        { label: "Filosofía", id: "2" },
+                  ],
+            },
+            {
+                  id: "5",
+                  type: "article",
+                  className: "col-span-1 sm:col-span-2 lg:col-span-2",
+                  title: "El origen de la civilización y fbndfkjbn dnfjhvdnfv dfnbkjdfnb dnfbkjdnf",
+                  author: "Antonio Escohotado",
+                  detailHref: "#",
+                  hasPermission: true,
+                  isPdf: true,
+                  coverHref: "https://placehold.co/600x800",
+                  href: "/",
+                  categories: [
+                        { label: "Historia", id: "1" },
+                        { label: "Filosofía", id: "2" },
+                  ],
+            },
+      ]
+};
+
 const meta: Meta<typeof HomePage> = {
       title: "Pages/Grids",
       component: HomePage,
@@ -186,5 +271,12 @@ export const Grid02: Story = {
       name: "featured Grid 02",
       args: {
             featuredItems: [featuredGrid02 as any],
+      }
+};
+
+export const Grid03: Story = {
+      name: "featured Grid 03",
+      args: {
+            featuredItems: [featuredGrid03 as any],
       }
 };
