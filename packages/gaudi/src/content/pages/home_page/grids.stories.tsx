@@ -271,7 +271,7 @@ const featuredGrid04: { gridClassname: string, features: ContentCardModel[] } = 
             {
                   id: "3",
                   type: "video",
-                  className: "col-span-1 sm:col-span-4 md:col-span-2 lg:col-span-2 row-span-1 lg:row-span-2",
+                  className: "col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 row-span-1 lg:row-span-2",
                   title: "250.000 agradecimientos escohotadianos a todos los emboscados",
                   publishedAt: "2024-11-18",
                   coverHref: "https://placehold.co/300x200",
