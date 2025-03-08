@@ -2,6 +2,10 @@ import classNames from "classnames";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 import { NavItem } from "../../../common/header/nav_item";
 import { routes } from "hegel";
+import { XIcon } from "../../../common/icons/social/x_icon";
+import { FacebookIcon } from "../../../common/icons/social/facebook_icon";
+import { InstagramIcon } from "../../../common/icons/social/instagram_icon";
+import { YoutubeIcon } from "../../../common/icons/social/youtube_icon";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
@@ -22,13 +26,19 @@ export const Footer: React.FC<Props> = (className, ...props) => {
       return (
             <div className={divClass} {...props}>
                   <ContentWrapper className="flex flex-row justify-between items-center">
-                        <div id="socialMedia" className="flex flex-row gap-3 items-center">
-                              <a href="#" target="_blank" id="X" className="cursor-pointer">
-                                    <svg role="img" viewBox="0 0 24 24"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          className="w-6 h-6"
-                                          fill="white"><title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" /></svg>
-                              </a>
+                        <div className="grid grid-cols-2 gap-6 md:flex md:flex-row md:items-center">
+                              <NavItem href={routes.otherExternal.youtube} variant="secondary">
+                                    <YoutubeIcon className="w-7 h-7"/>
+                              </NavItem>
+                              <NavItem href={routes.otherExternal.x} variant="secondary">
+                                    <XIcon className="w-7 h-7"/>
+                              </NavItem>
+                              <NavItem href={routes.otherExternal.facebook} variant="secondary">
+                                    <FacebookIcon className="w-7 h-7"/>
+                              </NavItem>
+                              <NavItem href={routes.otherExternal.instagram} variant="secondary">
+                                    <InstagramIcon className="w-7 h-7"/>
+                              </NavItem>
                         </div>
                         <div className="flex flex-col md:flex-row gap-4 items-center ">
                               <NavItem className="self-end md:self-center" href={routes.nextJS.privacidad} variant="secondary">Privacidad</NavItem>

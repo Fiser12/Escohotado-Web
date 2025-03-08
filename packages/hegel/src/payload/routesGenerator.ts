@@ -44,7 +44,11 @@ export const routes = {
     getYoutubeVideosApi: (playlistId: string) => `${process.env.FORUM_URL}/api/v3/get-youtube-videos/${playlistId}`
   },
   otherExternal: {
-    emboscadura: `https://laemboscadura.com`
+    emboscadura: `https://laemboscadura.com`,
+    x: `https://x.com/AEscohotado`,
+    facebook: `https://www.facebook.com/profile.php?id=61555222603814`,
+    instagram: `https://www.instagram.com/escohotado/`,
+    youtube: `https://www.youtube.com/@AntonioEscohotadoEspinosa`
   },
   keycloak: {
     issuer: keyloakIssuer,
