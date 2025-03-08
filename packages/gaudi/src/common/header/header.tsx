@@ -6,6 +6,7 @@ import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
 import { HamburguerIcon } from "../icons/hamburguer_icon";
 import { OpenModalButton } from "./open_search_modal_button";
+import { ArrowLinkIcon } from "../icons/arrow_link";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
     user: Optional<UserModel>
@@ -29,16 +30,16 @@ export const Header: React.FC<Props> = ({
                 <nav className="h-16 py-5 bg-white flex justify-between items-center">
                     <Logo tabIndex={0} />
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <NavItem href={routes.nextJS.lecturasPageHref} text="Lecturas" tabindex={2} />
-                        <NavItem href={routes.nextJS.videosPageHref} text="Vídeos" tabindex={3} />
-                        <NavItem href={routes.nodeBB.root} text="Foro" tabindex={3} />
+                        <NavItem href={routes.nextJS.lecturasPageHref} tabindex={2}>Lecturas</NavItem>
+                        <NavItem href={routes.nextJS.videosPageHref} tabindex={3}>Videos</NavItem>
+                        <NavItem href={routes.nodeBB.root} tabindex={4}>Foro</NavItem> 
                         {hasPermission &&
-                            <NavItem href={routes.nextJS.citasPageHref} text="Citas" tabindex={4} />
+                            <NavItem href={routes.nextJS.citasPageHref} tabindex={5}>Citas</NavItem>
                         }
                         <OpenModalButton />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <a href={routes.otherExternal.emboscadura} target="_blank">
+                        <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
                             <MainButton text="La Emboscadura" color="primary" />
                         </a>
 
@@ -56,11 +57,14 @@ export const Header: React.FC<Props> = ({
                                 }
                             ]}
                         /> :
-                            <button type="submit" onClick={async () => {
+                            <button className="cursor-pointer" type="submit" tabIndex={7} onClick={async () => {
                                 "use server";
                                 await signIn();
                             }}>
-                                <MainButton text="Entrar" color="secondary" />
+                                <NavItem>
+                                    <p>Iniciar sesión</p>
+                                    <ArrowLinkIcon/>
+                                </NavItem>
                             </button>
                         }
                     </div>

@@ -30,7 +30,9 @@ export const routes = {
     lecturasPageHref: "/lecturas",
     videosPageHref: "/videos",
     citasPageHref: "/citas",
-    homePageHref: "/"
+    homePageHref: "/",
+    privacidad: "/privacidad",
+    termsAndConditions: "/terminos-y-condiciones",
   },
   newsletter: {
     newsletterSubscriptionForm: `${process.env.NEWSLETTER_URL}/subscription/form`,

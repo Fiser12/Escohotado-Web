@@ -1,5 +1,7 @@
 import classNames from "classnames";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
+import { NavItem } from "../../../common/header/nav_item";
+import { routes } from "hegel";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
@@ -20,10 +22,6 @@ export const Footer: React.FC<Props> = (className, ...props) => {
       return (
             <div className={divClass} {...props}>
                   <ContentWrapper className="flex flex-row justify-between items-center">
-                        <div className="flex flex-col md:flex-row gap-1">
-                              <p>&copy; 2024 Jorge Escohotado.</p>
-                              <p className="italic">Todos los derechos reservados.</p>
-                        </div>
                         <div id="socialMedia" className="flex flex-row gap-3 items-center">
                               <a href="#" target="_blank" id="X" className="cursor-pointer">
                                     <svg role="img" viewBox="0 0 24 24"
@@ -31,6 +29,11 @@ export const Footer: React.FC<Props> = (className, ...props) => {
                                           className="w-6 h-6"
                                           fill="white"><title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" /></svg>
                               </a>
+                        </div>
+                        <div className="flex flex-col md:flex-row gap-4 items-center ">
+                              <NavItem className="self-end md:self-center" href={routes.nextJS.privacidad} variant="secondary">Privacidad</NavItem>
+                              <NavItem className="self-end md:self-center" href={routes.nextJS.termsAndConditions} variant="secondary">Terminos y condiciones</NavItem>
+                              <p className="self-end md:self-center">&copy; 2024 Jorge Escohotado</p>
                         </div>
                   </ContentWrapper>
             </div>
