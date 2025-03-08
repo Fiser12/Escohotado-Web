@@ -37,8 +37,12 @@ export const routes = {
     newsletterSubscribersApi: `${process.env.NEWSLETTER_URL}/api/subscribers`
   },
   nodeBB: {
+    root: `${process.env.FORUM_URL}`,
     syncTopicsApi: `${process.env.FORUM_URL}/api/v3/posts-sync`,
     getYoutubeVideosApi: (playlistId: string) => `${process.env.FORUM_URL}/api/v3/get-youtube-videos/${playlistId}`
+  },
+  otherExternal: {
+    emboscadura: `https://laemboscadura.com`
   },
   keycloak: {
     issuer: keyloakIssuer,

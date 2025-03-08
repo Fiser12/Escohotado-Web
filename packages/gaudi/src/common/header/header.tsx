@@ -31,34 +31,37 @@ export const Header: React.FC<Props> = ({
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
                         <NavItem href={routes.nextJS.lecturasPageHref} text="Lecturas" tabindex={2} />
                         <NavItem href={routes.nextJS.videosPageHref} text="Vídeos" tabindex={3} />
-                        { hasPermission &&
+                        <NavItem href={routes.nodeBB.root} text="Foro" tabindex={3} />
+                        {hasPermission &&
                             <NavItem href={routes.nextJS.citasPageHref} text="Citas" tabindex={4} />
                         }
                         <OpenModalButton />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
+                        <a href={routes.otherExternal.emboscadura} target="_blank">
+                            <MainButton text="La Emboscadura" color="primary" />
+                        </a>
+
                         {user ? <UserDropdown
                             user={user}
                             menuSections={[
                                 ...menuSections,
-                                { items: [{ 
-                                    text: "Cerrar sesión", 
-                                    action: signOut,
-                                    target: "_black",
-                                    href: routes.keycloak.logout 
-                                }] 
-                            }
+                                {
+                                    items: [{
+                                        text: "Cerrar sesión",
+                                        action: signOut,
+                                        target: "_black",
+                                        href: routes.keycloak.logout
+                                    }]
+                                }
                             ]}
-                        /> : <form
-                            action={async () => {
+                        /> :
+                            <button type="submit" onClick={async () => {
                                 "use server";
                                 await signIn();
-                            }}
-                        >
-                            <button type="submit">
+                            }}>
                                 <MainButton text="Entrar" color="secondary" />
                             </button>
-                        </form>
                         }
                     </div>
                     <div className="lg:hidden md:block">

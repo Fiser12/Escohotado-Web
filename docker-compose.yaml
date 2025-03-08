@@ -27,7 +27,7 @@ services:
       - ./.docker/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=devsecret
-      - POSTGRES_USER=admin
+      - POSTGRES_USER=escota
       - POSTGRES_DB=escota_db
     networks:
       - outside
