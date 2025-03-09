@@ -35,7 +35,7 @@ export const routes = {
     termsAndConditions: "/terminos-y-condiciones",
   },
   newsletter: {
-    newsletterSubscriptionForm: `${process.env.NEWSLETTER_URL}/subscription/form`,
+    newsletterSubscriptionForm: `https://mailing.escohotado.es/subscription/form`,
     newsletterSubscribersApi: `${process.env.NEWSLETTER_URL}/api/subscribers`
   },
   nodeBB: {
