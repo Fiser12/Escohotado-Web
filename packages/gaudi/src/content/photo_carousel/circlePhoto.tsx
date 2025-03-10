@@ -10,7 +10,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const CirclePhoto: React.FC<Props> = ({ coverHref, isSelected = false, className }) => {
       const containerClass = classNames('bg-white rounded-full aspect-square p-1 hover:border-primary-300 transition-all duration-300 ease-in-out', className,
             {
-                  'border-2 border-primary-300 h-24': isSelected,
+                  'border-2 border-primary-300 h-16': isSelected,
                   'border border-gray-disabled h-20': !isSelected,
             }
       )

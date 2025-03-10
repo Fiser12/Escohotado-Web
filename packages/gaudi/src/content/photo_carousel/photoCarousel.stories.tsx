@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { PhotoCarousel } from "."
+import { ContentWrapper } from "../../common/content_wrapper/content_wrapper";
 
 //Prueba photos
 const photoUrlEven = 'https://picsum.photos/200/200?random=1';
@@ -26,6 +27,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
+      decorators: [
+            (Story) => (
+                  <ContentWrapper className="overflow-hidden">
+                        <Story />
+                  </ContentWrapper>
+            ),
+      ],
       parameters: {
             backgrounds: {
               default: 'Gray',
