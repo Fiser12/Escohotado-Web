@@ -6,6 +6,7 @@ import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
 import { HamburguerIcon } from "../icons/hamburguer_icon";
 import { OpenModalButton } from "./open_search_modal_button";
+import { Hamburguer } from "./hamburguer";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
     user: Optional<UserModel>
@@ -62,7 +63,7 @@ export const Header: React.FC<Props> = ({
                         }
                     </div>
                     <div className="lg:hidden md:block">
-                        <HamburguerIcon></HamburguerIcon>
+                        <Hamburguer></Hamburguer>
                     </div>
                 </nav>
             </ContentWrapper>
