@@ -6,6 +6,7 @@ import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
 import { HamburguerIcon } from "../icons/hamburguer_icon";
 import { OpenModalButton } from "./open_search_modal_button";
+import { Hamburguer } from "./hamburguer";
 import { ArrowLinkIcon } from "../icons/arrow_link";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
