@@ -4,9 +4,18 @@ import { authConfig } from "./auth.config";
 const { auth: middleware } = NextAuth(authConfig);
 export default middleware; */
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export default function middleware() {
+export default function middleware(req: NextRequest) {
+  const maintenanceMode = process.env.MAINTENANCE_MODE === 'true';
+
+  if (maintenanceMode) {
+    const token = req.cookies.get('dev_token')?.value;
+
+    if (!token || token !== process.env.DEV_TOKEN) {
+      return new NextResponse('Sitio en mantenimiento. Acceso restringido.', { status: 503 });
+    }
+  }
   return NextResponse.next();
 }
 
