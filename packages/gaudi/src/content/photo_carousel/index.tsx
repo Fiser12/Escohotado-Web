@@ -1,14 +1,15 @@
-import classNames from "classnames";
+"use client";
+
 import { CirclePhoto } from "./circlePhoto";
 import Image from "next/image"
 import { H2 } from "../../common/headers/H2";
 import { useState } from "react";
 import "./style.css";
 
-interface Carouseltem {
+export interface Carouseltem {
       photoHref: string;
       title: string;
-      description: string;
+      description: React.ReactNode;
       year: number
 }
 
@@ -19,7 +20,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const PhotoCarousel: React.FC<Props> = ({ items }) => {
       const [selected, setSelected] = useState<Carouseltem>(items.at(0)!)
       return (
-            <div className="w-full bg-white">
+            <div className="w-full">
                   <div className="w-full pt-10 md:pt-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0">
                         <div className="w-full flex justify-center items-center">
                               <div className="relative h-[400px] w-full mr-6 md:m-0">
@@ -34,7 +35,7 @@ export const PhotoCarousel: React.FC<Props> = ({ items }) => {
                         <div className="flex flex-col gap-4 px-10 lg:px-16">
                               <div className="h-full flex flex-col gap-4 md:gap-6 justify-center">
                                     <H2 label={selected.title} />
-                                    <p className="line-clamp-4">{selected.description}</p>
+                                    {selected.description}
                               </div>
                               <p className="font-display text-7xl md:text-8xl bg-gradient-to-r from-primary-100 to-primary-300 bg-clip-text text-transparent translate-y-3">{selected.year}</p>
                         </div>
@@ -42,8 +43,8 @@ export const PhotoCarousel: React.FC<Props> = ({ items }) => {
                   <div className="overflow-x-auto no-scrollbar">
                         <div className="relative inline-block mx-10 my-8 md:my-10">
                               <div className="flex gap-16 md:gap-20">
-                                    {items.map((item) => (
-                                          <button onClick={() => { setSelected(item) }} className="z-10">
+                                    {items.map((item, i) => (
+                                          <button key={i} onClick={() => { setSelected(item) }} className="z-10">
                                                 <CirclePhoto coverHref={item.photoHref} isSelected={item == selected} />
                                           </button>
                                     ))}

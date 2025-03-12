@@ -1,9 +1,9 @@
 import { Block } from 'payload'
 import { wrapperBlockSlug } from '../../slug_blogs'
 import { buildLexical } from '../../../lexicalBuilder'
-import { internalLexicalBlocks } from '../../../internalLexicalBuilder'
+import { lexicalBlocksExcluding } from '../../../defaultLexical'
 
-const editor = buildLexical(internalLexicalBlocks)
+const editor = buildLexical(() => lexicalBlocksExcluding(["wrapper_block"] as any))
 
 export const WrapperBlock: Block = {
   slug: wrapperBlockSlug,

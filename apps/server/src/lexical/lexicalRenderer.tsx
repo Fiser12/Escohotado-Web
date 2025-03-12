@@ -33,22 +33,27 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   data: SerializedEditorState
+  useContentWrapper?: boolean
 }
 
 export function LexicalRenderer(props: Props) {
-  const { className, ...rest } = props
-  return (
-    <ContentWrapper>
-      <RichTextWithoutBlocks
-        converters={jsxConverters}
-        className={classNames(
-          'article-html-content',
-          "max-w-none",
-          "w-full",
-          className,
-        )}
-        {...rest}
-      />
-    </ContentWrapper>
-  )
+  const { className, useContentWrapper = true, ...rest } = props
+  const Content = <RichTextWithoutBlocks
+    converters={jsxConverters}
+    className={classNames(
+      'article-html-content',
+      "max-w-none",
+      "w-full",
+      className,
+    )}
+    {...rest}
+  />
+  if (useContentWrapper) {
+    return (
+      <ContentWrapper>
+        {Content}
+      </ContentWrapper>
+    )
+  }
+  return Content
 }

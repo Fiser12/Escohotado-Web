@@ -1230,6 +1230,102 @@ export interface VideosPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwoColumnsBlock".
+ */
+export interface TwoColumnsBlock {
+  type: '1x3' | '2x2' | '3x1';
+  left: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  right: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'two_columns_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  items?:
+    | {
+        cover: number | Media;
+        title?: string | null;
+        year?: number | null;
+        description?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BookCarouselBlock".
+ */
+export interface BookCarouselBlock {
+  title: string;
+  books: (number | Book)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'books_carousel_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "UIBlock".
+ */
+export interface UIBlock {
+  uiBlock?: {
+    relationTo: 'ui_block';
+    value: number | UiBlock;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ui_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "GridCardsBlock".
  */
 export interface GridCardsBlock {
@@ -1311,46 +1407,6 @@ export interface GridCardsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TwoColumnsBlock".
- */
-export interface TwoColumnsBlock {
-  type: '1x3' | '2x2' | '3x1';
-  left: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  right: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'two_columns_block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "WrapperBlock".
  */
 export interface WrapperBlock {
@@ -1373,56 +1429,6 @@ export interface WrapperBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'wrapper_block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock".
- */
-export interface HeroBlock {
-  description?: string | null;
-  buttons?:
-    | {
-        title: string;
-        link: string;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'hero_block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "NewsletterSubscriptionBlock".
- */
-export interface NewsletterSubscriptionBlock {
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'newsletter_subscription_block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BookCarouselBlock".
- */
-export interface BookCarouselBlock {
-  title: string;
-  books: (number | Book)[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'books_carousel_block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "UIBlock".
- */
-export interface UIBlock {
-  uiBlock?: {
-    relationTo: 'ui_block';
-    value: number | UiBlock;
-  } | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'ui_block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

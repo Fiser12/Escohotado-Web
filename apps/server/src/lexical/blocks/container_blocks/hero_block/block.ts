@@ -1,5 +1,10 @@
 import { Block } from 'payload'
 import { heroBlockSlug } from '../../slug_blogs'
+import { buildLexical } from '@/lexical/lexicalBuilder'
+import { internalLexicalBlocks } from '@/lexical/internalLexicalBuilder'
+import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
+
+const editor = buildLexical(internalLexicalBlocks)
 
 export const HeroBlock: Block = {
   slug: heroBlockSlug,
@@ -10,31 +15,40 @@ export const HeroBlock: Block = {
   },
   fields: [
     {
-      label: 'Descripción',
-      name: 'description',
-      type: 'textarea',
-      localized: true,
-    },
-    {
-      type: 'array',
-      name: 'buttons',
-      fields: [
+      'name': 'items',
+      'type': 'array',
+      'fields': [
         {
-          label: 'Título del botón',
-          name: 'title',
-          type: 'text',
+          name: 'cover',
+          type: 'upload',
+          relationTo: COLLECTION_SLUG_MEDIA,
+          hasMany: false,
           required: true,
-          localized: true,
+          filterOptions: {
+            mimeType: { contains: 'image' },
+          }
         },
         {
-          label: 'Enlace del botón',
-          name: 'link',
+          label: 'Título',
+          name: 'title',
           type: 'text',
+          localized: true
+        },
+        {
+          label: 'Año',
+          name: 'year',
+          type: 'number'
+        },
+        {
+          label: 'Descripción',
+          name: 'description',
+          type: 'richText',
           localized: true,
-          required: true,
-        }
-      ],
-    },
-  ],
+          editor
+        }    
+      ]
+    }
+    
+  ]
 }
 

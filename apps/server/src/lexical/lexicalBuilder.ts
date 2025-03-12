@@ -24,7 +24,7 @@ import {
   SuperscriptFeature,
   InlineCodeFeature
 } from '@payloadcms/richtext-lexical'
-import { collectionsContentsWithDetailsSlugs } from 'hegel/payload'
+import { collectionsContentsSlugs } from 'hegel/payload'
 
 export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<any, any, any>[] => [
   HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
@@ -47,7 +47,7 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
   ItalicFeature(),
   BlocksFeature({ blocks: blocks() }),
   LinkFeature({
-    enabledCollections: collectionsContentsWithDetailsSlugs,
+    enabledCollections: collectionsContentsSlugs,
     fields: ({ defaultFields }) => {
       const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
         if ('name' in field && field.name === 'url') return false
@@ -65,6 +65,14 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
           label: ({ t }) => t('fields:enterURL'),
           required: true,
         },
+        {
+          name: 'type',
+          type: 'select',
+          options: [
+            { label: 'Button', value: 'button' },
+            { label: 'Inline', value: 'inline' },
+          ]
+        }
       ]
     },
   }),

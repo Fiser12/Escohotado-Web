@@ -20,3 +20,4 @@ export { ModalQuote } from "./content/featured_grid_home/content/quote/Modal/mod
 export { HighlightSection, FreemiumHighlightSection } from "./content/article/highlight/section_highlight";
 export { SEOContentWrapper } from "./common/seo_content_wrapper";
 export { Footer } from "./content/common/footer";
+export { PhotoCarousel, type Carouseltem } from "./content/photo_carousel";

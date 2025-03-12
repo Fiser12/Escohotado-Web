@@ -19,11 +19,6 @@ export const collectionsContentsSlugs = [
     COLLECTION_SLUG_QUOTE,
     COLLECTION_SLUG_VIDEO,
 ]
-export const collectionsContentsWithDetailsSlugs = [
-    COLLECTION_SLUG_ARTICLE_WEB,
-    COLLECTION_SLUG_BOOK,
-    COLLECTION_SLUG_VIDEO,
-]
 
 export const collectionsSlugs = [
     COLLECTION_SLUG_USER,

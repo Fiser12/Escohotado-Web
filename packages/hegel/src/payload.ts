@@ -14,7 +14,6 @@ export {
     COLLECTION_SLUG_UI_BLOCK,
     COLLECTION_SLUG_UI_GRID_CARDS,
     collectionsContentsSlugs,
-    collectionsContentsWithDetailsSlugs,
     collectionsSlugs
  } from './payload/collectionsSlugs'
 
