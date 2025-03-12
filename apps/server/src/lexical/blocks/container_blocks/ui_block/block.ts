@@ -1,5 +1,6 @@
 import { Block } from 'payload'
 import { uiBlockSlug } from '../../slug_blogs'
+import { permissionEvaluationField } from '@/core/auth/permissions/permissionEvaluationField'
 
 export const UIBlock: Block = {
   slug: uiBlockSlug,
@@ -9,6 +10,7 @@ export const UIBlock: Block = {
     plural: 'UI Blocks',
   },
   fields: [
+    permissionEvaluationField,
     {
       label: 'UI Block',
       name: 'uiBlock',

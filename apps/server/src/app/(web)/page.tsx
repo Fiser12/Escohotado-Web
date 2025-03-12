@@ -5,7 +5,7 @@ import { signIn } from '@/payload/plugins/authjs/plugin';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { Subscription } from "payload-types";
 import { SubscriptionsSection } from "@/ui/organisms/subscriptions.organism";
-import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
+import { evalPermissionByRoleQuery } from "@/core/auth/permissions/evalPermissionByRoleQuery";
 
 const Page = async () => {
   const payload = await getPayload();
@@ -13,7 +13,7 @@ const Page = async () => {
     slug: "home_page"
   })
   const user = await getCurrentUserQuery(payload);
-  const hasPermission = evalPermissionQuery(user, 'basic');
+  const hasPermission = evalPermissionByRoleQuery(user, 'basic');
 
   return (
     <>
@@ -23,8 +23,8 @@ const Page = async () => {
           className="h-full"
         />
       }
-      { !hasPermission &&
-        <SubscriptionsSection className="pb-16"  />
+      {!hasPermission &&
+        <SubscriptionsSection className="pb-16" />
       }
       <NewsletterSubscription />
     </>

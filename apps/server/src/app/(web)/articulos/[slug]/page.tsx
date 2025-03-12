@@ -6,7 +6,7 @@ import { Media, Pdf, Quote, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
-import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
+import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { mapTaxonomyToCategoryModel } from '@/core/domain/mapping/mapTaxonomyToCategoryModel';
 import { ContentProtected } from '@/ui/contentProtected';
@@ -49,9 +49,9 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
   const article = articles.docs.at(0);
   // @ts-ignore
   const locales = article?.locales ?? [] as string[];
-  if(!article) return null;
+  if (!article) return null;
   const document = article.document as Pdf | null
-  const downloadUrl = evalPermissionQuery(user, document?.permissions_seeds) ? document?.url : null;
+  const downloadUrl = evalPermissionByRoleQuery(user, document?.permissions_seeds) ? document?.url : null;
   const cover = (article.cover as Media | null)?.url
   return <SEOContentWrapper
     title={article?.title ?? "No title"}
@@ -70,8 +70,8 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
       categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
     >
       {article.content &&
-        <ContentProtected 
-          fallback={<BlockedContentArea content={article.preview_content} />} 
+        <ContentProtected
+          fallback={<BlockedContentArea content={article.preview_content} />}
           permissions_seeds={article.permissions_seeds}
         >
           <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />

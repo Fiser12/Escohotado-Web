@@ -1316,6 +1316,11 @@ export interface BookCarouselBlock {
  * via the `definition` "UIBlock".
  */
 export interface UIBlock {
+  type_of_permissions?: ('all' | 'roles' | 'only_no_roles' | 'only_guess') | null;
+  permissions?: {
+    relationTo: 'permission';
+    value: number | Permission;
+  } | null;
   uiBlock?: {
     relationTo: 'ui_block';
     value: number | UiBlock;
@@ -1410,6 +1415,11 @@ export interface GridCardsBlock {
  * via the `definition` "WrapperBlock".
  */
 export interface WrapperBlock {
+  type_of_permissions?: ('all' | 'roles' | 'only_no_roles' | 'only_guess') | null;
+  permissions?: {
+    relationTo: 'permission';
+    value: number | Permission;
+  } | null;
   type?: ('white' | 'gray') | null;
   content?: {
     root: {

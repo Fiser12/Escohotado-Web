@@ -1,7 +1,7 @@
 "use server";
 
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
+import { evalPermissionByRoleQuery } from "@/core/auth/permissions/evalPermissionByRoleQuery";
 import { permissionSlugs } from "hegel";
 
 interface Props {
@@ -14,7 +14,7 @@ export const ContentProtected: React.FC<Props> = async ({ children, fallback, pe
     const user = await getCurrentUserQuery();
     if (!user) return fallback;
     //if (user.roles?.includes(permissionSlugs.webAdmin)) return children;
-    const hasPermissions = evalPermissionQuery(user, permissions_seeds);
+    const hasPermissions = evalPermissionByRoleQuery(user, permissions_seeds);
     if (hasPermissions) return children;
     return fallback;
 }

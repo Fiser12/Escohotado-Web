@@ -21,7 +21,7 @@ export const PhotoCarousel: React.FC<Props> = ({ items }) => {
       const [selected, setSelected] = useState<Carouseltem>(items.at(0)!)
       return (
             <div className="w-full">
-                  <div className="w-full pt-10 md:pt-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0">
+                  <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0">
                         <div className="w-full flex justify-center items-center">
                               <div className="relative h-[400px] w-full mr-6 md:m-0">
                                     <Image
@@ -40,7 +40,7 @@ export const PhotoCarousel: React.FC<Props> = ({ items }) => {
                               <p className="font-display text-7xl md:text-8xl bg-gradient-to-r from-primary-100 to-primary-300 bg-clip-text text-transparent translate-y-3">{selected.year}</p>
                         </div>
                   </div>
-                  <div className="overflow-x-auto no-scrollbar">
+                  { items.length > 1 && <div className="overflow-x-auto no-scrollbar">
                         <div className="relative inline-block mx-10 my-8 md:my-10">
                               <div className="flex gap-16 md:gap-20">
                                     {items.map((item, i) => (
@@ -51,7 +51,7 @@ export const PhotoCarousel: React.FC<Props> = ({ items }) => {
                               </div>
                               <div className="w-full border border-gray-200 absolute top-1/2 transform -translate-y-1/2"></div>
                         </div>
-                  </div>
+                  </div> }
             </div>
       );
 }

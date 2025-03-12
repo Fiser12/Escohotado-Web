@@ -16,7 +16,7 @@ export const blockRenderers: Record<string, BlockRendererFunction> = {
     [heroBlockSlug]: heroBlockRenderer,
     [wrapperBlockSlug]: wrapperBlockRenderer,
     [booksCarouselBlockSlug]: booksCarouselBlockRenderer,
-    //content
     [gridCardsBlockSlug]: gridCardsBlockRenderer,
+    //content
     [twoColumnsBlockSlug]: twoColumnsRenderer,
 }

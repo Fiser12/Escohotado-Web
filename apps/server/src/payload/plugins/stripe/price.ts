@@ -20,7 +20,7 @@ export const updatePrices = async () => {
         acc[productId].push(priceId)
         return acc
       },
-      {} as Record<string, string[]>,
+      {} as Record<string, number[]>,
     )
 
   Object.entries(pricesByProductId).map(async ([productId, prices]) => {
@@ -39,7 +39,7 @@ export const updatePrices = async () => {
 
 interface PriceUpserted {
   productId: string
-  priceId: string
+  priceId: number
 }
 
 export async function priceUpsert(price: Stripe.Price): Promise<PriceUpserted | null> {

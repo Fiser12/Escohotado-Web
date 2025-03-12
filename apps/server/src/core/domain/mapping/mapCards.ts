@@ -1,4 +1,4 @@
-import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery'
+import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery'
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery'
 import { IMAGE_ERROR } from 'hegel/constants'
 import {
@@ -35,7 +35,7 @@ type ContentRelationType = Extract<
 const mapRelationToFeatured = (
   user: User | null,
   item: ContentRelationType,
-): ContentHeaderModel | null  => {
+): ContentHeaderModel | null => {
   if (typeof item.value === 'number') {
     return null
   }
@@ -60,14 +60,14 @@ export const mapArticleCard =
       id: item.id,
       title: item.title,
       isPdf: 'url' in item,
-      hasPermission: evalPermissionQuery(user, item.permissions_seeds?.trim() ?? '' as any),
+      hasPermission: evalPermissionByRoleQuery(user, item.permissions_seeds?.trim() ?? ('' as any)),
       author: getAuthorsNamesFromTaxonomies(taxonomies),
       categories: getMediasFromTaxonomies(taxonomies).concat(getTopicsFromTaxonomies(taxonomies)),
       coverHref: (item.cover as Media)?.url,
       detailHref: routes.nextJS.generateDetailHref({
-        collection: 'article_web', 
-        value: item
-      })
+        collection: 'article_web',
+        value: item,
+      }),
     }
   }
 export const mapVideoCard =
@@ -88,7 +88,7 @@ export const mapVideoCard =
       categories: [],
       hasPermission: href != null && href != '',
       coverHref: video.thumbnailUrl ?? IMAGE_ERROR,
-      detailHref: routes.nextJS.generateDetailHref({collection: "video", value: video}),
+      detailHref: routes.nextJS.generateDetailHref({ collection: 'video', value: video }),
       href: href,
     }
   }
@@ -107,36 +107,42 @@ const mapBookCard = (item: Book): ContentHeaderModel => {
     id: item.id,
     author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
     coverHref: (item.cover as Media)?.url ?? IMAGE_ERROR,
-    detailHref: routes.nextJS.generateDetailHref({collection: "book", value: item}),
+    detailHref: routes.nextJS.generateDetailHref({ collection: 'book', value: item }),
     quote: item.description ?? 'No description',
     title: item.title ?? 'No title',
   }
 }
-export const mapQuoteCard = 
-(user: User | null) =>
-(item: Quote): QuoteHeaderModel => {
-  const taxonomies = (item.categories ?? []) as Taxonomy[]
+export const mapQuoteCard =
+  (user: User | null) =>
+  (item: Quote): QuoteHeaderModel => {
+    const taxonomies = (item.categories ?? []) as Taxonomy[]
 
-  return {
-    type: 'quote',
-    categories: getSelectableTaxonomies(taxonomies),
-    context: item.context,
-    origen: item.source && typeof item.source.value !== "number" ? {
-      title: item.source.value.title ?? "No title",
-      type: item.source.relationTo,
-      hasPermissions: evalPermissionQuery(
-        user, 
-        'permissions_seeds' in item.source.value 
-          ? (item.source.value.permissions_seeds?.trim() ?? '') 
-          : '' as any
-        ),
-      detailHref: routes.nextJS.generateDetailHref({collection: item.source.relationTo, value: item.source.value})
-    } : undefined,
-    id: item.id,
-    author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
-    quote: item.quote,
+    return {
+      type: 'quote',
+      categories: getSelectableTaxonomies(taxonomies),
+      context: item.context,
+      origen:
+        item.source && typeof item.source.value !== 'number'
+          ? {
+              title: item.source.value.title ?? 'No title',
+              type: item.source.relationTo,
+              hasPermissions: evalPermissionByRoleQuery(
+                user,
+                'permissions_seeds' in item.source.value
+                  ? (item.source.value.permissions_seeds?.trim() ?? '')
+                  : ('' as any),
+              ),
+              detailHref: routes.nextJS.generateDetailHref({
+                collection: item.source.relationTo,
+                value: item.source.value,
+              }),
+            }
+          : undefined,
+      id: item.id,
+      author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
+      quote: item.quote,
+    }
   }
-}
 
 const mapQueryField =
   (user: User | null) =>
@@ -145,7 +151,7 @@ const mapQueryField =
       return queryField.value.map((item) => mapRelationToFeatured(user, item))
     } else if (queryField.blockType === 'mediaQueryField') {
       return queryField.value
-        .map(it => it.value)
+        .map((it) => it.value)
         .cast<Media>()
         .map(mapMediaCard)
     } else if (queryField.blockType === 'articleQueryBlock') {

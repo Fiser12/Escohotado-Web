@@ -2,8 +2,9 @@ import { Block } from 'payload'
 import { wrapperBlockSlug } from '../../slug_blogs'
 import { buildLexical } from '../../../lexicalBuilder'
 import { lexicalBlocksExcluding } from '../../../defaultLexical'
+import { permissionEvaluationField } from '@/core/auth/permissions/permissionEvaluationField'
 
-const editor = buildLexical(() => lexicalBlocksExcluding(["wrapper_block"] as any))
+const editor = buildLexical(() => lexicalBlocksExcluding(["wrapper_block"]))
 
 export const WrapperBlock: Block = {
   slug: wrapperBlockSlug,
@@ -13,6 +14,7 @@ export const WrapperBlock: Block = {
     plural: 'Wrapper',
   },
   fields: [
+    permissionEvaluationField,
     {
       type: 'select',
       name: 'type',

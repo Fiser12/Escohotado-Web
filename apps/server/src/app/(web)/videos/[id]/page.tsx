@@ -8,7 +8,7 @@ import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermitt
 import { mapAnyToComment } from 'hegel';
 import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
 import { Quote } from 'payload-types';
-import { evalPermissionQuery } from '@/core/auth/permissions/evalPermissionQuery';
+import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery';
 import { SEOContentWrapper } from 'gaudi/client';
 
 interface Props {
@@ -33,7 +33,7 @@ const Page: NextPage<Props> = async (props) => {
     video.url,
     video.url_free,
   )
-  const hasPermissions = evalPermissionQuery(user, 'basic');
+  const hasPermissions = evalPermissionByRoleQuery(user, 'basic');
   const quotes = (video?.quotes?.docs ?? [])
     .slice(0, hasPermissions ? 3 : 0)
     .cast<Quote>()
@@ -60,7 +60,7 @@ const Page: NextPage<Props> = async (props) => {
         commentsSectionModel={mapAnyToComment(video.forum_post_id, video.last_forum_posts ?? [])}
       />
     </VideoDetail>
-    </SEOContentWrapper>
+  </SEOContentWrapper>
 };
 
 export default Page;

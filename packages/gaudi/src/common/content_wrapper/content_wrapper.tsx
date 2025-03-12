@@ -8,7 +8,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const ContentWrapper: React.FC<Props> = ({ className, backgroundClassname, children, ...rest }) => {
     return (
         <div className={`w-full h-full ${backgroundClassname}`} {...rest}>
-            <div className={`mx-auto max-w-screen-xl w-full ${className}`}>
+            <div className={`mx-auto max-w-screen-xl pr-4 pl-4 w-full ${className}`}>
                 {children}
             </div>
         </div>

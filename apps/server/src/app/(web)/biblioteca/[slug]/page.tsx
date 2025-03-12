@@ -8,7 +8,7 @@ import { Media, Quote, Taxonomy } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/ui/nuqs/book_variants_selector_nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from "hegel";
-import { evalPermissionQuery } from "@/core/auth/permissions/evalPermissionQuery";
+import { evalPermissionByRoleQuery } from "@/core/auth/permissions/evalPermissionByRoleQuery";
 import "hegel";
 import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
 import { getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
@@ -35,7 +35,7 @@ const Page = async (props: Props) => {
         })
     ]);
     const book = books.docs.at(0);
-    const hasPermissions = evalPermissionQuery(user, 'basic');
+    const hasPermissions = evalPermissionByRoleQuery(user, 'basic');
     const quotes = (book?.quotes?.docs ?? [])
         .slice(0, hasPermissions ? 3 : 0)
         .cast<Quote>()
