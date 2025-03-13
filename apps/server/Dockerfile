@@ -20,6 +20,7 @@ ENV PAYLOAD_CONFIG_PATH=payload.config.js
 
 
 COPY --from=builder --chown=nextjs:nodejs /app/apps/server/.next/standalone ./apps/server
+COPY --from=builder --chown=nextjs:nodejs /app/apps/server/public ./apps/server/public
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 COPY --chown=nextjs:nodejs apps/server/scripts/entrypoint.sh /entrypoint.sh
