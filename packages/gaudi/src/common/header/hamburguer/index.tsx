@@ -7,7 +7,7 @@ export function Hamburguer() {
 
       return (
             <div
-                  className="relative w-12 h-12 cursor-pointer rounded"
+                  className="relative w-10 h-10 cursor-pointer rounded"
                   onClick={() => setIsActive(!isActive)}
             >
                   {/* DOT 1 */}

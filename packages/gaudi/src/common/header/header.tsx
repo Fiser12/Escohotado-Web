@@ -4,7 +4,6 @@ import { type MenuSection, type UserModel, type Optional, routes, MenuItem } fro
 import { NavItem } from "./nav_item";
 import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
-import { HamburguerIcon } from "../icons/hamburguer_icon";
 import { OpenModalButton } from "./open_search_modal_button";
 import { ArrowLinkIcon } from "../icons/arrow_link";
 import { useState } from "react";
