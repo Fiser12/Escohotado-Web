@@ -1,6 +1,6 @@
 FROM node:22-alpine AS base
 WORKDIR /app
-
+# https://github.com/vercel/next.js/blob/canary/examples/with-docker-multi-env/docker/production/Dockerfile
 FROM base AS builder
 RUN apk add --no-cache libc6-compat
 
@@ -20,9 +20,9 @@ ENV PAYLOAD_CONFIG_PATH=payload.config.js
 
 
 COPY --from=builder --chown=nextjs:nodejs /app/apps/server/.next/standalone ./apps/server
-COPY --from=builder --chown=nextjs:nodejs /app/apps/server/.next/standalone ./apps/server
-COPY --from=builder --chown=nextjs:nodejs /app/apps/server/.next/static ./apps/server/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/server/.next/static ./apps/server/.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/apps/server/public ./apps/server/public
 
 COPY --chown=nextjs:nodejs apps/server/scripts/entrypoint.sh /entrypoint.sh
 
