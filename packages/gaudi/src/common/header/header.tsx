@@ -1,13 +1,31 @@
 import { ContentWrapper } from "../content_wrapper/content_wrapper"
 import { Logo } from "./logo"
-import { type MenuSection, type UserModel, type Optional, routes } from 'hegel';
+import { type MenuSection, type UserModel, type Optional, routes, MenuItem } from 'hegel';
 import { NavItem } from "./nav_item";
 import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
 import { HamburguerIcon } from "../icons/hamburguer_icon";
 import { OpenModalButton } from "./open_search_modal_button";
-import { Hamburguer } from "./hamburguer";
 import { ArrowLinkIcon } from "../icons/arrow_link";
+import { useState } from "react";
+import { Hamburguer } from "./hamburguer";
+import { MobileMenu } from "./user_dropdown/mobile_menu";
+
+const navItemList: (hasPermission: Boolean) => MenuItem[] = (hasPermission) => {
+    let items = [
+        { href: routes.nextJS.lecturasPageHref, tabindex: 2, text: "Lecturas" },
+        { href: routes.nextJS.videosPageHref, tabindex: 3, text: "Videos" },
+        { href: routes.nodeBB.root, tabindex: 4, text: "Foro" },
+    ]
+    if (hasPermission) {
+        items.push({
+            href: routes.nextJS.citasPageHref,
+            tabindex: 5,
+            text: "Citas"
+        })
+    }
+    return items
+}
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
     user: Optional<UserModel>
@@ -25,25 +43,23 @@ export const Header: React.FC<Props> = ({
     hasPermission,
     ...rest
 }) => {
+    const [isOpenMenu, setIsMenuOpen] = useState(false)
+
     return (
-        <header {...rest}>
+        <header {...rest} className="w-full bg-white">
             <ContentWrapper>
-                <nav className="h-16 py-5 bg-white flex justify-between items-center">
+                <nav className="relative h-16 py-5 bg-white flex justify-between items-center">
                     <Logo tabIndex={0} />
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <NavItem href={routes.nextJS.lecturasPageHref} tabindex={2}>Lecturas</NavItem>
-                        <NavItem href={routes.nextJS.videosPageHref} tabindex={3}>Videos</NavItem>
-                        <NavItem href={routes.nodeBB.root} tabindex={4}>Foro</NavItem> 
-                        {hasPermission &&
-                            <NavItem href={routes.nextJS.citasPageHref} tabindex={5}>Citas</NavItem>
-                        }
+                        {navItemList(hasPermission).map(item => (
+                            <NavItem href={item.href} tabindex={item.tabindex}>{item.text}</NavItem>
+                        ))}
                         <OpenModalButton />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
                         <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
                             <MainButton text="La Emboscadura" color="primary" />
                         </a>
-
                         {user ? <UserDropdown
                             user={user}
                             menuSections={[
@@ -64,15 +80,29 @@ export const Header: React.FC<Props> = ({
                             }}>
                                 <NavItem>
                                     <p>Iniciar sesión</p>
-                                    <ArrowLinkIcon/>
+                                    <ArrowLinkIcon />
                                 </NavItem>
                             </button>
                         }
                     </div>
-                    <div className="lg:hidden md:block">
-                        <HamburguerIcon />
+                    <div className="lg:hidden md:block" onClick={() => setIsMenuOpen(!isOpenMenu)}>
+                        <Hamburguer />
                     </div>
                 </nav>
+                <div id="mobileMenu" className={`absolute w-full left-0 bg-white transform transition-transform ${isOpenMenu ? "opacity-100" : "opacity-0"}`}>
+                    <MobileMenu
+                        user={user}
+                        signIn={signIn}
+                        accountMenuItems={menuSections}
+                        pageItems={navItemList(hasPermission)}
+                        logoutMenuItem={{
+                            text: "Cerrar sesión",
+                            action: signOut,
+                            target: "_black",
+                            href: routes.keycloak.logout
+                        }}
+                    />
+                </div>
             </ContentWrapper>
         </header>
     )
