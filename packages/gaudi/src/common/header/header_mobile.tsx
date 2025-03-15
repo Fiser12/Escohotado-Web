@@ -7,6 +7,7 @@ import { MobileMenu } from "./user_dropdown/mobile_menu";
 import { useEffect, useState } from "react";
 import { ContentWrapper } from "../content_wrapper/content_wrapper";
 import { OpenModalButton } from "./open_search_modal_button";
+import { motion } from 'framer-motion';
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: UserModel | null
@@ -36,7 +37,13 @@ export const HeaderMobile: React.FC<Props> = ({ user, accountMenuItems, classNam
                     </div>
                 </div>
             </nav>
-            <div className={`absolute w-full left-0 bg-white z-1000 transform transition-transform ${isOpenMenu ? "block" : "hidden"} lg:hidden`}>
+            <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: isOpenMenu ? "auto" : 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ overflow: "hidden" }}
+                className={`absolute w-full left-0 bg-white z-1000 lg:hidden`}
+>
                 <MobileMenu
                     user={user}
                     signIn={signIn}
@@ -44,7 +51,7 @@ export const HeaderMobile: React.FC<Props> = ({ user, accountMenuItems, classNam
                     pageItems={pageItems}
                     logoutMenuItem={logoutMenuItem}
                 />
-            </div>
+            </motion.div>
         </ContentWrapper>
     </header>
 }
