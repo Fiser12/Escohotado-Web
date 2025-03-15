@@ -4,7 +4,7 @@ import { MenuItem, MenuSection, UserModel } from "hegel";
 import { Hamburguer } from "./hamburguer";
 import { Logo } from "./logo";
 import { MobileMenu } from "./user_dropdown/mobile_menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ContentWrapper } from "../content_wrapper/content_wrapper";
 import { OpenModalButton } from "./open_search_modal_button";
 
@@ -18,6 +18,12 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export const HeaderMobile: React.FC<Props> = ({ user, accountMenuItems, className, pageItems, logoutMenuItem, signIn, ...rest }) => {
     const [isOpenMenu, setIsMenuOpen] = useState(false)
+    useEffect(() => {
+        document.body.style.overflow = isOpenMenu ? 'hidden' : "";
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpenMenu]);
 
     return <header {...rest} className="w-full bg-white block lg:hidden">
         <ContentWrapper>
@@ -30,7 +36,7 @@ export const HeaderMobile: React.FC<Props> = ({ user, accountMenuItems, classNam
                     </div>
                 </div>
             </nav>
-            <div className={`absolute w-full left-0 bg-white transform transition-transform ${isOpenMenu ? "block" : "hidden"} lg:hidden`}>
+            <div className={`absolute w-full left-0 bg-white z-1000 transform transition-transform ${isOpenMenu ? "block" : "hidden"} lg:hidden`}>
                 <MobileMenu
                     user={user}
                     signIn={signIn}

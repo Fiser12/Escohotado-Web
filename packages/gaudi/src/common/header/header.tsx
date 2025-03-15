@@ -1,6 +1,6 @@
 import { ContentWrapper } from "../content_wrapper/content_wrapper"
 import { Logo } from "./logo"
-import { type MenuSection, type UserModel, type Optional, routes, navItemList } from 'hegel';
+import { type MenuSection, type UserModel, type Optional, routes, navItemList, MenuItem } from 'hegel';
 import { NavItem } from "./nav_item";
 import { UserDropdown } from "./user_dropdown";
 import { MainButton } from "../main_button/main_button";
@@ -24,8 +24,13 @@ export const Header: React.FC<Props> = ({
     hasPermission,
     ...rest
 }) => {
-    return (
-        <>
+    const logoutMenuItem: MenuItem = {
+        text: "Cerrar sesión",
+        action: signOut,
+        target: "_black",
+        href: routes.keycloak.logout
+    }
+    return (<>
         <header {...rest} className="w-full bg-white hidden lg:block">
             <ContentWrapper>
                 <nav className="relative h-16 py-5 bg-white flex justify-between items-center">
@@ -47,12 +52,7 @@ export const Header: React.FC<Props> = ({
                             menuSections={[
                                 ...menuSections,
                                 {
-                                    items: [{
-                                        text: "Cerrar sesión",
-                                        action: signOut,
-                                        target: "_black",
-                                        href: routes.keycloak.logout
-                                    }]
+                                    items: [logoutMenuItem]
                                 }
                             ]}
                         /> :
@@ -72,15 +72,7 @@ export const Header: React.FC<Props> = ({
             signIn={signIn}
             accountMenuItems={menuSections}
             pageItems={navItemList(hasPermission)}
-            logoutMenuItem={{
-                text: "Cerrar sesión",
-                action: signOut,
-                target: "_black",
-                href: routes.keycloak.logout
-            }}
+            logoutMenuItem={logoutMenuItem}
         />
-        </>
-    )
+    </>)
 }
-
-
