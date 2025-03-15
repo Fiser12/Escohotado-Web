@@ -1,9 +1,9 @@
 import { Block } from 'payload'
-import { internalLexicalBlocksExcluding } from '../../../internalLexicalBuilder'
 import { buildLexical } from '../../../lexicalBuilder'
+import { lexicalBlocksExcluding } from '../../../defaultLexical'
 import { twoColumnsBlockSlug } from '../../slug_blogs'
 
-const editor = buildLexical(() => internalLexicalBlocksExcluding(["two_columns_block"]))
+const editor = buildLexical(() => lexicalBlocksExcluding(["two_columns_block"]))
 
 export const TwoColumnsBlock: Block = {
   slug: twoColumnsBlockSlug,

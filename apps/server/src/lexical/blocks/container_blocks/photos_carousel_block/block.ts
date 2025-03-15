@@ -1,17 +1,17 @@
 import { Block } from 'payload'
-import { heroBlockSlug } from '../../slug_blogs'
+import { photosCarouselBlock } from '../../slug_blogs'
 import { buildLexical } from '@/lexical/lexicalBuilder'
-import { internalLexicalBlocks } from '@/lexical/internalLexicalBuilder'
+import { lexicalBlocksExcluding } from '../../../defaultLexical'
 import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 
-const editor = buildLexical(internalLexicalBlocks)
+const editor = buildLexical(() => lexicalBlocksExcluding(["photos_carousel_block", "two_columns_block", "wrapper_block"]))
 
-export const HeroBlock: Block = {
-  slug: heroBlockSlug,
-  interfaceName: 'HeroBlock',
+export const PhotosCarouselBlock: Block = {
+  slug: photosCarouselBlock,
+  interfaceName: 'PhotosCarouselBlock',
   labels: {
-    singular: 'Hero panel',
-    plural: 'Hero panel',
+    singular: 'Photos carousel',
+    plural: 'Photos carousels',
   },
   fields: [
     {
@@ -48,7 +48,6 @@ export const HeroBlock: Block = {
         }    
       ]
     }
-    
   ]
 }
 
