@@ -5,6 +5,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
     href?: string;
     tabindex?: number;
     variant?: 'primary' | 'secondary';
+    className?: string;
 };
 export const NavItem = ({ href, children, tabindex, variant = 'primary', className }: Props) => {
     const classname = classNames(
