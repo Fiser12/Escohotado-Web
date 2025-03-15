@@ -6,13 +6,17 @@ import { UIBlock } from './blocks/ui_block/block'
 import { GridCardsBlock } from './blocks/grid_cards_block/block'
 import { Block } from 'payload'
 import { BlockSlug } from './blocks/slug_blogs'
+import { TwoColumnsBlock } from './blocks/two_columns_block/block'
+import { HighlightBlock } from './blocks/highlight_block/block'
 
 export const defaultBlocks = () => [
   WrapperBlock,
+  HighlightBlock,
   PhotosCarouselBlock,
   BooksCarouselBlock,
   UIBlock,
   GridCardsBlock,
+  TwoColumnsBlock
 ]
 
 export const defaultLexical = buildLexical(defaultBlocks)

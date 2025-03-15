@@ -10,8 +10,8 @@ export const PhotosCarouselBlock: Block = {
   slug: photosCarouselBlock,
   interfaceName: 'PhotosCarouselBlock',
   labels: {
-    singular: 'Photos carousel',
-    plural: 'Photos carousels',
+    singular: 'Carousel de fotos',
+    plural: 'Carousels de fotos',
   },
   fields: [
     {

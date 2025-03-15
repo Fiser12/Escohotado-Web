@@ -3,13 +3,16 @@ import { buildLexical } from '../../lexicalBuilder'
 import { lexicalBlocksExcluding } from '../../defaultLexical'
 import { twoColumnsBlockSlug } from '../slug_blogs'
 
-const editor = buildLexical(() => lexicalBlocksExcluding(["two_columns_block"]))
+const editor = buildLexical(() => lexicalBlocksExcluding([
+  "two_columns_block",
+  'wrapper_block'
+]))
 
 export const TwoColumnsBlock: Block = {
   slug: twoColumnsBlockSlug,
   labels: {
-    singular: 'Bloque de dos columnas',
-    plural: 'Bloques de dos columnas'
+    singular: 'Doble columna',
+    plural: 'Doble columnas'
   },
   interfaceName: 'TwoColumnsBlock',
   fields: [
