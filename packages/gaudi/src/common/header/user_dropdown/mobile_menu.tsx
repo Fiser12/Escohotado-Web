@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { NavItem } from "../nav_item";
 import { MainButton } from "../../main_button/main_button";
 import { ArrowLinkIcon } from "../../icons/arrow_link";
+import Image from "next/image";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: UserModel | null
@@ -18,14 +19,14 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
 
     const mainContainerClass = classNames(
         className,
-        "w-full"
+        "w-full flex flex-col"
     )
 
     const genericClass = "w-full px-6 py-4 hover:bg-primary-50"
     const genericPYSectionClass = "my-2"
 
     return (
-        <div className={mainContainerClass}>
+        <div className={`h-[calc(100vh-4rem)] sm:h-auto ${mainContainerClass}`}>
             <div className="border-b border-gray-disabled">
                 {user ?
                     <div className={genericPYSectionClass}>
@@ -54,18 +55,27 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
                     </div>
                 }
             </div>
-            <div className={genericPYSectionClass}>
+            <div className={`${genericPYSectionClass} h-full`}>
                 {pageItems.map(item => (
                     <NavItem href={item.href} tabindex={item.tabindex} className={`${genericClass}`}>{item.text}</NavItem>
                 ))}
             </div>
             <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
-                <div className="py-6 flex item-center justify-center bg-red-300">
+                <div className="relative py-10 sm:py-6 flex item-center justify-center bg-primary-100">
                     <MainButton text="La Emboscadura" color="primary" />
+                    <Image
+                        fill
+                        src="https://placehold.co/1920x300"
+                        alt="Background"
+                        className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-20"
+                    />
                 </div>
             </a>
             {user &&
-                <NavItem href={logoutMenuItem.href} tabindex={logoutMenuItem.tabindex} className={`${genericClass} border-t border-gray-disabled`}>{logoutMenuItem.text}</NavItem>}
+                <div className={`${genericPYSectionClass}`}>
+                    <NavItem href={logoutMenuItem.href} tabindex={logoutMenuItem.tabindex} className={`${genericClass}`}>{logoutMenuItem.text}</NavItem>
+                </div>
+            }
         </div>
     );
 

@@ -88,7 +88,7 @@ export const Header: React.FC<Props> = ({
                         <Hamburguer />
                     </div>
                 </nav>
-                <div id="mobileMenu" className={`absolute w-full left-0 bg-white transform transition-transform ${isOpenMenu ? "opacity-100" : "opacity-0"}`}>
+                <div id="mobileMenu" className={`absolute  w-full left-0 bg-white transform transition-transform ${isOpenMenu ? "opacity-100" : "opacity-0"} lg:opacity-0`}>
                     <MobileMenu
                         user={user}
                         signIn={signIn}
