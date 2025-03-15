@@ -26,7 +26,7 @@ export const HeaderMobile: React.FC<Props> = ({ user, accountMenuItems, classNam
         };
     }, [isOpenMenu]);
 
-    return <header {...rest} className="w-full bg-white block lg:hidden">
+    return <header {...rest} className={`w-full bg-white ${className ?? ""}`} >
         <ContentWrapper>
             <nav className="flex justify-between items-center lg:hidden h-16 py-5">
                 <Logo tabIndex={0} />
@@ -43,7 +43,7 @@ export const HeaderMobile: React.FC<Props> = ({ user, accountMenuItems, classNam
                 transition={{ duration: 0.3 }}
                 style={{ overflow: "hidden" }}
                 className={`absolute w-full left-0 bg-white z-1000 lg:hidden`}
->
+            >
                 <MobileMenu
                     user={user}
                     signIn={signIn}

@@ -4,10 +4,12 @@ import Link from 'next/link';
 interface Props extends React.HTMLAttributes<HTMLElement> {
     href?: string;
     tabindex?: number;
+    target?: string;
     variant?: 'primary' | 'secondary';
     className?: string;
+    onClick?: () => void;
 };
-export const NavItem = ({ href, children, tabindex, variant = 'primary', className }: Props) => {
+export const NavItem = ({ href, children, tabindex, target, onClick, variant = 'primary', className }: Props) => {
     const classname = classNames(
         'text-sm',
         'font-normal',
@@ -33,6 +35,8 @@ export const NavItem = ({ href, children, tabindex, variant = 'primary', classNa
     }
     return (
         <Link
+            target={target}
+            onClick={onClick}
             tabIndex={tabindex}
             href={href}
             className={classname}

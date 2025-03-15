@@ -74,7 +74,15 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
             </a>
             {user &&
                 <div className={`${genericPYSectionClass}`}>
-                    <NavItem href={logoutMenuItem.href} tabindex={logoutMenuItem.tabindex} className={`${genericClass}`}>{logoutMenuItem.text}</NavItem>
+                    <NavItem
+                        href={logoutMenuItem.href!}
+                        target={logoutMenuItem.target}
+                        onClick={logoutMenuItem.action}
+                        className={`${genericClass}`}
+                    >
+                        {logoutMenuItem.text}
+                    </NavItem>
+
                 </div>
             }
         </div>
