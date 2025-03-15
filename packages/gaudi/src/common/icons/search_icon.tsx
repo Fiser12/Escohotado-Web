@@ -8,7 +8,7 @@ export const SearchIcon: React.FC<Props> = ({
     className = '',
 }) => {
     const iconClass = classNames(
-        "fill-current text-gray-500 w-6 h-6",
+        "fill-current w-6 h-6",
         className,
     );
 

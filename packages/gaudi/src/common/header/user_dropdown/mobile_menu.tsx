@@ -6,6 +6,7 @@ import { NavItem } from "../nav_item";
 import { MainButton } from "../../main_button/main_button";
 import { ArrowLinkIcon } from "../../icons/arrow_link";
 import Image from "next/image";
+import { HighlightSection } from "../../../client";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: UserModel | null
@@ -21,6 +22,8 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
         className,
         "w-full flex flex-col"
     )
+
+    // Mirar animación a la hora de ocultar y expandir menu
 
     const genericClass = "w-full px-6 py-4 hover:bg-primary-50"
     const genericPYSectionClass = "my-2"
@@ -61,15 +64,9 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
                 ))}
             </div>
             <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
-                <div className="relative py-10 sm:py-6 flex item-center justify-center bg-primary-100">
+                <HighlightSection type="secondary">
                     <MainButton text="La Emboscadura" color="primary" />
-                    <Image
-                        fill
-                        src="https://placehold.co/1920x300"
-                        alt="Background"
-                        className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-20"
-                    />
-                </div>
+                </HighlightSection>
             </a>
             {user &&
                 <div className={`${genericPYSectionClass}`}>

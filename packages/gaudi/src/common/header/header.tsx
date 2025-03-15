@@ -53,12 +53,14 @@ export const Header: React.FC<Props> = ({
                         {navItemList(hasPermission).map(item => (
                             <NavItem href={item.href} tabindex={item.tabindex}>{item.text}</NavItem>
                         ))}
-                        <OpenModalButton />
                     </div>
                     <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                        <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
-                            <MainButton text="La Emboscadura" color="primary" />
-                        </a>
+                        <div className="flex items-center gap-4">
+                            <OpenModalButton />
+                            <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
+                                <MainButton text="La Emboscadura" color="primary" />
+                            </a>
+                        </div>
                         {user ? <UserDropdown
                             user={user}
                             menuSections={[
@@ -84,8 +86,11 @@ export const Header: React.FC<Props> = ({
                             </button>
                         }
                     </div>
-                    <div className="lg:hidden md:block" onClick={() => setIsMenuOpen(!isOpenMenu)}>
-                        <Hamburguer />
+                    <div className="flex gap-4 lg:hidden">
+                        <OpenModalButton />
+                        <div className="flex items-center gap-4" onClick={() => setIsMenuOpen(!isOpenMenu)}>
+                            <Hamburguer />
+                        </div>
                     </div>
                 </nav>
                 <div id="mobileMenu" className={`absolute  w-full left-0 bg-white transform transition-transform ${isOpenMenu ? "opacity-100" : "opacity-0"} lg:opacity-0`}>
