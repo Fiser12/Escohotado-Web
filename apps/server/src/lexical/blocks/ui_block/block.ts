@@ -1,5 +1,5 @@
 import { Block } from 'payload'
-import { uiBlockSlug } from '../../slug_blogs'
+import { uiBlockSlug } from '../slug_blogs'
 import { permissionEvaluationField } from '@/core/auth/permissions/permissionEvaluationField'
 
 export const UIBlock: Block = {

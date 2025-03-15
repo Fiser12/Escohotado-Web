@@ -1,4 +1,4 @@
-import { LexicalRenderer } from '../../../lexicalRenderer';
+import { LexicalRenderer } from '../../lexicalRenderer';
 
 export const renderer = async ({ node }: any) => {
     const type = node?.fields?.type;

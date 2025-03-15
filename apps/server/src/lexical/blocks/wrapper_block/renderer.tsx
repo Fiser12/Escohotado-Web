@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { LexicalRenderer } from '../../../lexicalRenderer'
+import { LexicalRenderer } from '../../lexicalRenderer'
 import { ContentWrapper } from 'gaudi/server'
 import { evalAdvancePermissionQuery } from '@/core/auth/permissions/evalAdvancePermissionQuery';
 

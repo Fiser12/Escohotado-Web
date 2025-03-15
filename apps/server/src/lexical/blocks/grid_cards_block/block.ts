@@ -1,13 +1,13 @@
-import { Block } from "payload";
-import { gridCardsBlockSlug } from "../../slug_blogs";
-import { queryField } from "../query_field";
+import { Block } from 'payload'
+import { gridCardsBlockSlug } from '../slug_blogs'
+import { queryField } from '../query_field'
 
 export const GridCardsBlock: Block = {
   slug: gridCardsBlockSlug,
   interfaceName: 'GridCardsBlock',
   labels: {
     singular: 'Grid de cards',
-    plural: 'Grid de cards'
+    plural: 'Grid de cards',
   },
   fields: [
     queryField,

@@ -1,5 +1,5 @@
 import { Block } from 'payload'
-import { booksCarouselBlockSlug } from '../../slug_blogs'
+import { booksCarouselBlockSlug } from '../slug_blogs'
 
 export const BooksCarouselBlock: Block = {
   slug: booksCarouselBlockSlug,
