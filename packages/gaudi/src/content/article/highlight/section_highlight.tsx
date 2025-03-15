@@ -8,16 +8,22 @@ import handwrittenBackground from "../../../assets/images/handwritting-bg.jpg";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     coverHref?: string;
+    type?: 'primary' | 'secondary';
 }
 
 export const HighlightSection: React.FC<Props> = ({
-    coverHref = handwrittenBackground.src, 
-    className, 
-    children, 
+    coverHref = handwrittenBackground.src,
+    type = 'primary',
+    className,
+    children,
     ...rest
 }) => {
     const containerClass = classNames(
-        'w-full bg-black py-12.5 px-5 text-white relative overflow-hidden',
+        'w-full py-12.5 px-5 text-white relative overflow-hidden',
+        {
+            'bg-black': type === 'primary',
+            'bg-primary-100': type === 'secondary',
+        },
         className
     )
     return (
