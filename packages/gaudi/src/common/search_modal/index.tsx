@@ -117,7 +117,7 @@ export const SearchModal: React.FC<Props> = ({
               className="w-full rounded-md bg-gray-200 text-gray-700 leading-tight focus:outline-none py-2 px-2"
               id="search"
               type="text"
-              placeholder="Buscar contenido"
+              placeholder="Buscar"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />

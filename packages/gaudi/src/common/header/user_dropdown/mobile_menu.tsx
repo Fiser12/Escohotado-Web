@@ -37,19 +37,16 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
                             <UserIcon color='primary' className="h-8" />
                             <p className="font-semibold font-body">{`Hola, ${user?.name ?? user?.email}`}</p>
                         </div>
-                        {accountMenuItems.map(accountItem => (
-                            <div>
-                                {accountItem.items.map(item =>
-                                    <NavItem href={item.href} tabindex={item.tabindex} className={`${genericClass}`}>{item.text}</NavItem>
+                        {accountMenuItems.map((accountItem, index) => (
+                            <div key={index}>
+                                {accountItem.items.map((item, index) =>
+                                    <NavItem href={item.href} key={index} tabindex={item.tabindex} className={`${genericClass}`}>{item.text}</NavItem>
                                 )}
                             </div>
                         ))}
                     </div> :
                     <div className={genericPYSectionClass}>
-                        <button className="w-full cursor-pointer" type="submit" tabIndex={7} onClick={async () => {
-                            "use server";
-                            await signIn();
-                        }}>
+                        <button className="w-full cursor-pointer" type="submit" tabIndex={7} onClick={signIn}>
                             <NavItem className={`${genericClass} flex justify-between`}>
                                 <p>Iniciar sesión</p>
                                 <ArrowLinkIcon />
@@ -59,8 +56,15 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
                 }
             </div>
             <div className={`${genericPYSectionClass} h-full`}>
-                {pageItems.map(item => (
-                    <NavItem href={item.href} tabindex={item.tabindex} className={`${genericClass}`}>{item.text}</NavItem>
+                {pageItems.map((item, index) => (
+                    <NavItem 
+                        href={item.href} 
+                        key={index}
+                        tabindex={item.tabindex} 
+                        className={`${genericClass}`}
+                    >
+                        {item.text}
+                    </NavItem>
                 ))}
             </div>
             <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
