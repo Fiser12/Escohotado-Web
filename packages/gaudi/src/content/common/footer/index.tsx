@@ -41,8 +41,8 @@ export const Footer: React.FC<Props> = (className, ...props) => {
                               </NavItem>
                         </div>
                         <div className="flex flex-col md:flex-row gap-4 items-center ">
-                              <NavItem className="self-end md:self-center" href={routes.nextJS.privacidad} variant="secondary">Privacidad</NavItem>
-                              <NavItem className="self-end md:self-center" href={routes.nextJS.termsAndConditions} variant="secondary">Terminos y condiciones</NavItem>
+                              <NavItem className="self-end md:self-center" href={routes.nextJS.privacidadPageHref} variant="secondary">Privacidad</NavItem>
+                              <NavItem className="self-end md:self-center" href={routes.nextJS.termsAndConditionsPageHref} variant="secondary">Terminos y condiciones</NavItem>
                               <p className="self-end md:self-center">&copy; 2024 Jorge Escohotado</p>
                         </div>
                   </ContentWrapper>

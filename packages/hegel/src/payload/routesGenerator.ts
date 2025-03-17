@@ -31,8 +31,8 @@ export const routes = {
     videosPageHref: "/videos",
     citasPageHref: "/citas",
     homePageHref: "/",
-    privacidad: "/privacidad",
-    termsAndConditions: "/terminos-y-condiciones",
+    privacidadPageHref: "/privacidad",
+    termsAndConditionsPageHref: "/terminos-y-condiciones",
   },
   newsletter: {
     newsletterSubscriptionForm: `https://mailing.escohotado.es/subscription/form`,

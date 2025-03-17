@@ -1,6 +1,6 @@
 import { routes } from "hegel/payload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton } from "gaudi/server";
+import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton, H4 } from "gaudi/server";
 import { FreemiumHighlightSection, HighlightSection } from "gaudi/client";
 import { convertContentModelToCard } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
@@ -81,7 +81,8 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         permissions_seeds={"basic"}
         fallback={<FreemiumHighlightSection/>}
       >
-        <HighlightSection description="Accede a las citas de Escohotado" coverHref={handwrittenBackground.src}>
+        <HighlightSection>
+            <H4 label="Accede a las citas de Escohotado" />
             <Link href={routes.nextJS.citasPageHref}>
                 <MainButton text={"Ir a las citas"} color="secondary" type="line"></MainButton>
             </Link>

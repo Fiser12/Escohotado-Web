@@ -1230,10 +1230,70 @@ export interface VideosPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ButtonsBlock".
+ */
+export interface ButtonsBlock {
+  buttons?:
+    | {
+        label?: string | null;
+        type_of_button_style?: ('primary_fill' | 'secondary_fill' | 'primary_line' | 'secondary_line') | null;
+        type_of_button_link?: ('collections' | 'static' | 'external') | null;
+        collections?: {
+          relationTo: 'search-results';
+          value: number | SearchResult;
+        } | null;
+        static?:
+          | (
+              | '/subscriptions'
+              | '/cuenta'
+              | '/lecturas'
+              | '/videos'
+              | '/citas'
+              | '/'
+              | '/privacidad'
+              | '/terminos-y-condiciones'
+            )
+          | null;
+        href?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'buttons_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "HighlightBlock".
  */
 export interface HighlightBlock {
   content?: string | null;
+  background_style?: ('primary' | 'secondary') | null;
+  buttons?:
+    | {
+        label?: string | null;
+        type_of_button_style?: ('primary_fill' | 'secondary_fill' | 'primary_line' | 'secondary_line') | null;
+        type_of_button_link?: ('collections' | 'static' | 'external') | null;
+        collections?: {
+          relationTo: 'search-results';
+          value: number | SearchResult;
+        } | null;
+        static?:
+          | (
+              | '/subscriptions'
+              | '/cuenta'
+              | '/lecturas'
+              | '/videos'
+              | '/citas'
+              | '/'
+              | '/privacidad'
+              | '/terminos-y-condiciones'
+            )
+          | null;
+        href?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'highlight_block';

@@ -1,11 +1,4 @@
-import { ContentWrapper } from "../content_wrapper/content_wrapper"
-import { Logo } from "./logo"
 import { type MenuSection, type UserModel, type Optional, routes, navItemList, MenuItem } from 'hegel';
-import { NavItem } from "./nav_item";
-import { UserDropdown } from "./user_dropdown";
-import { MainButton } from "../main_button/main_button";
-import { OpenModalButton } from "./open_search_modal_button";
-import { ArrowLinkIcon } from "../icons/arrow_link";
 import { HeaderMobile } from "./header_mobile";
 import { HeaderDesktop } from "./header_desktop";
 
@@ -33,6 +26,7 @@ export const Header: React.FC<Props> = ({
     }
     return (<>
         <HeaderDesktop
+            {...rest}
             className="hidden lg:block"
             user={user}
             signIn={signIn}
@@ -41,6 +35,7 @@ export const Header: React.FC<Props> = ({
             logoutMenuItem={logoutMenuItem}
         />
         <HeaderMobile
+            {...rest}
             className="block lg:hidden"
             user={user}
             signIn={signIn}

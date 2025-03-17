@@ -22,8 +22,14 @@ export const HeaderDesktop: React.FC<Props> = ({ user, accountMenuItems, classNa
             <nav className="relative h-16 py-5 bg-white flex justify-between items-center">
                 <Logo tabIndex={0} />
                 <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
-                    {pageItems.map(item => (
-                        <NavItem href={item.href} tabindex={item.tabindex}>{item.text}</NavItem>
+                    {pageItems.map((item, index) => (
+                        <NavItem 
+                            key={index}
+                            href={item.href} 
+                            tabindex={item.tabindex}
+                        >
+                            {item.text}
+                        </NavItem>
                     ))}
                 </div>
                 <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">

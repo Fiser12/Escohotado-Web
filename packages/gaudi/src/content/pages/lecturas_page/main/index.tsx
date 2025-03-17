@@ -12,6 +12,7 @@ import drinkEscohotado from "../../../../assets/images/antonio-escohotado-lectur
 import { GridCardsBlock } from "../../../featured_grid_home/GridCardsBlock";
 import { convertContentModelToCard, ArticleHeaderModel } from "hegel";
 import { MainButton } from "../../../../common/main_button/main_button";
+import { H4 } from "../../../../common/headers/H4";
 
 export const ArticlePage = () => {
 
@@ -140,7 +141,8 @@ export const ArticlePage = () => {
           </div>
         </ContentWrapper>
       </div>
-      <HighlightSection description="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?" coverHref={handwrittenBackground.src}>
+      <HighlightSection coverHref={handwrittenBackground.src}>
+          <H4 label="¿Te gustaría pasear por la biblioteca de artículos personales de Escohotado?"/>
           <MainButton text="Suscribete" color="secondary"/>
       </HighlightSection>
       <div className="@container w-full pt-12.5">
