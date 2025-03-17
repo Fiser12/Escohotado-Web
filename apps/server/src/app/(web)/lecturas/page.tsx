@@ -19,6 +19,7 @@ import { TagsFilterBarSSR } from "@/ui/nuqs/tags_filter_bar_ssr";
 import { getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
 import { ContentProtected } from "@/ui/contentProtected";
 import Link from "next/link";
+import { generateDetailHref } from "node_modules/hegel/src/payload/routesGenerator";
 
 export const pageSize = 10;
 
@@ -37,7 +38,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
   const user = await getCurrentUserQuery();
   const articles = await getArticlesQueryByTags(query, tagsArrays, 0)
   const lastArticles = await getArticlesQueryByTags("", [], 0, 4);
-  const books = await getBooksQuery(query)
+  const books = await getBooksQuery("")
   const payload = await getPayload()
   const articulosDataPage = await payload.findGlobal({
     slug: "articulos_page"
@@ -67,7 +68,10 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
                 return <HeadlineCard
                   key={index}
                   author={authorName}
-                  href="#"
+                  href={generateDetailHref({
+                    collection: 'article_web', 
+                    value: {id: article.id, slug: article.slug} }
+                  )}
                   title={article.title ?? "No title"}
                   textLink={"Leer más"}
                 />

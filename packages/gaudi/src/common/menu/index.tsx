@@ -1,11 +1,11 @@
 "use client";
 import { MenuSection } from "hegel";
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import Link from 'next/link';
 import classNames from "classnames";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    toggleMenu: (changeTo?: boolean) => void
+    toggleMenu: (changeTo: boolean) => void
     menuSections: MenuSection[]
 }
 export const BasicMenu: React.FC<Props> = ({
@@ -14,6 +14,30 @@ export const BasicMenu: React.FC<Props> = ({
     className,
     ...rest
 }) => {
+    const timerRef = useRef<NodeJS.Timeout>(null);
+
+    const handleMouseLeave = () => {
+        timerRef.current = setTimeout(() => {
+            toggleMenu(false);
+        }, 1000);
+    };
+
+    const handleMouseEnter = () => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+        }
+    };
+
+    useEffect(() => {
+
+
+        return () => {
+            if (timerRef.current)
+            clearTimeout(timerRef.current);
+        };
+    }, []);
+
     const divClass = classNames(
         'w-full md:w-40 bg-white rounded-sm flex-col justify-start items-start inline-flex shadow-lg',
         className
@@ -22,7 +46,8 @@ export const BasicMenu: React.FC<Props> = ({
         <div
             className={divClass}
             {...rest}
-            onMouseLeave={() => toggleMenu(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             role="menu"
             tabIndex={7}
         >

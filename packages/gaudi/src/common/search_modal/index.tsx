@@ -162,7 +162,7 @@ export const SearchModal: React.FC<Props> = ({
                 </div>
                 <div className="ml-3 flex-grow font-medium line-clamp-2">{item.title}</div>
                 <div className="flex items-center space-x-2">
-                  { item.href == null && <div className='h-6 w-6'><LockIcon /> </div>}
+                  { item.href == null && <div className='h-5 w-5'><LockIcon /> </div>}
                 </div>
               </>
               return <a href={item.href ?? routes.nextJS.subscriptionPageHref} key={index} className={className}>{Content}</a>
