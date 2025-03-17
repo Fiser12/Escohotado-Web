@@ -4,6 +4,8 @@ import { BasicMenu } from "../../menu";
 import { MenuSection, UserModel } from "hegel";
 import { UserIcon } from '../../icons/user_icon';
 import classNames from "classnames";
+import { motion } from "framer-motion";
+import { ChevronDownIcon } from "../../icons/chevron_down_icon";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user: UserModel
@@ -13,8 +15,8 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const UserDropdown: React.FC<Props> = ({ user, menuSections, className, ...rest }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    function toggleMenu(changeTo?: boolean) {
-        setIsMenuOpen(changeTo ?? !isMenuOpen);
+    function toggleMenu() {
+        setIsMenuOpen((prevState) => !prevState);
     }
     const divClass = classNames(
         className,
@@ -23,21 +25,29 @@ export const UserDropdown: React.FC<Props> = ({ user, menuSections, className, .
 
     return (
         <div className={divClass} {...rest}>
-            <button
-                onMouseEnter={() => toggleMenu(true)}
-                onFocus={() => toggleMenu(true)}
-            >
+            <button onClick={toggleMenu}>
                 <div className="flex items-center gap-1.5 h-16">
                     <span className="font-semibold font-body text-sm">{`Hola, ${user.name ?? user.email}`}</span>
                     <UserIcon color='primary' className="h-7" />
-                    <svg width="7" height="5" viewBox="0 0 7 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3.5359 5L0.0717969 -6.05683e-07L7 0L3.5359 5Z" fill="#222222" />
-                    </svg>
+                        <motion.div
+                            animate={{ scaleY: isMenuOpen ? -1 : 1 }}
+                            transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            style={{ originY: 0.5, display: 'inline-block' }}
+                        >
+                            <ChevronDownIcon />
+                        </motion.div>
                 </div>
             </button>
-            {isMenuOpen && <div className="absolute left-0 z-10">
-                <BasicMenu toggleMenu={toggleMenu} menuSections={menuSections} />
-            </div>}
+            <motion.div 
+                initial={{ height: 0 }}
+                animate={{ height: isMenuOpen ? "auto" : 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ overflow: "hidden" }}
+                className={`absolute right-0 z-10 shadow-lg`}
+                
+            >
+                <BasicMenu toggleMenu={setIsMenuOpen} menuSections={menuSections} />
+            </motion.div>
         </div>
     );
 

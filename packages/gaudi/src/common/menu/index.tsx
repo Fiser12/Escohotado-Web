@@ -39,7 +39,7 @@ export const BasicMenu: React.FC<Props> = ({
     }, []);
 
     const divClass = classNames(
-        'w-full md:w-40 bg-white rounded-sm flex-col justify-start items-start inline-flex shadow-lg',
+        'w-full md:w-40 bg-white rounded-sm flex-col justify-end items-start inline-flex',
         className
     );
     return (
