@@ -1,7 +1,6 @@
 import { COLLECTION_SLUG_BOOK, routes } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Media } from 'payload-types'
-import { searchElementsQuery } from './searchElementsQuery'
 
 interface BookDto {
   title: string
@@ -9,16 +8,12 @@ interface BookDto {
   link: string
 }
 
-export const getBooksQuery = async (query: string): Promise<BookDto[]> => {
-  const { results } = await searchElementsQuery(query, [COLLECTION_SLUG_BOOK])
+export const getBooksQuery = async (): Promise<BookDto[]> => {
   const payload = await getPayload()
   const books = await payload.find({
     collection: COLLECTION_SLUG_BOOK,
     sort: '-publishedAt',
-    pagination: false,
-    where: {
-      id: { in: results.map((item) => item.id) },
-    },
+    pagination: false
   })
 
   return books.docs.map((book) => {

@@ -9,7 +9,6 @@ export { default as storybookHelpers } from "./storybook-helpers";
 export { SubscriptionsGroupCard } from "./subscription/subscriptions_card_group";
 export { BookCard } from "./content/book/cards";
 export { ArticleDetail } from "./content/pages/article_page/detalle_web";
-export { ArticleDetailPdf } from "./content/pages/article_page/detalle_pdf";
 export { VideoDetail } from "./content/pages/video_page/detalle";
 export { ContentGridList } from "./content/common/content_grid_list";
 export { HeadlineCard } from "./content/article/cards/article_headline_card";

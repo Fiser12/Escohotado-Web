@@ -57,9 +57,7 @@ export const getArticlesQuery = async (
     pagination: false,
     where: {
       id: {
-        in: results
-          .filter((result) => result.collection === COLLECTION_SLUG_ARTICLE_WEB)
-          .map((result) => result.id),
+        in: results.map((result) => result.id),
       }
     }
   })

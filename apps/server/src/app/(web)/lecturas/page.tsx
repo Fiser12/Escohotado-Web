@@ -35,14 +35,21 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const ArticlePage = async ({ searchParams, className, ...rest }: Props) => {
   const { tags, query } = await searchContentParamsCache.parse(searchParams)
   const tagsArrays = tags.split(',').filter(Boolean)
-  const user = await getCurrentUserQuery();
-  const articles = await getArticlesQueryByTags(query, tagsArrays, 0)
-  const lastArticles = await getArticlesQueryByTags("", [], 0, 4);
-  const books = await getBooksQuery("")
   const payload = await getPayload()
-  const articulosDataPage = await payload.findGlobal({
-    slug: "articulos_page"
-  })
+  const [
+    user,
+    articles,
+    lastArticles,
+    books,
+    articulosDataPage
+  ] = await Promise.all([
+    getCurrentUserQuery(),
+    getArticlesQueryByTags(query, tagsArrays, 0),
+    getArticlesQueryByTags("", [], 0, 4),
+    getBooksQuery(),
+    payload.findGlobal({ slug: "articulos_page" })
+  ]);
+
   const articleCardMapper = (article: ArticleWeb) => mapArticleCard(user)(article);
   const divClass = classNames(
     "w-full bg-gray-light",

@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge'
 import './style.css'
+import { classMerge } from '../../utils/classMerge';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     text: string;
@@ -18,8 +20,8 @@ export const MainButton: React.FC<Props> = ({
     icon,
     ...rest
 }) => {
-    const buttonClass = classNames(
-        'px-4 py-1.5 rounded flex justify-center items-center font-body text-sm inline-flex min-w-24 max-w-52 cursor-pointer transition duration-300 hover:-translate-y-1 motion-reduce:hover:transform-none',
+    const buttonClass = classMerge(
+        'px-4 py-1.5 rounded flex justify-center items-center font-body text-sm inline-flex min-w-24 max-w-58 cursor-pointer transition duration-300 hover:-translate-y-1 motion-reduce:hover:transform-none',
         className,
         {
             // Fill

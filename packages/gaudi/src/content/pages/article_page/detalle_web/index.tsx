@@ -45,7 +45,7 @@ export const ArticleDetail: React.FC<Props> = ({
     );
 
     const tagDateContainerClass = classNames(
-        'flex flex-col md:flex-row gap-3 justify-between'
+        'flex flex-col md:flex-row gap-5 justify-between'
     );
 
     const categoriesClass = classNames(
