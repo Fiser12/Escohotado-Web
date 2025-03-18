@@ -57,6 +57,7 @@ export const getVideosQuery = async (
     collection: COLLECTION_SLUG_VIDEO,
     sort,
     pagination: false,
+    limit,
     where: {
       id: { in: results.map(item => item.id) },
     },

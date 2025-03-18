@@ -55,6 +55,7 @@ export const getArticlesQuery = async (
     sort,
     draft: false,
     pagination: false,
+    limit,
     where: {
       id: {
         in: results.map((result) => result.id),

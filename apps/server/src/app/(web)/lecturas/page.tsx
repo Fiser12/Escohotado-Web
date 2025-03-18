@@ -60,17 +60,17 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
       <div id="headerArticles" className="@container w-full bg-white pt-12.5">
         <ContentWrapper className="mx-auto flex flex-col gap-7.5">
           <H2 label="Últimos artículos" id="last-articles" />
-          <div className="grid grid-cols-3 @max-md:grid-cols-1 items-center gap-4 md:gap-10">
+          <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 md:gap-10 items-end">
             <Image
               src={escohotadoArticlesPortada.src}
               alt="Escohotado image"
-              className="order-2 md:order-none"
+              className="order-2 lg:order-none w-[15rem] lg:w-auto mx-auto"
               width={650}
               height={1080}
             />
-            <div className="w-full col-span-2 order-1 md:order-none">
+            <div className="w-full col-span-2 order-1 lg:order-none">
               {lastArticles.results.map((article, index) => {
-                const categories = article.categories as Taxonomy[]
+                const categories = article.categories?.cast<Taxonomy>() ?? []
                 const authorName = getAuthorFromTaxonomies(categories)?.singular_name ?? "No author"
                 return <HeadlineCard
                   key={index}
