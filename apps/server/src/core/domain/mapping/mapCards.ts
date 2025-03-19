@@ -20,9 +20,9 @@ import {
   User,
 } from 'payload-types'
 import 'hegel'
-import { getArticlesQuery } from '@/core/content/getArticlesQuery'
-import { getVideosQuery } from '@/core/content/getVideosQuery'
-import { getQuotesQuery } from '@/core/content/getQuotesQuery'
+import { getArticlesQueryWithCache } from '@/core/content/getArticlesQuery'
+import { getVideosQuery, getVideosQueryWithCache } from '@/core/content/getVideosQuery'
+import { getQuotesQuery, getQuotesQueryWithCache } from '@/core/content/getQuotesQuery'
 import { MediaHeaderModel } from 'node_modules/hegel/src/domain/content_model'
 import { routes } from 'hegel/payload'
 
@@ -156,16 +156,18 @@ const mapQueryField =
         .map(mapMediaCard)
     } else if (queryField.blockType === 'articleQueryBlock') {
       const { querySize, sort, filter } = queryField
-      const articulos = await getArticlesQuery(0, querySize, sort, '', filter)
+      const articulos = await getArticlesQueryWithCache(
+        {hours: 1}, 0, querySize, sort, '', filter
+      )
       return articulos.results.map((article) => mapArticleCard(user)(article))
     } else if (queryField.blockType === 'quoteQueryBlock') {
       const { querySize, sort, filter, filterByQuoteOrigin } = queryField
       const filterByOrigin = filterByQuoteOrigin?.value as any | null
-      const quotes = await getQuotesQuery(0, querySize, sort, '', filterByOrigin?.id, filter)
+      const quotes = await getQuotesQueryWithCache({hours: 1}, 0, querySize, sort, '', filterByOrigin?.id, filter)
       return quotes.results.map((q) => mapQuoteCard(user)(q))
     } else if (queryField.blockType === 'videoQueryBlock') {
       const { querySize, sort, filter } = queryField
-      const videos = await getVideosQuery(0, querySize, sort, '', filter)
+      const videos = await getVideosQueryWithCache({hours: 1}, 0, querySize, sort, '', filter)
       return videos.results.map((video) => mapVideoCard(user)(video))
     }
 

@@ -1,6 +1,7 @@
 'use server'
+
 import { getPayload } from '@/payload/utils/getPayload'
-import { CategoryModel } from 'hegel'
+import { CategoryModel, withCache } from 'hegel'
 import { collectionsContentsSlugs } from 'hegel/payload'
 import { Taxonomy } from 'payload-types'
 import { mapTaxonomyToCategoryModel } from '../domain/mapping/mapTaxonomyToCategoryModel'
@@ -42,3 +43,5 @@ export const tagsFromContentQuery = async (
       ?.flat() ?? []
   )
 }
+
+export const tagsFromContentQueryWithCache = withCache(tagsFromContentQuery)

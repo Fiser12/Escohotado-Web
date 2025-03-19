@@ -6,6 +6,7 @@ import { searchElementsQuery } from './searchElementsQuery'
 import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
+import { withCache } from 'hegel'
 
 const limit = 20
 
@@ -81,3 +82,6 @@ export const getVideosQuery = async (
 
   return { results: videos, maxPage: lastPage }
 }
+
+export const getVideosQueryWithCache = withCache(getVideosQuery)
+export const getVideosQueryByTagsWithCache = withCache(getVideosQueryByTags)

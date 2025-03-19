@@ -1,10 +1,10 @@
 "use client";
 
-import { CommonArticle, getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
+import { getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
 import { convertContentModelToCard } from "hegel";
 import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
-import { User } from "payload-types";
+import { ArticleWeb, User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -15,11 +15,11 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const DynamicLoadingArticles: React.FC<Props> = ({ query, tagsArrays, maxPage, user, className, ...rest }) => {
-    const [articles, setArticles] = useState<Record<string, CommonArticle[]>>({});
+    const [articles, setArticles] = useState<Record<string, ArticleWeb[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const observerRef = useRef<HTMLDivElement | null>(null);
-    const articleCardMapper = (article: CommonArticle) => mapArticleCard(user)(article);
+    const articleCardMapper = (article: ArticleWeb) => mapArticleCard(user)(article);
 
     useEffect(() => {
         const loadArticles = async () => {

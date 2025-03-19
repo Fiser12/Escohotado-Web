@@ -4,7 +4,7 @@ import { COLLECTION_SLUG_QUOTE } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Quote, Taxonomy, Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
-import { evaluateExpression } from 'hegel'
+import { evaluateExpression, withCache } from 'hegel'
 import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
 import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
 
@@ -30,7 +30,7 @@ export const getQuotesQueryByTags = async (
     sortBy as 'publishedAt' | 'popularity',
     query,
     filterByCollectionId,
-    generateFilterExpresionFromTags(tags, '&&')
+    generateFilterExpresionFromTags(tags, '&&'),
   )
 }
 
@@ -45,7 +45,12 @@ export const getQuotesQuery = async (
   results: Quote[]
   maxPage: number
 }> => {
-  const { results, lastPage } = (await searchElementsQuery(query, [COLLECTION_SLUG_QUOTE], undefined, filterExpression))
+  const { results, lastPage } = await searchElementsQuery(
+    query,
+    [COLLECTION_SLUG_QUOTE],
+    undefined,
+    filterExpression,
+  )
   if (results.length === 0) return { results: [], maxPage: lastPage }
 
   const payload = await getPayload()
@@ -59,21 +64,23 @@ export const getQuotesQuery = async (
     where: { id: { in: results.map((item) => item.id) } },
   })
 
-  const quotes = quotesDocs.docs
-    .filter((quote) => {
-      if (filterByCollectionId) {
-        const id = typeof quote.source?.value === 'number' 
-        ? quote.source?.value 
-        : String(quote.source?.value.id)
-        return id === filterByCollectionId
-      }
-      return true
-    })
-    const startIndex = page * maxPage
-    const endIndex = startIndex + maxPage
-  
-    return {
-      results: quotes.slice(startIndex, endIndex),
-      maxPage: Math.ceil(quotes.length / maxPage),
+  const quotes = quotesDocs.docs.filter((quote) => {
+    if (filterByCollectionId) {
+      const id =
+        typeof quote.source?.value === 'number'
+          ? quote.source?.value
+          : String(quote.source?.value.id)
+      return id === filterByCollectionId
     }
+    return true
+  })
+  const startIndex = page * maxPage
+  const endIndex = startIndex + maxPage
+
+  return {
+    results: quotes.slice(startIndex, endIndex),
+    maxPage: Math.ceil(quotes.length / maxPage),
   }
+}
+
+export const getQuotesQueryWithCache = withCache(getQuotesQuery)

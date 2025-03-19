@@ -67,3 +67,4 @@ export const getArticlesQuery = async (
   return { results: articles.docs, maxPage: lastPage }
 }
 export const getArticlesQueryByTagsWithCache = withCache(getArticlesQueryByTags)
+export const getArticlesQueryWithCache = withCache(getArticlesQuery)
