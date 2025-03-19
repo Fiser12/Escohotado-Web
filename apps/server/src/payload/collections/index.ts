@@ -7,6 +7,7 @@ import permissions from '@/payload/collections/user/permissions'
 import { products } from '@/payload/collections/stripe/products'
 import { contentCollections } from '@/payload/collections/content'
 import { uiCollections } from '@/payload/collections/ui'
+import { addClearCacheHookBeforeChange } from './content/content_collection_builder'
 
 
 const collections = [
@@ -15,7 +16,7 @@ const collections = [
     products,
     subscriptions,
     media,
-    taxonomy,
+    addClearCacheHookBeforeChange(taxonomy),
     ...contentCollections,
     ...uiCollections,
     permissions,

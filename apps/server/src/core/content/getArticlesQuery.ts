@@ -4,6 +4,7 @@ import { getPayload } from '@/payload/utils/getPayload'
 import { ArticleWeb } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
+import { withCache } from 'hegel'
 
 const pageSize = 40
 
@@ -65,3 +66,4 @@ export const getArticlesQuery = async (
 
   return { results: articles.docs, maxPage: lastPage }
 }
+export const getArticlesQueryByTagsWithCache = withCache(getArticlesQueryByTags)

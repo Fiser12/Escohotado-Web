@@ -1,6 +1,7 @@
 import { COLLECTION_SLUG_BOOK, routes } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Media } from 'payload-types'
+import { withCache } from 'hegel'
 
 interface BookDto {
   title: string
@@ -25,3 +26,4 @@ export const getBooksQuery = async (): Promise<BookDto[]> => {
     }
   })
 }
+export const getBooksQueryWithCache = withCache(getBooksQuery)

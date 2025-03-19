@@ -26,3 +26,5 @@ export type {
 export { evaluateExpression } from "./domain/evaluateExpression";
 export { routes } from './payload/routesGenerator'
 export { permissionSlugs, forumClientId } from './payload/keycloakPermissionSlugs'
+export { getCache, setCache, clearCache } from './nextjs/cacheFn'
+export { withCache } from './nextjs/withCache'

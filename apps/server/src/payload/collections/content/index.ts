@@ -3,11 +3,13 @@ import { articleWeb } from "./articleWeb";
 import { book } from "./book";
 import { video } from "./video";
 import { quote } from "./quote";
+import { addClearCacheHookBeforeChange } from "./content_collection_builder";
 
 export const contentCollections = [
-    pdf,
-    articleWeb,
-    book,
-    video,
-    quote
+    addClearCacheHookBeforeChange(pdf),
+    addClearCacheHookBeforeChange(articleWeb),
+    addClearCacheHookBeforeChange(book),
+    addClearCacheHookBeforeChange(video),
+    addClearCacheHookBeforeChange(quote)
 ]
+

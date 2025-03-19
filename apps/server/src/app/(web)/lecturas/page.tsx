@@ -2,12 +2,12 @@ import { routes } from "hegel/payload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton, H4 } from "gaudi/server";
 import { FreemiumHighlightSection, HighlightSection } from "gaudi/client";
-import { convertContentModelToCard } from "hegel";
+import { convertContentModelToCard, withCache } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
-import { getBooksQuery } from "@/core/content/getBooksQuery";
+import { getArticlesQueryByTagsWithCache } from "@/core/content/getArticlesQuery";
+import { getBooksQueryWithCache } from "@/core/content/getBooksQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
@@ -44,9 +44,9 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
     articulosDataPage
   ] = await Promise.all([
     getCurrentUserQuery(),
-    getArticlesQueryByTags(query, tagsArrays, 0),
-    getArticlesQueryByTags("", [], 0, 4),
-    getBooksQuery(),
+    getArticlesQueryByTagsWithCache({hours: 1}, query, tagsArrays, 0),
+    getArticlesQueryByTagsWithCache({hours: 1}, "", [], 0, 4),
+    getBooksQueryWithCache({ days: 1 }),
     payload.findGlobal({ slug: "articulos_page" })
   ]);
 

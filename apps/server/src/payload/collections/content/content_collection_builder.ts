@@ -7,6 +7,7 @@ import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 import { checkReadPermissions, isAdmin } from '../../fields/permissions/accessEvaluations'
 import { taxonomyRelationship } from '../../fields/taxonomies/taxonomiesRelationshipFields'
 import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
+import { clearCache } from 'hegel'
 
 
 export function contentWithPermissionsCollectionBuilder(
@@ -85,5 +86,18 @@ export function contentCollectionBuilder(
       ...(config.fields ?? []),
       forumPostsCacheField,
     ],
+  }
+}
+
+export const addClearCacheHookBeforeChange = (collection: CollectionConfig): CollectionConfig => {
+  return {
+      ...collection,
+      hooks: {
+          ...collection.hooks,
+          beforeChange: [
+              ...collection.hooks?.beforeChange || [],
+              clearCache
+          ]
+      }
   }
 }

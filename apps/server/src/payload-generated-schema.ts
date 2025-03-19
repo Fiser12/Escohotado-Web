@@ -15,14 +15,14 @@ import {
   varchar,
   timestamp,
   jsonb,
-  uuid,
   boolean,
-  numeric,
   serial,
+  numeric,
   type AnyPgColumn,
   pgEnum,
 } from '@payloadcms/db-postgres/drizzle/pg-core'
 import { sql, relations } from '@payloadcms/db-postgres/drizzle'
+export const enum__locales = pgEnum('enum__locales', ['en', 'es'])
 export const enum_prices_type = pgEnum('enum_prices_type', ['one_time', 'recurring'])
 export const enum_prices_interval = pgEnum('enum_prices_interval', ['day', 'week', 'month', 'year'])
 export const enum_products_type = pgEnum('enum_products_type', ['good', 'service'])
@@ -35,6 +35,15 @@ export const enum_subscriptions_status = pgEnum('enum_subscriptions_status', [
   'past_due',
   'unpaid',
   'paused',
+])
+export const enum_article_web_status = pgEnum('enum_article_web_status', ['draft', 'published'])
+export const enum__article_web_v_version_status = pgEnum('enum__article_web_v_version_status', [
+  'draft',
+  'published',
+])
+export const enum__article_web_v_published_locale = pgEnum('enum__article_web_v_published_locale', [
+  'en',
+  'es',
 ])
 export const enum_book_ediciones_variant = pgEnum('enum_book_ediciones_variant', [
   'audiobook',
@@ -56,6 +65,9 @@ export const users_accounts = pgTable(
   (columns) => ({
     _orderIdx: index('users_accounts_order_idx').on(columns._order),
     _parentIDIdx: index('users_accounts_parent_id_idx').on(columns._parentID),
+    users_accounts_provider_account_id_idx: index('users_accounts_provider_account_id_idx').on(
+      columns.providerAccountId,
+    ),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [users.id],
@@ -76,6 +88,9 @@ export const users_sessions = pgTable(
   (columns) => ({
     _orderIdx: index('users_sessions_order_idx').on(columns._order),
     _parentIDIdx: index('users_sessions_parent_id_idx').on(columns._parentID),
+    users_sessions_session_token_idx: index('users_sessions_session_token_idx').on(
+      columns.sessionToken,
+    ),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
       foreignColumns: [users.id],
@@ -84,40 +99,21 @@ export const users_sessions = pgTable(
   }),
 )
 
-export const users_verification_tokens = pgTable(
-  'users_verification_tokens',
-  {
-    _order: integer('_order').notNull(),
-    _parentID: varchar('_parent_id').notNull(),
-    id: varchar('id').primaryKey(),
-    token: varchar('token').notNull(),
-    expires: timestamp('expires', { mode: 'string', withTimezone: true, precision: 3 }).notNull(),
-  },
-  (columns) => ({
-    _orderIdx: index('users_verification_tokens_order_idx').on(columns._order),
-    _parentIDIdx: index('users_verification_tokens_parent_id_idx').on(columns._parentID),
-    _parentIDFk: foreignKey({
-      columns: [columns['_parentID']],
-      foreignColumns: [users.id],
-      name: 'users_verification_tokens_parent_id_fk',
-    }).onDelete('cascade'),
-  }),
-)
-
 export const users = pgTable(
   'users',
   {
     id: varchar('id').primaryKey(),
-    name: varchar('name'),
-    roles: jsonb('roles'),
-    stripeCustomerId: varchar('stripe_customer_id'),
     email: varchar('email').notNull(),
-    image: varchar('image'),
     emailVerified: timestamp('email_verified', {
       mode: 'string',
       withTimezone: true,
       precision: 3,
     }),
+    name: varchar('name'),
+    image: varchar('image'),
+    roles: jsonb('roles'),
+    isSubscribedToNewsletter: boolean('is_subscribed_to_newsletter').notNull().default(true),
+    stripeCustomerId: varchar('stripe_customer_id'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -126,6 +122,7 @@ export const users = pgTable(
       .notNull(),
   },
   (columns) => ({
+    users_email_idx: uniqueIndex('users_email_idx').on(columns.email),
     users_updated_at_idx: index('users_updated_at_idx').on(columns.updatedAt),
     users_created_at_idx: index('users_created_at_idx').on(columns.createdAt),
   }),
@@ -134,7 +131,7 @@ export const users = pgTable(
 export const prices = pgTable(
   'prices',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     stripeID: varchar('stripe_i_d').notNull(),
     stripeProductId: varchar('stripe_product_id').notNull(),
     active: boolean('active').notNull().default(false),
@@ -163,7 +160,7 @@ export const products_images = pgTable(
   'products_images',
   {
     _order: integer('_order').notNull(),
-    _parentID: uuid('_parent_id').notNull(),
+    _parentID: integer('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     url: varchar('url'),
   },
@@ -182,7 +179,7 @@ export const products_features = pgTable(
   'products_features',
   {
     _order: integer('_order').notNull(),
-    _parentID: uuid('_parent_id').notNull(),
+    _parentID: integer('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     title: varchar('title'),
   },
@@ -200,7 +197,7 @@ export const products_features = pgTable(
 export const products = pgTable(
   'products',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     stripeID: varchar('stripe_i_d').notNull(),
     type: enum_products_type('type'),
     active: boolean('active').notNull().default(false),
@@ -226,10 +223,10 @@ export const products_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
-    pricesID: uuid('prices_id'),
-    permissionID: varchar('permission_id'),
+    pricesID: integer('prices_id'),
+    permissionID: integer('permission_id'),
   },
   (columns) => ({
     order: index('products_rels_order_idx').on(columns.order),
@@ -260,13 +257,13 @@ export const products_rels = pgTable(
 export const subscriptions = pgTable(
   'subscriptions',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     user: varchar('user_id')
       .notNull()
       .references(() => users.id, {
         onDelete: 'set null',
       }),
-    product: uuid('product_id')
+    product: integer('product_id')
       .notNull()
       .references(() => products.id, {
         onDelete: 'set null',
@@ -312,7 +309,7 @@ export const subscriptions = pgTable(
 export const media = pgTable(
   'media',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     title: varchar('title'),
     rawContent: varchar('raw_content'),
     prefix: varchar('prefix').default('media'),
@@ -352,9 +349,10 @@ export const taxonomy_breadcrumbs = pgTable(
   'taxonomy_breadcrumbs',
   {
     _order: integer('_order').notNull(),
-    _parentID: varchar('_parent_id').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+    _locale: enum__locales('_locale').notNull(),
     id: varchar('id').primaryKey(),
-    doc: varchar('doc_id').references(() => taxonomy.id, {
+    doc: integer('doc_id').references(() => taxonomy.id, {
       onDelete: 'set null',
     }),
     url: varchar('url'),
@@ -363,6 +361,7 @@ export const taxonomy_breadcrumbs = pgTable(
   (columns) => ({
     _orderIdx: index('taxonomy_breadcrumbs_order_idx').on(columns._order),
     _parentIDIdx: index('taxonomy_breadcrumbs_parent_id_idx').on(columns._parentID),
+    _localeIdx: index('taxonomy_breadcrumbs_locale_idx').on(columns._locale),
     taxonomy_breadcrumbs_doc_idx: index('taxonomy_breadcrumbs_doc_idx').on(columns.doc),
     _parentIDFk: foreignKey({
       columns: [columns['_parentID']],
@@ -375,13 +374,11 @@ export const taxonomy_breadcrumbs = pgTable(
 export const taxonomy = pgTable(
   'taxonomy',
   {
-    id: varchar('id').primaryKey(),
+    id: serial('id').primaryKey(),
     selectable: boolean('selectable').default(true),
-    singular_name: varchar('singular_name').notNull(),
-    plural_name: varchar('plural_name'),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
-    parent: varchar('parent_id').references((): AnyPgColumn => taxonomy.id, {
+    parent: integer('parent_id').references((): AnyPgColumn => taxonomy.id, {
       onDelete: 'set null',
     }),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -399,28 +396,35 @@ export const taxonomy = pgTable(
   }),
 )
 
-export const article_pdf = pgTable(
-  'article_pdf',
+export const taxonomy_locales = pgTable(
+  'taxonomy_locales',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
-    permissions_seeds: varchar('permissions_seeds').default(''),
-    cover: uuid('cover_id')
-      .notNull()
-      .references(() => media.id, {
-        onDelete: 'set null',
-      }),
+    singular_name: varchar('singular_name').notNull(),
+    plural_name: varchar('plural_name'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('taxonomy_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [taxonomy.id],
+      name: 'taxonomy_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const pdf = pgTable(
+  'pdf',
+  {
+    id: serial('id').primaryKey(),
     title: varchar('title').notNull(),
-    description: varchar('description'),
-    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
-    content: jsonb('content'),
-    forum_post_id: varchar('forum_post_id'),
-    last_forum_sync: timestamp('last_forum_sync', {
-      mode: 'string',
-      withTimezone: true,
-      precision: 3,
-    }),
-    last_forum_posts: jsonb('last_forum_posts'),
-    prefix: varchar('prefix').default('article_pdf'),
+    permissions_seeds: varchar('permissions_seeds').default(''),
+    prefix: varchar('prefix').default('pdf'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -438,47 +442,35 @@ export const article_pdf = pgTable(
     focalY: numeric('focal_y'),
   },
   (columns) => ({
-    article_pdf_cover_idx: index('article_pdf_cover_idx').on(columns.cover),
-    article_pdf_updated_at_idx: index('article_pdf_updated_at_idx').on(columns.updatedAt),
-    article_pdf_created_at_idx: index('article_pdf_created_at_idx').on(columns.createdAt),
-    article_pdf_filename_idx: uniqueIndex('article_pdf_filename_idx').on(columns.filename),
+    pdf_updated_at_idx: index('pdf_updated_at_idx').on(columns.updatedAt),
+    pdf_created_at_idx: index('pdf_created_at_idx').on(columns.createdAt),
+    pdf_filename_idx: uniqueIndex('pdf_filename_idx').on(columns.filename),
   }),
 )
 
-export const article_pdf_rels = pgTable(
-  'article_pdf_rels',
+export const pdf_rels = pgTable(
+  'pdf_rels',
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
-    permissionID: varchar('permission_id'),
-    taxonomyID: varchar('taxonomy_id'),
+    permissionID: integer('permission_id'),
   },
   (columns) => ({
-    order: index('article_pdf_rels_order_idx').on(columns.order),
-    parentIdx: index('article_pdf_rels_parent_idx').on(columns.parent),
-    pathIdx: index('article_pdf_rels_path_idx').on(columns.path),
-    article_pdf_rels_permission_id_idx: index('article_pdf_rels_permission_id_idx').on(
-      columns.permissionID,
-    ),
-    article_pdf_rels_taxonomy_id_idx: index('article_pdf_rels_taxonomy_id_idx').on(
-      columns.taxonomyID,
-    ),
+    order: index('pdf_rels_order_idx').on(columns.order),
+    parentIdx: index('pdf_rels_parent_idx').on(columns.parent),
+    pathIdx: index('pdf_rels_path_idx').on(columns.path),
+    pdf_rels_permission_id_idx: index('pdf_rels_permission_id_idx').on(columns.permissionID),
     parentFk: foreignKey({
       columns: [columns['parent']],
-      foreignColumns: [article_pdf.id],
-      name: 'article_pdf_rels_parent_fk',
+      foreignColumns: [pdf.id],
+      name: 'pdf_rels_parent_fk',
     }).onDelete('cascade'),
     permissionIdFk: foreignKey({
       columns: [columns['permissionID']],
       foreignColumns: [permission.id],
-      name: 'article_pdf_rels_permission_fk',
-    }).onDelete('cascade'),
-    taxonomyIdFk: foreignKey({
-      columns: [columns['taxonomyID']],
-      foreignColumns: [taxonomy.id],
-      name: 'article_pdf_rels_taxonomy_fk',
+      name: 'pdf_rels_permission_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -486,19 +478,14 @@ export const article_pdf_rels = pgTable(
 export const article_web = pgTable(
   'article_web',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     permissions_seeds: varchar('permissions_seeds').default(''),
-    cover: uuid('cover_id')
-      .notNull()
-      .references(() => media.id, {
-        onDelete: 'set null',
-      }),
-    title: varchar('title').notNull(),
-    description: varchar('description'),
+    cover: integer('cover_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
-    content: jsonb('content'),
     forum_post_id: varchar('forum_post_id'),
     last_forum_sync: timestamp('last_forum_sync', {
       mode: 'string',
@@ -512,12 +499,45 @@ export const article_web = pgTable(
     createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
+    _status: enum_article_web_status('_status').default('draft'),
   },
   (columns) => ({
     article_web_cover_idx: index('article_web_cover_idx').on(columns.cover),
     article_web_slug_idx: index('article_web_slug_idx').on(columns.slug),
     article_web_updated_at_idx: index('article_web_updated_at_idx').on(columns.updatedAt),
     article_web_created_at_idx: index('article_web_created_at_idx').on(columns.createdAt),
+    article_web__status_idx: index('article_web__status_idx').on(columns._status),
+  }),
+)
+
+export const article_web_locales = pgTable(
+  'article_web_locales',
+  {
+    title: varchar('title'),
+    content: jsonb('content'),
+    source: varchar('source'),
+    preview_content: jsonb('preview_content'),
+    document: integer('document_id').references(() => pdf.id, {
+      onDelete: 'set null',
+    }),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    article_web_document_idx: index('article_web_document_idx').on(
+      columns.document,
+      columns._locale,
+    ),
+    _localeParent: uniqueIndex('article_web_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [article_web.id],
+      name: 'article_web_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -526,10 +546,10 @@ export const article_web_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
-    permissionID: varchar('permission_id'),
-    taxonomyID: varchar('taxonomy_id'),
+    permissionID: integer('permission_id'),
+    taxonomyID: integer('taxonomy_id'),
   },
   (columns) => ({
     order: index('article_web_rels_order_idx').on(columns.order),
@@ -559,11 +579,152 @@ export const article_web_rels = pgTable(
   }),
 )
 
+export const _article_web_v = pgTable(
+  '_article_web_v',
+  {
+    id: serial('id').primaryKey(),
+    parent: integer('parent_id').references(() => article_web.id, {
+      onDelete: 'set null',
+    }),
+    version_permissions_seeds: varchar('version_permissions_seeds').default(''),
+    version_cover: integer('version_cover_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    version_publishedAt: timestamp('version_published_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version_slug: varchar('version_slug'),
+    version_slugLock: boolean('version_slug_lock').default(true),
+    version_forum_post_id: varchar('version_forum_post_id'),
+    version_last_forum_sync: timestamp('version_last_forum_sync', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version_last_forum_posts: jsonb('version_last_forum_posts'),
+    version_updatedAt: timestamp('version_updated_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version_createdAt: timestamp('version_created_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }),
+    version__status: enum__article_web_v_version_status('version__status').default('draft'),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    snapshot: boolean('snapshot'),
+    publishedLocale: enum__article_web_v_published_locale('published_locale'),
+    latest: boolean('latest'),
+  },
+  (columns) => ({
+    _article_web_v_parent_idx: index('_article_web_v_parent_idx').on(columns.parent),
+    _article_web_v_version_version_cover_idx: index('_article_web_v_version_version_cover_idx').on(
+      columns.version_cover,
+    ),
+    _article_web_v_version_version_slug_idx: index('_article_web_v_version_version_slug_idx').on(
+      columns.version_slug,
+    ),
+    _article_web_v_version_version_updated_at_idx: index(
+      '_article_web_v_version_version_updated_at_idx',
+    ).on(columns.version_updatedAt),
+    _article_web_v_version_version_created_at_idx: index(
+      '_article_web_v_version_version_created_at_idx',
+    ).on(columns.version_createdAt),
+    _article_web_v_version_version__status_idx: index(
+      '_article_web_v_version_version__status_idx',
+    ).on(columns.version__status),
+    _article_web_v_created_at_idx: index('_article_web_v_created_at_idx').on(columns.createdAt),
+    _article_web_v_updated_at_idx: index('_article_web_v_updated_at_idx').on(columns.updatedAt),
+    _article_web_v_snapshot_idx: index('_article_web_v_snapshot_idx').on(columns.snapshot),
+    _article_web_v_published_locale_idx: index('_article_web_v_published_locale_idx').on(
+      columns.publishedLocale,
+    ),
+    _article_web_v_latest_idx: index('_article_web_v_latest_idx').on(columns.latest),
+  }),
+)
+
+export const _article_web_v_locales = pgTable(
+  '_article_web_v_locales',
+  {
+    version_title: varchar('version_title'),
+    version_content: jsonb('version_content'),
+    version_source: varchar('version_source'),
+    version_preview_content: jsonb('version_preview_content'),
+    version_document: integer('version_document_id').references(() => pdf.id, {
+      onDelete: 'set null',
+    }),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _article_web_v_version_version_document_idx: index(
+      '_article_web_v_version_version_document_idx',
+    ).on(columns.version_document, columns._locale),
+    _localeParent: uniqueIndex('_article_web_v_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [_article_web_v.id],
+      name: '_article_web_v_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const _article_web_v_rels = pgTable(
+  '_article_web_v_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: integer('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    permissionID: integer('permission_id'),
+    taxonomyID: integer('taxonomy_id'),
+  },
+  (columns) => ({
+    order: index('_article_web_v_rels_order_idx').on(columns.order),
+    parentIdx: index('_article_web_v_rels_parent_idx').on(columns.parent),
+    pathIdx: index('_article_web_v_rels_path_idx').on(columns.path),
+    _article_web_v_rels_permission_id_idx: index('_article_web_v_rels_permission_id_idx').on(
+      columns.permissionID,
+    ),
+    _article_web_v_rels_taxonomy_id_idx: index('_article_web_v_rels_taxonomy_id_idx').on(
+      columns.taxonomyID,
+    ),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [_article_web_v.id],
+      name: '_article_web_v_rels_parent_fk',
+    }).onDelete('cascade'),
+    permissionIdFk: foreignKey({
+      columns: [columns['permissionID']],
+      foreignColumns: [permission.id],
+      name: '_article_web_v_rels_permission_fk',
+    }).onDelete('cascade'),
+    taxonomyIdFk: foreignKey({
+      columns: [columns['taxonomyID']],
+      foreignColumns: [taxonomy.id],
+      name: '_article_web_v_rels_taxonomy_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const book_ediciones = pgTable(
   'book_ediciones',
   {
     _order: integer('_order').notNull(),
-    _parentID: uuid('_parent_id').notNull(),
+    _parentID: integer('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     link: varchar('link'),
     variant: enum_book_ediciones_variant('variant'),
@@ -583,16 +744,13 @@ export const book_ediciones = pgTable(
 export const book = pgTable(
   'book',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
-    cover: uuid('cover_id')
+    id: serial('id').primaryKey(),
+    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    cover: integer('cover_id')
       .notNull()
       .references(() => media.id, {
         onDelete: 'set null',
       }),
-    title: varchar('title').notNull(),
-    description: varchar('description'),
-    publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
-    content: jsonb('content'),
     slug: varchar('slug'),
     slugLock: boolean('slug_lock').default(true),
     forum_post_id: varchar('forum_post_id'),
@@ -617,14 +775,37 @@ export const book = pgTable(
   }),
 )
 
+export const book_locales = pgTable(
+  'book_locales',
+  {
+    title: varchar('title').notNull(),
+    description: varchar('description'),
+    content: jsonb('content'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('book_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [book.id],
+      name: 'book_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const book_rels = pgTable(
   'book_rels',
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
-    taxonomyID: varchar('taxonomy_id'),
+    taxonomyID: integer('taxonomy_id'),
   },
   (columns) => ({
     order: index('book_rels_order_idx').on(columns.order),
@@ -647,14 +828,10 @@ export const book_rels = pgTable(
 export const video = pgTable(
   'video',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
-    content: jsonb('content'),
-    url: varchar('url').notNull(),
-    url_free: varchar('url_free'),
+    id: serial('id').primaryKey(),
     permissions_seeds: varchar('permissions_seeds').default(''),
     tags: jsonb('tags'),
     thumbnailUrl: varchar('thumbnail_url'),
-    title: varchar('title'),
     viewCount: numeric('view_count'),
     duration: numeric('duration'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
@@ -673,9 +850,33 @@ export const video = pgTable(
       .notNull(),
   },
   (columns) => ({
-    video_url_idx: uniqueIndex('video_url_idx').on(columns.url),
     video_updated_at_idx: index('video_updated_at_idx').on(columns.updatedAt),
     video_created_at_idx: index('video_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const video_locales = pgTable(
+  'video_locales',
+  {
+    content: jsonb('content'),
+    url: varchar('url').notNull(),
+    url_free: varchar('url_free'),
+    title: varchar('title'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    video_url_idx: uniqueIndex('video_url_idx').on(columns.url, columns._locale),
+    _localeParent: uniqueIndex('video_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [video.id],
+      name: 'video_locales_parent_id_fk',
+    }).onDelete('cascade'),
   }),
 )
 
@@ -684,10 +885,10 @@ export const video_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
-    permissionID: varchar('permission_id'),
-    taxonomyID: varchar('taxonomy_id'),
+    permissionID: integer('permission_id'),
+    taxonomyID: integer('taxonomy_id'),
   },
   (columns) => ({
     order: index('video_rels_order_idx').on(columns.order),
@@ -716,9 +917,7 @@ export const video_rels = pgTable(
 export const quote = pgTable(
   'quote',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
-    quote: varchar('quote').notNull(),
-    context: varchar('context'),
+    id: serial('id').primaryKey(),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -732,18 +931,39 @@ export const quote = pgTable(
   }),
 )
 
+export const quote_locales = pgTable(
+  'quote_locales',
+  {
+    quote: varchar('quote').notNull(),
+    context: varchar('context'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('quote_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [quote.id],
+      name: 'quote_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const quote_rels = pgTable(
   'quote_rels',
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
-    bookID: uuid('book_id'),
-    videoID: uuid('video_id'),
-    article_pdfID: uuid('article_pdf_id'),
-    article_webID: uuid('article_web_id'),
-    taxonomyID: varchar('taxonomy_id'),
+    bookID: integer('book_id'),
+    videoID: integer('video_id'),
+    article_webID: integer('article_web_id'),
+    taxonomyID: integer('taxonomy_id'),
   },
   (columns) => ({
     order: index('quote_rels_order_idx').on(columns.order),
@@ -751,7 +971,6 @@ export const quote_rels = pgTable(
     pathIdx: index('quote_rels_path_idx').on(columns.path),
     quote_rels_book_id_idx: index('quote_rels_book_id_idx').on(columns.bookID),
     quote_rels_video_id_idx: index('quote_rels_video_id_idx').on(columns.videoID),
-    quote_rels_article_pdf_id_idx: index('quote_rels_article_pdf_id_idx').on(columns.article_pdfID),
     quote_rels_article_web_id_idx: index('quote_rels_article_web_id_idx').on(columns.article_webID),
     quote_rels_taxonomy_id_idx: index('quote_rels_taxonomy_id_idx').on(columns.taxonomyID),
     parentFk: foreignKey({
@@ -768,11 +987,6 @@ export const quote_rels = pgTable(
       columns: [columns['videoID']],
       foreignColumns: [video.id],
       name: 'quote_rels_video_fk',
-    }).onDelete('cascade'),
-    article_pdfIdFk: foreignKey({
-      columns: [columns['article_pdfID']],
-      foreignColumns: [article_pdf.id],
-      name: 'quote_rels_article_pdf_fk',
     }).onDelete('cascade'),
     article_webIdFk: foreignKey({
       columns: [columns['article_webID']],
@@ -791,7 +1005,7 @@ export const ui_grid_cards_cards = pgTable(
   'ui_grid_cards_cards',
   {
     _order: integer('_order').notNull(),
-    _parentID: uuid('_parent_id').notNull(),
+    _parentID: integer('_parent_id').notNull(),
     id: varchar('id').primaryKey(),
     tailwindClassNames: varchar('tailwind_class_names').notNull(),
   },
@@ -809,7 +1023,7 @@ export const ui_grid_cards_cards = pgTable(
 export const ui_grid_cards = pgTable(
   'ui_grid_cards',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     title: varchar('title'),
     tailwindGridClassNames: varchar('tailwind_grid_class_names').default(
       'grid-cols-1 md:grid-cols-4',
@@ -830,9 +1044,8 @@ export const ui_grid_cards = pgTable(
 export const ui_block = pgTable(
   'ui_block',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     title: varchar('title').notNull(),
-    block: jsonb('block').notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -846,11 +1059,33 @@ export const ui_block = pgTable(
   }),
 )
 
+export const ui_block_locales = pgTable(
+  'ui_block_locales',
+  {
+    block: jsonb('block').notNull(),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('ui_block_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [ui_block.id],
+      name: 'ui_block_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const permission = pgTable(
   'permission',
   {
-    id: varchar('id').primaryKey(),
-    slug: varchar('slug').notNull(),
+    id: serial('id').primaryKey(),
+    slug: varchar('slug'),
+    slugLock: boolean('slug_lock').default(true),
     title: varchar('title').notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
@@ -860,7 +1095,7 @@ export const permission = pgTable(
       .notNull(),
   },
   (columns) => ({
-    permission_slug_idx: uniqueIndex('permission_slug_idx').on(columns.slug),
+    permission_slug_idx: index('permission_slug_idx').on(columns.slug),
     permission_updated_at_idx: index('permission_updated_at_idx').on(columns.updatedAt),
     permission_created_at_idx: index('permission_created_at_idx').on(columns.createdAt),
   }),
@@ -869,8 +1104,7 @@ export const permission = pgTable(
 export const search_results = pgTable(
   'search_results',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
-    title: varchar('title'),
+    id: serial('id').primaryKey(),
     priority: numeric('priority'),
     tags: varchar('tags'),
     permissions_seeds: varchar('permissions_seeds'),
@@ -888,18 +1122,38 @@ export const search_results = pgTable(
   }),
 )
 
+export const search_results_locales = pgTable(
+  'search_results_locales',
+  {
+    title: varchar('title'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('search_results_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [search_results.id],
+      name: 'search_results_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const search_results_rels = pgTable(
   'search_results_rels',
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
-    videoID: uuid('video_id'),
-    quoteID: uuid('quote_id'),
-    article_webID: uuid('article_web_id'),
-    article_pdfID: uuid('article_pdf_id'),
-    bookID: uuid('book_id'),
+    videoID: integer('video_id'),
+    quoteID: integer('quote_id'),
+    article_webID: integer('article_web_id'),
+    bookID: integer('book_id'),
   },
   (columns) => ({
     order: index('search_results_rels_order_idx').on(columns.order),
@@ -909,9 +1163,6 @@ export const search_results_rels = pgTable(
     search_results_rels_quote_id_idx: index('search_results_rels_quote_id_idx').on(columns.quoteID),
     search_results_rels_article_web_id_idx: index('search_results_rels_article_web_id_idx').on(
       columns.article_webID,
-    ),
-    search_results_rels_article_pdf_id_idx: index('search_results_rels_article_pdf_id_idx').on(
-      columns.article_pdfID,
     ),
     search_results_rels_book_id_idx: index('search_results_rels_book_id_idx').on(columns.bookID),
     parentFk: foreignKey({
@@ -934,11 +1185,6 @@ export const search_results_rels = pgTable(
       foreignColumns: [article_web.id],
       name: 'search_results_rels_article_web_fk',
     }).onDelete('cascade'),
-    article_pdfIdFk: foreignKey({
-      columns: [columns['article_pdfID']],
-      foreignColumns: [article_pdf.id],
-      name: 'search_results_rels_article_pdf_fk',
-    }).onDelete('cascade'),
     bookIdFk: foreignKey({
       columns: [columns['bookID']],
       foreignColumns: [book.id],
@@ -950,7 +1196,7 @@ export const search_results_rels = pgTable(
 export const payload_locked_documents = pgTable(
   'payload_locked_documents',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     globalSlug: varchar('global_slug'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
@@ -977,23 +1223,23 @@ export const payload_locked_documents_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
     usersID: varchar('users_id'),
-    pricesID: uuid('prices_id'),
-    productsID: uuid('products_id'),
-    subscriptionsID: uuid('subscriptions_id'),
-    mediaID: uuid('media_id'),
-    taxonomyID: varchar('taxonomy_id'),
-    article_pdfID: uuid('article_pdf_id'),
-    article_webID: uuid('article_web_id'),
-    bookID: uuid('book_id'),
-    videoID: uuid('video_id'),
-    quoteID: uuid('quote_id'),
-    ui_grid_cardsID: uuid('ui_grid_cards_id'),
-    ui_blockID: uuid('ui_block_id'),
-    permissionID: varchar('permission_id'),
-    'search-resultsID': uuid('search_results_id'),
+    pricesID: integer('prices_id'),
+    productsID: integer('products_id'),
+    subscriptionsID: integer('subscriptions_id'),
+    mediaID: integer('media_id'),
+    taxonomyID: integer('taxonomy_id'),
+    pdfID: integer('pdf_id'),
+    article_webID: integer('article_web_id'),
+    bookID: integer('book_id'),
+    videoID: integer('video_id'),
+    quoteID: integer('quote_id'),
+    ui_grid_cardsID: integer('ui_grid_cards_id'),
+    ui_blockID: integer('ui_block_id'),
+    permissionID: integer('permission_id'),
+    'search-resultsID': integer('search_results_id'),
   },
   (columns) => ({
     order: index('payload_locked_documents_rels_order_idx').on(columns.order),
@@ -1017,9 +1263,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_taxonomy_id_idx: index(
       'payload_locked_documents_rels_taxonomy_id_idx',
     ).on(columns.taxonomyID),
-    payload_locked_documents_rels_article_pdf_id_idx: index(
-      'payload_locked_documents_rels_article_pdf_id_idx',
-    ).on(columns.article_pdfID),
+    payload_locked_documents_rels_pdf_id_idx: index('payload_locked_documents_rels_pdf_id_idx').on(
+      columns.pdfID,
+    ),
     payload_locked_documents_rels_article_web_id_idx: index(
       'payload_locked_documents_rels_article_web_id_idx',
     ).on(columns.article_webID),
@@ -1079,10 +1325,10 @@ export const payload_locked_documents_rels = pgTable(
       foreignColumns: [taxonomy.id],
       name: 'payload_locked_documents_rels_taxonomy_fk',
     }).onDelete('cascade'),
-    article_pdfIdFk: foreignKey({
-      columns: [columns['article_pdfID']],
-      foreignColumns: [article_pdf.id],
-      name: 'payload_locked_documents_rels_article_pdf_fk',
+    pdfIdFk: foreignKey({
+      columns: [columns['pdfID']],
+      foreignColumns: [pdf.id],
+      name: 'payload_locked_documents_rels_pdf_fk',
     }).onDelete('cascade'),
     article_webIdFk: foreignKey({
       columns: [columns['article_webID']],
@@ -1130,7 +1376,7 @@ export const payload_locked_documents_rels = pgTable(
 export const payload_preferences = pgTable(
   'payload_preferences',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     key: varchar('key'),
     value: jsonb('value'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -1156,7 +1402,7 @@ export const payload_preferences_rels = pgTable(
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
-    parent: uuid('parent_id').notNull(),
+    parent: integer('parent_id').notNull(),
     path: varchar('path').notNull(),
     usersID: varchar('users_id'),
   },
@@ -1183,7 +1429,7 @@ export const payload_preferences_rels = pgTable(
 export const payload_migrations = pgTable(
   'payload_migrations',
   {
-    id: uuid('id').defaultRandom().primaryKey(),
+    id: serial('id').primaryKey(),
     name: varchar('name'),
     batch: numeric('batch'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
@@ -1204,25 +1450,85 @@ export const payload_migrations = pgTable(
 )
 
 export const articulos_page = pgTable('articulos_page', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  content: jsonb('content'),
+  id: serial('id').primaryKey(),
   updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }),
   createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
 })
+
+export const articulos_page_locales = pgTable(
+  'articulos_page_locales',
+  {
+    content: jsonb('content'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('articulos_page_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [articulos_page.id],
+      name: 'articulos_page_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
 
 export const home_page = pgTable('home_page', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  content: jsonb('content'),
+  id: serial('id').primaryKey(),
   updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }),
   createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
 })
 
+export const home_page_locales = pgTable(
+  'home_page_locales',
+  {
+    content: jsonb('content'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('home_page_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [home_page.id],
+      name: 'home_page_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const videos_page = pgTable('videos_page', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  content: jsonb('content'),
+  id: serial('id').primaryKey(),
   updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }),
   createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }),
 })
+
+export const videos_page_locales = pgTable(
+  'videos_page_locales',
+  {
+    content: jsonb('content'),
+    id: serial('id').primaryKey(),
+    _locale: enum__locales('_locale').notNull(),
+    _parentID: integer('_parent_id').notNull(),
+  },
+  (columns) => ({
+    _localeParent: uniqueIndex('videos_page_locales_locale_parent_id_unique').on(
+      columns._locale,
+      columns._parentID,
+    ),
+    _parentIdFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [videos_page.id],
+      name: 'videos_page_locales_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
 
 export const relations_users_accounts = relations(users_accounts, ({ one }) => ({
   _parentID: one(users, {
@@ -1238,25 +1544,12 @@ export const relations_users_sessions = relations(users_sessions, ({ one }) => (
     relationName: 'sessions',
   }),
 }))
-export const relations_users_verification_tokens = relations(
-  users_verification_tokens,
-  ({ one }) => ({
-    _parentID: one(users, {
-      fields: [users_verification_tokens._parentID],
-      references: [users.id],
-      relationName: 'verificationTokens',
-    }),
-  }),
-)
 export const relations_users = relations(users, ({ many }) => ({
   accounts: many(users_accounts, {
     relationName: 'accounts',
   }),
   sessions: many(users_sessions, {
     relationName: 'sessions',
-  }),
-  verificationTokens: many(users_verification_tokens, {
-    relationName: 'verificationTokens',
   }),
 }))
 export const relations_prices = relations(prices, () => ({}))
@@ -1327,6 +1620,13 @@ export const relations_taxonomy_breadcrumbs = relations(taxonomy_breadcrumbs, ({
     relationName: 'doc',
   }),
 }))
+export const relations_taxonomy_locales = relations(taxonomy_locales, ({ one }) => ({
+  _parentID: one(taxonomy, {
+    fields: [taxonomy_locales._parentID],
+    references: [taxonomy.id],
+    relationName: '_locales',
+  }),
+}))
 export const relations_taxonomy = relations(taxonomy, ({ one, many }) => ({
   parent: one(taxonomy, {
     fields: [taxonomy.parent],
@@ -1336,32 +1636,37 @@ export const relations_taxonomy = relations(taxonomy, ({ one, many }) => ({
   breadcrumbs: many(taxonomy_breadcrumbs, {
     relationName: 'breadcrumbs',
   }),
+  _locales: many(taxonomy_locales, {
+    relationName: '_locales',
+  }),
 }))
-export const relations_article_pdf_rels = relations(article_pdf_rels, ({ one }) => ({
-  parent: one(article_pdf, {
-    fields: [article_pdf_rels.parent],
-    references: [article_pdf.id],
+export const relations_pdf_rels = relations(pdf_rels, ({ one }) => ({
+  parent: one(pdf, {
+    fields: [pdf_rels.parent],
+    references: [pdf.id],
     relationName: '_rels',
   }),
   permissionID: one(permission, {
-    fields: [article_pdf_rels.permissionID],
+    fields: [pdf_rels.permissionID],
     references: [permission.id],
     relationName: 'permission',
   }),
-  taxonomyID: one(taxonomy, {
-    fields: [article_pdf_rels.taxonomyID],
-    references: [taxonomy.id],
-    relationName: 'taxonomy',
+}))
+export const relations_pdf = relations(pdf, ({ many }) => ({
+  _rels: many(pdf_rels, {
+    relationName: '_rels',
   }),
 }))
-export const relations_article_pdf = relations(article_pdf, ({ one, many }) => ({
-  cover: one(media, {
-    fields: [article_pdf.cover],
-    references: [media.id],
-    relationName: 'cover',
+export const relations_article_web_locales = relations(article_web_locales, ({ one }) => ({
+  _parentID: one(article_web, {
+    fields: [article_web_locales._parentID],
+    references: [article_web.id],
+    relationName: '_locales',
   }),
-  _rels: many(article_pdf_rels, {
-    relationName: '_rels',
+  document: one(pdf, {
+    fields: [article_web_locales.document],
+    references: [pdf.id],
+    relationName: 'document',
   }),
 }))
 export const relations_article_web_rels = relations(article_web_rels, ({ one }) => ({
@@ -1387,7 +1692,57 @@ export const relations_article_web = relations(article_web, ({ one, many }) => (
     references: [media.id],
     relationName: 'cover',
   }),
+  _locales: many(article_web_locales, {
+    relationName: '_locales',
+  }),
   _rels: many(article_web_rels, {
+    relationName: '_rels',
+  }),
+}))
+export const relations__article_web_v_locales = relations(_article_web_v_locales, ({ one }) => ({
+  _parentID: one(_article_web_v, {
+    fields: [_article_web_v_locales._parentID],
+    references: [_article_web_v.id],
+    relationName: '_locales',
+  }),
+  version_document: one(pdf, {
+    fields: [_article_web_v_locales.version_document],
+    references: [pdf.id],
+    relationName: 'version_document',
+  }),
+}))
+export const relations__article_web_v_rels = relations(_article_web_v_rels, ({ one }) => ({
+  parent: one(_article_web_v, {
+    fields: [_article_web_v_rels.parent],
+    references: [_article_web_v.id],
+    relationName: '_rels',
+  }),
+  permissionID: one(permission, {
+    fields: [_article_web_v_rels.permissionID],
+    references: [permission.id],
+    relationName: 'permission',
+  }),
+  taxonomyID: one(taxonomy, {
+    fields: [_article_web_v_rels.taxonomyID],
+    references: [taxonomy.id],
+    relationName: 'taxonomy',
+  }),
+}))
+export const relations__article_web_v = relations(_article_web_v, ({ one, many }) => ({
+  parent: one(article_web, {
+    fields: [_article_web_v.parent],
+    references: [article_web.id],
+    relationName: 'parent',
+  }),
+  version_cover: one(media, {
+    fields: [_article_web_v.version_cover],
+    references: [media.id],
+    relationName: 'version_cover',
+  }),
+  _locales: many(_article_web_v_locales, {
+    relationName: '_locales',
+  }),
+  _rels: many(_article_web_v_rels, {
     relationName: '_rels',
   }),
 }))
@@ -1396,6 +1751,13 @@ export const relations_book_ediciones = relations(book_ediciones, ({ one }) => (
     fields: [book_ediciones._parentID],
     references: [book.id],
     relationName: 'Ediciones',
+  }),
+}))
+export const relations_book_locales = relations(book_locales, ({ one }) => ({
+  _parentID: one(book, {
+    fields: [book_locales._parentID],
+    references: [book.id],
+    relationName: '_locales',
   }),
 }))
 export const relations_book_rels = relations(book_rels, ({ one }) => ({
@@ -1419,8 +1781,18 @@ export const relations_book = relations(book, ({ one, many }) => ({
   Ediciones: many(book_ediciones, {
     relationName: 'Ediciones',
   }),
+  _locales: many(book_locales, {
+    relationName: '_locales',
+  }),
   _rels: many(book_rels, {
     relationName: '_rels',
+  }),
+}))
+export const relations_video_locales = relations(video_locales, ({ one }) => ({
+  _parentID: one(video, {
+    fields: [video_locales._parentID],
+    references: [video.id],
+    relationName: '_locales',
   }),
 }))
 export const relations_video_rels = relations(video_rels, ({ one }) => ({
@@ -1441,8 +1813,18 @@ export const relations_video_rels = relations(video_rels, ({ one }) => ({
   }),
 }))
 export const relations_video = relations(video, ({ many }) => ({
+  _locales: many(video_locales, {
+    relationName: '_locales',
+  }),
   _rels: many(video_rels, {
     relationName: '_rels',
+  }),
+}))
+export const relations_quote_locales = relations(quote_locales, ({ one }) => ({
+  _parentID: one(quote, {
+    fields: [quote_locales._parentID],
+    references: [quote.id],
+    relationName: '_locales',
   }),
 }))
 export const relations_quote_rels = relations(quote_rels, ({ one }) => ({
@@ -1461,11 +1843,6 @@ export const relations_quote_rels = relations(quote_rels, ({ one }) => ({
     references: [video.id],
     relationName: 'video',
   }),
-  article_pdfID: one(article_pdf, {
-    fields: [quote_rels.article_pdfID],
-    references: [article_pdf.id],
-    relationName: 'article_pdf',
-  }),
   article_webID: one(article_web, {
     fields: [quote_rels.article_webID],
     references: [article_web.id],
@@ -1478,6 +1855,9 @@ export const relations_quote_rels = relations(quote_rels, ({ one }) => ({
   }),
 }))
 export const relations_quote = relations(quote, ({ many }) => ({
+  _locales: many(quote_locales, {
+    relationName: '_locales',
+  }),
   _rels: many(quote_rels, {
     relationName: '_rels',
   }),
@@ -1494,8 +1874,26 @@ export const relations_ui_grid_cards = relations(ui_grid_cards, ({ many }) => ({
     relationName: 'cards',
   }),
 }))
-export const relations_ui_block = relations(ui_block, () => ({}))
+export const relations_ui_block_locales = relations(ui_block_locales, ({ one }) => ({
+  _parentID: one(ui_block, {
+    fields: [ui_block_locales._parentID],
+    references: [ui_block.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations_ui_block = relations(ui_block, ({ many }) => ({
+  _locales: many(ui_block_locales, {
+    relationName: '_locales',
+  }),
+}))
 export const relations_permission = relations(permission, () => ({}))
+export const relations_search_results_locales = relations(search_results_locales, ({ one }) => ({
+  _parentID: one(search_results, {
+    fields: [search_results_locales._parentID],
+    references: [search_results.id],
+    relationName: '_locales',
+  }),
+}))
 export const relations_search_results_rels = relations(search_results_rels, ({ one }) => ({
   parent: one(search_results, {
     fields: [search_results_rels.parent],
@@ -1517,11 +1915,6 @@ export const relations_search_results_rels = relations(search_results_rels, ({ o
     references: [article_web.id],
     relationName: 'article_web',
   }),
-  article_pdfID: one(article_pdf, {
-    fields: [search_results_rels.article_pdfID],
-    references: [article_pdf.id],
-    relationName: 'article_pdf',
-  }),
   bookID: one(book, {
     fields: [search_results_rels.bookID],
     references: [book.id],
@@ -1529,6 +1922,9 @@ export const relations_search_results_rels = relations(search_results_rels, ({ o
   }),
 }))
 export const relations_search_results = relations(search_results, ({ many }) => ({
+  _locales: many(search_results_locales, {
+    relationName: '_locales',
+  }),
   _rels: many(search_results_rels, {
     relationName: '_rels',
   }),
@@ -1571,10 +1967,10 @@ export const relations_payload_locked_documents_rels = relations(
       references: [taxonomy.id],
       relationName: 'taxonomy',
     }),
-    article_pdfID: one(article_pdf, {
-      fields: [payload_locked_documents_rels.article_pdfID],
-      references: [article_pdf.id],
-      relationName: 'article_pdf',
+    pdfID: one(pdf, {
+      fields: [payload_locked_documents_rels.pdfID],
+      references: [pdf.id],
+      relationName: 'pdf',
     }),
     article_webID: one(article_web, {
       fields: [payload_locked_documents_rels.article_webID],
@@ -1647,20 +2043,56 @@ export const relations_payload_preferences = relations(payload_preferences, ({ m
   }),
 }))
 export const relations_payload_migrations = relations(payload_migrations, () => ({}))
-export const relations_articulos_page = relations(articulos_page, () => ({}))
-export const relations_home_page = relations(home_page, () => ({}))
-export const relations_videos_page = relations(videos_page, () => ({}))
+export const relations_articulos_page_locales = relations(articulos_page_locales, ({ one }) => ({
+  _parentID: one(articulos_page, {
+    fields: [articulos_page_locales._parentID],
+    references: [articulos_page.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations_articulos_page = relations(articulos_page, ({ many }) => ({
+  _locales: many(articulos_page_locales, {
+    relationName: '_locales',
+  }),
+}))
+export const relations_home_page_locales = relations(home_page_locales, ({ one }) => ({
+  _parentID: one(home_page, {
+    fields: [home_page_locales._parentID],
+    references: [home_page.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations_home_page = relations(home_page, ({ many }) => ({
+  _locales: many(home_page_locales, {
+    relationName: '_locales',
+  }),
+}))
+export const relations_videos_page_locales = relations(videos_page_locales, ({ one }) => ({
+  _parentID: one(videos_page, {
+    fields: [videos_page_locales._parentID],
+    references: [videos_page.id],
+    relationName: '_locales',
+  }),
+}))
+export const relations_videos_page = relations(videos_page, ({ many }) => ({
+  _locales: many(videos_page_locales, {
+    relationName: '_locales',
+  }),
+}))
 
 type DatabaseSchema = {
+  enum__locales: typeof enum__locales
   enum_prices_type: typeof enum_prices_type
   enum_prices_interval: typeof enum_prices_interval
   enum_products_type: typeof enum_products_type
   enum_subscriptions_status: typeof enum_subscriptions_status
+  enum_article_web_status: typeof enum_article_web_status
+  enum__article_web_v_version_status: typeof enum__article_web_v_version_status
+  enum__article_web_v_published_locale: typeof enum__article_web_v_published_locale
   enum_book_ediciones_variant: typeof enum_book_ediciones_variant
   enum_book_ediciones_language: typeof enum_book_ediciones_language
   users_accounts: typeof users_accounts
   users_sessions: typeof users_sessions
-  users_verification_tokens: typeof users_verification_tokens
   users: typeof users
   prices: typeof prices
   products_images: typeof products_images
@@ -1671,22 +2103,32 @@ type DatabaseSchema = {
   media: typeof media
   taxonomy_breadcrumbs: typeof taxonomy_breadcrumbs
   taxonomy: typeof taxonomy
-  article_pdf: typeof article_pdf
-  article_pdf_rels: typeof article_pdf_rels
+  taxonomy_locales: typeof taxonomy_locales
+  pdf: typeof pdf
+  pdf_rels: typeof pdf_rels
   article_web: typeof article_web
+  article_web_locales: typeof article_web_locales
   article_web_rels: typeof article_web_rels
+  _article_web_v: typeof _article_web_v
+  _article_web_v_locales: typeof _article_web_v_locales
+  _article_web_v_rels: typeof _article_web_v_rels
   book_ediciones: typeof book_ediciones
   book: typeof book
+  book_locales: typeof book_locales
   book_rels: typeof book_rels
   video: typeof video
+  video_locales: typeof video_locales
   video_rels: typeof video_rels
   quote: typeof quote
+  quote_locales: typeof quote_locales
   quote_rels: typeof quote_rels
   ui_grid_cards_cards: typeof ui_grid_cards_cards
   ui_grid_cards: typeof ui_grid_cards
   ui_block: typeof ui_block
+  ui_block_locales: typeof ui_block_locales
   permission: typeof permission
   search_results: typeof search_results
+  search_results_locales: typeof search_results_locales
   search_results_rels: typeof search_results_rels
   payload_locked_documents: typeof payload_locked_documents
   payload_locked_documents_rels: typeof payload_locked_documents_rels
@@ -1694,11 +2136,13 @@ type DatabaseSchema = {
   payload_preferences_rels: typeof payload_preferences_rels
   payload_migrations: typeof payload_migrations
   articulos_page: typeof articulos_page
+  articulos_page_locales: typeof articulos_page_locales
   home_page: typeof home_page
+  home_page_locales: typeof home_page_locales
   videos_page: typeof videos_page
+  videos_page_locales: typeof videos_page_locales
   relations_users_accounts: typeof relations_users_accounts
   relations_users_sessions: typeof relations_users_sessions
-  relations_users_verification_tokens: typeof relations_users_verification_tokens
   relations_users: typeof relations_users
   relations_prices: typeof relations_prices
   relations_products_images: typeof relations_products_images
@@ -1708,22 +2152,32 @@ type DatabaseSchema = {
   relations_subscriptions: typeof relations_subscriptions
   relations_media: typeof relations_media
   relations_taxonomy_breadcrumbs: typeof relations_taxonomy_breadcrumbs
+  relations_taxonomy_locales: typeof relations_taxonomy_locales
   relations_taxonomy: typeof relations_taxonomy
-  relations_article_pdf_rels: typeof relations_article_pdf_rels
-  relations_article_pdf: typeof relations_article_pdf
+  relations_pdf_rels: typeof relations_pdf_rels
+  relations_pdf: typeof relations_pdf
+  relations_article_web_locales: typeof relations_article_web_locales
   relations_article_web_rels: typeof relations_article_web_rels
   relations_article_web: typeof relations_article_web
+  relations__article_web_v_locales: typeof relations__article_web_v_locales
+  relations__article_web_v_rels: typeof relations__article_web_v_rels
+  relations__article_web_v: typeof relations__article_web_v
   relations_book_ediciones: typeof relations_book_ediciones
+  relations_book_locales: typeof relations_book_locales
   relations_book_rels: typeof relations_book_rels
   relations_book: typeof relations_book
+  relations_video_locales: typeof relations_video_locales
   relations_video_rels: typeof relations_video_rels
   relations_video: typeof relations_video
+  relations_quote_locales: typeof relations_quote_locales
   relations_quote_rels: typeof relations_quote_rels
   relations_quote: typeof relations_quote
   relations_ui_grid_cards_cards: typeof relations_ui_grid_cards_cards
   relations_ui_grid_cards: typeof relations_ui_grid_cards
+  relations_ui_block_locales: typeof relations_ui_block_locales
   relations_ui_block: typeof relations_ui_block
   relations_permission: typeof relations_permission
+  relations_search_results_locales: typeof relations_search_results_locales
   relations_search_results_rels: typeof relations_search_results_rels
   relations_search_results: typeof relations_search_results
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels
@@ -1731,8 +2185,11 @@ type DatabaseSchema = {
   relations_payload_preferences_rels: typeof relations_payload_preferences_rels
   relations_payload_preferences: typeof relations_payload_preferences
   relations_payload_migrations: typeof relations_payload_migrations
+  relations_articulos_page_locales: typeof relations_articulos_page_locales
   relations_articulos_page: typeof relations_articulos_page
+  relations_home_page_locales: typeof relations_home_page_locales
   relations_home_page: typeof relations_home_page
+  relations_videos_page_locales: typeof relations_videos_page_locales
   relations_videos_page: typeof relations_videos_page
 }
 
