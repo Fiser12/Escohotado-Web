@@ -1,5 +1,6 @@
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { H2 } from "../../../../common/headers/H2";
+import { H1 } from "../../../../common/headers/H1";
 import { MainButton } from "../../../../common/main_button/main_button";
 import { BookCard } from "../../../book/cards";
 import { ImageParallax } from "../../../book/cards/image_parallax";
@@ -26,13 +27,7 @@ export const BookMain = () => {
     return (
         <div className="w-full h-auto md:h-screen bg-white">
             <MainHero
-                topHeader={true}
-                title="Rameras y Esposas"
-                description="Reedición de «Rameras y Esposas» (1993) de Antonio Escohotado, en formato impreso, con cuadernillo a color de 20 páginas."
-                children={
-                    <MainButton text="Sumérgete en la lectura" />
-                }
-                image={
+                media={
                     <ImageParallax
                         className="px-2 sm:px-20 md:px-0 lg:px-8"
                         shadow={false}
@@ -41,7 +36,11 @@ export const BookMain = () => {
                     </ImageParallax>
                 }
                 className="bg-gray-light"
-            />
+            >
+                <H1 label={"Reedición de «Rameras y Esposas» (1993) de Antonio Escohotado, en formato impreso, con cuadernillo a color de 20 páginas."} />
+                <p className="line-clamp-6">{"Reedición de «Rameras y Esposas» (1993) de Antonio Escohotado, en formato impreso, con cuadernillo a color de 20 páginas."}</p>
+                <MainButton text="Sumérgete en la lectura" />
+            </MainHero>
             <ContentWrapper className="mx-auto flex flex-col gap-10 py-16">
                 <H2 label="Biblioteca" />
                 <ContentGridList

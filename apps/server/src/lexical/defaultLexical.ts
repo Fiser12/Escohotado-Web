@@ -9,9 +9,11 @@ import { BlockSlug } from './blocks/slug_blogs'
 import { TwoColumnsBlock } from './blocks/two_columns_block/block'
 import { HighlightBlock } from './blocks/highlight_block/block'
 import { ButtonsBlock } from './blocks/button_block/block'
+import { HeroBlock } from './blocks/hero_block/block'
 
 export const defaultBlocks = () => [
   WrapperBlock,
+  HeroBlock,
   ButtonsBlock,
   HighlightBlock,
   PhotosCarouselBlock,

@@ -60,7 +60,7 @@ const Page = async (props: Props) => {
     >
         <BookDetail
             title={book.title ?? "No title"}
-            description={book.description ?? "Empty"}
+            description={book.description ?? ""}
             detailHref={routes.nextJS.generateDetailHref({ collection: "book", value: book })}
             author={getAuthorFromTaxonomies(book.categories as Taxonomy[])?.singular_name}
             coverHref={(book.cover as Media)?.url ?? "#"}

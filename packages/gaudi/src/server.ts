@@ -18,8 +18,8 @@ export { BookDetail } from "./content/pages/book_page/detail";
 export { HomePage } from "./content/pages/home_page"
 export { NewsletterSubscription } from "./content/common/newsletterSubscription";
 export { GridCardsBlock } from "./content/featured_grid_home/GridCardsBlock";
-import HomeHero from "./common/home_hero";
+export { MainHero } from "./content/common/hero";
 import handwrittenBackground from "./assets/images/handwritting-bg.jpg";
 import escohotadoArticlesPortada from "./assets/images/antonio-escohotado-lecturas.png";
-export { handwrittenBackground, escohotadoArticlesPortada, HomeHero };
+export { handwrittenBackground, escohotadoArticlesPortada };
 export { DetailBottomSection } from "./common/detail_bottom_section";

@@ -11,8 +11,16 @@ export const LexicalButtonRenderer: React.FC<ButtonLexicalType> = (button) => {
     />
   </Link>
 }
-export const LexicalButtonsRenderer: React.FC<{buttons: ButtonLexicalType[]}> = ({buttons}) => {
-    return <div className='flex flex-wrap justify-center gap-4'>
+export const LexicalButtonsRenderer: React.FC<{
+    buttons: ButtonLexicalType[]
+    alignment: "right" | "left" | "center"
+}> = ({buttons, alignment}) => {
+    let alignmentTailwind
+    if (alignment === "right") alignmentTailwind = "md:justify-end"
+    else if (alignment === "left") alignmentTailwind = "md:justify-start"
+    else alignmentTailwind = "md:justify-center"
+    
+    return <div className={`flex flex-wrap gap-4 justify-center ${alignmentTailwind}`}>
       {buttons.map((button, index) => <LexicalButtonRenderer key={index} {...button} />)}
     </div>
 }

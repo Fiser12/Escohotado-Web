@@ -1258,6 +1258,7 @@ export interface ButtonsBlock {
         id?: string | null;
       }[]
     | null;
+  alignment?: ('left' | 'center' | 'right') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'buttons_block';
@@ -1407,6 +1408,32 @@ export interface GridCardsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'grid_cards_block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  media: number | Media;
+  inverted?: boolean | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero_block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

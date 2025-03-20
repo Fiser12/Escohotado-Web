@@ -10,6 +10,17 @@ export const ButtonsBlock: Block = {
     plural: 'ButtonsBlocks',
   },
   fields: [
-    buttonsField(4)
+    buttonsField(4),
+    {
+      name: 'alignment',
+      label: 'Alignment',
+      type: 'select',
+      defaultValue: 'center',
+      options: [
+        { label: 'Left', value: 'left' },
+        { label: 'Center', value: 'center' },
+        { label: 'Right', value: 'right' }
+      ],
+    }
   ],
 }

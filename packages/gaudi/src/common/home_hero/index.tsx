@@ -11,9 +11,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const HomeHero: React.FC<Props> = ({ description, buttons, ...rest }) => {
     return <MainHero
         {...rest}
-        description={description}
         title="Antonio Escohotado"
-        image={
+        media={
             <Image
                 width={2610}
                 height={3036}
@@ -21,7 +20,6 @@ const HomeHero: React.FC<Props> = ({ description, buttons, ...rest }) => {
                 alt={"Antonio Escohotado"}
             />
         }
-        topHeader={true}
         changeDirection={false}
     >
         {buttons.map((button, index) => (

@@ -26,6 +26,19 @@ export const HeaderMobile: React.FC<Props> = ({ user, accountMenuItems, classNam
         };
     }, [isOpenMenu]);
 
+    useEffect(() => {
+        const handleResize = () => {
+          if (window.innerWidth >= 1024) {
+            document.body.style.overflow = '';
+          } else if (isOpenMenu) {
+            document.body.style.overflow = 'hidden';
+          }
+        };
+    
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, [isOpenMenu]);
+    
     return <header {...rest} className={`w-full bg-white ${className ?? ""}`} >
         <ContentWrapper>
             <nav className="flex justify-between items-center lg:hidden h-16 py-5">

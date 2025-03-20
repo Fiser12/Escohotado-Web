@@ -15,9 +15,7 @@ const meta: Meta<typeof MainHero> = {
     },
     argTypes: {
         title: { control: "text", description: "Title of the Hero" },
-        description: { control: "text", description: "Description of the Hero" },
-        quote: { control: "text", description: "Caption of the Hero" },
-        image: {
+        media: {
             description: "Image to be displayed",
             control: false,
         },
@@ -36,8 +34,6 @@ export const Book: Story = {
     name: "Book",
     args: {
         title: "Sample Book Title",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer laoreet mi neque, eu blandit lectus facilisis non. Suspendisse ligula nibh, viverra vel congue sed, vestibulum sed ex. Phasellus a odio sodales, tincidunt odio sed, posuere lectus. Duis turpis nisi, posuere ac lectus eu, bibendum gravida est. Pellentesque turpis lectus, porttitor at augue non, mattis sollicitudin velit. Ut a metus eu arcu venenatis pharetra ac vitae orci.",
-        quote: "Sample quote text",
     },
     render: args => (
         <MainHero
