@@ -29,6 +29,16 @@ export const HeroBlock: Block = {
           name: 'inverted',
           type: 'checkbox',
           defaultValue: false
+        },
+        {
+          type: 'select',
+          label: 'Tipo de media',
+          name: 'media_type',
+          options: [
+            { label: 'Normal', value: 'normal' },
+            { label: 'Autoplay & Muted (Si es vídeo)', value: 'muted' },
+          ],
+          defaultValue: 'normal'
         }    
       ]
     },

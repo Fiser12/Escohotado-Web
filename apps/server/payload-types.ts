@@ -1416,6 +1416,7 @@ export interface GridCardsBlock {
 export interface HeroBlock {
   media: number | Media;
   inverted?: boolean | null;
+  media_type?: ('normal' | 'muted') | null;
   content?: {
     root: {
       type: string;

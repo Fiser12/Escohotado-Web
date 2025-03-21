@@ -13,8 +13,8 @@ export const LexicalButtonRenderer: React.FC<ButtonLexicalType> = (button) => {
 }
 export const LexicalButtonsRenderer: React.FC<{
     buttons: ButtonLexicalType[]
-    alignment: "right" | "left" | "center"
-}> = ({buttons, alignment}) => {
+    alignment?: "right" | "left" | "center"
+}> = ({buttons, alignment = "center"}) => {
     let alignmentTailwind
     if (alignment === "right") alignmentTailwind = "md:justify-end"
     else if (alignment === "left") alignmentTailwind = "md:justify-start"
