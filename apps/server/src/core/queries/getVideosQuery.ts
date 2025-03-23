@@ -6,20 +6,34 @@ import { Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
-import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
+import { generateFilterExpresionFromTags } from 'hegel'
 import { withCache } from 'nextjs-query-cache'
 
 const PAGE_SIZE = 20
 
+/**
+ * Video con información adicional sobre permisos
+ */
 export type ResultVideo = Video & {
   allowedHref: string | null
 }
 
+/**
+ * Resultado paginado de videos
+ */
 export type VideosQueryResult = {
   results: ResultVideo[]
   maxPage: number
 }
 
+/**
+ * Tipos de ordenación disponibles
+ */
+type SortOption = 'publishedAt' | 'popularity'
+
+/**
+ * Obtiene videos filtrados por etiquetas
+ */
 export const getVideosQueryByTags = async (
   query: string,
   tags: string[],
@@ -27,20 +41,21 @@ export const getVideosQueryByTags = async (
   sortBy: string,
 ): Promise<VideosQueryResult> => {
   const filterExpression = generateFilterExpresionFromTags(tags, '&&')
-  return getVideosQuery(
-    page,
-    PAGE_SIZE,
-    sortBy as 'publishedAt' | 'popularity',
-    query,
-    filterExpression,
-  )
+  return getVideosQuery(page, PAGE_SIZE, sortBy as SortOption, query, filterExpression)
 }
 
+/**
+ * Busca videos por IDs con opciones de ordenación
+ */
 const fetchVideosByIds = async (
   videoIds: number[],
-  sortBy: 'publishedAt' | 'popularity',
+  sortBy: SortOption,
   limit: number,
 ): Promise<Video[]> => {
+  if (videoIds.length === 0) {
+    return []
+  }
+
   const payload = await getPayload()
   const sort = sortBy === 'publishedAt' ? '-publishedAt' : '-viewCount'
 
@@ -57,7 +72,14 @@ const fetchVideosByIds = async (
   return videosDocs.docs
 }
 
+/**
+ * Añade información de permisos a los videos
+ */
 const mapVideosWithPermissions = async (videos: Video[]): Promise<ResultVideo[]> => {
+  if (videos.length === 0) {
+    return []
+  }
+
   const payload = await getPayload()
   const user = await getCurrentUserQuery(payload)
 
@@ -76,11 +98,14 @@ const mapVideosWithPermissions = async (videos: Video[]): Promise<ResultVideo[]>
   })
 }
 
+/**
+ * Obtiene videos según criterios de búsqueda
+ */
 export const getVideosQuery = async (
-  page: number = 0,
-  limit: number = PAGE_SIZE,
-  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
-  query: string = '',
+  page = 0,
+  limit = PAGE_SIZE,
+  sortBy: SortOption = 'publishedAt',
+  query = '',
   filterExpression?: string | null,
 ): Promise<VideosQueryResult> => {
   const { results, lastPage } = await searchElementsQuery(
@@ -102,10 +127,16 @@ export const getVideosQuery = async (
   return { results: videosWithPermissions, maxPage: lastPage }
 }
 
+/**
+ * Versión cacheada de getVideosQuery
+ */
 export const getVideosQueryWithCache = withCache(getVideosQuery)({
   hours: 1,
 })
 
+/**
+ * Versión cacheada de getVideosQueryByTags
+ */
 export const getVideosQueryByTagsWithCache = withCache(getVideosQueryByTags)({
   hours: 1,
 })

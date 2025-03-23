@@ -10,8 +10,8 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from "hegel";
 import { evalPermissionByRoleQuery } from "@/core/auth/permissions/evalPermissionByRoleQuery";
 import "hegel";
-import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
-import { getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
+import { mapQuoteCard } from "@/core/mappers/mapCards";
+import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { SEOContentWrapper } from "gaudi/client";
 
 interface Props {

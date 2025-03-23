@@ -355,25 +355,28 @@ importers:
 
   packages/nextjs-query-cache:
     dependencies:
-      next:
-        specifier: '>=13.4.0'
-        version: 15.1.6(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@19.0.0-beta-714736e-20250131)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4)
+      jsep:
+        specifier: ^1.4.0
+        version: 1.4.0
     devDependencies:
       '@types/node':
-        specifier: ^18.0.0
-        version: 18.19.81
+        specifier: ^22.13.1
+        version: 22.13.1
       eslint:
-        specifier: ^8.40.0
-        version: 8.57.1
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.2(@types/node@18.19.81)(typescript@5.7.3)
+        specifier: ^9.19.0
+        version: 9.19.0(jiti@2.4.2)
+      eslint-config:
+        specifier: workspace:*
+        version: link:../eslint-config
       typescript:
-        specifier: ^5.0.0
+        specifier: ^5.7.3
         version: 5.7.3
-      vitest:
-        specifier: ^0.34.0
-        version: 0.34.6(lightningcss@1.29.1)(sass@1.77.4)(terser@5.37.0)
+      typescript-eslint:
+        specifier: ^8.23.0
+        version: 8.23.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)
+      vite:
+        specifier: ^6.0.11
+        version: 6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sass@1.77.4)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0)
 
 packages:
 
@@ -3836,9 +3839,6 @@ packages:
 
   '@types/mysql@2.15.26':
     resolution: {integrity: sha512-DSLCOXhkvfS5WNNPbfn2KdICAmk8lLc+/PNvnPnF7gOdMZCxopXduqv0OQ13y/yA/zXTSikZZqVgybUxOEg6YQ==}
-
-  '@types/node@18.19.81':
-    resolution: {integrity: sha512-7KO9oZ2//ivtSsryp0LQUqq79zyGXzwq1WqfywpC9ucjY7YyltMMmxWgtRFRKCxwa7VPxVBVy4kHf5UC1E8Lug==}
 
   '@types/node@22.13.1':
     resolution: {integrity: sha512-jK8uzQlrvXqEU91UxiK5J7pKHyzgnI1Qnl0QDHIgVGuolJhRb9EEl28Cj9b3rGR8B2lhFCtvIm5os8lFnO/1Ew==}
@@ -8413,9 +8413,6 @@ packages:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
 
-  undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
-
   undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
 
@@ -10784,6 +10781,7 @@ snapshots:
   '@jest/schemas@29.6.3':
     dependencies:
       '@sinclair/typebox': 0.27.8
+    optional: true
 
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:
@@ -11927,7 +11925,8 @@ snapshots:
       - encoding
       - supports-color
 
-  '@sinclair/typebox@0.27.8': {}
+  '@sinclair/typebox@0.27.8':
+    optional: true
 
   '@smithy/abort-controller@4.0.1':
     dependencies:
@@ -12531,7 +12530,7 @@ snapshots:
   '@storybook/blocks@8.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.5.1(prettier@3.4.2))':
     dependencies:
       '@storybook/csf': 0.1.12
-      '@storybook/icons': 1.3.2(react-dom@18.3.1(react@19.0.0))(react@18.3.1)
+      '@storybook/icons': 1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       storybook: 8.5.1(prettier@3.4.2)
       ts-dedent: 2.2.0
     optionalDependencies:
@@ -12722,6 +12721,11 @@ snapshots:
       type-fest: 2.19.0
 
   '@storybook/global@5.0.0': {}
+
+  '@storybook/icons@1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@storybook/icons@1.3.2(react-dom@18.3.1(react@19.0.0))(react@18.3.1)':
     dependencies:
@@ -13256,8 +13260,10 @@ snapshots:
   '@types/chai-subset@1.3.6(@types/chai@4.3.20)':
     dependencies:
       '@types/chai': 4.3.20
+    optional: true
 
-  '@types/chai@4.3.20': {}
+  '@types/chai@4.3.20':
+    optional: true
 
   '@types/connect@3.4.36':
     dependencies:
@@ -13326,10 +13332,6 @@ snapshots:
   '@types/mysql@2.15.26':
     dependencies:
       '@types/node': 22.13.1
-
-  '@types/node@18.19.81':
-    dependencies:
-      undici-types: 5.26.5
 
   '@types/node@22.13.1':
     dependencies:
@@ -13759,6 +13761,7 @@ snapshots:
       '@vitest/spy': 0.34.6
       '@vitest/utils': 0.34.6
       chai: 4.5.0
+    optional: true
 
   '@vitest/expect@2.0.5':
     dependencies:
@@ -13780,16 +13783,19 @@ snapshots:
       '@vitest/utils': 0.34.6
       p-limit: 4.0.0
       pathe: 1.1.2
+    optional: true
 
   '@vitest/snapshot@0.34.6':
     dependencies:
       magic-string: 0.30.17
       pathe: 1.1.2
       pretty-format: 29.7.0
+    optional: true
 
   '@vitest/spy@0.34.6':
     dependencies:
       tinyspy: 2.2.1
+    optional: true
 
   '@vitest/spy@2.0.5':
     dependencies:
@@ -13800,6 +13806,7 @@ snapshots:
       diff-sequences: 29.6.3
       loupe: 2.3.7
       pretty-format: 29.7.0
+    optional: true
 
   '@vitest/utils@2.0.5':
     dependencies:
@@ -14078,7 +14085,8 @@ snapshots:
       object.assign: 4.1.7
       util: 0.12.5
 
-  assertion-error@1.1.0: {}
+  assertion-error@1.1.0:
+    optional: true
 
   assertion-error@2.0.1: {}
 
@@ -14296,7 +14304,8 @@ snapshots:
     dependencies:
       streamsearch: 1.1.0
 
-  cac@6.7.14: {}
+  cac@6.7.14:
+    optional: true
 
   call-bind-apply-helpers@1.0.1:
     dependencies:
@@ -14342,6 +14351,7 @@ snapshots:
       loupe: 2.3.7
       pathval: 1.1.1
       type-detect: 4.1.0
+    optional: true
 
   chai@5.1.2:
     dependencies:
@@ -14403,6 +14413,7 @@ snapshots:
   check-error@1.0.3:
     dependencies:
       get-func-name: 2.0.2
+    optional: true
 
   check-error@2.1.1: {}
 
@@ -14491,7 +14502,8 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  confbox@0.1.8: {}
+  confbox@0.1.8:
+    optional: true
 
   console-browserify@1.2.0: {}
 
@@ -14690,6 +14702,7 @@ snapshots:
   deep-eql@4.1.4:
     dependencies:
       type-detect: 4.1.0
+    optional: true
 
   deep-eql@5.0.2: {}
 
@@ -14755,7 +14768,8 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  diff-sequences@29.6.3: {}
+  diff-sequences@29.6.3:
+    optional: true
 
   diff@4.0.2: {}
 
@@ -15103,6 +15117,7 @@ snapshots:
       '@esbuild/win32-arm64': 0.21.5
       '@esbuild/win32-ia32': 0.21.5
       '@esbuild/win32-x64': 0.21.5
+    optional: true
 
   esbuild@0.23.1:
     optionalDependencies:
@@ -15184,7 +15199,7 @@ snapshots:
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.5.4))(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.1.0(eslint@8.57.1)
@@ -15233,7 +15248,7 @@ snapshots:
       is-glob: 4.0.3
       stable-hash: 0.0.4
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.5.4))(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -15280,7 +15295,7 @@ snapshots:
       eslint: 9.19.0(jiti@2.4.2)
       ignore: 5.3.2
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.5.4))(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -15915,7 +15930,8 @@ snapshots:
 
   gensync@1.0.0-beta.2: {}
 
-  get-func-name@2.0.2: {}
+  get-func-name@2.0.2:
+    optional: true
 
   get-intrinsic@1.2.7:
     dependencies:
@@ -16682,7 +16698,8 @@ snapshots:
 
   loader-utils@3.3.1: {}
 
-  local-pkg@0.4.3: {}
+  local-pkg@0.4.3:
+    optional: true
 
   locate-character@3.0.0: {}
 
@@ -16740,6 +16757,7 @@ snapshots:
   loupe@2.3.7:
     dependencies:
       get-func-name: 2.0.2
+    optional: true
 
   loupe@3.1.2: {}
 
@@ -17088,6 +17106,7 @@ snapshots:
       pathe: 2.0.3
       pkg-types: 1.3.1
       ufo: 1.5.4
+    optional: true
 
   module-details-from-path@1.0.3: {}
 
@@ -17527,11 +17546,14 @@ snapshots:
 
   path-type@4.0.0: {}
 
-  pathe@1.1.2: {}
+  pathe@1.1.2:
+    optional: true
 
-  pathe@2.0.3: {}
+  pathe@2.0.3:
+    optional: true
 
-  pathval@1.1.1: {}
+  pathval@1.1.1:
+    optional: true
 
   pathval@2.0.0: {}
 
@@ -17696,6 +17718,7 @@ snapshots:
       confbox: 0.1.8
       mlly: 1.7.4
       pathe: 2.0.3
+    optional: true
 
   pluralize@8.0.0: {}
 
@@ -17845,6 +17868,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       ansi-styles: 5.2.0
       react-is: 18.3.1
+    optional: true
 
   pretty-format@3.8.0: {}
 
@@ -18009,7 +18033,8 @@ snapshots:
 
   react-is@17.0.2: {}
 
-  react-is@18.3.1: {}
+  react-is@18.3.1:
+    optional: true
 
   react-refresh@0.14.2: {}
 
@@ -18466,7 +18491,8 @@ snapshots:
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
 
-  siginfo@2.0.0: {}
+  siginfo@2.0.0:
+    optional: true
 
   signal-exit@3.0.7: {}
 
@@ -18554,7 +18580,8 @@ snapshots:
 
   stable-hash@0.0.4: {}
 
-  stackback@0.0.2: {}
+  stackback@0.0.2:
+    optional: true
 
   stackframe@1.3.4: {}
 
@@ -18564,7 +18591,8 @@ snapshots:
 
   state-local@1.0.7: {}
 
-  std-env@3.8.1: {}
+  std-env@3.8.1:
+    optional: true
 
   storybook@8.5.1(prettier@3.4.2):
     dependencies:
@@ -18692,6 +18720,7 @@ snapshots:
   strip-literal@1.3.0:
     dependencies:
       acorn: 8.14.0
+    optional: true
 
   stripe@10.17.0:
     dependencies:
@@ -18823,7 +18852,8 @@ snapshots:
 
   tiny-invariant@1.3.3: {}
 
-  tinybench@2.9.0: {}
+  tinybench@2.9.0:
+    optional: true
 
   tinycolor2@1.6.0: {}
 
@@ -18837,11 +18867,13 @@ snapshots:
       '@types/tinycolor2': 1.4.6
       tinycolor2: 1.6.0
 
-  tinypool@0.7.0: {}
+  tinypool@0.7.0:
+    optional: true
 
   tinyrainbow@1.2.0: {}
 
-  tinyspy@2.2.1: {}
+  tinyspy@2.2.1:
+    optional: true
 
   tinyspy@3.0.2: {}
 
@@ -18904,24 +18936,6 @@ snapshots:
   ts-essentials@10.0.3(typescript@5.5.4):
     optionalDependencies:
       typescript: 5.5.4
-
-  ts-node@10.9.2(@types/node@18.19.81)(typescript@5.7.3):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 18.19.81
-      acorn: 8.14.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.7.3
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
 
   ts-node@10.9.2(@types/node@22.13.1)(typescript@5.7.3):
     dependencies:
@@ -19018,7 +19032,8 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
 
-  type-detect@4.1.0: {}
+  type-detect@4.1.0:
+    optional: true
 
   type-fest@0.20.2: {}
 
@@ -19087,7 +19102,8 @@ snapshots:
 
   typescript@5.7.3: {}
 
-  ufo@1.5.4: {}
+  ufo@1.5.4:
+    optional: true
 
   uglify-js@3.19.3:
     optional: true
@@ -19100,8 +19116,6 @@ snapshots:
       has-bigints: 1.1.0
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
-
-  undici-types@5.26.5: {}
 
   undici-types@6.20.0: {}
 
@@ -19244,6 +19258,7 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+    optional: true
 
   vite@5.4.14(@types/node@22.13.1)(lightningcss@1.29.1)(sass@1.77.4)(terser@5.37.0):
     dependencies:
@@ -19256,6 +19271,7 @@ snapshots:
       lightningcss: 1.29.1
       sass: 1.77.4
       terser: 5.37.0
+    optional: true
 
   vite@6.1.0(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(sass@1.77.4)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0):
     dependencies:
@@ -19307,6 +19323,7 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+    optional: true
 
   vm-browserify@1.1.2: {}
 
@@ -19470,6 +19487,7 @@ snapshots:
     dependencies:
       siginfo: 2.0.0
       stackback: 0.0.2
+    optional: true
 
   word-wrap@1.2.5: {}
 

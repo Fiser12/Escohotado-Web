@@ -35,7 +35,7 @@ let cache: Cache = {
  * @param updater Función que recibe la caché actual y devuelve la caché actualizada
  * @returns La caché actualizada
  */
-export const updateCache = (updater: (cache: Cache) => Cache): Cache => {
+export const updateCache = async (updater: (cache: Cache) => Cache): Promise<Cache> => {
   cache = updater(cache);
   return cache;
 };

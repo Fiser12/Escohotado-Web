@@ -4,6 +4,7 @@ import { getPayload } from '@/payload/utils/getPayload'
 import { evaluateExpression } from 'hegel'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { evalPermissionByRoleQuery } from '../auth/permissions/evalPermissionByRoleQuery'
+import { User } from 'payload-types'
 
 export type SearchCollection = 'article_web' | 'quote' | 'book' | 'video'
 
@@ -15,7 +16,33 @@ export type SearchResult = {
   tags: string[]
 }
 
-const createQueryCondition = (query: string) => {
+// Tipado para los documentos recibidos directamente del payload
+interface PayloadDoc {
+  id: number
+  title?: string | null
+  doc?: {
+    relationTo: SearchCollection
+    value: number | any // Payload puede devolver tanto el ID como el objeto completo
+  }
+  href?: string | null
+  permissions_seeds?: string | null
+  tags?: string | null
+}
+
+type QueryCondition = {
+  where?: {
+    and: Array<{
+      or: Array<
+        | { title: { like: string } }
+        | { tags: { like: string } }
+        | { and: Array<{ title: { like: string } }> }
+        | { and: Array<{ tags: { like: string } }> }
+      >
+    }>
+  }
+}
+
+const createQueryCondition = (query: string): QueryCondition => {
   if (!query) return {}
 
   const titleCondition = { title: { like: query } }
@@ -39,34 +66,51 @@ const createQueryCondition = (query: string) => {
   }
 }
 
-const filterByCollections =
-  (collections: SearchCollection[], filterExpression?: string | null) => (result: any) => {
-    const isInCollection = collections.includes(result.doc?.relationTo)
+const filterByCollections = (collections: SearchCollection[], filterExpression?: string | null) => {
+  return (result: PayloadDoc): boolean => {
+    if (!result.doc) return false
+
+    const isInCollection = collections.includes(result.doc.relationTo)
 
     if (!filterExpression) return isInCollection
 
     const tags = result.tags?.split(' ').filter(Boolean) ?? []
     return isInCollection && evaluateExpression(filterExpression, tags)
   }
+}
 
-const mapToSearchResult =
-  (user: any) =>
-  (result: any): SearchResult => ({
-    collection: result.doc.relationTo,
-    href: evalPermissionByRoleQuery(user, result.permissions_seeds?.trim() ?? '')
-      ? (result.href ?? '#')
-      : undefined,
-    id: result.doc.value as number,
-    title: result.title ?? '',
-    tags: result.tags?.split(' ').filter(Boolean) ?? [],
-  })
+const mapToSearchResult = (user: User | null) => {
+  return (result: PayloadDoc): SearchResult => {
+    if (!result.doc) {
+      throw new Error('Invalid search result: missing doc field')
+    }
 
-const paginateResults = (results: SearchResult[], page: number, limit?: number) => {
+    return {
+      collection: result.doc.relationTo,
+      href: evalPermissionByRoleQuery(user, result.permissions_seeds?.trim() ?? '')
+        ? (result.href ?? '#')
+        : undefined,
+      id: result.doc.value as number,
+      title: result.title ?? '',
+      tags: result.tags?.split(' ').filter(Boolean) ?? [],
+    }
+  }
+}
+
+type PaginationResult = {
+  results: SearchResult[]
+  lastPage: number
+}
+
+const paginateResults = (
+  results: SearchResult[],
+  page: number,
+  limit?: number,
+): PaginationResult => {
   if (!limit) return { results, lastPage: 0 }
 
   const startIndex = page * limit
-  const endIndex = startIndex + limit
-  const paginatedResults = results.slice(startIndex, endIndex)
+  const paginatedResults = results.slice(startIndex, startIndex + limit)
   const lastPage = Math.ceil(results.length / limit)
 
   return { results: paginatedResults, lastPage }
@@ -78,7 +122,7 @@ export const searchElementsQuery = async (
   page: number = 0,
   filterExpression?: string | null,
   limit?: number,
-): Promise<{ results: SearchResult[]; lastPage: number }> => {
+): Promise<PaginationResult> => {
   const payload = await getPayload()
   const user = await getCurrentUserQuery(payload)
 
@@ -97,9 +141,12 @@ export const searchElementsQuery = async (
     ...createQueryCondition(query),
   })
 
+  const filterFn = filterByCollections(collections, filterExpression)
+  const mapFn = mapToSearchResult(user)
+
   const filteredResults = searchResults.docs
-    .filter(filterByCollections(collections, filterExpression))
-    .map(mapToSearchResult(user))
+    .filter((doc) => filterFn(doc as PayloadDoc))
+    .map((doc) => mapFn(doc as PayloadDoc))
 
   return paginateResults(filteredResults, page, limit)
 }

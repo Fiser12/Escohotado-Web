@@ -1,6 +1,6 @@
 "use client";
 
-import { mapTaxonomyToCategoryModel, getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
+import { mapTaxonomyToCategoryModel, getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { Quote, Taxonomy } from "payload-types";
 import { ModalQuote } from "gaudi/client";
 import { useRouter } from "next/navigation";

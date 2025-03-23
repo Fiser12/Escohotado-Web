@@ -2,15 +2,15 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, GridCardsBlock } from "gaudi/server";
 import { Quote } from "payload-types";
-import { getQuotesQueryByTags } from "@/core/content/getQuotesQuery";
+import { getQuotesQueryWithCache } from "@/core/queries/getQuotesQuery";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { convertContentModelToCard, routes } from "hegel";
-import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
-import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { DynamicLoadingQuotes } from '@/ui/dynamic-loading-lists/dynamic-loading-quotes';
-import { TagsFilterBarSSR } from '@/ui/nuqs/tags_filter_bar_ssr';
+import { convertContentModelToCard, generateFilterExpresionFromTags, routes } from "hegel";
+import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery';
 import { redirect } from 'next/navigation';
+import { DynamicLoadingQuotes } from '@/ui/dynamic-loading-lists/dynamic-loading-quotes';
+import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
+import { TagsFilterBarSSR } from '@/ui/nuqs/tags_filter_bar_ssr';
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),
@@ -28,7 +28,7 @@ const Page = async ({ searchParams }: Props) => {
 
   const [user, quotesResult] = await Promise.all([
     getCurrentUserQuery(payload),
-    getQuotesQueryByTags(query, tags.split(",").filter(Boolean) ?? [], 0, "publishedAt"),
+    getQuotesQueryWithCache(0, 20, "publishedAt", query, null, tags.split(",").filter(Boolean).length > 0 ? generateFilterExpresionFromTags(tags.split(",").filter(Boolean), '&&') : null),
   ]);
   const quoteCardMapper = (video: Quote) => mapQuoteCard(user)(video);
   const hasPermission = evalPermissionByRoleQuery(user, "basic");

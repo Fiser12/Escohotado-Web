@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "CommonJS",
-    "lib": ["ES2018", "DOM"],
-    "declaration": true,
-    "outDir": "./dist",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ES2022",
+    "moduleResolution": "Node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node"
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts", "src/test", "src/examples"]
+  "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js"],
+  "exclude": ["node_modules"]
 }

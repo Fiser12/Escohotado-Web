@@ -1,7 +1,7 @@
 "use client";
 
-import { getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
-import { mapArticleCard } from "@/core/domain/mapping/mapCards";
+import { getArticlesQueryByTags } from "@/core/queries/getArticlesQuery";
+import { mapArticleCard } from "@/core/mappers/mapCards";
 import { convertContentModelToCard } from "hegel";
 import { GridCardsBlock } from "gaudi/server";
 import { ArticleWeb, User } from "payload-types";
