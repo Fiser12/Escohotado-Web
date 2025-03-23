@@ -11,7 +11,7 @@ import { getBooksQueryWithCache } from "@/core/content/getBooksQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
-import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
+import { GridCardsBlock } from "gaudi/server";
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import classNames from "classnames";

@@ -3,7 +3,7 @@
 import { getQuotesQueryByTags } from "@/core/content/getQuotesQuery";
 import { mapQuoteCard } from "@/core/domain/mapping/mapCards";
 import { convertContentModelToCard } from "hegel";
-import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
+import { GridCardsBlock } from "gaudi/server";
 import { Quote, User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 

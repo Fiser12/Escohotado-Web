@@ -3,7 +3,7 @@
 import { getArticlesQueryByTags } from "@/core/content/getArticlesQuery";
 import { mapArticleCard } from "@/core/domain/mapping/mapCards";
 import { convertContentModelToCard } from "hegel";
-import { GridCardsBlock } from "node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock";
+import { GridCardsBlock } from "gaudi/server";
 import { ArticleWeb, User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 

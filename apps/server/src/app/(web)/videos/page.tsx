@@ -8,7 +8,7 @@ import { getVideosQueryByTagsWithCache, ResultVideo } from "@/core/content/getVi
 import { DynamicLoadingVideos } from '@/ui/dynamic-loading-lists/dynamic-loading-videos';
 export const pageSize = 10;
 import { mapVideoCard } from '@/core/domain/mapping/mapCards';
-import { GridCardsBlock } from 'node_modules/gaudi/src/content/featured_grid_home/GridCardsBlock';
+import { GridCardsBlock } from "gaudi/server";
 import { LexicalRenderer } from '@/lexical/lexicalRenderer';
 import { SortSelectorSSR } from '@/ui/nuqs/sort_selector_ssr';
 import { PlaylistsSelectorSSR } from '@/ui/nuqs/playlists_selector_ssr';
