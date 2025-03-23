@@ -11,7 +11,12 @@ import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFr
 import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 
-const pageSize = 20
+const PAGE_SIZE = 20
+
+export type QuotesQueryResult = {
+  results: Quote[]
+  maxPage: number
+}
 
 export type ResultVideo = Video & {
   allowedHref: string | null
@@ -23,67 +28,76 @@ export const getQuotesQueryByTags = async (
   page: number,
   sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
   filterByCollectionId?: string | null,
-): Promise<{
-  results: Quote[]
-  maxPage: number
-}> => {
-  return getQuotesQuery(
-    page,
-    pageSize,
-    sortBy as 'publishedAt' | 'popularity',
-    query,
-    filterByCollectionId,
-    generateFilterExpresionFromTags(tags, '&&'),
-  )
+): Promise<QuotesQueryResult> => {
+  const filterExpression = generateFilterExpresionFromTags(tags, '&&')
+  return getQuotesQuery(page, PAGE_SIZE, sortBy, query, filterByCollectionId, filterExpression)
 }
 
-export const getQuotesQuery = async (
-  page: number = 0,
-  maxPage: number = pageSize,
-  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
-  query: string = '',
-  filterByCollectionId?: string | null,
-  filterExpression?: string | null,
-): Promise<{
-  results: Quote[]
-  maxPage: number
-}> => {
-  const { results, lastPage } = await searchElementsQuery(
-    query,
-    [COLLECTION_SLUG_QUOTE],
-    undefined,
-    filterExpression,
-  )
-  if (results.length === 0) return { results: [], maxPage: lastPage }
-
+const fetchQuotesByIds = async (
+  quoteIds: number[],
+  sortBy: 'publishedAt' | 'popularity',
+): Promise<Quote[]> => {
   const payload = await getPayload()
-  const sort = sortBy == 'publishedAt' ? '-createdAt' : '-createdAt'
+  const sort = sortBy === 'publishedAt' ? '-createdAt' : '-createdAt'
 
   const quotesDocs = await payload.find({
     collection: COLLECTION_SLUG_QUOTE,
     sort,
     pagination: false,
     depth: 1,
-    where: { id: { in: results.map((item) => item.id) } },
+    where: { id: { in: quoteIds } },
   })
 
-  const quotes = quotesDocs.docs.filter((quote) => {
-    if (filterByCollectionId) {
-      const id =
-        typeof quote.source?.value === 'number'
-          ? quote.source?.value
-          : String(quote.source?.value.id)
-      return id === filterByCollectionId
-    }
-    return true
+  return quotesDocs.docs
+}
+
+const filterQuotesByCollection = (
+  quotes: Quote[],
+  filterByCollectionId?: string | null,
+): Quote[] => {
+  if (!filterByCollectionId) return quotes
+
+  return quotes.filter((quote) => {
+    const id =
+      typeof quote.source?.value === 'number' ? quote.source?.value : String(quote.source?.value.id)
+    return id === filterByCollectionId
   })
-  const startIndex = page * maxPage
-  const endIndex = startIndex + maxPage
+}
+
+const paginateQuotes = (quotes: Quote[], page: number, pageSize: number): QuotesQueryResult => {
+  const startIndex = page * pageSize
+  const endIndex = startIndex + pageSize
 
   return {
     results: quotes.slice(startIndex, endIndex),
-    maxPage: Math.ceil(quotes.length / maxPage),
+    maxPage: Math.ceil(quotes.length / pageSize),
   }
+}
+
+export const getQuotesQuery = async (
+  page: number = 0,
+  pageSize: number = PAGE_SIZE,
+  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
+  query: string = '',
+  filterByCollectionId?: string | null,
+  filterExpression?: string | null,
+): Promise<QuotesQueryResult> => {
+  const { results, lastPage } = await searchElementsQuery(
+    query,
+    [COLLECTION_SLUG_QUOTE],
+    undefined,
+    filterExpression,
+  )
+
+  if (results.length === 0) {
+    return { results: [], maxPage: lastPage }
+  }
+
+  const quoteIds = results.map((item) => item.id)
+  const quotes = await fetchQuotesByIds(quoteIds, sortBy)
+  const filteredQuotes = filterQuotesByCollection(quotes, filterByCollectionId)
+
+  return paginateQuotes(filteredQuotes, page, pageSize)
 }
 
 export const getQuotesQueryWithCache = withCache(getQuotesQuery)({

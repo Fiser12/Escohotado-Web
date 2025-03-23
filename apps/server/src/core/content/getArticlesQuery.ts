@@ -1,4 +1,5 @@
 'use server'
+
 import { COLLECTION_SLUG_ARTICLE_WEB } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { ArticleWeb } from 'payload-types'
@@ -8,51 +9,35 @@ import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedCo
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { withCache } from 'nextjs-query-cache'
 
-const pageSize = 40
+const PAGE_SIZE = 40
+
+export type ArticlesQueryResult = {
+  results: ArticleWeb[]
+  maxPage: number
+}
 
 export const getArticlesQueryByTags = async (
   query: string,
   tags: string[],
   page: number,
-  limit: number = pageSize,
-): Promise<{
-  results: ArticleWeb[]
-  maxPage: number
-}> => {
+  limit: number = PAGE_SIZE,
+): Promise<ArticlesQueryResult> => {
   if (tags.length === 0) {
     return getArticlesQuery(page, limit, 'publishedAt', query)
   }
-  return getArticlesQuery(
-    page,
-    limit,
-    'publishedAt',
-    query,
-    generateFilterExpresionFromTags(tags, '&&'),
-  )
+
+  const filterExpression = generateFilterExpresionFromTags(tags, '&&')
+  return getArticlesQuery(page, limit, 'publishedAt', query, filterExpression)
 }
 
-export const getArticlesQuery = async (
-  page: number = 0,
-  limit: number = pageSize,
-  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
-  query: string = '',
-  filterExpression?: string | null,
-): Promise<{
-  results: ArticleWeb[]
-  maxPage: number
-}> => {
-  const { results, lastPage } = await searchElementsQuery(
-    query,
-    [COLLECTION_SLUG_ARTICLE_WEB],
-    page,
-    filterExpression,
-    limit,
-  )
-  if (results.length === 0) return { results: [], maxPage: lastPage }
-
+const fetchArticlesById = async (
+  articleIds: number[],
+  sortBy: 'publishedAt' | 'popularity',
+  limit: number,
+): Promise<ArticleWeb[]> => {
   const payload = await getPayload()
+  const sort = sortBy === 'publishedAt' ? '-publishedAt' : '-publishedAt'
 
-  const sort = sortBy == 'publishedAt' ? '-publishedAt' : '-publishedAt'
   const articles = await payload.find({
     collection: COLLECTION_SLUG_ARTICLE_WEB,
     sort,
@@ -61,17 +46,43 @@ export const getArticlesQuery = async (
     limit,
     where: {
       id: {
-        in: results.map((result) => result.id),
+        in: articleIds,
       },
     },
   })
 
-  return { results: articles.docs, maxPage: lastPage }
+  return articles.docs
+}
+
+export const getArticlesQuery = async (
+  page: number = 0,
+  limit: number = PAGE_SIZE,
+  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
+  query: string = '',
+  filterExpression?: string | null,
+): Promise<ArticlesQueryResult> => {
+  const { results, lastPage } = await searchElementsQuery(
+    query,
+    [COLLECTION_SLUG_ARTICLE_WEB],
+    page,
+    filterExpression,
+    limit,
+  )
+
+  if (results.length === 0) {
+    return { results: [], maxPage: lastPage }
+  }
+
+  const articleIds = results.map((result) => result.id)
+  const articles = await fetchArticlesById(articleIds, sortBy, limit)
+
+  return { results: articles, maxPage: lastPage }
 }
 
 export const getArticlesQueryByTagsWithCache = withCache(getArticlesQueryByTags)({
   hours: 1,
 })
+
 export const getArticlesQueryWithCache = withCache(getArticlesQuery)({
   hours: 1,
 })

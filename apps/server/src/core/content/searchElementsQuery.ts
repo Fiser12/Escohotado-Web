@@ -6,12 +6,70 @@ import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { evalPermissionByRoleQuery } from '../auth/permissions/evalPermissionByRoleQuery'
 
 export type SearchCollection = 'article_web' | 'quote' | 'book' | 'video'
-type SearchResult = {
+
+export type SearchResult = {
   collection: SearchCollection
   id: number
   title: string
   href?: string
   tags: string[]
+}
+
+const createQueryCondition = (query: string) => {
+  if (!query) return {}
+
+  const titleCondition = { title: { like: query } }
+  const tagsCondition = { tags: { like: query } }
+  const titleWordConditions = query.split(' ').map((word) => ({ title: { like: word } }))
+  const tagsWordConditions = query.split(' ').map((word) => ({ tags: { like: word } }))
+
+  return {
+    where: {
+      and: [
+        {
+          or: [
+            titleCondition,
+            tagsCondition,
+            { and: titleWordConditions },
+            { and: tagsWordConditions },
+          ],
+        },
+      ],
+    },
+  }
+}
+
+const filterByCollections =
+  (collections: SearchCollection[], filterExpression?: string | null) => (result: any) => {
+    const isInCollection = collections.includes(result.doc?.relationTo)
+
+    if (!filterExpression) return isInCollection
+
+    const tags = result.tags?.split(' ').filter(Boolean) ?? []
+    return isInCollection && evaluateExpression(filterExpression, tags)
+  }
+
+const mapToSearchResult =
+  (user: any) =>
+  (result: any): SearchResult => ({
+    collection: result.doc.relationTo,
+    href: evalPermissionByRoleQuery(user, result.permissions_seeds?.trim() ?? '')
+      ? (result.href ?? '#')
+      : undefined,
+    id: result.doc.value as number,
+    title: result.title ?? '',
+    tags: result.tags?.split(' ').filter(Boolean) ?? [],
+  })
+
+const paginateResults = (results: SearchResult[], page: number, limit?: number) => {
+  if (!limit) return { results, lastPage: 0 }
+
+  const startIndex = page * limit
+  const endIndex = startIndex + limit
+  const paginatedResults = results.slice(startIndex, endIndex)
+  const lastPage = Math.ceil(results.length / limit)
+
+  return { results: paginatedResults, lastPage }
 }
 
 export const searchElementsQuery = async (
@@ -24,7 +82,7 @@ export const searchElementsQuery = async (
   const payload = await getPayload()
   const user = await getCurrentUserQuery(payload)
 
-  const results = await payload.find({
+  const searchResults = await payload.find({
     collection: 'search-results',
     depth: 1,
     select: {
@@ -36,49 +94,12 @@ export const searchElementsQuery = async (
     },
     sort: '-priority',
     pagination: false,
-    ...(query
-      ? {
-          where: {
-            and: [
-              {
-                or: [
-                  { title: { like: query } },
-                  { tags: { like: query } },
-                  { and: query.split(' ').map((word) => ({ title: { like: word } })) },
-                  { and: query.split(' ').map((word) => ({ tags: { like: word } })) },
-                ],
-              },
-            ],
-          },
-        }
-      : {}),
+    ...createQueryCondition(query),
   })
-  const resultsFiltered = results.docs
-    .filter((result) => {
-      return (
-        collections.includes(result.doc?.relationTo) &&
-        (filterExpression
-          ? evaluateExpression(filterExpression, result.tags?.split(' ').filter(Boolean) ?? [])
-          : true)
-      )
-    })
-    .map((result) => ({
-      collection: result.doc.relationTo,
-      href: evalPermissionByRoleQuery(user, result.permissions_seeds?.trim() ?? ('' as any))
-        ? (result.href ?? '#')
-        : undefined,
-      id: result.doc.value as number,
-      title: result.title ?? '',
-      tags: result.tags?.split(' ').filter(Boolean) ?? [],
-    }))
 
-  if (!limit) return { results: resultsFiltered, lastPage: 0 }
+  const filteredResults = searchResults.docs
+    .filter(filterByCollections(collections, filterExpression))
+    .map(mapToSearchResult(user))
 
-  const startIndex = page * limit
-  const endIndex = startIndex + limit
-
-  return {
-    results: resultsFiltered.slice(startIndex, endIndex),
-    lastPage: Math.ceil(resultsFiltered.length / limit),
-  }
+  return paginateResults(filteredResults, page, limit)
 }

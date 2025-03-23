@@ -7,13 +7,34 @@ import { Taxonomy } from 'payload-types'
 import { mapTaxonomyToCategoryModel } from '../domain/mapping/mapTaxonomyToCategoryModel'
 import { withCache } from 'nextjs-query-cache'
 
+type ContentCollection = (typeof collectionsContentsSlugs)[number]
+
+const getQueryFieldKey = (collection: ContentCollection): string =>
+  collection === 'quote' ? 'quote' : 'title'
+
+const filterExcludedCategories =
+  (excludeSeeds: string[]) =>
+  (category: Taxonomy): boolean => {
+    if (!excludeSeeds.length) return true
+
+    return !excludeSeeds.some((seed) =>
+      category.breadcrumbs?.some((breadcrumb) => breadcrumb.url?.includes(seed)),
+    )
+  }
+
+const extractCategories = (category: Taxonomy): CategoryModel[] => {
+  const result = mapTaxonomyToCategoryModel(category)
+  return result ? [result] : []
+}
+
 export const tagsFromContentQuery = async (
-  collection: (typeof collectionsContentsSlugs)[number],
+  collection: ContentCollection,
   query: string,
   excludeSeeds: string[] = [],
 ): Promise<CategoryModel[]> => {
   const payload = await getPayload()
-  const queryFieldKey = collection === 'quote' ? 'quote' : 'title'
+  const queryFieldKey = getQueryFieldKey(collection)
+
   const contentDocs = await payload.find({
     collection: collection,
     pagination: false,
@@ -25,23 +46,14 @@ export const tagsFromContentQuery = async (
       [queryFieldKey]: { like: query },
     },
   })
-  return (
-    contentDocs.docs
-      .map(
-        (quote) =>
-          quote.categories
-            ?.cast<Taxonomy>()
-            ?.filter(
-              (category) =>
-                !excludeSeeds.some((seed) =>
-                  category.breadcrumbs?.some((breadcrumb) => breadcrumb.url?.includes(seed)),
-                ),
-            )
-            ?.mapNotNull(mapTaxonomyToCategoryModel)
-            ?.flat() ?? [],
-      )
-      ?.flat() ?? []
-  )
+
+  return contentDocs.docs.flatMap((doc) => {
+    const categories = doc.categories?.cast<Taxonomy>()
+
+    if (!categories) return []
+
+    return categories.filter(filterExcludedCategories(excludeSeeds)).flatMap(extractCategories)
+  })
 }
 
 export const tagsFromContentQueryWithCache = withCache(tagsFromContentQuery)({

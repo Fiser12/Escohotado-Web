@@ -7,7 +7,7 @@ import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 import { checkReadPermissions, isAdmin } from '../../fields/permissions/accessEvaluations'
 import { taxonomyRelationship } from '../../fields/taxonomies/taxonomiesRelationshipFields'
 import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
-import { clearCache } from 'hegel'
+import { clearCache } from 'nextjs-query-cache'
 
 
 export function contentWithPermissionsCollectionBuilder(
