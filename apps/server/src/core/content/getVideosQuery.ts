@@ -6,7 +6,7 @@ import { searchElementsQuery } from './searchElementsQuery'
 import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
-import { withCache } from 'hegel'
+import { withCache } from 'nextjs-query-cache'
 
 const limit = 20
 
@@ -43,11 +43,11 @@ export const getVideosQuery = async (
   maxPage: number
 }> => {
   const { results, lastPage } = await searchElementsQuery(
-    query, 
-    [COLLECTION_SLUG_VIDEO], 
+    query,
+    [COLLECTION_SLUG_VIDEO],
     page,
-    filterExpression, 
-    limit
+    filterExpression,
+    limit,
   )
   if (results.length === 0) return { results: [], maxPage: lastPage }
 
@@ -60,28 +60,30 @@ export const getVideosQuery = async (
     pagination: false,
     limit,
     where: {
-      id: { in: results.map(item => item.id) },
+      id: { in: results.map((item) => item.id) },
     },
   })
 
-  const videos = videosDocs.docs
-    .map((video) => {
-      const allowedHref = fetchPermittedContentQuery(
-        user,
-        video.permissions_seeds ?? '',
-        video.url,
-        video.url_free,
-      )
+  const videos = videosDocs.docs.map((video) => {
+    const allowedHref = fetchPermittedContentQuery(
+      user,
+      video.permissions_seeds ?? '',
+      video.url,
+      video.url_free,
+    )
 
-      return {
-        ...video,
-        allowedHref,
-      }
+    return {
+      ...video,
+      allowedHref,
     }
-  )
+  })
 
   return { results: videos, maxPage: lastPage }
 }
 
-export const getVideosQueryWithCache = withCache(getVideosQuery)
-export const getVideosQueryByTagsWithCache = withCache(getVideosQueryByTags)
+export const getVideosQueryWithCache = withCache(getVideosQuery)({
+  hours: 1,
+})
+export const getVideosQueryByTagsWithCache = withCache(getVideosQueryByTags)({
+  hours: 1,
+})

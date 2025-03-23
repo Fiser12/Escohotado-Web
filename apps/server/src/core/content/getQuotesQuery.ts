@@ -4,9 +4,12 @@ import { COLLECTION_SLUG_QUOTE } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Quote, Taxonomy, Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
-import { evaluateExpression, withCache } from 'hegel'
+import { evaluateExpression } from 'hegel'
+import { withCache } from 'nextjs-query-cache'
 import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
 import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
+import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
+import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 
 const pageSize = 20
 
@@ -83,4 +86,6 @@ export const getQuotesQuery = async (
   }
 }
 
-export const getQuotesQueryWithCache = withCache(getQuotesQuery)
+export const getQuotesQueryWithCache = withCache(getQuotesQuery)({
+  hours: 1,
+})

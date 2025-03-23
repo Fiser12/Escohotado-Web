@@ -24,7 +24,10 @@ export type {
   OrigenModel,
 } from "./domain/content_model";
 export { evaluateExpression } from "./domain/evaluateExpression";
-export { routes } from './payload/routesGenerator'
-export { permissionSlugs, forumClientId } from './payload/keycloakPermissionSlugs'
-export { getCache, setCache, clearCache } from './nextjs/cacheFn'
-export { withCache } from './nextjs/withCache'
+export { routes } from "./payload/routesGenerator";
+export {
+  permissionSlugs,
+  forumClientId,
+} from "./payload/keycloakPermissionSlugs";
+
+// Nota: Las funciones de caché ahora se importan desde 'nextjs-query-cache'

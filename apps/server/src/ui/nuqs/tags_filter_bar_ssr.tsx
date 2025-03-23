@@ -14,7 +14,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 export async function TagsFilterBarSSR({collection, query, excludeSeeds = [], ...rest}: Props) {
     const taxonomies = (await Promise.all(
         collection.map(async (collection) => await tagsFromContentQueryWithCache(
-            {hours: 1}, collection, query, excludeSeeds
+            collection, query, excludeSeeds
         ))
     )).flat();
     if(taxonomies.length === 0) return null;

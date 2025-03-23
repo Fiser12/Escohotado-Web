@@ -30,8 +30,8 @@ const Page = async ({ searchParams }: Props) => {
   const tags = playlist != '' ? playlist.split(',') : []
   const [user, videosResult, lastVideosResult] = await Promise.all([
     getCurrentUserQuery(payload),
-    getVideosQueryByTagsWithCache({hours: 1}, query, tags, 0, sort),
-    getVideosQueryByTagsWithCache({hours: 1}, query, tags, 0, "publishedAt")
+    getVideosQueryByTagsWithCache(query, tags, 0, sort),
+    getVideosQueryByTagsWithCache(query, tags, 0, "publishedAt")
   ]);
   const videosDataPage = await payload.findGlobal({
     slug: "videos_page"

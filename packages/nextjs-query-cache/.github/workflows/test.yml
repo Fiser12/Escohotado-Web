@@ -1,0 +1,40 @@
+name: Test nextjs-query-cache
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/nextjs-query-cache/**'
+  pull_request:
+    paths:
+      - 'packages/nextjs-query-cache/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          cd packages/nextjs-query-cache
+          npm ci
+          
+      - name: Run tests
+        run: |
+          cd packages/nextjs-query-cache
+          npm test
+          
+      - name: Build package
+        run: |
+          cd packages/nextjs-query-cache
+          npm run build 

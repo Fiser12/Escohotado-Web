@@ -1,7 +1,7 @@
 import { COLLECTION_SLUG_BOOK, routes } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Media } from 'payload-types'
-import { withCache } from 'hegel'
+import { withCache } from 'nextjs-query-cache'
 
 interface BookDto {
   title: string
@@ -14,7 +14,7 @@ export const getBooksQuery = async (): Promise<BookDto[]> => {
   const books = await payload.find({
     collection: COLLECTION_SLUG_BOOK,
     sort: '-publishedAt',
-    pagination: false
+    pagination: false,
   })
 
   return books.docs.map((book) => {
@@ -22,8 +22,10 @@ export const getBooksQuery = async (): Promise<BookDto[]> => {
     return {
       title: book.title ?? '',
       coverHref: cover?.url ?? '#',
-      link: routes.nextJS.generateDetailHref({ collection: COLLECTION_SLUG_BOOK, value: book })
+      link: routes.nextJS.generateDetailHref({ collection: COLLECTION_SLUG_BOOK, value: book }),
     }
   })
 }
-export const getBooksQueryWithCache = withCache(getBooksQuery)
+export const getBooksQueryWithCache = withCache(getBooksQuery)({
+  days: 1,
+})

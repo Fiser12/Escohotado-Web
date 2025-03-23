@@ -1,10 +1,11 @@
 'use server'
 
 import { getPayload } from '@/payload/utils/getPayload'
-import { CategoryModel, withCache } from 'hegel'
+import { CategoryModel } from 'hegel'
 import { collectionsContentsSlugs } from 'hegel/payload'
 import { Taxonomy } from 'payload-types'
 import { mapTaxonomyToCategoryModel } from '../domain/mapping/mapTaxonomyToCategoryModel'
+import { withCache } from 'nextjs-query-cache'
 
 export const tagsFromContentQuery = async (
   collection: (typeof collectionsContentsSlugs)[number],
@@ -30,12 +31,11 @@ export const tagsFromContentQuery = async (
         (quote) =>
           quote.categories
             ?.cast<Taxonomy>()
-            ?.filter(category =>
-              !excludeSeeds.some(
-                seed => category.breadcrumbs?.some(
-                  breadcrumb => breadcrumb.url?.includes(seed)
-                )
-              )
+            ?.filter(
+              (category) =>
+                !excludeSeeds.some((seed) =>
+                  category.breadcrumbs?.some((breadcrumb) => breadcrumb.url?.includes(seed)),
+                ),
             )
             ?.mapNotNull(mapTaxonomyToCategoryModel)
             ?.flat() ?? [],
@@ -44,4 +44,7 @@ export const tagsFromContentQuery = async (
   )
 }
 
-export const tagsFromContentQueryWithCache = withCache(tagsFromContentQuery)
+export const tagsFromContentQueryWithCache = withCache(tagsFromContentQuery)({
+  days: 1,
+  tags: ['taxonomies'],
+})

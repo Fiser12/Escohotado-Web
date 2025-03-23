@@ -157,17 +157,17 @@ const mapQueryField =
     } else if (queryField.blockType === 'articleQueryBlock') {
       const { querySize, sort, filter } = queryField
       const articulos = await getArticlesQueryWithCache(
-        {hours: 1}, 0, querySize, sort, '', filter
+        0, querySize, sort, '', filter
       )
       return articulos.results.map((article) => mapArticleCard(user)(article))
     } else if (queryField.blockType === 'quoteQueryBlock') {
       const { querySize, sort, filter, filterByQuoteOrigin } = queryField
       const filterByOrigin = filterByQuoteOrigin?.value as any | null
-      const quotes = await getQuotesQueryWithCache({hours: 1}, 0, querySize, sort, '', filterByOrigin?.id, filter)
+      const quotes = await getQuotesQueryWithCache(0, querySize, sort, '', filterByOrigin?.id, filter)
       return quotes.results.map((q) => mapQuoteCard(user)(q))
     } else if (queryField.blockType === 'videoQueryBlock') {
       const { querySize, sort, filter } = queryField
-      const videos = await getVideosQueryWithCache({hours: 1}, 0, querySize, sort, '', filter)
+      const videos = await getVideosQueryWithCache(0, querySize, sort, '', filter)
       return videos.results.map((video) => mapVideoCard(user)(video))
     }
 

@@ -4,7 +4,9 @@ import { getPayload } from '@/payload/utils/getPayload'
 import { ArticleWeb } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
-import { withCache } from 'hegel'
+import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
+import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
+import { withCache } from 'nextjs-query-cache'
 
 const pageSize = 40
 
@@ -21,11 +23,11 @@ export const getArticlesQueryByTags = async (
     return getArticlesQuery(page, limit, 'publishedAt', query)
   }
   return getArticlesQuery(
-    page, 
-    limit, 
-    'publishedAt', 
-    query, 
-    generateFilterExpresionFromTags(tags, '&&')
+    page,
+    limit,
+    'publishedAt',
+    query,
+    generateFilterExpresionFromTags(tags, '&&'),
   )
 }
 
@@ -40,11 +42,11 @@ export const getArticlesQuery = async (
   maxPage: number
 }> => {
   const { results, lastPage } = await searchElementsQuery(
-    query, 
+    query,
     [COLLECTION_SLUG_ARTICLE_WEB],
-    page, 
+    page,
     filterExpression,
-    limit
+    limit,
   )
   if (results.length === 0) return { results: [], maxPage: lastPage }
 
@@ -60,11 +62,16 @@ export const getArticlesQuery = async (
     where: {
       id: {
         in: results.map((result) => result.id),
-      }
-    }
+      },
+    },
   })
 
   return { results: articles.docs, maxPage: lastPage }
 }
-export const getArticlesQueryByTagsWithCache = withCache(getArticlesQueryByTags)
-export const getArticlesQueryWithCache = withCache(getArticlesQuery)
+
+export const getArticlesQueryByTagsWithCache = withCache(getArticlesQueryByTags)({
+  hours: 1,
+})
+export const getArticlesQueryWithCache = withCache(getArticlesQuery)({
+  hours: 1,
+})

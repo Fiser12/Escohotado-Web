@@ -2,7 +2,7 @@ import { routes } from "hegel/payload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton, H4 } from "gaudi/server";
 import { FreemiumHighlightSection, HighlightSection } from "gaudi/client";
-import { convertContentModelToCard, withCache } from "hegel";
+import { convertContentModelToCard } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
@@ -44,9 +44,9 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
     articulosDataPage
   ] = await Promise.all([
     getCurrentUserQuery(),
-    getArticlesQueryByTagsWithCache({hours: 1}, query, tagsArrays, 0),
-    getArticlesQueryByTagsWithCache({hours: 1}, "", [], 0, 4),
-    getBooksQueryWithCache({ days: 1 }),
+    getArticlesQueryByTagsWithCache(query, tagsArrays, 0),
+    getArticlesQueryByTagsWithCache("", [], 0, 4),
+    getBooksQueryWithCache(),
     payload.findGlobal({ slug: "articulos_page" })
   ]);
 
@@ -76,8 +76,9 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
                   key={index}
                   author={authorName}
                   href={generateDetailHref({
-                    collection: 'article_web', 
-                    value: {id: article.id, slug: article.slug} }
+                    collection: 'article_web',
+                    value: { id: article.id, slug: article.slug }
+                  }
                   )}
                   title={article.title ?? "No title"}
                   textLink={"Leer más"}
@@ -88,15 +89,15 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
           </div>
         </ContentWrapper>
       </div>
-      <ContentProtected 
+      <ContentProtected
         permissions_seeds={"basic"}
-        fallback={<FreemiumHighlightSection/>}
+        fallback={<FreemiumHighlightSection />}
       >
         <HighlightSection>
-            <H4 label="Accede a las citas de Escohotado" />
-            <Link href={routes.nextJS.citasPageHref}>
-                <MainButton text={"Ir a las citas"} color="secondary" type="line"></MainButton>
-            </Link>
+          <H4 label="Accede a las citas de Escohotado" />
+          <Link href={routes.nextJS.citasPageHref}>
+            <MainButton text={"Ir a las citas"} color="secondary" type="line"></MainButton>
+          </Link>
         </HighlightSection>
       </ContentProtected>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
@@ -118,8 +119,8 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         <GridCardsBlock
           features={
             articles.results
-            .map(articleCardMapper)
-            .map(convertContentModelToCard("col-span-2"))
+              .map(articleCardMapper)
+              .map(convertContentModelToCard("col-span-2"))
           }
           className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8'
         />
