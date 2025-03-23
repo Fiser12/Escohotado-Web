@@ -2,41 +2,55 @@
 
 import { COLLECTION_SLUG_QUOTE } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
-import { Quote, Taxonomy, Video } from 'payload-types'
+import { Quote, Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
-import { evaluateExpression } from 'hegel'
+import { generateFilterExpresionFromTags } from 'hegel'
 import { withCache } from 'nextjs-query-cache'
-import { getSlugsFromTaxonomy } from '../domain/getSlugsFromTaxonomy'
-import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
-import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
-import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 
 const PAGE_SIZE = 20
 
+/**
+ * Resultado paginado de citas
+ */
 export type QuotesQueryResult = {
   results: Quote[]
   maxPage: number
 }
 
+/**
+ * Video con información adicional de permisos
+ */
 export type ResultVideo = Video & {
   allowedHref: string | null
 }
 
+/**
+ * Tipos de ordenación disponibles
+ */
+type SortOption = 'publishedAt' | 'popularity'
+
+/**
+ * Obtiene citas filtradas por etiquetas
+ */
 export const getQuotesQueryByTags = async (
   query: string,
   tags: string[],
   page: number,
-  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
+  sortBy: SortOption = 'publishedAt',
   filterByCollectionId?: string | null,
 ): Promise<QuotesQueryResult> => {
   const filterExpression = generateFilterExpresionFromTags(tags, '&&')
   return getQuotesQuery(page, PAGE_SIZE, sortBy, query, filterByCollectionId, filterExpression)
 }
 
-const fetchQuotesByIds = async (
-  quoteIds: number[],
-  sortBy: 'publishedAt' | 'popularity',
-): Promise<Quote[]> => {
+/**
+ * Busca citas por IDs con opciones de ordenación
+ */
+const fetchQuotesByIds = async (quoteIds: number[], sortBy: SortOption): Promise<Quote[]> => {
+  if (quoteIds.length === 0) {
+    return []
+  }
+
   const payload = await getPayload()
   const sort = sortBy === 'publishedAt' ? '-createdAt' : '-createdAt'
 
@@ -51,11 +65,15 @@ const fetchQuotesByIds = async (
   return quotesDocs.docs
 }
 
+/**
+ * Filtra citas por colección específica
+ */
 const filterQuotesByCollection = (
   quotes: Quote[],
   filterByCollectionId?: string | null,
 ): Quote[] => {
   if (!filterByCollectionId) return quotes
+  if (quotes.length === 0) return []
 
   return quotes.filter((quote) => {
     const id =
@@ -64,7 +82,14 @@ const filterQuotesByCollection = (
   })
 }
 
+/**
+ * Pagina una lista de citas
+ */
 const paginateQuotes = (quotes: Quote[], page: number, pageSize: number): QuotesQueryResult => {
+  if (quotes.length === 0) {
+    return { results: [], maxPage: 0 }
+  }
+
   const startIndex = page * pageSize
   const endIndex = startIndex + pageSize
 
@@ -74,11 +99,14 @@ const paginateQuotes = (quotes: Quote[], page: number, pageSize: number): Quotes
   }
 }
 
+/**
+ * Obtiene citas según criterios de búsqueda
+ */
 export const getQuotesQuery = async (
-  page: number = 0,
-  pageSize: number = PAGE_SIZE,
-  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
-  query: string = '',
+  page = 0,
+  pageSize = PAGE_SIZE,
+  sortBy: SortOption = 'publishedAt',
+  query = '',
   filterByCollectionId?: string | null,
   filterExpression?: string | null,
 ): Promise<QuotesQueryResult> => {
@@ -100,6 +128,9 @@ export const getQuotesQuery = async (
   return paginateQuotes(filteredQuotes, page, pageSize)
 }
 
+/**
+ * Versión cacheada de getQuotesQuery
+ */
 export const getQuotesQueryWithCache = withCache(getQuotesQuery)({
   hours: 1,
 })

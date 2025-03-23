@@ -23,7 +23,7 @@ export type {
   VideoHeaderModel,
   OrigenModel,
 } from "./domain/content_model";
-export { evaluateExpression } from "./domain/evaluateExpression";
+export { evaluateExpression, generateFilterExpresionFromTags } from "./domain/evaluateExpression";
 export { routes } from "./payload/routesGenerator";
 export {
   permissionSlugs,

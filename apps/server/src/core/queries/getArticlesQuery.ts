@@ -4,9 +4,7 @@ import { COLLECTION_SLUG_ARTICLE_WEB } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { ArticleWeb } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
-import { generateFilterExpresionFromTags } from '../domain/getFilterExpressionFromTags'
-import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
-import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
+import { generateFilterExpresionFromTags } from 'hegel'
 import { withCache } from 'nextjs-query-cache'
 
 const PAGE_SIZE = 40
@@ -16,11 +14,16 @@ export type ArticlesQueryResult = {
   maxPage: number
 }
 
+type SortOption = 'publishedAt' | 'popularity'
+
+/**
+ * Obtiene artículos filtrados por etiquetas
+ */
 export const getArticlesQueryByTags = async (
   query: string,
   tags: string[],
   page: number,
-  limit: number = PAGE_SIZE,
+  limit = PAGE_SIZE,
 ): Promise<ArticlesQueryResult> => {
   if (tags.length === 0) {
     return getArticlesQuery(page, limit, 'publishedAt', query)
@@ -30,13 +33,21 @@ export const getArticlesQueryByTags = async (
   return getArticlesQuery(page, limit, 'publishedAt', query, filterExpression)
 }
 
+/**
+ * Busca artículos por IDs con opciones de ordenación
+ */
 const fetchArticlesById = async (
   articleIds: number[],
-  sortBy: 'publishedAt' | 'popularity',
+  sortBy: SortOption,
   limit: number,
 ): Promise<ArticleWeb[]> => {
+  if (articleIds.length === 0) {
+    return []
+  }
+
   const payload = await getPayload()
-  const sort = sortBy === 'publishedAt' ? '-publishedAt' : '-publishedAt'
+  // Esta es una corrección: el tipo de 'popularity' debería tener su propia ordenación
+  const sort = sortBy === 'publishedAt' ? '-publishedAt' : '-viewCount'
 
   const articles = await payload.find({
     collection: COLLECTION_SLUG_ARTICLE_WEB,
@@ -54,11 +65,14 @@ const fetchArticlesById = async (
   return articles.docs
 }
 
+/**
+ * Obtiene artículos según criterios de búsqueda
+ */
 export const getArticlesQuery = async (
-  page: number = 0,
-  limit: number = PAGE_SIZE,
-  sortBy: 'publishedAt' | 'popularity' = 'publishedAt',
-  query: string = '',
+  page = 0,
+  limit = PAGE_SIZE,
+  sortBy: SortOption = 'publishedAt',
+  query = '',
   filterExpression?: string | null,
 ): Promise<ArticlesQueryResult> => {
   const { results, lastPage } = await searchElementsQuery(
@@ -79,10 +93,16 @@ export const getArticlesQuery = async (
   return { results: articles, maxPage: lastPage }
 }
 
+/**
+ * Versión cacheada de getArticlesQueryByTags
+ */
 export const getArticlesQueryByTagsWithCache = withCache(getArticlesQueryByTags)({
   hours: 1,
 })
 
+/**
+ * Versión cacheada de getArticlesQuery
+ */
 export const getArticlesQueryWithCache = withCache(getArticlesQuery)({
   hours: 1,
 })

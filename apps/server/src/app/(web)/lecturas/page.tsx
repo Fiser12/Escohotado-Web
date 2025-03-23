@@ -6,20 +6,21 @@ import { convertContentModelToCard } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { getArticlesQueryByTagsWithCache } from "@/core/content/getArticlesQuery";
-import { getBooksQueryWithCache } from "@/core/content/getBooksQuery";
+import { getArticlesQueryByTagsWithCache } from "@/core/queries/getArticlesQuery";
+import { getBooksQueryWithCache } from "@/core/queries/getBooksQuery";
 import Image from "next/image";
 import { DynamicLoadingArticles } from "../../../ui/dynamic-loading-lists/dynamic-loading-articles";
-import { mapArticleCard } from "@/core/domain/mapping/mapCards";
+import { mapArticleCard } from "@/core/mappers/mapCards";
 import { GridCardsBlock } from "gaudi/server";
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import classNames from "classnames";
 import { TagsFilterBarSSR } from "@/ui/nuqs/tags_filter_bar_ssr";
-import { getAuthorFromTaxonomies } from "@/core/domain/mapping/mapTaxonomyToCategoryModel";
+import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { ContentProtected } from "@/ui/contentProtected";
 import Link from "next/link";
 import { generateDetailHref } from "node_modules/hegel/src/payload/routesGenerator";
+import { mapTaxonomyToCategoryModel } from "@/core/mappers/mapTaxonomyToCategoryModel";
 
 export const pageSize = 10;
 

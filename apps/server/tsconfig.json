@@ -30,7 +30,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../../packages/gaudi/src/content/featured_grid_home/GridCardsBlock.tsx"
   ],
   "exclude": ["node_modules"]
 }

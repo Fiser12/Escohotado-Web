@@ -1,4 +1,4 @@
-import { getSlugsFromTaxonomy } from "@/core/domain/getSlugsFromTaxonomy";
+import { mapTaxonomyToSlugs } from "@/core/mappers/mapTaxonomyToSlugs";
 import { searchPlugin } from "@payloadcms/plugin-search";
 import { COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, routes } from "hegel/payload";
 import { Config } from "payload";
@@ -30,7 +30,7 @@ const config: (config: Config) => Config = searchPlugin({
       },
       beforeSync: ({ originalDoc, searchDoc, ...rest }: any) => {
         const tags = Array.from(
-            new Set(originalDoc.categories?.flatMap(getSlugsFromTaxonomy).filter(Boolean))
+            new Set(originalDoc.categories?.flatMap(mapTaxonomyToSlugs).filter(Boolean))
         ).join(" ")
         
         return {

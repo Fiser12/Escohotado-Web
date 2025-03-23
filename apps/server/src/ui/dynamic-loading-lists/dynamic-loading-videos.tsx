@@ -1,7 +1,7 @@
 "use client";
 
-import { getVideosQueryByTags, ResultVideo } from "@/core/content/getVideosQuery";
-import { mapVideoCard } from "@/core/domain/mapping/mapCards";
+import { getVideosQueryByTags, ResultVideo } from "@/core/queries/getVideosQuery";
+import { mapVideoCard } from "@/core/mappers/mapCards";
 import { convertContentModelToCard } from "hegel";
 import { GridCardsBlock } from "gaudi/server";
 import { User } from "payload-types";

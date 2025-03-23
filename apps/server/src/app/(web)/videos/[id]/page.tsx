@@ -6,7 +6,7 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_VIDEO, routes } from 'hegel/payload';
 import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery';
 import { mapAnyToComment } from 'hegel';
-import { mapQuoteCard } from '@/core/domain/mapping/mapCards';
+import { mapQuoteCard } from '@/core/mappers/mapCards';
 import { Quote } from 'payload-types';
 import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery';
 import { SEOContentWrapper } from 'gaudi/client';
