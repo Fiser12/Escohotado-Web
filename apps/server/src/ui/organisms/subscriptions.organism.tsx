@@ -1,9 +1,9 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi/server";
-import { Subscription } from "payload-types";
 import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
+import { UserInventory } from 'hegel';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
@@ -19,7 +19,7 @@ export const SubscriptionsSection: React.FC<Props> = async ({...rest}) => {
     },
   })
   const className = classNames("space-y-6 gap-2 flex flex-col items-center", rest.className)
-
+  const inventory = user?.inventory as UserInventory | null
   return (
     <ContentWrapper
       className={className}
@@ -37,9 +37,8 @@ export const SubscriptionsSection: React.FC<Props> = async ({...rest}) => {
         }}
         loggedIn={!!user}
         products={products.docs}
-        subscription={user?.subscription?.docs
-          ?.cast<Subscription>()
-          ?.at(0)
+        subscription={
+          Object.values(inventory?.subscriptions ?? {}).at(0)
         }
       />
     </ContentWrapper>

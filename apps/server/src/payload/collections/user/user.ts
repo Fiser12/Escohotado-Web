@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_SUBSCRIPTIONS, COLLECTION_SLUG_USER } from 'hegel/payload'
+import { COLLECTION_SLUG_USER } from 'hegel/payload'
 import { isAdminOrCurrentUser, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
 import { User } from 'payload-types'
 import syncNewsletterSubscription from '@/core/newsletter/syncNewsletterSubscription'
@@ -56,14 +56,11 @@ export const users: CollectionConfig = {
         ]
       }
     },
-    {
-      name: 'subscription',
-      type: 'join',
-      collection: COLLECTION_SLUG_SUBSCRIPTIONS,
-      on: 'user',
-      hasMany: false,
+    { 
+      name: 'inventory', 
+      type: 'json', 
+      admin: { readOnly: true },
     },
-    { name: 'stripeCustomerId', type: 'text', admin: { readOnly: true, position: 'sidebar' } },
   ],
 } as const
 

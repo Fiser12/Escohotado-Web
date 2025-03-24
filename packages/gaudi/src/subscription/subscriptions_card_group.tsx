@@ -3,19 +3,19 @@
 import React, { useState } from "react";
 import { ToggleButtonGroup } from "../common/toggle_button_group/toggle_button_group";
 import { SubscriptionCard } from "./subscription_card";
-import { Interval, IntervalOptions } from "hegel";
+import { Interval, IntervalOptions, SubscriptionInventory } from "hegel";
 import { SubscriptionButton } from "./subscription_button";
 import "hegel";
 
 interface Price {
-    id: string;
+    id: number;
     currency: string;
     unitAmount: number;
     stripeID: string;
     interval?: Interval | null;
 }
 interface Product {
-    id: string;
+    id: number;
     name: string;
     features?:
     | {
@@ -24,15 +24,7 @@ interface Product {
     }[]
     | null;
     metadata?: any;
-    prices?: (string | Price)[] | null;
-}
-
-export interface Subscription {
-    id: string;
-    stripeID: string;
-    stripePriceID: string;
-    cancelAtPeriodEnd?: boolean | null;
-    canceledAt?: string | null;
+    prices?: (number | Price)[] | null;
 }
 
 export enum SubscriptionButtonActionType {
@@ -50,7 +42,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     products: Product[];
     signIn: () => Promise<void>;
     loggedIn: boolean;
-    subscription?: Subscription;
+    subscription?: SubscriptionInventory;
     options?: IntervalOptions[];
 }
 
@@ -88,7 +80,7 @@ export const SubscriptionsGroupCard: React.FC<Props> = ({
                                 href={subscriptionButtonHref(
                                     calculateButtonActionType(price.stripeID, subscription),
                                     price.stripeID,
-                                    subscription?.stripeID
+                                    subscription?.stripeData.subscriptionId
                                 )}
                                 subscription={subscription}
                                 currentPriceId={price.stripeID}
@@ -108,19 +100,19 @@ const subscriptionButtonHref: (action: SubscriptionButtonActionType, priceId: st
     return ''
 }
 const getPriceByProduct = (product: Product, interval: Interval): Price | null => {
-    const price = product.prices?.find((price) => typeof price !== 'string' && price.interval === interval) as Price | undefined;
+    const price = product.prices?.find((price) => typeof price !== 'number' && price.interval === interval) as Price | undefined;
     if (!price) return null;
     return price;
 }
 
-export const calculateButtonActionType = (currentPriceId: string, subscription?: Subscription): SubscriptionButtonActionType => {
-    if (subscription && subscription.stripePriceID === currentPriceId) {
-        if (subscription.cancelAtPeriodEnd) {
+export const calculateButtonActionType = (currentPriceId: string, subscription?: SubscriptionInventory): SubscriptionButtonActionType => {
+    if (subscription && subscription.stripeData.priceId === currentPriceId) {
+        if (subscription.subscriptionStripeData.canceledAtPeriodEnd) {
             return SubscriptionButtonActionType.renew;
         } else {
             return SubscriptionButtonActionType.cancel;
         }
-    } else if (subscription && subscription.stripePriceID !== currentPriceId) {
+    } else if (subscription && subscription.stripeData.priceId !== currentPriceId) {
         return SubscriptionButtonActionType.change;
     } else {
         return SubscriptionButtonActionType.select;

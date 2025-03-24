@@ -26,16 +26,6 @@ export const enum__locales = pgEnum('enum__locales', ['en', 'es'])
 export const enum_prices_type = pgEnum('enum_prices_type', ['one_time', 'recurring'])
 export const enum_prices_interval = pgEnum('enum_prices_interval', ['day', 'week', 'month', 'year'])
 export const enum_products_type = pgEnum('enum_products_type', ['good', 'service'])
-export const enum_subscriptions_status = pgEnum('enum_subscriptions_status', [
-  'trialing',
-  'active',
-  'canceled',
-  'incomplete',
-  'incomplete_expired',
-  'past_due',
-  'unpaid',
-  'paused',
-])
 export const enum_article_web_status = pgEnum('enum_article_web_status', ['draft', 'published'])
 export const enum__article_web_v_version_status = pgEnum('enum__article_web_v_version_status', [
   'draft',
@@ -113,7 +103,7 @@ export const users = pgTable(
     image: varchar('image'),
     roles: jsonb('roles'),
     isSubscribedToNewsletter: boolean('is_subscribed_to_newsletter').notNull().default(true),
-    stripeCustomerId: varchar('stripe_customer_id'),
+    inventory: jsonb('inventory'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -251,58 +241,6 @@ export const products_rels = pgTable(
       foreignColumns: [permission.id],
       name: 'products_rels_permission_fk',
     }).onDelete('cascade'),
-  }),
-)
-
-export const subscriptions = pgTable(
-  'subscriptions',
-  {
-    id: serial('id').primaryKey(),
-    user: varchar('user_id')
-      .notNull()
-      .references(() => users.id, {
-        onDelete: 'set null',
-      }),
-    product: integer('product_id')
-      .notNull()
-      .references(() => products.id, {
-        onDelete: 'set null',
-      }),
-    status: enum_subscriptions_status('status').notNull(),
-    created: timestamp('created', { mode: 'string', withTimezone: true, precision: 3 }),
-    currentPeriodStart: timestamp('current_period_start', {
-      mode: 'string',
-      withTimezone: true,
-      precision: 3,
-    }),
-    currentPeriodEnd: timestamp('current_period_end', {
-      mode: 'string',
-      withTimezone: true,
-      precision: 3,
-    }),
-    endedAt: timestamp('ended_at', { mode: 'string', withTimezone: true, precision: 3 }),
-    cancelAt: timestamp('cancel_at', { mode: 'string', withTimezone: true, precision: 3 }),
-    canceledAt: timestamp('canceled_at', { mode: 'string', withTimezone: true, precision: 3 }),
-    cancelAtPeriodEnd: boolean('cancel_at_period_end'),
-    trialStart: timestamp('trial_start', { mode: 'string', withTimezone: true, precision: 3 }),
-    trialEnd: timestamp('trial_end', { mode: 'string', withTimezone: true, precision: 3 }),
-    stripeID: varchar('stripe_i_d').notNull(),
-    stripePriceID: varchar('stripe_price_i_d').notNull(),
-    stripeCustomerId: varchar('stripe_customer_id').notNull(),
-    metadata: jsonb('metadata'),
-    permissions_seeds: varchar('permissions_seeds').default(''),
-    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
-      .defaultNow()
-      .notNull(),
-    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
-      .defaultNow()
-      .notNull(),
-  },
-  (columns) => ({
-    subscriptions_user_idx: index('subscriptions_user_idx').on(columns.user),
-    subscriptions_product_idx: index('subscriptions_product_idx').on(columns.product),
-    subscriptions_updated_at_idx: index('subscriptions_updated_at_idx').on(columns.updatedAt),
-    subscriptions_created_at_idx: index('subscriptions_created_at_idx').on(columns.createdAt),
   }),
 )
 
@@ -1228,7 +1166,6 @@ export const payload_locked_documents_rels = pgTable(
     usersID: varchar('users_id'),
     pricesID: integer('prices_id'),
     productsID: integer('products_id'),
-    subscriptionsID: integer('subscriptions_id'),
     mediaID: integer('media_id'),
     taxonomyID: integer('taxonomy_id'),
     pdfID: integer('pdf_id'),
@@ -1254,9 +1191,6 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_products_id_idx: index(
       'payload_locked_documents_rels_products_id_idx',
     ).on(columns.productsID),
-    payload_locked_documents_rels_subscriptions_id_idx: index(
-      'payload_locked_documents_rels_subscriptions_id_idx',
-    ).on(columns.subscriptionsID),
     payload_locked_documents_rels_media_id_idx: index(
       'payload_locked_documents_rels_media_id_idx',
     ).on(columns.mediaID),
@@ -1309,11 +1243,6 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['productsID']],
       foreignColumns: [products.id],
       name: 'payload_locked_documents_rels_products_fk',
-    }).onDelete('cascade'),
-    subscriptionsIdFk: foreignKey({
-      columns: [columns['subscriptionsID']],
-      foreignColumns: [subscriptions.id],
-      name: 'payload_locked_documents_rels_subscriptions_fk',
     }).onDelete('cascade'),
     mediaIdFk: foreignKey({
       columns: [columns['mediaID']],
@@ -1593,18 +1522,6 @@ export const relations_products = relations(products, ({ many }) => ({
   }),
   _rels: many(products_rels, {
     relationName: '_rels',
-  }),
-}))
-export const relations_subscriptions = relations(subscriptions, ({ one }) => ({
-  user: one(users, {
-    fields: [subscriptions.user],
-    references: [users.id],
-    relationName: 'user',
-  }),
-  product: one(products, {
-    fields: [subscriptions.product],
-    references: [products.id],
-    relationName: 'product',
   }),
 }))
 export const relations_media = relations(media, () => ({}))
@@ -1952,11 +1869,6 @@ export const relations_payload_locked_documents_rels = relations(
       references: [products.id],
       relationName: 'products',
     }),
-    subscriptionsID: one(subscriptions, {
-      fields: [payload_locked_documents_rels.subscriptionsID],
-      references: [subscriptions.id],
-      relationName: 'subscriptions',
-    }),
     mediaID: one(media, {
       fields: [payload_locked_documents_rels.mediaID],
       references: [media.id],
@@ -2085,7 +1997,6 @@ type DatabaseSchema = {
   enum_prices_type: typeof enum_prices_type
   enum_prices_interval: typeof enum_prices_interval
   enum_products_type: typeof enum_products_type
-  enum_subscriptions_status: typeof enum_subscriptions_status
   enum_article_web_status: typeof enum_article_web_status
   enum__article_web_v_version_status: typeof enum__article_web_v_version_status
   enum__article_web_v_published_locale: typeof enum__article_web_v_published_locale
@@ -2099,7 +2010,6 @@ type DatabaseSchema = {
   products_features: typeof products_features
   products: typeof products
   products_rels: typeof products_rels
-  subscriptions: typeof subscriptions
   media: typeof media
   taxonomy_breadcrumbs: typeof taxonomy_breadcrumbs
   taxonomy: typeof taxonomy
@@ -2149,7 +2059,6 @@ type DatabaseSchema = {
   relations_products_features: typeof relations_products_features
   relations_products_rels: typeof relations_products_rels
   relations_products: typeof relations_products
-  relations_subscriptions: typeof relations_subscriptions
   relations_media: typeof relations_media
   relations_taxonomy_breadcrumbs: typeof relations_taxonomy_breadcrumbs
   relations_taxonomy_locales: typeof relations_taxonomy_locales

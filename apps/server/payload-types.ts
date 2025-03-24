@@ -69,7 +69,6 @@ export interface Config {
     users: User;
     prices: Price;
     products: Product;
-    subscriptions: Subscription;
     media: Media;
     taxonomy: Taxonomy;
     pdf: Pdf;
@@ -86,9 +85,6 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
-    users: {
-      subscription: 'subscriptions';
-    };
     prices: {
       product: 'products';
     };
@@ -103,7 +99,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     prices: PricesSelect<false> | PricesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
-    subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     taxonomy: TaxonomySelect<false> | TaxonomySelect<true>;
     pdf: PdfSelect<false> | PdfSelect<true>;
@@ -171,12 +166,15 @@ export interface User {
   image?: string | null;
   roles?: string[];
   isSubscribedToNewsletter: boolean;
-  subscription?: {
-    docs?: (number | Subscription)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  stripeCustomerId?: string | null;
+  inventory?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   accounts?:
     | {
         id?: string | null;
@@ -197,25 +195,25 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscriptions".
+ * via the `definition` "prices".
  */
-export interface Subscription {
+export interface Price {
   id: number;
-  user: string | User;
-  product: number | Product;
-  status: 'trialing' | 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'paused';
-  created?: string | null;
-  currentPeriodStart?: string | null;
-  currentPeriodEnd?: string | null;
-  endedAt?: string | null;
-  cancelAt?: string | null;
-  canceledAt?: string | null;
-  cancelAtPeriodEnd?: boolean | null;
-  trialStart?: string | null;
-  trialEnd?: string | null;
   stripeID: string;
-  stripePriceID: string;
-  stripeCustomerId: string;
+  stripeProductId: string;
+  product?: {
+    docs?: (number | Product)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  active: boolean;
+  description?: string | null;
+  unitAmount: number;
+  currency: string;
+  type: 'one_time' | 'recurring';
+  interval?: ('day' | 'week' | 'month' | 'year') | null;
+  intervalCount?: number | null;
+  trialPeriodDays?: number | null;
   metadata?:
     | {
         [k: string]: unknown;
@@ -225,7 +223,6 @@ export interface Subscription {
     | number
     | boolean
     | null;
-  permissions_seeds?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -264,39 +261,6 @@ export interface Product {
     | null;
   permissions?: (number | Permission)[] | null;
   permissions_seeds?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "prices".
- */
-export interface Price {
-  id: number;
-  stripeID: string;
-  stripeProductId: string;
-  product?: {
-    docs?: (number | Product)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  active: boolean;
-  description?: string | null;
-  unitAmount: number;
-  currency: string;
-  type: 'one_time' | 'recurring';
-  interval?: ('day' | 'week' | 'month' | 'year') | null;
-  intervalCount?: number | null;
-  trialPeriodDays?: number | null;
-  metadata?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -683,10 +647,6 @@ export interface PayloadLockedDocument {
         value: number | Product;
       } | null)
     | ({
-        relationTo: 'subscriptions';
-        value: number | Subscription;
-      } | null)
-    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
@@ -784,8 +744,7 @@ export interface UsersSelect<T extends boolean = true> {
   image?: T;
   roles?: T;
   isSubscribedToNewsletter?: T;
-  subscription?: T;
-  stripeCustomerId?: T;
+  inventory?: T;
   accounts?:
     | T
     | {
@@ -849,31 +808,6 @@ export interface ProductsSelect<T extends boolean = true> {
         id?: T;
       };
   permissions?: T;
-  permissions_seeds?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscriptions_select".
- */
-export interface SubscriptionsSelect<T extends boolean = true> {
-  user?: T;
-  product?: T;
-  status?: T;
-  created?: T;
-  currentPeriodStart?: T;
-  currentPeriodEnd?: T;
-  endedAt?: T;
-  cancelAt?: T;
-  canceledAt?: T;
-  cancelAtPeriodEnd?: T;
-  trialStart?: T;
-  trialEnd?: T;
-  stripeID?: T;
-  stripePriceID?: T;
-  stripeCustomerId?: T;
-  metadata?: T;
   permissions_seeds?: T;
   updatedAt?: T;
   createdAt?: T;

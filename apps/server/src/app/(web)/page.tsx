@@ -1,9 +1,7 @@
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { ContentWrapper, H2, H4, NewsletterSubscription, SubscriptionsGroupCard } from "gaudi/server";
-import { signIn } from '@/payload/plugins/authjs/plugin';
+import { NewsletterSubscription } from "gaudi/server";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { Subscription } from "payload-types";
 import { SubscriptionsSection } from "@/ui/organisms/subscriptions.organism";
 import { evalPermissionByRoleQuery } from "@/core/auth/permissions/evalPermissionByRoleQuery";
 

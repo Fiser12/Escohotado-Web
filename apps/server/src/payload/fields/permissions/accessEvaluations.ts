@@ -1,12 +1,10 @@
+import { getUserPermissions } from "@/core/auth/permissions/getUserPermissions"
 import { permissionSlugs } from "hegel"
 import { Access } from "payload"
-import { Subscription } from "payload-types"
 
 export const checkReadPermissions: Access = (props) => {
   if(isAdmin(props)) return true
-  const userPermissions = props.req.user?.subscription?.docs
-    ?.map(sub => sub as Subscription)
-    ?.flatMap(sub => sub.permissions_seeds) ?? []
+  const userPermissions = getUserPermissions(props.req.user)
   return {or: [
     {permissions_seeds: { equals: "" }},
     ...userPermissions.map(perm => ({ permissions_seeds: { contains: perm }}))
