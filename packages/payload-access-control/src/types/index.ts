@@ -1,3 +1,39 @@
+export interface Permission {
+  id: number;
+  slug?: string | null;
+  title: string;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface WithPermissions {
+  permissions?: (number | Permission)[] | null;
+  permissions_seeds?: string | null;
+}
+
+export interface Subscription {
+  status?: string;
+  permissions_seeds?: string | null;
+}
+
+/**
+ * Tipo base para usuarios con sistema de permisos
+ */
+export interface BaseUser {
+  id: string | number;
+  roles?: string[];
+  inventory?: any;
+  [key: string]: any;
+}
+
+export interface User extends BaseUser {}
+
+export interface PayloadAccessControlConfig {
+  permissionCollection?: {
+    slug?: string;
+  };
+}
+
 const SubscriptionStatus = [
   "trialing",
   "active",

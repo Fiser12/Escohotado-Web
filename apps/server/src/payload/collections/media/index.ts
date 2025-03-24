@@ -3,7 +3,7 @@ import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 import { addContentHashToFile } from '../../hooks/media/addContentHashToFileHook'
 import { handleSvgUpload } from '../../hooks/media/handleSvgUploadHook'
 import { updateCacheControl } from '../../hooks/media/updateCacheControl'
-import { isAnyone, isAdmin } from '../../fields/permissions/accessEvaluations'
+import { isAnyone, isAdmin } from 'payload-access-control'
 
 const media: CollectionConfig = {
   slug: COLLECTION_SLUG_MEDIA,

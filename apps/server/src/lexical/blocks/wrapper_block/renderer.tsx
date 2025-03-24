@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { LexicalRenderer } from '../../lexicalRenderer'
 import { ContentWrapper } from 'gaudi/server'
-import { evalAdvancePermissionQuery } from '@/core/auth/permissions/evalAdvancePermissionQuery';
+import { evalAdvancePermissionQuery } from 'payload-access-control';
 
 export const renderer = async ({ node }: any) => {
   const className = classNames(

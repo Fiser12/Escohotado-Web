@@ -6,7 +6,7 @@ import { getQuotesQueryWithCache } from "@/core/queries/getQuotesQuery";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { convertContentModelToCard, generateFilterExpresionFromTags, routes } from "hegel";
 import { mapQuoteCard } from "@/core/mappers/mapCards";
-import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery';
+import { evalPermissionByRoleQuery } from "payload-access-control";
 import { redirect } from 'next/navigation';
 import { DynamicLoadingQuotes } from '@/ui/dynamic-loading-lists/dynamic-loading-quotes';
 import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";

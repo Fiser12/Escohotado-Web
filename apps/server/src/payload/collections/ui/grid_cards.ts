@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { isAnyone, isAdmin } from '../../fields/permissions/accessEvaluations'
+import { isAnyone, isAdmin } from 'payload-access-control'
 import { COLLECTION_SLUG_UI_GRID_CARDS } from 'hegel/payload'
 
 export const gridCards: CollectionConfig = {

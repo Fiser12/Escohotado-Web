@@ -1,7 +1,6 @@
 import { slugField } from '@/payload/fields/slug'
 import { COLLECTION_SLUG_BOOK, COLLECTION_SLUG_MEDIA } from 'hegel/payload'
 import { contentCollectionBuilder } from '../content_collection_builder'
-import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 
 export const book = contentCollectionBuilder({
   slug: COLLECTION_SLUG_BOOK,
@@ -72,7 +71,6 @@ export const book = contentCollectionBuilder({
           ]
         }
       ]
-    },
-    quotesJoinField
+    }
   ]
 }, true)

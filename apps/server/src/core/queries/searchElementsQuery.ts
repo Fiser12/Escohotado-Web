@@ -3,7 +3,7 @@
 import { getPayload } from '@/payload/utils/getPayload'
 import { evaluateExpression } from 'hegel'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
-import { evalPermissionByRoleQuery } from '../auth/permissions/evalPermissionByRoleQuery'
+import { evalPermissionByRoleQuery } from 'payload-access-control'
 import { User } from 'payload-types'
 
 export type SearchCollection = 'article_web' | 'quote' | 'book' | 'video'

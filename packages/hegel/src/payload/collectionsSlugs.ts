@@ -1,7 +1,6 @@
 export const COLLECTION_SLUG_USER = 'users' as const
 export const COLLECTION_SLUG_MEDIA = 'media' as const
 export const COLLECTION_SLUG_TAXONOMY = 'taxonomy' as const
-export const COLLECTION_SLUG_PERMISSION = 'permission' as const
 export const COLLECTION_SLUG_PRODUCTS = 'products' as const
 export const COLLECTION_SLUG_PRICES = 'prices' as const
 export const COLLECTION_SLUG_PDF = 'pdf' as const
@@ -23,7 +22,6 @@ export const collectionsSlugs = [
     COLLECTION_SLUG_USER,
     COLLECTION_SLUG_MEDIA,
     COLLECTION_SLUG_TAXONOMY,
-    COLLECTION_SLUG_PERMISSION,
     COLLECTION_SLUG_PRODUCTS,
     COLLECTION_SLUG_PRICES,
     COLLECTION_SLUG_UI_GRID_CARDS,

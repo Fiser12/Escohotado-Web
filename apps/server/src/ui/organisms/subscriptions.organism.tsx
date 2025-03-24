@@ -3,7 +3,7 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi/server";
 import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
-import { UserInventory } from 'hegel';
+import { UserInventory } from 'payload-access-control';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 

@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS } from 'hegel/payload'
-import { isAdminOrStripeActive, isAdmin } from '../../fields/permissions/accessEvaluations'
+import { isAdminOrStripeActive, isAdmin } from 'payload-access-control'
 
 export const PricingType = {
   one_time: 'One Time',

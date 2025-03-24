@@ -3,7 +3,7 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { NewsletterSubscription } from "gaudi/server";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { SubscriptionsSection } from "@/ui/organisms/subscriptions.organism";
-import { evalPermissionByRoleQuery } from "@/core/auth/permissions/evalPermissionByRoleQuery";
+import { evalPermissionByRoleQuery } from "payload-access-control";
 
 const Page = async () => {
   const payload = await getPayload();

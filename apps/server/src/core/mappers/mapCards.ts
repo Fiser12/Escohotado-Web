@@ -1,5 +1,4 @@
-import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery'
-import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery'
+import { evalPermissionByRoleQuery, fetchPermittedContentQuery } from 'payload-access-control'
 import { IMAGE_ERROR } from 'hegel/constants'
 import {
   getAuthorsNamesFromTaxonomies,

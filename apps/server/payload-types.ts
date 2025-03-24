@@ -270,8 +270,7 @@ export interface Product {
  */
 export interface Permission {
   id: number;
-  slug?: string | null;
-  slugLock?: boolean | null;
+  slug: string;
   title: string;
   updatedAt: string;
   createdAt: string;
@@ -1009,7 +1008,6 @@ export interface UiBlockSelect<T extends boolean = true> {
  */
 export interface PermissionSelect<T extends boolean = true> {
   slug?: T;
-  slugLock?: T;
   title?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -1,9 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_USER } from 'hegel/payload'
-import { isAdminOrCurrentUser, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
-import { User } from 'payload-types'
+import { isAdminOrCurrentUser, isAdmin, permissionSlugs } from 'payload-access-control'
 import syncNewsletterSubscription from '@/core/newsletter/syncNewsletterSubscription'
-import { permissionSlugs } from 'hegel'
 
 const ADMIN_AUTH_GROUP = 'Auth'
 
@@ -35,32 +33,33 @@ export const users: CollectionConfig = {
     },
     {
       label: 'Subscripción a la newsletter',
-      name: "isSubscribedToNewsletter",
-      type: "checkbox",
+      name: 'isSubscribedToNewsletter',
+      type: 'checkbox',
       required: true,
       defaultValue: true,
       hooks: {
         afterChange: [
           async ({ data, previousDoc }): Promise<void> => {
-            if(!data 
-              || !data.email
-              || data.isSubscribedToNewsletter === previousDoc.isSubscribedToNewsletter 
-            ) return
+            if (
+              !data ||
+              !data.email ||
+              data.isSubscribedToNewsletter === previousDoc.isSubscribedToNewsletter
+            )
+              return
 
             await syncNewsletterSubscription({
-              email: data.email, 
-              name: data.name , 
-              isSubscribedToNewsletter: data.isSubscribedToNewsletter
+              email: data.email,
+              name: data.name,
+              isSubscribedToNewsletter: data.isSubscribedToNewsletter,
             })
-          }
-        ]
-      }
+          },
+        ],
+      },
     },
-    { 
-      name: 'inventory', 
-      type: 'json', 
+    {
+      name: 'inventory',
+      type: 'json',
       admin: { readOnly: true },
     },
   ],
 } as const
-

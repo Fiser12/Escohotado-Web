@@ -1,4 +1,4 @@
-import { forumClientId, permissionSlugs, routes } from 'hegel'
+import { forumClientId, routes } from 'hegel'
 import { loginKeycloak } from './loginKeycloak'
 
 export const deleteForumPremiumRoleCommand = async (userId: string): Promise<void> => {
@@ -16,7 +16,7 @@ export const deleteForumPremiumRoleCommand = async (userId: string): Promise<voi
       body: JSON.stringify([
         {
           id: 'b845e658-d9b4-4905-8203-aee0aea110d4',
-          name: permissionSlugs.foroPremium,
+          name: "foro_premium",
         },
       ]),
       redirect: 'follow',

@@ -2,17 +2,17 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { ArticleDetail, DetailBottomSection } from "gaudi/server";
 import { NextPage } from "next/types";
-import { Media, Pdf, Quote, Taxonomy } from "payload-types";
+import { Media, Pdf, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
-import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery';
-import { mapQuoteCard } from '@/core/mappers/mapCards';
+import { evalPermissionByRoleQuery } from "payload-access-control";
 import { mapTaxonomyToCategoryModel } from '@/core/mappers/mapTaxonomyToCategoryModel';
 import { ContentProtected } from '@/ui/contentProtected';
 import { FreemiumHighlightSection, SEOContentWrapper } from 'gaudi/client';
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { TypedLocale } from 'payload';
+import { mapQuoteCard } from '@/core/mappers/mapCards';
 
 export const searchContentParamsCache = createSearchParamsCache({
   locale: parseAsString.withDefault('es'),
@@ -78,7 +78,7 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
         </ContentProtected>
       }
       <DetailBottomSection
-        quotesModel={[]}
+        quotesModel={[].mapNotNull(mapQuoteCard(user))}
         commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
       />
     </ArticleDetail>

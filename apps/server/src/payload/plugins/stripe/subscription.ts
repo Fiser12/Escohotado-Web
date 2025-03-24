@@ -6,7 +6,7 @@ import { getPayload } from '@/payload/utils/getPayload'
 import { deleteForumPremiumRoleCommand } from '@/core/auth/keycloak/deleteForumPremiumRoleCommand'
 import { addForumPremiumRoleCommand } from '@/core/auth/keycloak/addForumPremiumRoleCommand'
 import type Stripe from 'stripe'
-import { generateUserInventory, UserInventory } from 'hegel'
+import { generateUserInventory, UserInventory } from 'payload-access-control'
 
 const logs = false
 

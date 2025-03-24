@@ -1,10 +1,6 @@
 import type { CollectionConfig } from 'payload'
-import {
-  permissionRelationship,
-  cachePermissionSeedsHook,
-} from '@/payload/fields/permissions/permissionsRelationshipFields'
+import { permissionRelationship, cachePermissionSeedsHook, checkReadPermissions, isAdmin } from 'payload-access-control'
 import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
-import { checkReadPermissions, isAdmin } from '../../fields/permissions/accessEvaluations'
 import { taxonomyRelationship } from '../../fields/taxonomies/taxonomiesRelationshipFields'
 import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
 import { clearCache } from 'nextjs-query-cache'

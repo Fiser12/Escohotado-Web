@@ -1,10 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES } from 'hegel/payload'
-import {
-  permissionRelationship,
-  cachePermissionSeedsHook,
-} from '../../fields/permissions/permissionsRelationshipFields'
-import { isAdminOrStripeActive, isAdmin } from '../../fields/permissions/accessEvaluations'
+import { permissionRelationship, cachePermissionSeedsHook, isAdminOrStripeActive, isAdmin } from 'payload-access-control'
 
 export const products: CollectionConfig = {
   slug: COLLECTION_SLUG_PRODUCTS,

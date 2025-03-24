@@ -6,7 +6,7 @@ import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery"
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { Footer, Textures } from "gaudi/client";
 import { routes } from "hegel";
-import { evalPermissionByRoleQuery } from "@/core/auth/permissions/evalPermissionByRoleQuery";
+import { evalPermissionByRoleQuery } from "payload-access-control";
 import "../tailwind.css";
 
 const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> = async ({ children, modal }) => {

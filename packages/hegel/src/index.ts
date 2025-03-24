@@ -11,8 +11,6 @@ export type { Interval, IntervalOptions } from "./domain/interval_options";
 import "./domain/optional_helpers";
 export type { Comment, CommentsSectionModel } from "./domain/types/Comment";
 export type { CategoryModel } from "./domain/types/CategoryModel";
-export type { UserInventory, SubscriptionInventory } from "./domain/types/Inventory";
-export { generateUserInventory } from "./domain/types/Inventory";
 export { mapAnyToComment } from "./domain/types/Comment";
 export { convertContentModelToCard } from "./domain/content_model";
 export type {
@@ -28,7 +26,6 @@ export type {
 export { evaluateExpression, generateFilterExpresionFromTags } from "./domain/evaluateExpression";
 export { routes } from "./payload/routesGenerator";
 export {
-  permissionSlugs,
   forumClientId,
 } from "./payload/keycloakPermissionSlugs";
 

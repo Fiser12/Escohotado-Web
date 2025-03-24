@@ -1,11 +1,11 @@
 import { addContentHashToFile } from '../../../hooks/media/addContentHashToFileHook'
 import { COLLECTION_SLUG_PDF, routes } from 'hegel/payload'
 import { CollectionConfig } from 'payload'
-import { checkReadPermissions, isAdmin } from '@/payload/fields/permissions/accessEvaluations'
+import { checkReadPermissions, isAdmin } from 'payload-access-control'
 import {
   cachePermissionSeedsHook,
   permissionRelationship,
-} from '@/payload/fields/permissions/permissionsRelationshipFields'
+} from 'payload-access-control'
 
 export const pdf: CollectionConfig = {
   slug: COLLECTION_SLUG_PDF,
