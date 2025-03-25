@@ -1,4 +1,4 @@
-import { routes } from "hegel";
+import { routes } from "@/core/routesGenerator";
 import { Field } from "payload";
 
 export const buttonField: Field = {

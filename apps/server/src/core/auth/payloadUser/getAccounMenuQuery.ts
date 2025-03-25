@@ -1,7 +1,7 @@
-import { MenuSection, routes } from 'hegel'
+import { routes } from '@/core/routesGenerator'
+import { MenuSection } from 'hegel'
 import { BaseUser, permissionSlugs } from 'payload-access-control'
 
-// Actualizado para ser más genérico y compatible con BaseUser
 export const getAccountMenuQuery = <T extends BaseUser>(user?: T | null): MenuSection[] => {
   if (!user) {
     return []

@@ -5,7 +5,8 @@ import 'hegel'
 import { BasePayload } from 'payload'
 import { YoutubeVideo } from './youtube_video_model'
 import { getPayload } from '@/payload/utils/getPayload'
-import { COLLECTION_SLUG_VIDEO, routes } from 'hegel/payload'
+import { routes } from '@/core/routesGenerator'
+import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs'
 
 const getYoutubeVideos = async (
   playlistId: string = 'UUks2FdxaBZZFl4PTBAGz4Jw',

@@ -5,9 +5,36 @@ import { NuqsAdapter } from 'nuqs/adapters/next'
 import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { Footer, Textures } from "gaudi/client";
-import { routes } from "hegel";
+import { MenuItem } from "hegel";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import "../tailwind.css";
+import { routes } from "@/core/routesGenerator";
+
+const logoutMenuItem: MenuItem = {
+  text: "Cerrar sesión",
+  action: async () => {
+    "use server";
+    await signOut({ redirectTo: routes.nextJS.homePageHref });
+  },
+  target: "_black",
+  href: routes.keycloak.logout
+}
+
+const navItemList: (hasPermission: Boolean) => MenuItem[] = (hasPermission) => {
+  let items = [
+      { href: routes.nextJS.lecturasPageHref, tabindex: 2, text: "Lecturas" },
+      { href: routes.nextJS.videosPageHref, tabindex: 3, text: "Videos" },
+      { href: routes.nodeBB.root, tabindex: 4, text: "Foro" },
+  ]
+  if (hasPermission) {
+      items.push({
+          href: routes.nextJS.citasPageHref,
+          tabindex: 5,
+          text: "Citas"
+      })
+  }
+  return items
+}
 
 const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> = async ({ children, modal }) => {
   const payloadUser = await getCurrentUserQuery()
@@ -25,23 +52,29 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
       <body className="min-h-dvh flex flex-col">
         <NuqsAdapter>
           <Header
-            hasPermission={hasPermission}
             user={payloadUser}
+            pageItems={navItemList(hasPermission)}
             signIn={async () => {
               "use server";
               await signIn("keycloak");
             }}
-            signOut={async () => {
-              "use server";
-              await signOut({ redirectTo: routes.nextJS.homePageHref });
-            }}
+            logoutMenuItem={logoutMenuItem}
             menuSections={getAccountMenuQuery(payloadUser)}
           />
           {modal}
           <main className="flex flex-col flex-grow">
             {children}
           </main>
-          <Footer />
+          <Footer 
+            youtubeHref={routes.otherExternal.youtube}
+            xHref={routes.otherExternal.x}
+            facebookHref={routes.otherExternal.facebook}
+            instagramHref={routes.otherExternal.instagram}
+            tiktokHref={routes.otherExternal.tiktok}
+            ivooxHref={routes.otherExternal.ivoox}
+            privacidadHref={routes.nextJS.privacidadPageHref}
+            termsAndConditionsHref={routes.nextJS.termsAndConditionsPageHref}
+          />
         </NuqsAdapter>
         {Textures.map((Element, index) => <Element key={index} />)}
       </body>

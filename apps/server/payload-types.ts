@@ -88,12 +88,6 @@ export interface Config {
     prices: {
       product: 'products';
     };
-    book: {
-      quotes: 'quote';
-    };
-    video: {
-      quotes: 'quote';
-    };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
@@ -448,11 +442,60 @@ export interface Book {
         id?: string | null;
       }[]
     | null;
-  quotes?: {
-    docs?: (number | Quote)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
+  forum_post_id?: string | null;
+  last_forum_sync?: string | null;
+  last_forum_posts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video".
+ */
+export interface Video {
+  id: number;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  url: string;
+  permissions?: (number | Permission)[] | null;
+  url_free?: string | null;
+  permissions_seeds?: string | null;
+  tags?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  thumbnailUrl?: string | null;
+  title?: string | null;
+  viewCount?: number | null;
+  duration?: number | null;
+  publishedAt?: string | null;
+  categories?: (number | Taxonomy)[] | null;
   forum_post_id?: string | null;
   last_forum_sync?: string | null;
   last_forum_posts?:
@@ -489,65 +532,6 @@ export interface Quote {
         value: number | ArticleWeb;
       } | null);
   categories?: (number | Taxonomy)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "video".
- */
-export interface Video {
-  id: number;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  url: string;
-  permissions?: (number | Permission)[] | null;
-  url_free?: string | null;
-  quotes?: {
-    docs?: (number | Quote)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  permissions_seeds?: string | null;
-  tags?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  thumbnailUrl?: string | null;
-  title?: string | null;
-  viewCount?: number | null;
-  duration?: number | null;
-  publishedAt?: string | null;
-  categories?: (number | Taxonomy)[] | null;
-  forum_post_id?: string | null;
-  last_forum_sync?: string | null;
-  last_forum_posts?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -933,7 +917,6 @@ export interface BookSelect<T extends boolean = true> {
         language?: T;
         id?: T;
       };
-  quotes?: T;
   forum_post_id?: T;
   last_forum_sync?: T;
   last_forum_posts?: T;
@@ -949,7 +932,6 @@ export interface VideoSelect<T extends boolean = true> {
   url?: T;
   permissions?: T;
   url_free?: T;
-  quotes?: T;
   permissions_seeds?: T;
   tags?: T;
   thumbnailUrl?: T;

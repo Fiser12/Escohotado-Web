@@ -1,4 +1,4 @@
-import { routes } from "hegel"
+import { routes } from "@/core/routesGenerator"
 
 export const loginKeycloak = async (): Promise<{ token: string }> => {
   const headers = new Headers()

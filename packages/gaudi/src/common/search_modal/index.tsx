@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { CategoryModel, routes } from 'hegel';
+import { CategoryModel } from 'hegel';
 import { SearchIcon } from '../icons/search_icon';
 import { ChevronDownIcon } from '../icons/chevron_down_icon';
 import { LockIcon } from '../icons/lock_icon';
@@ -23,6 +23,7 @@ interface Props {
   onType: (value: string) => void;
   onTagClick: (tag: CategoryModel) => void;
   items: SearchedItem[];
+  subscriptionHref: string;
   maxItemSize: number;
   children?: React.ReactNode;
   onFilterChange?: (filter: SearchOptions) => void;
@@ -70,6 +71,7 @@ export const SearchModal: React.FC<Props> = ({
   secondsDelay,
   onType,
   items,
+  subscriptionHref,
   maxItemSize,
   children,
   onFilterChange,
@@ -165,7 +167,7 @@ export const SearchModal: React.FC<Props> = ({
                   { item.href == null && <div className='h-5 w-5'><LockIcon /> </div>}
                 </div>
               </>
-              return <a href={item.href ?? routes.nextJS.subscriptionPageHref} key={index} className={className}>{Content}</a>
+              return <a href={item.href ?? subscriptionHref} key={index} className={className}>{Content}</a>
             })}
               {children}
           </div>

@@ -1,4 +1,4 @@
-import { MenuItem, MenuSection, routes, UserModel } from "hegel";
+import { MenuItem, MenuSection } from "hegel";
 import { Logo } from "./logo";
 import { ContentWrapper } from "../content_wrapper/content_wrapper";
 import { OpenModalButton } from "./open_search_modal_button";
@@ -6,9 +6,10 @@ import { NavItem } from "./nav_item";
 import { MainButton } from "../main_button/main_button";
 import { UserDropdown } from "./user_dropdown";
 import { ArrowLinkIcon } from "../icons/arrow_link";
+import { BaseUser } from "payload-access-control";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    user?: UserModel | null
+    user?: BaseUser | null
     accountMenuItems: MenuSection[]
     pageItems: MenuItem[]
     logoutMenuItem: MenuItem
@@ -35,7 +36,7 @@ export const HeaderDesktop: React.FC<Props> = ({ user, accountMenuItems, classNa
                 <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
                     <div className="flex items-center gap-4">
                         <OpenModalButton />
-                        <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
+                        <a href={"https://laemboscadura.com"} target="_blank" tabIndex={6}>
                             <MainButton text="La Emboscadura" color="primary" />
                         </a>
                     </div>

@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { getPayload } from '@/payload/utils/getPayload';
 import { stripeBuilder } from '@/payload/plugins/stripe/stripe-builder'
-import { routes } from 'hegel';
+import { routes } from '@/core/routesGenerator';
+import { UserInventory } from 'payload-access-control';
 
 export async function GET(request: Request) {
   const payloadUser = await getCurrentUserQuery()
@@ -14,13 +15,17 @@ export async function GET(request: Request) {
   await stripeBuilder().subscriptions.update(subscriptionId, {
     cancel_at_period_end: cancelAtPeriodEnd,
   })
+  const inventory = payloadUser.inventory as UserInventory | null
+  if(inventory) {
+    inventory.subscriptions[subscriptionId].subscriptionStripeData.canceledAtPeriodEnd = cancelAtPeriodEnd
+  }
   const payload = await getPayload()
   await payload.update({
-    collection: 'subscriptions',
+    collection: 'users',
     data: {
-      cancelAtPeriodEnd: cancelAtPeriodEnd,
+      inventory: inventory as any,
     },
-    where: { stripeID: { equals: subscriptionId } },
+    where: { id: { equals: payloadUser.id } },
   })
   return NextResponse.redirect(`${process.env.DOMAIN}${routes.nextJS.subscriptionPageHref}`, 303)
 }

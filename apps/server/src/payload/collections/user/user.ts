@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_USER } from 'hegel/payload'
 import { isAdminOrCurrentUser, isAdmin, permissionSlugs } from 'payload-access-control'
 import syncNewsletterSubscription from '@/core/newsletter/syncNewsletterSubscription'
+import { COLLECTION_SLUG_USER } from '@/core/collectionsSlugs'
 
 const ADMIN_AUTH_GROUP = 'Auth'
 

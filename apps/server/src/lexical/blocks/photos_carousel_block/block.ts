@@ -2,9 +2,11 @@ import { Block } from 'payload'
 import { photosCarouselBlock } from '../slug_blogs'
 import { buildLexical } from '@/lexical/lexicalBuilder'
 import { lexicalBlocksExcluding } from '../../defaultLexical'
-import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
+import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
 
-const editor = buildLexical(() => lexicalBlocksExcluding(["photos_carousel_block", "two_columns_block", "wrapper_block"]))
+const editor = buildLexical(() =>
+  lexicalBlocksExcluding(['photos_carousel_block', 'two_columns_block', 'wrapper_block']),
+)
 
 export const PhotosCarouselBlock: Block = {
   slug: photosCarouselBlock,
@@ -15,9 +17,9 @@ export const PhotosCarouselBlock: Block = {
   },
   fields: [
     {
-      'name': 'items',
-      'type': 'array',
-      'fields': [
+      name: 'items',
+      type: 'array',
+      fields: [
         {
           name: 'cover',
           type: 'upload',
@@ -26,28 +28,27 @@ export const PhotosCarouselBlock: Block = {
           required: true,
           filterOptions: {
             mimeType: { contains: 'image' },
-          }
+          },
         },
         {
           label: 'Título',
           name: 'title',
           type: 'text',
-          localized: true
+          localized: true,
         },
         {
           label: 'Año',
           name: 'year',
-          type: 'number'
+          type: 'number',
         },
         {
           label: 'Descripción',
           name: 'description',
           type: 'richText',
           localized: true,
-          editor
-        }    
-      ]
-    }
-  ]
+          editor,
+        },
+      ],
+    },
+  ],
 }
-

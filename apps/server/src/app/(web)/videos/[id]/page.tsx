@@ -3,12 +3,13 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { DetailBottomSection, VideoDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { COLLECTION_SLUG_VIDEO, routes } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
 import { mapQuoteCard } from '@/core/mappers/mapCards';
 import { Quote } from 'payload-types';
 import { evalPermissionByRoleQuery, fetchPermittedContentQuery } from "payload-access-control";
 import { SEOContentWrapper } from 'gaudi/client';
+import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs';
+import { routes } from '@/core/routesGenerator';
 
 interface Props {
   params: {
@@ -41,6 +42,7 @@ const Page: NextPage<Props> = async (props) => {
     ogType="video"
   >
     <VideoDetail
+      subscriptionPageHref={routes.nextJS.subscriptionPageHref}
       videoHref={href}
       title={video.title ?? "No title"}
       detailHref={routes.nextJS.generateDetailHref({ collection: "video", value: video })}

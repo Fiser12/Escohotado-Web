@@ -1,23 +1,22 @@
-import { permissionSlugs } from "../payload/keycloakPermissionSlugs";
-import type { MenuSection } from "../domain/header_submenu_model.js";
-import type { UserModel } from "../domain/user-model.js";
+import { MenuSection } from "hegel";
+import { BaseUser } from "payload-access-control";
 
-export const mockUser: UserModel = {
+export const mockUser: BaseUser = {
     id: "123",
     name: "name",
     email: "email@fake.com",
     image: "https://fake.com/image.jpg",
     roles: []
 }
-export const mockAdminUser: UserModel = {
+export const mockAdminUser: BaseUser = {
     id: "123",
     name: "name",
     email: "email@fake.com",
     image: "https://fake.com/image.jpg",
-    roles: [permissionSlugs.webAdmin]
+    roles: ["webAdmin"]
 }
 
-export function menuSectionsLoaderMock(user: UserModel | null): MenuSection[] {
+export function menuSectionsLoaderMock(user: BaseUser): MenuSection[] {
     if(!user) {
         return [];
     }
@@ -29,7 +28,7 @@ export function menuSectionsLoaderMock(user: UserModel | null): MenuSection[] {
             ]   
         }
     ];
-    if(user.roles.includes(permissionSlugs.webAdmin)) {
+    if(user.roles?.includes("webAdmin")) {
         sections.push({
             title: "Administración",
             items: [

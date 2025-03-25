@@ -2,9 +2,16 @@ import { Block } from 'payload'
 import { heroBlock } from '../slug_blogs'
 import { buildLexical } from '@/lexical/lexicalBuilder'
 import { lexicalBlocksExcluding } from '../../defaultLexical'
-import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
+import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
 
-const editor = buildLexical(() => lexicalBlocksExcluding(["photos_carousel_block", "two_columns_block", "wrapper_block", "hero_block"]))
+const editor = buildLexical(() =>
+  lexicalBlocksExcluding([
+    'photos_carousel_block',
+    'two_columns_block',
+    'wrapper_block',
+    'hero_block',
+  ]),
+)
 
 export const HeroBlock: Block = {
   slug: heroBlock,
@@ -19,7 +26,7 @@ export const HeroBlock: Block = {
       type: 'upload',
       relationTo: COLLECTION_SLUG_MEDIA,
       hasMany: false,
-      required: true
+      required: true,
     },
     {
       type: 'row',
@@ -28,7 +35,7 @@ export const HeroBlock: Block = {
           label: 'Invertido',
           name: 'inverted',
           type: 'checkbox',
-          defaultValue: false
+          defaultValue: false,
         },
         {
           type: 'select',
@@ -38,17 +45,16 @@ export const HeroBlock: Block = {
             { label: 'Normal', value: 'normal' },
             { label: 'Autoplay & Muted (Si es vídeo)', value: 'muted' },
           ],
-          defaultValue: 'normal'
-        }    
-      ]
+          defaultValue: 'normal',
+        },
+      ],
     },
     {
       label: 'Contenido',
       name: 'content',
       type: 'richText',
       localized: true,
-      editor
-    }   
-  ]
+      editor,
+    },
+  ],
 }
-

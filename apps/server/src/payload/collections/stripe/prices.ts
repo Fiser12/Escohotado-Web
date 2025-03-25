@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS } from 'hegel/payload'
+import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS } from '@/core/collectionsSlugs'
 import { isAdminOrStripeActive, isAdmin } from 'payload-access-control'
 
 export const PricingType = {
@@ -21,7 +21,7 @@ export const prices: CollectionConfig = {
   slug: COLLECTION_SLUG_PRICES,
   admin: {
     useAsTitle: 'unitAmount',
-    group: "Stripe",
+    group: 'Stripe',
   },
   access: {
     read: isAdminOrStripeActive,

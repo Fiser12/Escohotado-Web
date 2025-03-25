@@ -1,6 +1,5 @@
 "use server";
 
-import { COLLECTION_SLUG_BOOK, routes } from "hegel/payload";
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { BookDetail, DetailBottomSection } from "gaudi/server";
@@ -13,6 +12,8 @@ import "hegel";
 import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { SEOContentWrapper } from "gaudi/client";
+import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
+import { routes } from '@/core/routesGenerator';
 
 interface Props {
     params: {

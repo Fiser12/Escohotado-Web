@@ -5,7 +5,7 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { SubscriptionsSection } from "@/ui/organisms/subscriptions.organism";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 
-const Page = async () => {
+const Page: React.FC<{action: string}> = async ({action}) => {
   const payload = await getPayload();
   const homeData = await payload.findGlobal({
     slug: "home_page"
@@ -24,7 +24,7 @@ const Page = async () => {
       {!hasPermission &&
         <SubscriptionsSection className="pb-16" />
       }
-      <NewsletterSubscription />
+      <NewsletterSubscription action={action} />
     </>
   );
 };

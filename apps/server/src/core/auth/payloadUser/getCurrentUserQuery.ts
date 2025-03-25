@@ -1,7 +1,7 @@
 import { headers as getHeaders } from 'next/headers'
 import { BasePayload } from 'payload'
-import type { User } from 'payload-types'
 import { getPayload } from '@/payload/utils/getPayload'
+import { BaseUser } from 'payload-access-control'
 
 /**
  * Get the current user with out needing to import the payload instance & headers.
@@ -13,7 +13,7 @@ import { getPayload } from '@/payload/utils/getPayload'
 
 export async function getCurrentUserQuery(
   payload: BasePayload | null = null,
-): Promise<User | null> {
+): Promise<BaseUser | null> {
   const headers = getHeaders()
   payload = payload ?? (await getPayload())
   return (await payload.auth({ headers } as any)).user

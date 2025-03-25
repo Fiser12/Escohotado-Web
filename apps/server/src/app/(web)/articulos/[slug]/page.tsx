@@ -4,7 +4,6 @@ import { ArticleDetail, DetailBottomSection } from "gaudi/server";
 import { NextPage } from "next/types";
 import { Media, Pdf, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload';
 import { mapAnyToComment } from 'hegel';
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { mapTaxonomyToCategoryModel } from '@/core/mappers/mapTaxonomyToCategoryModel';
@@ -13,6 +12,8 @@ import { FreemiumHighlightSection, SEOContentWrapper } from 'gaudi/client';
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { TypedLocale } from 'payload';
 import { mapQuoteCard } from '@/core/mappers/mapCards';
+import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs';
+import { routes } from '@/core/routesGenerator';
 
 export const searchContentParamsCache = createSearchParamsCache({
   locale: parseAsString.withDefault('es'),
@@ -94,7 +95,7 @@ const BlockedContentArea: React.FC<{ content: any }> = ({ content }) => {
         </div>
         <div className="absolute bottom-0 left-0 w-full h-50 bg-gradient-to-b from-transparent to-white pointer-events-none" />
       </div>
-      <FreemiumHighlightSection />
+      <FreemiumHighlightSection subscriptionHref={routes.nextJS.subscriptionPageHref} />
     </div>
   );
 };

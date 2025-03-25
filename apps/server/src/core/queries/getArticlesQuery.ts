@@ -1,6 +1,6 @@
 'use server'
 
-import { COLLECTION_SLUG_ARTICLE_WEB } from 'hegel/payload'
+import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs'
 import { getPayload } from '@/payload/utils/getPayload'
 import { ArticleWeb } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'

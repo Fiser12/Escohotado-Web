@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import { ToggleButtonGroup } from "../common/toggle_button_group/toggle_button_group";
 import { SubscriptionCard } from "./subscription_card";
-import { Interval, IntervalOptions, SubscriptionInventory } from "hegel";
+import { Interval, IntervalOptions } from "hegel";
 import { SubscriptionButton } from "./subscription_button";
 import "hegel";
+import { SubscriptionInventory } from "payload-access-control";
 
 interface Price {
     id: number;

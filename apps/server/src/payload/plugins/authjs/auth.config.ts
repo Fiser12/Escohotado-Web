@@ -1,4 +1,4 @@
-import { routes } from 'hegel'
+import { routes } from '@/core/routesGenerator'
 import { NextAuthConfig } from 'next-auth'
 import keycloak from 'next-auth/providers/keycloak'
 

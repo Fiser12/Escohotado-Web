@@ -1,10 +1,12 @@
-import { routes } from "hegel";
 import HomePage from "@/app/(web)/page";
+import { routes } from "@/core/routesGenerator";
 import { SearchModalLayout } from "@/ui/modal-layouts/SearchModalLayout";
 
 const Page = async () => {
   return <>
-    <HomePage/>
+    <HomePage
+      action={routes.newsletter.newsletterSubscriptionForm}
+    />
     <SearchModalLayout 
       goBackTo={routes.nextJS.homePageHref}
     />

@@ -1,6 +1,11 @@
 import { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
-import { permissionRelationship, cachePermissionSeedsHook, isAnyone, isAdmin } from 'payload-access-control'
+import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs'
+import {
+  permissionRelationship,
+  cachePermissionSeedsHook,
+  isAnyone,
+  isAdmin,
+} from 'payload-access-control'
 import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
 
@@ -42,7 +47,7 @@ export const video: CollectionConfig = {
       label: 'Contenido',
       name: 'content',
       type: 'richText',
-      localized: true
+      localized: true,
     },
     {
       type: 'row',

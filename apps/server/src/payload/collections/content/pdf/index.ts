@@ -1,5 +1,5 @@
+import { COLLECTION_SLUG_PDF } from '@/core/collectionsSlugs'
 import { addContentHashToFile } from '../../../hooks/media/addContentHashToFileHook'
-import { COLLECTION_SLUG_PDF, routes } from 'hegel/payload'
 import { CollectionConfig } from 'payload'
 import { checkReadPermissions, isAdmin } from 'payload-access-control'
 import {

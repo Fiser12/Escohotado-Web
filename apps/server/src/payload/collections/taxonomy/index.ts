@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_TAXONOMY } from 'hegel/payload'
+import { COLLECTION_SLUG_TAXONOMY } from '@/core/collectionsSlugs'
 import { isAnyone, isAdmin } from 'payload-access-control'
 import { slugField } from '@/payload/fields/slug'
 
@@ -17,7 +17,7 @@ const taxonomy: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'singular_name',
-    group: 'Contenido'
+    group: 'Contenido',
   },
   fields: [
     {
@@ -39,7 +39,7 @@ const taxonomy: CollectionConfig = {
       localized: true,
       required: false,
     },
-    ...slugField("singular_name")
+    ...slugField('singular_name'),
   ],
 }
 

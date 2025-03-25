@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
+import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
 import { addContentHashToFile } from '../../hooks/media/addContentHashToFileHook'
 import { handleSvgUpload } from '../../hooks/media/handleSvgUploadHook'
 import { updateCacheControl } from '../../hooks/media/updateCacheControl'

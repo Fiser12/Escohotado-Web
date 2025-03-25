@@ -2,7 +2,7 @@
 
 import { getPayload } from '@/payload/utils/getPayload'
 import { CategoryModel } from 'hegel'
-import { collectionsContentsSlugs } from 'hegel/payload'
+import { collectionsContentsSlugs } from '@/core/collectionsSlugs'
 import { Taxonomy } from 'payload-types'
 import { mapTaxonomyToCategoryModel } from '../mappers/mapTaxonomyToCategoryModel'
 import { withCache } from 'nextjs-query-cache'

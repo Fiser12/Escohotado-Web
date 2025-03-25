@@ -1,7 +1,8 @@
 import { slugField } from '@/payload/fields/slug'
-import { COLLECTION_SLUG_ARTICLE_WEB, routes } from 'hegel/payload'
 import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
 import { defaultLexical } from '@/lexical/defaultLexical'
+import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs'
+import { routes } from '@/core/routesGenerator'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder({
   slug: COLLECTION_SLUG_ARTICLE_WEB,

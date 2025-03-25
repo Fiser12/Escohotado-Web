@@ -5,7 +5,7 @@ import { Tag } from "../../../../common/tag/tag";
 import { CategoryModel } from "hegel";
 import { VideoEmbed } from "../../../../common/video_embed/video_embed";
 import { SocialMediaShare } from "../../../../common/social_media";
-import { FreemiumHighlightSection } from "../../../../client";
+import { FreemiumHighlightSection } from "../../../article/highlight/section_highlight";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -13,6 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     author?: string;
     duration: number;
     videoHref?: string | null;
+    subscriptionPageHref: string;
     detailHref: string;
     categories: CategoryModel[];
     children: React.ReactNode;
@@ -24,6 +25,7 @@ export const VideoDetail: React.FC<Props> = ({
     publishedAt,
     categories,
     detailHref,
+    subscriptionPageHref,
     duration: durationStr,
     videoHref,
     children,
@@ -53,7 +55,7 @@ export const VideoDetail: React.FC<Props> = ({
             <ContentWrapper className="flex flex-col gap-12">
                 {videoHref ?
                     <VideoEmbed url={videoHref} /> :
-                    <FreemiumHighlightSection />
+                    <FreemiumHighlightSection subscriptionHref={subscriptionPageHref} />
                 }
                 <div className="flex flex-col gap-6 md:gap-10">
                     <H3 label={title ?? "No title"} />

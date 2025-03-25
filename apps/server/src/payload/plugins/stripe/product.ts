@@ -1,4 +1,4 @@
-import { COLLECTION_SLUG_PRODUCTS } from 'hegel/payload'
+import { COLLECTION_SLUG_PRODUCTS } from '@/core/collectionsSlugs'
 import { getPayload } from '@/payload/utils/getPayload'
 import type Stripe from 'stripe'
 import { payloadUpsert } from '../../utils/upsert'

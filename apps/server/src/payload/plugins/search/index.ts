@@ -1,6 +1,7 @@
+import { COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK } from "@/core/collectionsSlugs";
 import { mapTaxonomyToSlugs } from "@/core/mappers/mapTaxonomyToSlugs";
+import { routes } from "@/core/routesGenerator";
 import { searchPlugin } from "@payloadcms/plugin-search";
-import { COLLECTION_SLUG_VIDEO, COLLECTION_SLUG_QUOTE, COLLECTION_SLUG_ARTICLE_WEB, COLLECTION_SLUG_BOOK, routes } from "hegel/payload";
 import { Config } from "payload";
 
 const config: (config: Config) => Config = searchPlugin({

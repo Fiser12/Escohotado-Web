@@ -1,7 +1,7 @@
 {
-  "name": "payload-access-control",
+  "name": "payload-stripe-inventory",
   "version": "0.0.1",
-  "description": "Control de acceso modular para Payload CMS",
+  "description": "Sistema de inventario y suscripciones con Stripe para Payload CMS",
   "type": "module",
   "module": "index.ts",
   "main": "index.ts",
@@ -9,27 +9,29 @@
     ".": "./src/index.ts"
   },
   "types": "./src/index.ts",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [
     "payload-cms",
-    "permissions",
-    "access-control",
-    "roles"
+    "stripe",
+    "payments",
+    "subscriptions",
+    "inventory",
+    "e-commerce"
   ],
   "author": "",
   "license": "MIT",
   "peerDependencies": {
     "payload": "^3.0.0",
     "react": "^19.0.0",
-    "@payloadcms/ui": "^3.0.0"
+    "@payloadcms/ui": "^3.0.0",
+    "stripe": "^14.0.0",
+    "payload-access-control": "workspace:*"
   },
   "devDependencies": {
     "eslint": "^9.0.0",
     "typescript": "^5.0.0",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "config": "workspace:*",
-    "hegel": "workspace:*",
     "@types/node": "^22.0.0"
   },
   "files": [

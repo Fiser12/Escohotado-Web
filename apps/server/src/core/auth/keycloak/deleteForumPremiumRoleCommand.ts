@@ -1,5 +1,6 @@
-import { forumClientId, routes } from 'hegel'
 import { loginKeycloak } from './loginKeycloak'
+import { forumClientId } from './constants'
+import { routes } from '@/core/routesGenerator'
 
 export const deleteForumPremiumRoleCommand = async (userId: string): Promise<void> => {
   const { token } = await loginKeycloak()

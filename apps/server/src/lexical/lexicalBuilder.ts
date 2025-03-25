@@ -22,9 +22,9 @@ import {
   UnorderedListFeature,
   SubscriptFeature,
   SuperscriptFeature,
-  InlineCodeFeature
+  InlineCodeFeature,
 } from '@payloadcms/richtext-lexical'
-import { collectionsContentsSlugs } from 'hegel/payload'
+import { collectionsContentsSlugs } from '@/core/collectionsSlugs'
 
 export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<any, any, any>[] => [
   HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
@@ -71,12 +71,12 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
           options: [
             { label: 'Button', value: 'button' },
             { label: 'Inline', value: 'inline' },
-          ]
-        }
+          ],
+        },
       ]
     },
   }),
-  HTMLConverterFeature({})
+  HTMLConverterFeature({}),
 ]
 
 export function buildLexical(blocks: () => Block[]): Config['editor'] {

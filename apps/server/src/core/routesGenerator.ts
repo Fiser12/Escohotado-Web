@@ -48,7 +48,9 @@ export const routes = {
     x: `https://x.com/AEscohotado`,
     facebook: `https://www.facebook.com/profile.php?id=61555222603814`,
     instagram: `https://www.instagram.com/escohotado/`,
-    youtube: `https://www.youtube.com/@AntonioEscohotadoEspinosa`
+    youtube: `https://www.youtube.com/@AntonioEscohotadoEspinosa`,
+    tiktok: `https://www.tiktok.com/@escohotadooficial?lang=es`,
+    ivoox: `https://www.ivoox.com/perfil-antonio-escohotado_a8_podcaster_25202660_1.html`
   },
   keycloak: {
     issuer: keyloakIssuer,

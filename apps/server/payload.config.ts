@@ -21,7 +21,6 @@ export default buildConfig({
   collections,
   globals,
   db: postgresAdapter({
-    prodMigrations: migrations,
     pool: {
       connectionString: process.env.DATABASE_URL,
     },

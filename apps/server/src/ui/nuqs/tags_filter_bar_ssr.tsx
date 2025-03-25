@@ -1,4 +1,4 @@
-import { collectionsContentsSlugs } from "hegel/payload";
+import { collectionsContentsSlugs } from "@/core/collectionsSlugs";
 import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQuery";
 import { FilterBarNuqs } from "./filter_bar_nuqs";
 import { CategoryModel } from "hegel";

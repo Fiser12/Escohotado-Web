@@ -1,5 +1,5 @@
 import { CollectionAfterChangeHook } from 'payload'
-import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
+import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
 
 const fetchSVG = async (url: string): Promise<string> => {
   const response = await fetch(url)

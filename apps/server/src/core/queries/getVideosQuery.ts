@@ -1,6 +1,6 @@
 'use server'
 
-import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
+import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'

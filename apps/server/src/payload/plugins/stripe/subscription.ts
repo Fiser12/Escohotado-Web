@@ -1,7 +1,4 @@
-import {
-  COLLECTION_SLUG_USER,
-  COLLECTION_SLUG_PRODUCTS,
-} from 'hegel/payload'
+import { COLLECTION_SLUG_USER, COLLECTION_SLUG_PRODUCTS } from '@/core/collectionsSlugs'
 import { getPayload } from '@/payload/utils/getPayload'
 import { deleteForumPremiumRoleCommand } from '@/core/auth/keycloak/deleteForumPremiumRoleCommand'
 import { addForumPremiumRoleCommand } from '@/core/auth/keycloak/addForumPremiumRoleCommand'
@@ -49,7 +46,8 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
     const product = products.at(0)
     if (!product) return
 
-    const inventory = user.inventory as UserInventory | undefined ?? generateUserInventory(customer as string)
+    const inventory =
+      (user.inventory as UserInventory | undefined) ?? generateUserInventory(customer as string)
     inventory.subscriptions[stripeID] = {
       productId: product.id,
       permissions: product.permissions_seeds?.split(',') ?? [],
@@ -71,8 +69,8 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
         trial: {
           start: trial_start ? new Date(trial_start * 1000) : null,
           end: trial_end ? new Date(trial_end * 1000) : null,
-        }
-      }
+        },
+      },
     }
     await payload.update({
       collection: COLLECTION_SLUG_USER,

@@ -1,6 +1,6 @@
 'use server'
 
-import { COLLECTION_SLUG_QUOTE } from 'hegel/payload'
+import { COLLECTION_SLUG_QUOTE } from '@/core/collectionsSlugs'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Quote, Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'

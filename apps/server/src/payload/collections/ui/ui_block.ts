@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { isAnyone, isAdmin } from 'payload-access-control'
-import { COLLECTION_SLUG_UI_BLOCK } from 'hegel/payload'
+import { COLLECTION_SLUG_UI_BLOCK } from '@/core/collectionsSlugs'
 
 export const uiBLock: CollectionConfig = {
   slug: COLLECTION_SLUG_UI_BLOCK,
@@ -20,17 +20,17 @@ export const uiBLock: CollectionConfig = {
   },
   fields: [
     {
-        type: 'text',
-        name: 'title',
-        label: 'Título',
-        required: true
+      type: 'text',
+      name: 'title',
+      label: 'Título',
+      required: true,
     },
     {
-        type: 'richText',
-        localized: true,
-        name: 'block',
-        label: 'Bloque',
-        required: true
-    }
+      type: 'richText',
+      localized: true,
+      name: 'block',
+      label: 'Bloque',
+      required: true,
+    },
   ],
 }

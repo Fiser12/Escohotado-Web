@@ -1,14 +1,18 @@
 import type { CollectionConfig } from 'payload'
-import { permissionRelationship, cachePermissionSeedsHook, checkReadPermissions, isAdmin } from 'payload-access-control'
-import { COLLECTION_SLUG_MEDIA } from 'hegel/payload'
+import {
+  permissionRelationship,
+  cachePermissionSeedsHook,
+  checkReadPermissions,
+  isAdmin,
+} from 'payload-access-control'
+import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
 import { taxonomyRelationship } from '../../fields/taxonomies/taxonomiesRelationshipFields'
 import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
 import { clearCache } from 'nextjs-query-cache'
 
-
 export function contentWithPermissionsCollectionBuilder(
   config: Partial<CollectionConfig> & { slug: string },
-  localized?: boolean
+  localized?: boolean,
 ): CollectionConfig {
   const contentCollection = contentCollectionBuilder(config, localized)
   return {
@@ -24,7 +28,7 @@ export function contentWithPermissionsCollectionBuilder(
       beforeChange: [...(contentCollection.hooks?.beforeChange ?? []), cachePermissionSeedsHook()],
     },
     fields: [
-      ...permissionRelationship(), 
+      ...permissionRelationship(),
       {
         name: 'cover',
         type: 'upload',
@@ -34,14 +38,14 @@ export function contentWithPermissionsCollectionBuilder(
           mimeType: { contains: 'image' },
         },
       },
-      ...(contentCollection.fields ?? [])
-    ]
+      ...(contentCollection.fields ?? []),
+    ],
   }
 }
 
 export function contentCollectionBuilder(
   config: Partial<CollectionConfig> & { slug: string },
-  localized?: boolean
+  localized?: boolean,
 ): CollectionConfig {
   return {
     ...config,
@@ -63,7 +67,7 @@ export function contentCollectionBuilder(
       },
     },
     hooks: {
-      ...config.hooks
+      ...config.hooks,
     },
     fields: [
       {
@@ -87,13 +91,10 @@ export function contentCollectionBuilder(
 
 export const addClearCacheHookBeforeChange = (collection: CollectionConfig): CollectionConfig => {
   return {
-      ...collection,
-      hooks: {
-          ...collection.hooks,
-          beforeChange: [
-              ...collection.hooks?.beforeChange || [],
-              clearCache
-          ]
-      }
+    ...collection,
+    hooks: {
+      ...collection.hooks,
+      beforeChange: [...(collection.hooks?.beforeChange || []), clearCache],
+    },
   }
 }
