@@ -1,22 +1,24 @@
-import { COLLECTION_SLUG_PRODUCTS } from '@/core/collectionsSlugs'
-import { getPayload } from '@/payload/utils/getPayload'
-import type Stripe from 'stripe'
-import { payloadUpsert } from '../../utils/upsert'
-import { stripeBuilder } from '@/payload/plugins/stripe/stripe-builder'
+"use server";
 
+import type Stripe from 'stripe'
+import { payloadUpsert } from './upsert'
+import { stripeBuilder } from './stripe-builder'
+import type { BasePayload } from 'payload'
+import { COLLECTION_SLUG_PRODUCTS } from '../constants/collections'
 const logs = false
 
-export const updateProducts = async () => {
+export const updateProducts = async (payload: BasePayload) => {
   const stripe = await stripeBuilder()
   const products = await stripe.products.list({ limit: 100, active: true })
-  products.data.forEach(productSync)
+  products.data.forEach((product) => productSync(product, payload))
 }
 
-export const productSync = async (object: Stripe.Product) => {
+export const productSync = async (object: Stripe.Product, payload: BasePayload) => {
   const { id: stripeProductID, name, description, images } = object
-  if (object.deleted) return productDeleted(object)
+  if (object.deleted) return productDeleted(object, payload)
   try {
     await payloadUpsert({
+      payload,
       collection: COLLECTION_SLUG_PRODUCTS,
       data: {
         prices: [],
@@ -37,9 +39,8 @@ export const productSync = async (object: Stripe.Product) => {
   }
 }
 
-export const productDeleted = async (object: Stripe.Product) => {
+export const productDeleted = async (object: Stripe.Product, payload: BasePayload) => {
   const { id: stripeProductID } = object
-  const payload = await getPayload()
 
   try {
     const productQuery = await payload.find({

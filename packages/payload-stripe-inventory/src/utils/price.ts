@@ -1,13 +1,14 @@
-import { COLLECTION_SLUG_PRICES, COLLECTION_SLUG_PRODUCTS } from '@/core/collectionsSlugs'
-import { getPayload } from '@/payload/utils/getPayload'
+"use server";
 import type Stripe from 'stripe'
-import { payloadUpsert } from '../../utils/upsert'
-import { stripeBuilder } from '@/payload/plugins/stripe/stripe-builder'
+import { payloadUpsert } from './upsert'
+import { stripeBuilder } from './stripe-builder'
+import { BasePayload } from 'payload'
+import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES } from '../constants/collections'
 
-export const updatePrices = async () => {
+export const updatePrices = async (payload: BasePayload) => {
   const stripe = await stripeBuilder()
   const prices = await stripe.prices.list({ limit: 100, active: true })
-  const promises = prices.data.map(priceUpsert)
+  const promises = prices.data.map((price) => priceUpsert(price, payload))
   const pricesUpserted = await Promise.all(promises)
 
   const pricesByProductId = pricesUpserted
@@ -24,7 +25,6 @@ export const updatePrices = async () => {
     )
 
   Object.entries(pricesByProductId).map(async ([productId, prices]) => {
-    const payload = await getPayload()
     await payload.update({
       collection: COLLECTION_SLUG_PRODUCTS,
       data: {
@@ -42,14 +42,15 @@ interface PriceUpserted {
   priceId: number
 }
 
-export async function priceUpsert(price: Stripe.Price): Promise<PriceUpserted | null> {
+export async function priceUpsert(price: Stripe.Price, payload: BasePayload): Promise<PriceUpserted | null> {
   const stripeProductID = typeof price.product === 'string' ? price.product : price.product.id
 
   if (price.deleted) {
-    priceDeleted(price)
+    priceDeleted(price, payload)
     return null
   }
   const priceUpserted = await payloadUpsert({
+    payload,
     collection: COLLECTION_SLUG_PRICES,
     data: {
       stripeID: price.id,
@@ -69,9 +70,8 @@ export async function priceUpsert(price: Stripe.Price): Promise<PriceUpserted | 
   return { productId: stripeProductID, priceId: priceUpserted.id }
 }
 
-export const priceDeleted = async (price: Stripe.Price) => {
+export const priceDeleted = async (price: Stripe.Price, payload: BasePayload) => {
   const { id } = price
-  const payload = await getPayload()
 
   try {
     await payload.delete({

@@ -1,7 +1,5 @@
 'use server'
 
-import { updatePrices } from '@/payload/plugins/stripe/price'
-import { updateProducts } from '@/payload/plugins/stripe/product'
 import syncYoutubeChannelToVideoCollection from '@/core/admin/youtube_importer/sync_youtube_channel_to_video_collection_command'
 import syncForumWithDatabase from '@/core/admin/forum_sync'
 import { CollectionSlug } from 'payload'
@@ -10,11 +8,6 @@ export async function syncForumPosts(collectionSlug: CollectionSlug) {
   const validCollections: CollectionSlug[] = ['book', 'video', 'article_web']
   const slug = validCollections.includes(collectionSlug as CollectionSlug) ? collectionSlug : 'book'
   await syncForumWithDatabase(slug)
-}
-
-export async function updateProductsAndPrices() {
-  await updateProducts()
-  await updatePrices()
 }
 
 export async function syncNewVideos() {

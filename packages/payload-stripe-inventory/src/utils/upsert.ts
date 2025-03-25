@@ -1,22 +1,27 @@
-import { getPayload } from '@/payload/utils/getPayload'
-import type { Where } from 'payload'
-import type { Config } from '@/../payload-types'
+import type { BasePayload, Where } from 'payload'
+
+type Config = {
+  collections: {
+    [key: string]: any
+  }
+}
 
 interface UpsertOptions<T extends keyof Config['collections']> {
   collection: T
+  payload: BasePayload
   data: Omit<Config['collections'][T], 'createdAt' | 'id' | 'updatedAt' | 'sizes'>
   where: Where
 }
 
 export const payloadUpsert = async <T extends keyof Config['collections']>({
+  payload,
   collection,
   data,
   where,
 }: UpsertOptions<T>): Promise<Config['collections'][T] | null> => {
-  const payload = await getPayload()
   try {
     const existingDocs = await payload.find({
-      collection,
+      collection: collection as any,
       where,
       pagination: false,
       limit: 1,
@@ -25,7 +30,7 @@ export const payloadUpsert = async <T extends keyof Config['collections']>({
     const existingDocId = existingDocs.docs?.at(0)?.id
     if (existingDocId) {
       const updatedDoc = await payload.update({
-        collection,
+        collection: collection as any,
         id: existingDocId,
         data: data as any,
       })
@@ -39,6 +44,6 @@ export const payloadUpsert = async <T extends keyof Config['collections']>({
     } as any)
   } catch (error) {
     console.error(`Error in payloadUpsert: ${error}`)
-    throw new Error(`Failed to upsert document in collection ${collection}`)
+    throw new Error(`Failed to upsert document in collection ${collection} ${error}`)
   }
 }

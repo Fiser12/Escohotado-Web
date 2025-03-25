@@ -41,6 +41,7 @@
     "config": "workspace:*",
     "nextjs-query-cache": "workspace:*",
     "payload-access-control": "workspace:*",
+    "payload-stripe-inventory": "workspace:*",
     "cross-env": "^7.0.3",
     "framer-motion": "^12.3.0",
     "gaudi": "workspace:*",

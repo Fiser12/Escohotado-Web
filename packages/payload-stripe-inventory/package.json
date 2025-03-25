@@ -6,7 +6,8 @@
   "module": "index.ts",
   "main": "index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./admin": "./src/admin/index.ts"
   },
   "types": "./src/index.ts",
   "scripts": {},
@@ -24,8 +25,11 @@
     "payload": "^3.0.0",
     "react": "^19.0.0",
     "@payloadcms/ui": "^3.0.0",
-    "stripe": "^14.0.0",
+    "stripe": "17.2.1",
     "payload-access-control": "workspace:*"
+  },
+  "dependencies": {
+    "@payloadcms/plugin-stripe": "3.25.0"
   },
   "devDependencies": {
     "eslint": "^9.0.0",

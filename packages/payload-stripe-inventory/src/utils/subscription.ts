@@ -1,13 +1,15 @@
-import { COLLECTION_SLUG_USER, COLLECTION_SLUG_PRODUCTS } from '@/core/collectionsSlugs'
-import { getPayload } from '@/payload/utils/getPayload'
-import { deleteForumPremiumRoleCommand } from '@/core/auth/keycloak/deleteForumPremiumRoleCommand'
-import { addForumPremiumRoleCommand } from '@/core/auth/keycloak/addForumPremiumRoleCommand'
 import type Stripe from 'stripe'
 import { generateUserInventory, UserInventory } from 'payload-access-control'
+import { BasePayload } from 'payload'
+import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_USER } from '../constants/collections'
 
 const logs = false
 
-export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
+export const subscriptionUpsert = async (
+  subscription: Stripe.Subscription, 
+  payload: BasePayload,
+  onSubscriptionUpdate: (type: "create" | "delete", userId: string) => Promise<void>
+) => {
   const {
     id: stripeID,
     customer,
@@ -22,8 +24,6 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
     trial_start,
     trial_end,
   } = subscription
-  const payload = await getPayload()
-
   try {
     const userQuery = await payload.find({
       collection: COLLECTION_SLUG_USER,
@@ -49,7 +49,7 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
     const inventory =
       (user.inventory as UserInventory | undefined) ?? generateUserInventory(customer as string)
     inventory.subscriptions[stripeID] = {
-      productId: product.id,
+      productId: product.id as number,
       permissions: product.permissions_seeds?.split(',') ?? [],
       stripeData: {
         createdAt: new Date(),
@@ -79,7 +79,7 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
     })
 
     if (['active', 'trialing'].includes(status)) {
-      await addForumPremiumRoleCommand(metadata.keycloakUserId ?? 'ERROR')
+      await onSubscriptionUpdate('create', metadata.keycloakUserId)
     }
     if (logs) {
       payload.logger.info(`✅ Successfully updated subscription with Stripe ID: ${stripeID}`)
@@ -89,8 +89,11 @@ export const subscriptionUpsert = async (subscription: Stripe.Subscription) => {
   }
 }
 
-export const subscriptionDeleted = async (subscription: Stripe.Subscription) => {
-  const payload = await getPayload()
+export const subscriptionDeleted = async (
+  subscription: Stripe.Subscription, 
+  payload: BasePayload,
+  onSubscriptionUpdate: (type: "create" | "delete", userId: string) => Promise<void>
+) => {
   const { id, metadata } = subscription
 
   try {
@@ -106,7 +109,8 @@ export const subscriptionDeleted = async (subscription: Stripe.Subscription) => 
       data: { inventory: inventory as any },
       where: { id: { equals: user.id } },
     })
-    await deleteForumPremiumRoleCommand(subscription.metadata.keycloakUserId ?? 'ERROR')
+    await onSubscriptionUpdate('delete', metadata.keycloakUserId)
+
     if (logs) payload.logger.info(`✅ Successfully deleted subscription with Stripe ID: ${id}`)
   } catch (error) {
     payload.logger.error(`- Error deleting subscription: ${error}`)
