@@ -9,7 +9,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 }
 
-export const SubscriptionsSection: React.FC<Props> = async ({...rest}) => {
+export const SubscriptionsSection: React.FC<Props> = async ({ ...rest }) => {
   const payload = await getPayload();
   const user = await getCurrentUserQuery(payload);
   const products = await payload.find({
@@ -25,7 +25,7 @@ export const SubscriptionsSection: React.FC<Props> = async ({...rest}) => {
       className={className}
       backgroundClassname="bg-white"
     >
-      <H2 label="Elige tu plan y accede al legado Escohotado." className='text-center'/>
+      <H2 label="Elige tu plan y accede al legado Escohotado." className='text-center' />
       <H4 label="Descubre videos, artículos y textos exclusivos." />
       <p className="text-center text-cyan-950 text-base font-normal font-['Montserrat'] leading-normal">
         También puedes elegir la modalidad de pago que mejor se adapte a ti.

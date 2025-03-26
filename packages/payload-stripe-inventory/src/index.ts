@@ -8,4 +8,5 @@ export * from "./utils/price";
 export * from "./utils/subscription";
 export * from "./utils/stripe-builder";
 export * from "./utils/upsert";
+export * from "./api";
 export { plugin as stripePlugin } from "./plugin";

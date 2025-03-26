@@ -37,7 +37,7 @@ export enum SubscriptionButtonActionType {
 const defaultOptions: IntervalOptions[] = [
     { id: 'month', label: 'Pago mensual' },
     { id: 'year', label: 'Pago anual', sublabel: 'ahorra 10%' }
-  ];
+];
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     products: Product[];
@@ -94,10 +94,10 @@ export const SubscriptionsGroupCard: React.FC<Props> = ({
 };
 
 const subscriptionButtonHref: (action: SubscriptionButtonActionType, priceId: string, subscriptionId?: string) => string = (action, priceId, subscriptionId) => {
-    if (action === 'cancel') return `/stripe/update?subscriptionId=${subscriptionId}&cancelAtPeriodEnd=true`
-    else if (action === 'renew') return `/stripe/update?subscriptionId=${subscriptionId}`
-    else if (action === 'change') return `/stripe/portal?updateSubscriptionId=${subscriptionId}`
-    else if (action === 'select') return `/stripe/checkout?priceId=${priceId}`
+    if (action === 'cancel') return `/api/stripe-inventory/update?subscriptionId=${subscriptionId}&cancelAtPeriodEnd=true`
+    else if (action === 'renew') return `/api/stripe-inventory/update?subscriptionId=${subscriptionId}`
+    else if (action === 'change') return `/api/stripe-inventory/portal?updateSubscriptionId=${subscriptionId}`
+    else if (action === 'select') return `/api/stripe-inventory/checkout?priceId=${priceId}`
     return ''
 }
 const getPriceByProduct = (product: Product, interval: Interval): Price | null => {

@@ -32,14 +32,14 @@
     "payload-access-control": "workspace:*",
     "payload-base-singleton": "workspace:*"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^9.0.0",
     "typescript": "^5.0.0",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "config": "workspace:*",
-    "@types/node": "^22.0.0"
+    "@types/node": "^22.0.0",
+    "next": "^14.0.0"
   },
   "files": [
     "dist",
