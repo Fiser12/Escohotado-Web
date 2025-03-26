@@ -1,10 +1,9 @@
 import { Block } from 'payload'
 import { wrapperBlockSlug } from '../slug_blogs'
-import { buildLexical } from '../../lexicalBuilder'
-import { lexicalBlocksExcluding } from '../../defaultLexical'
+import { lexicalEditorExcluding } from '../../defaultLexical'
 import { permissionEvaluationField } from 'payload-access-control'
 
-const editor = buildLexical(() => lexicalBlocksExcluding(["wrapper_block"]))
+const editor = lexicalEditorExcluding(["wrapper_block"])
 
 export const WrapperBlock: Block = {
   slug: wrapperBlockSlug,

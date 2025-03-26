@@ -1,17 +1,14 @@
 import { Block } from 'payload'
 import { heroBlock } from '../slug_blogs'
-import { buildLexical } from '@/lexical/lexicalBuilder'
-import { lexicalBlocksExcluding } from '../../defaultLexical'
+import { lexicalEditorExcluding } from '../../defaultLexical'
 import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
 
-const editor = buildLexical(() =>
-  lexicalBlocksExcluding([
+const editor = lexicalEditorExcluding([
     'photos_carousel_block',
     'two_columns_block',
     'wrapper_block',
     'hero_block',
-  ]),
-)
+  ])
 
 export const HeroBlock: Block = {
   slug: heroBlock,
