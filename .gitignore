@@ -56,3 +56,5 @@ misc
 !.yarn/plugins
 *storybook.log
 k3s/secrets/ghrc-secrets.yaml
+
+tsconfig.tsbuildinfo

@@ -9,6 +9,8 @@ import { MenuItem } from "hegel";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import "../tailwind.css";
 import { routes } from "@/core/routesGenerator";
+import { loadPayloadSingleton } from "payload-base-singleton";
+import { getPayload } from "@/payload/utils/getPayload";
 
 const logoutMenuItem: MenuItem = {
   text: "Cerrar sesión",
@@ -26,6 +28,8 @@ const navItemList: (hasPermission: Boolean) => MenuItem[] = (hasPermission) => {
       { href: routes.nextJS.videosPageHref, tabindex: 3, text: "Videos" },
       { href: routes.nodeBB.root, tabindex: 4, text: "Foro" },
   ]
+  loadPayloadSingleton(getPayload)
+
   if (hasPermission) {
       items.push({
           href: routes.nextJS.citasPageHref,
