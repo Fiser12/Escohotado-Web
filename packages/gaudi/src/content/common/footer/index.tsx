@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 import { NavItem } from "../../../common/header/nav_item";
-import { routes } from "hegel";
 import { XIcon } from "../../../common/icons/social/x_icon";
 import { FacebookIcon } from "../../../common/icons/social/facebook_icon";
 import { InstagramIcon } from "../../../common/icons/social/instagram_icon";
@@ -10,9 +9,28 @@ import { TikTokIcon } from "../../../common/icons/social/tiktok_icon";
 import { IvooxIcon } from "../../../common/icons/social/ivoox_icon";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
+      youtubeHref?: string
+      xHref?: string
+      facebookHref?: string
+      instagramHref?: string
+      tiktokHref?: string
+      ivooxHref?: string
+      privacidadHref: string
+      termsAndConditionsHref: string
 }
 
-export const Footer: React.FC<Props> = (className, ...props) => {
+export const Footer: React.FC<Props> = ({
+      className,
+      youtubeHref,
+      xHref,
+      facebookHref,
+      instagramHref,
+      tiktokHref,
+      ivooxHref,
+      privacidadHref,
+      termsAndConditionsHref,
+      ...props
+}) => {
       const divClass = classNames(
             'bg-primary-900',
             'w-full',
@@ -29,28 +47,28 @@ export const Footer: React.FC<Props> = (className, ...props) => {
             <div className={divClass} {...props}>
                   <ContentWrapper className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="w-full flex flex-row gap-4 flex-wrap justify-center">
-                              <NavItem href={routes.otherExternal.youtube} variant="secondary">
+                              {youtubeHref && <NavItem href={youtubeHref} variant="secondary">
                                     <YoutubeIcon className="w-7 h-7" />
-                              </NavItem>
-                              <NavItem href={routes.otherExternal.x} variant="secondary">
+                              </NavItem>}
+                              {xHref && <NavItem href={xHref} variant="secondary">
                                     <XIcon className="w-7 h-7" />
-                              </NavItem>
-                              <NavItem href={routes.otherExternal.facebook} variant="secondary">
+                              </NavItem>}
+                              {facebookHref && <NavItem href={facebookHref} variant="secondary">
                                     <FacebookIcon className="w-7 h-7" />
-                              </NavItem>
-                              <NavItem href={routes.otherExternal.instagram} variant="secondary">
+                              </NavItem>}
+                              {instagramHref && <NavItem href={instagramHref} variant="secondary">
                                     <InstagramIcon className="w-7 h-7" />
-                              </NavItem>
-                              <NavItem href="https://www.tiktok.com/@escohotadooficial?lang=es" variant="secondary">
+                              </NavItem>}
+                              {tiktokHref && <NavItem href={tiktokHref} variant="secondary">
                                     <TikTokIcon className="w-7 h-7" />
-                              </NavItem>
-                              <NavItem href="https://www.ivoox.com/perfil-antonio-escohotado_a8_podcaster_25202660_1.html" variant="secondary">
+                              </NavItem>}
+                              {ivooxHref && <NavItem href={ivooxHref} variant="secondary">
                                     <IvooxIcon className="w-7 h-7" />
-                              </NavItem>
+                              </NavItem>}
                         </div>
                         <div className="w-full flex flex-col md:flex-row gap-4 items-center md:justify-end">
-                              <NavItem className="self-end md:self-center" href={routes.nextJS.privacidadPageHref} variant="secondary">Privacidad</NavItem>
-                              <NavItem className="self-end md:self-center" href={routes.nextJS.termsAndConditionsPageHref} variant="secondary">Terminos y condiciones</NavItem>
+                              <NavItem className="self-end md:self-center" href={privacidadHref} variant="secondary">Privacidad</NavItem>
+                              <NavItem className="self-end md:self-center" href={termsAndConditionsHref} variant="secondary">Terminos y condiciones</NavItem>
                               <p className="self-end md:self-center">&copy; 2024 Jorge Escohotado</p>
                         </div>
                   </ContentWrapper>

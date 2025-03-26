@@ -1,4 +1,3 @@
-import { collectionsContentsSlugs } from "../payload/collectionsSlugs";
 import { CategoryModel } from "./types/CategoryModel";
 
 type ContentType = "article" | "quote" | "book" | "video" | "media";
@@ -31,7 +30,7 @@ export interface QuoteHeaderModel extends ContentHeaderBaseModel {
 
 export interface OrigenModel {
     title: string;
-    type: typeof collectionsContentsSlugs[number];
+    type: string;
     detailHref: string
     hasPermissions: boolean
 }

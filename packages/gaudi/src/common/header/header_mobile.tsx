@@ -1,6 +1,6 @@
 "use client";
 
-import { MenuItem, MenuSection, UserModel } from "hegel";
+import { MenuItem, MenuSection } from "hegel";
 import { Hamburguer } from "./hamburguer";
 import { Logo } from "./logo";
 import { MobileMenu } from "./user_dropdown/mobile_menu";
@@ -8,9 +8,10 @@ import { useEffect, useState } from "react";
 import { ContentWrapper } from "../content_wrapper/content_wrapper";
 import { OpenModalButton } from "./open_search_modal_button";
 import { motion } from 'framer-motion';
+import { BaseUser } from "payload-access-control";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    user?: UserModel | null
+    user?: BaseUser | null
     accountMenuItems: MenuSection[]
     pageItems: MenuItem[]
     logoutMenuItem: MenuItem

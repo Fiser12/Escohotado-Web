@@ -1,0 +1,43 @@
+{
+  "name": "payload-base-singleton",
+  "version": "0.0.1",
+  "type": "module",
+  "module": "index.ts",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./src/index.ts",
+    "./admin": "./src/admin/index.ts"
+  },
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "payload-cms",
+    "stripe",
+    "payments",
+    "subscriptions",
+    "inventory",
+    "e-commerce"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "payload": "^3.25.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "config": "workspace:*",
+    "hegel": "workspace:*",
+    "@types/node": "^22.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

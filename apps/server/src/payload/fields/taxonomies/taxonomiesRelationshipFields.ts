@@ -1,6 +1,6 @@
 import { Field } from 'payload'
 import 'hegel'
-import { COLLECTION_SLUG_TAXONOMY } from 'hegel/payload'
+import { COLLECTION_SLUG_TAXONOMY } from '@/core/collectionsSlugs'
 import { slugField } from '../slug'
 
 export const taxonomyRelationship: Field = {

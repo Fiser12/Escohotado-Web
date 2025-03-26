@@ -22,13 +22,19 @@ const serverFunctions: ServerFunctionClient = async function (args) {
     importMap,
   })
 }
+import { loadPayloadSingleton } from 'payload-base-singleton'
+import { getPayload } from "@/payload/utils/getPayload";
 
-const Layout = ({ children }: Args) => (
+const Layout = ({ children }: Args) => {
+  loadPayloadSingleton(getPayload)
+  return (
+
   <>
     <RootLayout importMap={importMap} config={configPromise} serverFunction={serverFunctions}>
       {children}
     </RootLayout>
   </>
 )
+}
 
 export default Layout

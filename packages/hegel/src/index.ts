@@ -3,16 +3,11 @@ export {
   notNullAsync,
   type Optional,
 } from "./domain/optional_helpers";
-export type { UserModel } from "./domain/user-model";
 export type { MenuItem, MenuSection } from "./domain/header_submenu_model";
-export { navItemList } from "./domain/header_submenu_model";
-export * from "./mockData/user.model";
 export type { Interval, IntervalOptions } from "./domain/interval_options";
 import "./domain/optional_helpers";
 export type { Comment, CommentsSectionModel } from "./domain/types/Comment";
 export type { CategoryModel } from "./domain/types/CategoryModel";
-export type { UserInventory, SubscriptionInventory } from "./domain/types/Inventory";
-export { generateUserInventory } from "./domain/types/Inventory";
 export { mapAnyToComment } from "./domain/types/Comment";
 export { convertContentModelToCard } from "./domain/content_model";
 export type {
@@ -26,10 +21,3 @@ export type {
   OrigenModel,
 } from "./domain/content_model";
 export { evaluateExpression, generateFilterExpresionFromTags } from "./domain/evaluateExpression";
-export { routes } from "./payload/routesGenerator";
-export {
-  permissionSlugs,
-  forumClientId,
-} from "./payload/keycloakPermissionSlugs";
-
-// Nota: Las funciones de caché ahora se importan desde 'nextjs-query-cache'

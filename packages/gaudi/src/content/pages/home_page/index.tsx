@@ -20,7 +20,7 @@ export const HomePage = ({ featuredItems, description, buttons, ...rest }: Props
           ))}
         </ContentWrapper>
       </div>
-      <NewsletterSubscription />
+      <NewsletterSubscription action={""} />
     </div>
   );
 };

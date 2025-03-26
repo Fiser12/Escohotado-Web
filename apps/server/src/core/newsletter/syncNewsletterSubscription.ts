@@ -1,4 +1,4 @@
-import { routes } from "hegel";
+import { routes } from "../routesGenerator";
 
 type Props = {
   email: string

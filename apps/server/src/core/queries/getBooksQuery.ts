@@ -1,7 +1,8 @@
-import { COLLECTION_SLUG_BOOK, routes } from 'hegel/payload'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Media } from 'payload-types'
 import { withCache } from 'nextjs-query-cache'
+import { COLLECTION_SLUG_BOOK } from '../collectionsSlugs'
+import { routes } from '../routesGenerator'
 
 interface BookDto {
   title: string

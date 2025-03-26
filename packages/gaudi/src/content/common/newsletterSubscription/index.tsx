@@ -3,11 +3,12 @@ import { H3 } from "../../../common/headers/H3";
 import { EmailIcon } from "../../../common/icons/email_icon";
 import { InputForm } from "../../../common/input";
 import { MainButton } from "../../../common/main_button/main_button";
-import { routes } from "hegel";
 
-interface Props extends React.HTMLAttributes<HTMLAnchorElement> { }
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+      action: string
+ }
 
-export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
+export const NewsletterSubscription: React.FC<Props> = ({className, action }) => {
       const divClass = classNames(
             "bg-primary-900 w-full py-16 px-10",
             className
@@ -15,10 +16,9 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
 
       return <form
             method="post"
-            action={routes.newsletter.newsletterSubscriptionForm}
+            action={action}
             className={divClass}
             target="_blank"
-            {...rest}
       >
             <div className="flex flex-col items-start gap-8 max-w-[600px] mx-auto">
                   <H3 label="¡Únete a nuestra comunidad del conocimiento!" className="text-primary-100" />
@@ -33,7 +33,6 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
                                     type="text"
                                     placeholder={"Nombre"}
                                     state={"enabled"}
-                                    {...rest}
                               >
                               </InputForm>
                               <InputForm
@@ -43,7 +42,6 @@ export const NewsletterSubscription: React.FC<Props> = (className, ...rest) => {
                                     placeholder={"Email"}
                                     className="w-full"
                                     state={"enabled"}
-                                    {...rest}
                               >
                               </InputForm>
                         </div>

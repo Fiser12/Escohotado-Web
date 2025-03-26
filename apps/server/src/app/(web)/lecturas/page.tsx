@@ -1,6 +1,5 @@
-import { routes } from "hegel/payload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2, handwrittenBackground, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton, H4 } from "gaudi/server";
+import { ContentWrapper, H2,  HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton, H4 } from "gaudi/server";
 import { FreemiumHighlightSection, HighlightSection } from "gaudi/client";
 import { convertContentModelToCard } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
@@ -19,8 +18,7 @@ import { TagsFilterBarSSR } from "@/ui/nuqs/tags_filter_bar_ssr";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { ContentProtected } from "@/ui/contentProtected";
 import Link from "next/link";
-import { generateDetailHref } from "node_modules/hegel/src/payload/routesGenerator";
-import { mapTaxonomyToCategoryModel } from "@/core/mappers/mapTaxonomyToCategoryModel";
+import { generateDetailHref, routes } from "@/core/routesGenerator";
 
 export const pageSize = 10;
 
@@ -92,7 +90,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
       </div>
       <ContentProtected
         permissions_seeds={"basic"}
-        fallback={<FreemiumHighlightSection />}
+        fallback={<FreemiumHighlightSection subscriptionHref={routes.nextJS.subscriptionPageHref} />}
       >
         <HighlightSection>
           <H4 label="Accede a las citas de Escohotado" />

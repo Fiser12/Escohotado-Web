@@ -40,12 +40,14 @@
     "classnames": "^2.5.1",
     "config": "workspace:*",
     "nextjs-query-cache": "workspace:*",
+    "payload-access-control": "workspace:*",
+    "payload-stripe-inventory": "workspace:*",
     "cross-env": "^7.0.3",
     "framer-motion": "^12.3.0",
     "gaudi": "workspace:*",
     "hegel": "workspace:*",
     "jsonwebtoken": "^9.0.2",
-    "next": "15.1.6",
+    "next": "15.2.3",
     "next-auth": "^5.0.0-beta.25",
     "nuqs": "^2.2.3",
     "payload": "3.25.0",
@@ -55,7 +57,8 @@
     "sharp": "^0.33.5",
     "stripe": "17.2.1",
     "tailwind-merge": "^3.0.2",
-    "uuid": "^11.0.2"
+    "uuid": "^11.0.2",
+    "payload-base-singleton": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-designs": "^8.0.4",

@@ -1,14 +1,13 @@
 import { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
+import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs'
 import {
-  cachePermissionSeedsHook,
   permissionRelationship,
-} from '@/payload/fields/permissions/permissionsRelationshipFields'
-import { isAnyone, isAdmin } from '../../../fields/permissions/accessEvaluations'
-
+  cachePermissionSeedsHook,
+  isAnyone,
+  isAdmin,
+} from 'payload-access-control'
 import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
-import { quotesJoinField } from '@/payload/fields/quotesJoin/quotesJoinField'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()
 export const video: CollectionConfig = {
@@ -48,7 +47,7 @@ export const video: CollectionConfig = {
       label: 'Contenido',
       name: 'content',
       type: 'richText',
-      localized: true
+      localized: true,
     },
     {
       type: 'row',
@@ -73,7 +72,6 @@ export const video: CollectionConfig = {
         readOnly: true,
       },
     },
-    quotesJoinField,
     permissionSeedField,
     {
       label: 'Youtube Tags',

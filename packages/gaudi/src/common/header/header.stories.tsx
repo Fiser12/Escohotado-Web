@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { menuSectionsLoaderMock, mockUser } from 'hegel';
 import storybookHelpers from '../../storybook-helpers';
 import { Header } from './header';
+import { mockUser, menuSectionsLoaderMock } from '../../mockData/user.model';
 
 const meta: Meta<typeof Header> = {
 	title: 'Organism/Header',
@@ -9,9 +9,7 @@ const meta: Meta<typeof Header> = {
 	args: {
 		user: mockUser,
 		signIn: async () => { },
-		signOut: async () => { },
 		menuSections: menuSectionsLoaderMock(mockUser),
-
 	},
 	parameters: {
 		layout: 'fullscreen',

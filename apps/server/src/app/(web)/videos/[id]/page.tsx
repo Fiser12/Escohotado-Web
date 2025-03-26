@@ -3,13 +3,13 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { DetailBottomSection, VideoDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { COLLECTION_SLUG_VIDEO, routes } from 'hegel/payload';
-import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery';
 import { mapAnyToComment } from 'hegel';
 import { mapQuoteCard } from '@/core/mappers/mapCards';
 import { Quote } from 'payload-types';
-import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery';
+import { evalPermissionByRoleQuery, fetchPermittedContentQuery } from "payload-access-control";
 import { SEOContentWrapper } from 'gaudi/client';
+import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs';
+import { routes } from '@/core/routesGenerator';
 
 interface Props {
   params: {
@@ -34,9 +34,6 @@ const Page: NextPage<Props> = async (props) => {
     video.url_free,
   )
   const hasPermissions = evalPermissionByRoleQuery(user, 'basic');
-  const quotes = (video?.quotes?.docs ?? [])
-    .slice(0, hasPermissions ? 3 : 0)
-    .cast<Quote>()
 
   return <SEOContentWrapper
     title={video?.title ?? "No title"}
@@ -45,6 +42,7 @@ const Page: NextPage<Props> = async (props) => {
     ogType="video"
   >
     <VideoDetail
+      subscriptionPageHref={routes.nextJS.subscriptionPageHref}
       videoHref={href}
       title={video.title ?? "No title"}
       detailHref={routes.nextJS.generateDetailHref({ collection: "video", value: video })}
@@ -56,7 +54,7 @@ const Page: NextPage<Props> = async (props) => {
         <LexicalRenderer className="max-w-[48rem] mx-auto" data={video.content} />
       }
       <DetailBottomSection
-        quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
+        quotesModel={[].mapNotNull(mapQuoteCard(user))}
         commentsSectionModel={mapAnyToComment(video.forum_post_id, video.last_forum_posts ?? [])}
       />
     </VideoDetail>

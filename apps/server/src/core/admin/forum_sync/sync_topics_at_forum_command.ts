@@ -1,5 +1,5 @@
-import { routes } from "hegel";
-import { BasePayload } from "payload";
+import { routes } from "@/core/routesGenerator"
+
 interface Topic {
   id: string
   title?: string

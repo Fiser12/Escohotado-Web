@@ -1,4 +1,4 @@
-import { collectionsContentsSlugs } from 'hegel/payload'
+import { collectionsContentsSlugs } from '@/core/collectionsSlugs'
 import { Block } from 'payload'
 
 export const staticQueryBlock: Block = {
@@ -6,7 +6,7 @@ export const staticQueryBlock: Block = {
   labels: {
     singular: 'Consulta estática',
     plural: 'Consultas estáticas',
-},
+  },
   fields: [
     {
       type: 'relationship',

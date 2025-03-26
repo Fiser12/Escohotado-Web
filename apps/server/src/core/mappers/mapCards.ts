@@ -1,6 +1,4 @@
-import { evalPermissionByRoleQuery } from '@/core/auth/permissions/evalPermissionByRoleQuery'
-import { fetchPermittedContentQuery } from '@/core/auth/permissions/fetchPermittedContentQuery'
-import { IMAGE_ERROR } from 'hegel/constants'
+import { evalPermissionByRoleQuery, fetchPermittedContentQuery } from 'payload-access-control'
 import {
   getAuthorsNamesFromTaxonomies,
   getMediasFromTaxonomies,
@@ -24,7 +22,8 @@ import { getArticlesQueryWithCache } from '@/core/queries/getArticlesQuery'
 import { getVideosQueryWithCache } from '@/core/queries/getVideosQuery'
 import { getQuotesQueryWithCache } from '@/core/queries/getQuotesQuery'
 import { MediaHeaderModel } from 'node_modules/hegel/src/domain/content_model'
-import { routes } from 'hegel/payload'
+import { routes } from '../routesGenerator'
+export const IMAGE_ERROR = 'https://placehold.co/600x300?text=Error+cargando+imagen'
 
 type QueryFieldType = GridCardsBlock['queryField'][number]
 type ContentRelationType = Extract<

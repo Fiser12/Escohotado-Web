@@ -1,29 +1,27 @@
-import { type MenuSection, type UserModel, type Optional, routes, navItemList, MenuItem } from 'hegel';
+import { type MenuSection, type Optional, MenuItem } from 'hegel';
 import { HeaderMobile } from "./header_mobile";
 import { HeaderDesktop } from "./header_desktop";
+import { BaseUser } from 'payload-access-control';
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
-    user: Optional<UserModel>
-    hasPermission: boolean
+    user: Optional<BaseUser>
     menuSections: MenuSection[]
+    pageItems: MenuItem[]
+    logoutMenuItem: MenuItem
     signIn: () => Promise<void>
-    signOut: () => Promise<void>
 }
+
 
 export const Header: React.FC<Props> = ({
     user,
     signIn,
-    signOut,
+    logoutMenuItem,
+    pageItems,
     menuSections,
-    hasPermission,
     ...rest
 }) => {
-    const logoutMenuItem: MenuItem = {
-        text: "Cerrar sesión",
-        action: signOut,
-        target: "_black",
-        href: routes.keycloak.logout
-    }
+    
+    
     return (<>
         <HeaderDesktop
             {...rest}
@@ -31,7 +29,7 @@ export const Header: React.FC<Props> = ({
             user={user}
             signIn={signIn}
             accountMenuItems={menuSections}
-            pageItems={navItemList(hasPermission)}
+            pageItems={pageItems}
             logoutMenuItem={logoutMenuItem}
         />
         <HeaderMobile
@@ -40,7 +38,7 @@ export const Header: React.FC<Props> = ({
             user={user}
             signIn={signIn}
             accountMenuItems={menuSections}
-            pageItems={navItemList(hasPermission)}
+            pageItems={pageItems}
             logoutMenuItem={logoutMenuItem}
         />
     </>)

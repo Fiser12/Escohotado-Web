@@ -1,6 +1,5 @@
 "use server";
 
-import { COLLECTION_SLUG_BOOK, routes } from "hegel/payload";
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { BookDetail, DetailBottomSection } from "gaudi/server";
@@ -8,11 +7,13 @@ import { Media, Quote, Taxonomy } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/ui/nuqs/book_variants_selector_nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from "hegel";
-import { evalPermissionByRoleQuery } from "@/core/auth/permissions/evalPermissionByRoleQuery";
+import { evalPermissionByRoleQuery } from "payload-access-control";
 import "hegel";
 import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { SEOContentWrapper } from "gaudi/client";
+import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
+import { routes } from '@/core/routesGenerator';
 
 interface Props {
     params: {
@@ -36,9 +37,6 @@ const Page = async (props: Props) => {
     ]);
     const book = books.docs.at(0);
     const hasPermissions = evalPermissionByRoleQuery(user, 'basic');
-    const quotes = (book?.quotes?.docs ?? [])
-        .slice(0, hasPermissions ? 3 : 0)
-        .cast<Quote>()
     const variants: { [key: string]: string } = {
         book: "Libro",
         audiobook: "Audiolibro",
@@ -70,7 +68,7 @@ const Page = async (props: Props) => {
         >
             {book.content && <LexicalRenderer data={book.content} />}
             <DetailBottomSection
-                quotesModel={quotes.mapNotNull(mapQuoteCard(user))}
+                quotesModel={[].mapNotNull(mapQuoteCard(user))}
                 commentsSectionModel={mapAnyToComment(book.forum_post_id, book.last_forum_posts ?? [])}
             />
         </BookDetail>

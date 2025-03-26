@@ -1,15 +1,15 @@
 "use client";
-import { MenuItem, MenuSection, routes, UserModel } from "hegel";
+import { MenuItem, MenuSection } from "hegel";
 import { UserIcon } from '../../icons/user_icon';
 import classNames from "classnames";
 import { NavItem } from "../nav_item";
 import { MainButton } from "../../main_button/main_button";
 import { ArrowLinkIcon } from "../../icons/arrow_link";
-import Image from "next/image";
 import { HighlightSection } from "../../../client";
+import { BaseUser } from "payload-access-control";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    user?: UserModel | null
+    user?: BaseUser | null
     accountMenuItems: MenuSection[]
     pageItems: MenuItem[]
     logoutMenuItem: MenuItem
@@ -67,7 +67,7 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
                     </NavItem>
                 ))}
             </div>
-            <a href={routes.otherExternal.emboscadura} target="_blank" tabIndex={6}>
+            <a href={"https://laemboscadura.com"} target="_blank" tabIndex={6}>
                 <HighlightSection type="secondary">
                     <MainButton text="La Emboscadura" color="primary" />
                 </HighlightSection>

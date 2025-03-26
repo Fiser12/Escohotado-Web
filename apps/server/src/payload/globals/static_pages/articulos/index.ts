@@ -1,4 +1,4 @@
-import { routes } from "hegel";
+import { routes } from "@/core/routesGenerator";
 import { GlobalConfig } from "payload";
 
 export const ArticulosPage: GlobalConfig = {

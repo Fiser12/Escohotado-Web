@@ -1,14 +1,15 @@
 "use client";
 import { useState } from "react";
 import { BasicMenu } from "../../menu";
-import { MenuSection, UserModel } from "hegel";
+import { MenuSection } from "hegel";
 import { UserIcon } from '../../icons/user_icon';
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import { ChevronDownIcon } from "../../icons/chevron_down_icon";
+import { BaseUser } from "payload-access-control";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    user: UserModel
+    user: BaseUser
     menuSections: MenuSection[]
 }
 

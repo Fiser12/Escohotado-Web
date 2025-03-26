@@ -1,5 +1,6 @@
-import { forumClientId, permissionSlugs, routes } from 'hegel'
 import { loginKeycloak } from './loginKeycloak'
+import { forumClientId } from './constants'
+import { routes } from '@/core/routesGenerator'
 
 export const addForumPremiumRoleCommand = async (userId: string): Promise<void> => {
   const { token } = await loginKeycloak()
@@ -15,7 +16,7 @@ export const addForumPremiumRoleCommand = async (userId: string): Promise<void> 
       body: JSON.stringify([
         {
           id: 'b845e658-d9b4-4905-8203-aee0aea110d4',
-          name: permissionSlugs.foroPremium,
+          name: "foro_premium",
         },
       ]),
       redirect: 'follow',

@@ -1,10 +1,10 @@
 'use server'
 
-import { COLLECTION_SLUG_VIDEO } from 'hegel/payload'
+import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs'
 import { getPayload } from '@/payload/utils/getPayload'
 import { Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
-import { fetchPermittedContentQuery } from '../auth/permissions/fetchPermittedContentQuery'
+import { fetchPermittedContentQuery } from 'payload-access-control'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { generateFilterExpresionFromTags } from 'hegel'
 import { withCache } from 'nextjs-query-cache'

@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { H4 } from "../../../common/headers/H4";
 import Image from "next/image";
-import { routes } from "hegel";
 import Link from "next/link";
 import { MainButton } from "../../../common/main_button/main_button";
 import handwrittenBackground from "../../../assets/images/handwritting-bg.jpg";
@@ -41,10 +40,10 @@ export const HighlightSection: React.FC<Props> = ({
     );
 };
 
-export const FreemiumHighlightSection: React.FC<{}> = () => (
+export const FreemiumHighlightSection: React.FC<{ subscriptionHref: string }> = ({ subscriptionHref }) => (
     <HighlightSection >
         <H4 label="¿Te gustaría acceder al contenido exclusivo de Escohotado?" className="text-white text-center"></H4>
-        <Link href={routes.nextJS.subscriptionPageHref}>
+        <Link href={subscriptionHref}>
             <MainButton text={"Accede al contenido completo"} color="secondary" type="line" className="max-w-70"></MainButton>
         </Link>
     </HighlightSection>

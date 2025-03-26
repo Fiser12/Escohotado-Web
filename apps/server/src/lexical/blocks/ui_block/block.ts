@@ -1,6 +1,6 @@
 import { Block } from 'payload'
 import { uiBlockSlug } from '../slug_blogs'
-import { permissionEvaluationField } from '@/core/auth/permissions/permissionEvaluationField'
+import { permissionEvaluationField } from 'payload-access-control'
 
 export const UIBlock: Block = {
   slug: uiBlockSlug,

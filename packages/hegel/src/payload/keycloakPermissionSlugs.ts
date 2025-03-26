@@ -1,7 +1,0 @@
-export const permissionSlugs = {
-    webAdmin: "web_admin",
-    premium: "premium",
-    foroPremium: "foro_premium",
-}
-
-export const forumClientId = "154dd48a-eb9c-480b-a4e7-f47680a61b7e"

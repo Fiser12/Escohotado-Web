@@ -1,4 +1,4 @@
-import { evalAdvancePermissionQuery } from "@/core/auth/permissions/evalAdvancePermissionQuery"
+import { evalAdvancePermissionQuery } from "payload-access-control"
 import { LexicalRenderer } from "@/lexical/lexicalRenderer"
 import { getPayload } from "@/payload/utils/getPayload"
 

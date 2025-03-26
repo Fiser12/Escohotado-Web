@@ -1,9 +1,9 @@
-import { stripeBuilder } from '@/payload/plugins/stripe/stripe-builder'
 import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery'
 import { NextResponse } from 'next/server'
-import { User } from 'payload-types'
 import Stripe from 'stripe'
-import { routes } from 'hegel'
+import { routes } from '@/core/routesGenerator'
+import { BaseUser } from 'payload-access-control'
+import { stripeBuilder } from 'payload-stripe-inventory'
 
 export async function GET(request: Request) {
   const payloadUser = await getCurrentUserQuery()
@@ -24,13 +24,12 @@ export async function GET(request: Request) {
       subscription_update: { subscription: updateSubscriptionId },
     }
 
-  const session = await createPortalSession(url, payloadUser, flowData)
+  const session = await createPortalSession(payloadUser, flowData)
   return NextResponse.redirect(session.url, 303)
 }
 
 async function createPortalSession(
-  url: URL,
-  user: User,
+  user: BaseUser,
   flowData?: Stripe.BillingPortal.SessionCreateParams.FlowData,
 ) {
   const stripe = stripeBuilder()

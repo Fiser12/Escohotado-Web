@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { mockAdminUser, menuSectionsLoaderMock } from "hegel";
 import { BasicMenu } from ".";
 import storybookHelpers from "../../storybook-helpers";
+import { menuSectionsLoaderMock, mockAdminUser } from "../../mockData/user.model";
 
 const meta: Meta<typeof BasicMenu> = {
   title: "Molecules/Menu",

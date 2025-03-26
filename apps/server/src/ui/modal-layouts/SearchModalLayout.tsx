@@ -5,6 +5,7 @@ import { getIconByCollection } from "@/ui/getIconByCollection";
 import { SearchedItem, SearchOptions, AnimatedModal, SearchModal } from "gaudi/client";
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+import { routes } from "@/core/routesGenerator";
 
 export const SearchModalLayout: React.FC<{ goBackTo?: string; }> = ({ goBackTo }) => {
     const [items, setItems] = useState<SearchedItem[]>([]);
@@ -121,6 +122,7 @@ export const SearchModalLayout: React.FC<{ goBackTo?: string; }> = ({ goBackTo }
             modalContent={() => (
                 <SearchModal
                     items={items}
+                    subscriptionHref={routes.nextJS.subscriptionPageHref}
                     maxItemSize={400}
                     onTagClick={(tag) => console.log("Tag clicked", tag)}
                     onType={handleOnType}

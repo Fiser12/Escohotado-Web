@@ -1,0 +1,39 @@
+{
+  "name": "payload-access-control",
+  "version": "0.0.1",
+  "description": "Control de acceso modular para Payload CMS",
+  "type": "module",
+  "module": "index.ts",
+  "main": "index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "types": "./src/index.ts",
+  "scripts": {
+  },
+  "keywords": [
+    "payload-cms",
+    "permissions",
+    "access-control",
+    "roles"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "payload": "3.25.0",
+    "react": "^19.0.0",
+    "@payloadcms/ui": "^3.25.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "config": "workspace:*",
+    "hegel": "workspace:*",
+    "@types/node": "^22.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}
