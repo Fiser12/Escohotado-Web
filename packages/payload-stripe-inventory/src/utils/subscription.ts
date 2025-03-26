@@ -1,13 +1,13 @@
 import type Stripe from 'stripe'
 import { generateUserInventory, UserInventory } from 'payload-access-control'
-import { BasePayload } from 'payload'
+import { Payload } from 'payload'
 import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_USER } from '../constants/collections'
 
 const logs = false
 
 export const subscriptionUpsert = async (
   subscription: Stripe.Subscription, 
-  payload: BasePayload,
+  payload: Payload,
   onSubscriptionUpdate: (type: "create" | "delete", userId: string) => Promise<void>
 ) => {
   const {
@@ -91,7 +91,7 @@ export const subscriptionUpsert = async (
 
 export const subscriptionDeleted = async (
   subscription: Stripe.Subscription, 
-  payload: BasePayload,
+  payload: Payload,
   onSubscriptionUpdate: (type: "create" | "delete", userId: string) => Promise<void>
 ) => {
   const { id, metadata } = subscription

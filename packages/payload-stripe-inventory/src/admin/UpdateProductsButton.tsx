@@ -1,21 +1,20 @@
-"use server";
+"use client";
 
-import { EditViewProps, getPayload } from "payload";
+import { EditViewProps } from "payload";
+import { useState } from "react";
 import { updateProductsAndPrices } from "./actions";
 
-export const UpdateProductsButton: React.FC<EditViewProps> = async (data: any) => {
-
-    const payload = data.payload;
+export const UpdateProductsButton: React.FC<EditViewProps> = (data: any) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const handleSubmit = async () => {
-        "use server";
-        //setIsLoading(true);
+        setIsLoading(true);
         try {
-            await updateProductsAndPrices(payload);
+            await updateProductsAndPrices();
             window.location.reload(); 
         } catch (error) {
             console.error("Error updating products and prices:", error);
         } finally {
-            //setIsLoading(false);
+            setIsLoading(false);
         }
     };
 
@@ -25,10 +24,10 @@ export const UpdateProductsButton: React.FC<EditViewProps> = async (data: any) =
                 type="button"
                 onClick={handleSubmit}
                 className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
-                //disabled={isLoading}
+                disabled={isLoading}
             >
                 <span className="btn__label">
-                    {true ? "Actualizando..." : "Actualizar productos"}
+                    {isLoading ? "Actualizando..." : "Actualizar productos"}
                 </span>
             </button>
         </div>

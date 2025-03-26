@@ -3,17 +3,17 @@
 import type Stripe from 'stripe'
 import { payloadUpsert } from './upsert'
 import { stripeBuilder } from './stripe-builder'
-import type { BasePayload } from 'payload'
+import type { Payload } from 'payload'
 import { COLLECTION_SLUG_PRODUCTS } from '../constants/collections'
 const logs = false
 
-export const updateProducts = async (payload: BasePayload) => {
+export const updateProducts = async (payload: Payload) => {
   const stripe = await stripeBuilder()
   const products = await stripe.products.list({ limit: 100, active: true })
   products.data.forEach((product) => productSync(product, payload))
 }
 
-export const productSync = async (object: Stripe.Product, payload: BasePayload) => {
+export const productSync = async (object: Stripe.Product, payload: Payload) => {
   const { id: stripeProductID, name, description, images } = object
   if (object.deleted) return productDeleted(object, payload)
   try {
@@ -39,7 +39,7 @@ export const productSync = async (object: Stripe.Product, payload: BasePayload) 
   }
 }
 
-export const productDeleted = async (object: Stripe.Product, payload: BasePayload) => {
+export const productDeleted = async (object: Stripe.Product, payload: Payload) => {
   const { id: stripeProductID } = object
 
   try {

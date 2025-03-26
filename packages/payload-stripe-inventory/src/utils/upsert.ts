@@ -1,4 +1,4 @@
-import type { BasePayload, Where } from 'payload'
+import { Payload } from 'payload'
 
 type Config = {
   collections: {
@@ -8,9 +8,9 @@ type Config = {
 
 interface UpsertOptions<T extends keyof Config['collections']> {
   collection: T
-  payload: BasePayload
+  payload: Payload
   data: Omit<Config['collections'][T], 'createdAt' | 'id' | 'updatedAt' | 'sizes'>
-  where: Where
+  where: any
 }
 
 export const payloadUpsert = async <T extends keyof Config['collections']>({

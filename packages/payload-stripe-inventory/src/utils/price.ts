@@ -2,10 +2,10 @@
 import type Stripe from 'stripe'
 import { payloadUpsert } from './upsert'
 import { stripeBuilder } from './stripe-builder'
-import { BasePayload } from 'payload'
+import type { Payload } from 'payload'
 import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES } from '../constants/collections'
 
-export const updatePrices = async (payload: BasePayload) => {
+export const updatePrices = async (payload: Payload) => {
   const stripe = await stripeBuilder()
   const prices = await stripe.prices.list({ limit: 100, active: true })
   const promises = prices.data.map((price) => priceUpsert(price, payload))
@@ -42,7 +42,7 @@ interface PriceUpserted {
   priceId: number
 }
 
-export async function priceUpsert(price: Stripe.Price, payload: BasePayload): Promise<PriceUpserted | null> {
+export async function priceUpsert(price: Stripe.Price, payload: Payload): Promise<PriceUpserted | null> {
   const stripeProductID = typeof price.product === 'string' ? price.product : price.product.id
 
   if (price.deleted) {
@@ -70,7 +70,7 @@ export async function priceUpsert(price: Stripe.Price, payload: BasePayload): Pr
   return { productId: stripeProductID, priceId: priceUpserted.id }
 }
 
-export const priceDeleted = async (price: Stripe.Price, payload: BasePayload) => {
+export const priceDeleted = async (price: Stripe.Price, payload: Payload) => {
   const { id } = price
 
   try {

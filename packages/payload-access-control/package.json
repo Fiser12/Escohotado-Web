@@ -20,9 +20,9 @@
   "author": "",
   "license": "MIT",
   "peerDependencies": {
-    "payload": "^3.0.0",
+    "payload": "3.25.0",
     "react": "^19.0.0",
-    "@payloadcms/ui": "^3.0.0"
+    "@payloadcms/ui": "^3.25.0"
   },
   "devDependencies": {
     "eslint": "^9.0.0",
