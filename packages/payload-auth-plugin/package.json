@@ -1,0 +1,27 @@
+{
+  "name": "payload-auth-plugin",
+  "version": "0.0.1",
+  "description": "Sistema de autenticación modular para Payload CMS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --skipLibCheck",
+    "dev": "tsc --watch"
+  },
+  "peerDependencies": {
+    "payload": "^3.0.0",
+    "react": "^19.0.0",
+    "next-auth": "^4.22.0"
+  },
+  "dependencies": {
+    "payload-base-singleton": "workspace:*"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/node": "^22.0.0",
+    "payload": "^3.0.0",
+    "next-auth": "^4.22.0"
+  }
+}
