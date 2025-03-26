@@ -25,8 +25,9 @@ import {
   InlineCodeFeature,
 } from '@payloadcms/richtext-lexical'
 import { collectionsContentsSlugs } from '@/core/collectionsSlugs'
+import { buildLexicalByFeatures } from 'payload-lexical-blocks-builder/builder'
 
-export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<any, any, any>[] => [
+export const defaultFeatures = () => [
   HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
   InlineToolbarFeature(),
   ParagraphFeature(),
@@ -45,7 +46,6 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
   InlineCodeFeature(),
   HorizontalRuleFeature(),
   ItalicFeature(),
-  BlocksFeature({ blocks: blocks() }),
   LinkFeature({
     enabledCollections: collectionsContentsSlugs,
     fields: ({ defaultFields }) => {
@@ -76,13 +76,7 @@ export const lexicalFeatures = (blocks: () => Block[]): FeatureProviderServer<an
       ]
     },
   }),
-  HTMLConverterFeature({}),
+  HTMLConverterFeature({})
 ]
 
-export function buildLexical(blocks: () => Block[]): Config['editor'] {
-  return lexicalEditor({
-    features: () => {
-      return lexicalFeatures(blocks)
-    },
-  })
-}
+export const buildLexical = buildLexicalByFeatures(defaultFeatures)

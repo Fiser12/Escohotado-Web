@@ -1,8 +1,8 @@
 import { Block } from 'payload'
-import { lexicalEditorExcluding } from '../../defaultLexical'
 import { twoColumnsBlockSlug } from '../slug_blogs'
+import { lexicalEditorExcludingBlocks } from '@/lexical/lexicalEditorExcludingBlocks'
 
-const editor = lexicalEditorExcluding([
+const editor = lexicalEditorExcludingBlocks([
   "two_columns_block",
   'wrapper_block'
 ])

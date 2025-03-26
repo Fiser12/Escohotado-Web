@@ -1,0 +1,40 @@
+{
+  "name": "payload-lexical-blocks-builder",
+  "version": "0.0.1",
+  "type": "module",
+  "module": "index.ts",
+  "main": "index.ts",
+  "exports": {
+    "./builder": "./src/builder.ts",
+    "./renderer": "./src/renderer.ts"
+  },
+  "types": "./src/index.ts",
+  "scripts": {
+  },
+  "keywords": [
+    "payload-cms",
+    "permissions",
+    "access-control",
+    "roles"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "payload": "3.25.0",
+    "react": "^19.0.0",
+    "@payloadcms/richtext-lexical": "3.25.0",
+    "@payloadcms/ui": "^3.25.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "config": "workspace:*",
+    "hegel": "workspace:*",
+    "@types/node": "^22.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}
