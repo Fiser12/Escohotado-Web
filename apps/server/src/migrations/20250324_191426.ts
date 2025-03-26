@@ -4,7 +4,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    ALTER TABLE "subscriptions" DISABLE ROW LEVEL SECURITY;
   DROP TABLE "subscriptions" CASCADE;
-  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_subscriptions_fk";
+  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT IF EXISTS "payload_locked_documents_rels_subscriptions_fk";
   
   DROP INDEX IF EXISTS "payload_locked_documents_rels_subscriptions_id_idx";
   ALTER TABLE "users" ADD COLUMN "inventory" jsonb;
