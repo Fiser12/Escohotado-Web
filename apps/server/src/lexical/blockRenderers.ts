@@ -17,12 +17,12 @@ import {
   booksCarouselBlockSlug,
   uiBlockSlug,
   buttonsSlug,
-  highlightSlug
+  highlightSlug,
+  BlockSlug
 } from './blocks/slug_blogs'
+import { BlocksRendererFunctions } from 'payload-lexical-blocks-builder/renderer'
 
-export type BlockRendererFunction = <T>({ node }: any) => Promise<any>
-
-export const blockRenderers: Record<string, BlockRendererFunction> = {
+export const blockRenderers: BlocksRendererFunctions<BlockSlug> = {
   [uiBlockSlug]: uiBlockRenderer,
   [heroBlock]: heroBlockRenderer,
   [buttonsSlug]: buttonsRenderer,

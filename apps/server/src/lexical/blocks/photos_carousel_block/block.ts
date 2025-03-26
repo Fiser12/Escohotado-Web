@@ -1,9 +1,13 @@
 import { Block } from 'payload'
 import { photosCarouselBlock } from '../slug_blogs'
-import { lexicalEditorExcluding } from '../../defaultLexical'
+import { lexicalEditorExcludingBlocks } from '@/lexical/lexicalEditorExcludingBlocks'
 import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
 
-const editor = lexicalEditorExcluding(['photos_carousel_block', 'two_columns_block', 'wrapper_block'])
+const editor = lexicalEditorExcludingBlocks([
+  'photos_carousel_block',
+  'two_columns_block',
+  'wrapper_block',
+])
 
 export const PhotosCarouselBlock: Block = {
   slug: photosCarouselBlock,
