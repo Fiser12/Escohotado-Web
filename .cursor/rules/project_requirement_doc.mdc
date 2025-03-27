@@ -1,0 +1,120 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Requirements Document (PRD)
+
+## 1. Application Overview
+
+### 1.1 Purpose
+Escohotado-Portal is a digital content platform that provides access to articles, books, videos, and quotes related to philosophy and critical thinking. The platform implements a subscription system and role-based access control.
+
+### 1.2 Objectives
+- Provide subscribers access to premium content
+- Implement a flexible content management system
+- Ensure content monetization through subscriptions using Stripe
+
+## 2. User Flows
+
+### 2.1 Subscription Flow
+- User visits the subscription page
+- Selects a subscription plan
+- Completes payment process using Stripe
+- Receives immediate access to premium content
+
+### 2.2 Content Access Flow
+- User attempts to access content
+- System verifies permissions and role
+- If access is granted, content is displayed
+- If access is denied, user is redirected to subscription page or shown a preview
+
+### 2.3 Content Management Flow
+- Administrator accesses Payload CMS dashboard
+- Manages content and UI blocks
+- Configures permissions and roles
+- Publishes changes
+
+## 3. Technology Stack and APIs
+
+### 3.1 Frontend
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS
+- Storybook
+
+### 3.2 Backend
+- Payload CMS
+- PostgreSQL
+- TypeScript
+- Node.js
+- Docker
+
+### 3.3 External Services
+- NodeBB: External forum system for comments
+- Keycloak: Authentication system integrated through authjs and payload-authjs
+- Mailing Server: Email sending system
+- Stripe: Payments and subscriptions system
+
+## 4. Main Features
+
+### 4.1 Content System
+- Management of articles, books, videos, and quotes
+- Categorization and tagging system
+- Multilingual support
+- Rich-text editor using Lexical
+
+### 4.2 Subscription System
+- Integration with Stripe
+- Management of plans and pricing
+- Subscription-based access control
+- Stripe customer portal
+
+### 4.3 UI Blocks System
+- Modular and reusable blocks
+- Display modes:
+  - Sequential: shows all blocks in order
+  - Rotational: shows blocks based on the day of the year
+- Block-level permission control
+- Customization based on user role level
+
+### 4.4 Permissions System
+- Role-based access control
+- Granular content permissions
+- Integration with the subscription system
+- Advanced permission evaluation
+
+## 5. Package Architecture
+
+### 5.1 Core Packages
+- **hegel**: Base library with common functionality across all libraries
+- **payload-access-control**: Permission and evaluation system for Payload
+- **payload-base-singleton**: System for sharing Payload instance across Node
+- **payload-lexical-blocks-builder**: Abstractions for orderly Lexical block building
+- **payload-stripe-inventory**: Stripe management and subscription system
+- **nextjs-query-cache**: Query caching system for Next.js
+
+### 5.2 Architecture Benefits
+- Reusable code across projects
+- Clear separation of responsibilities
+- Simplified maintenance
+- Ease of extending functionalities
+
+## 6. Project Scope
+
+### 6.1 In Scope
+- Comprehensive content management system
+- Stripe integration
+- UI Blocks system
+- Access control and permissions
+- Multilingual support
+- Rich-text editor with Lexical
+- Subscription system
+- Stripe customer portal
+- Integration with NodeBB for comments
+- Authentication system with Keycloak
+- Email sending system
+
+## 7. Other Important Aspects
+This project serves as the central foundation for creating future similar projects. Therefore, functionalities are being extracted into packages to enable seamless reuse.

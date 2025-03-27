@@ -1,0 +1,190 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Technical Stack Document
+
+## Core Technologies
+
+### Frontend
+- **Next.js 15 (App Router)**  
+  [Documentation](https://nextjs.org/)  
+  Version: 15.2.3  
+  Main features: Server Components, App Router, Server Actions
+
+- **React 19**  
+  [Documentation](https://reactjs.org/)  
+  Version: 19.0.0  
+  Main features: Server Components, Suspense, Server Actions
+
+- **TypeScript**  
+  [Documentation](https://www.typescriptlang.org/)  
+  Version: 5.0.0  
+  Strict configuration enabled
+
+- **Tailwind CSS**  
+  [Documentation](https://tailwindcss.com/)  
+  Version: 3.4.0  
+  Customized configuration with JIT
+
+### Backend
+- **Payload CMS**  
+  [Documentation](https://payloadcms.com/)  
+  Version: 3.25.0  
+  Main features: TypeScript, GraphQL, REST API
+
+- **PostgreSQL**  
+  [Documentation](https://www.postgresql.org/)  
+  Version: 16  
+  Used with Drizzle ORM
+
+- **Node.js**  
+  [Documentation](https://nodejs.org/)  
+  Version: 20.x LTS
+
+## Internal Packages
+
+### hegel
+Base library with common functionalities  
+Main dependencies:
+- TypeScript
+
+### payload-access-control
+Permissions and evaluation system  
+Main dependencies:
+- Payload CMS
+- TypeScript
+- React
+
+### payload-base-singleton
+Singleton system for sharing Payload instance  
+Main dependencies:
+- Payload CMS
+- TypeScript
+
+### payload-lexical-blocks-builder
+Lexical blocks builder  
+Main dependencies:
+- @payloadcms/richtext-lexical
+- Payload CMS
+- TypeScript
+- React
+
+### payload-stripe-inventory
+Stripe management and subscriptions  
+Main dependencies:
+- stripe
+- Payload CMS
+- TypeScript
+- React
+- payload-access-control
+
+### nextjs-query-cache
+Query caching system  
+Main dependencies:
+- Next.js
+- TypeScript
+- React
+
+### gaudi
+UI components library  
+Main dependencies:
+- React
+- Tailwind CSS
+- Framer Motion
+
+## Payload CMS Plugins
+
+- **@payloadcms/db-postgres** (3.25.0): PostgreSQL database for Payload
+- **@payloadcms/live-preview-react** (3.25.0): Live preview for React
+- **@payloadcms/next** (3.25.0): Next.js integration
+- **@payloadcms/plugin-nested-docs** (3.25.0): Nested documents support
+- **@payloadcms/plugin-search** (3.25.0): Advanced search
+- **@payloadcms/plugin-sentry** (3.25.0): Sentry integration
+- **@payloadcms/plugin-stripe** (3.25.0): Stripe integration
+- **@payloadcms/richtext-lexical** (3.25.0): Rich-text editor with Lexical
+- **@payloadcms/storage-s3** (3.25.0): AWS S3 storage
+- **@payloadcms/ui** (3.25.0): Administration interface
+
+## External Services
+
+### Authentication
+- **Keycloak**  
+  [Documentation](https://www.keycloak.org/)  
+  Integrated via:
+  - next-auth (v5.0.0-beta.25)
+  - payload-authjs (v0.7.1)
+
+### Payments and Subscriptions
+- **Stripe**  
+  [Documentation](https://stripe.com/docs)  
+  Version: 17.2.1  
+  Features used:
+  - Checkout
+  - Customer Portal
+  - Webhooks
+  - Subscription Management
+
+### Forums
+- **NodeBB**  
+  [Documentation](https://nodebb.org/)  
+  Integrated via REST API
+
+### Email
+- **Mailing Server**  
+  Custom REST API  
+  Protocol: SMTP
+
+### Monitoring
+- **Sentry**  
+  [Documentation](https://sentry.io/)  
+  Version: 8.54.0  
+  Error and performance monitoring
+
+### Storage
+- **AWS S3**  
+  [Documentation](https://aws.amazon.com/s3/)  
+  Client: @aws-sdk/client-s3 (v3.741.0)  
+  File and media storage
+
+## Development Tools
+
+### Package Management
+- **pnpm**  
+  [Documentation](https://pnpm.io/)  
+  Version: 8.x  
+  Features: Workspaces, Monorepo
+### Design system
+- **storybook**
+  
+
+### Version Control
+- **Git**
+  - Workflow: Git Flow
+  - Platform: GitHub
+
+
+### CI/CD
+- **GitHub Actions**  
+  [Documentation](https://github.com/features/actions)  
+  Custom workflows
+- **Docker**
+  The project will be deployed using docker in a VPS. The docker image will be got from GitHub Repositories
+
+## Project Structure
+```
+/
+├── apps/
+│   ├── server/           # Backend Payload CMS
+│   └── web/              # Frontend Next.js
+├── packages/
+│   ├── hegel/            # Base library
+│   ├── payload-access-control/
+│   ├── payload-base-singleton/
+│   ├── payload-lexical-blocks-builder/
+│   ├── payload-stripe-inventory/
+│   ├── nextjs-query-cache/
+│   └── gaudi/            # UI components library
+└── package.json
+```

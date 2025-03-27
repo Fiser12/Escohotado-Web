@@ -1,0 +1,123 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Application Flow Document
+
+## Home Page (`/`)
+The home page serves as the main entry point of the application. It displays a hero section with featured content and a grid of recent articles, books, videos, and quotes. Users can navigate to different content sections through the main navigation menu or by clicking on the featured items.
+
+## Content Pages
+
+### Articles (`/lecturas`)
+The articles page shows a list of all available articles. Users can filter articles by category and sort them by date or popularity. Each article card displays the title, excerpt, and publication date. Clicking on an article takes users to the full article view.
+
+### Books (`/libros`)
+The books section displays a collection of books. Users can browse through different books, view their details, and access their content if they have the appropriate subscription level. Each book card shows the cover image, title, and author.
+
+### Videos (`/videos`)
+The video section contains a collection of video content. Users can watch videos directly on the platform if they have the required subscription level. Videos are organized by categories and can be sorted by date or popularity.
+
+### Quotes (`/citas`)
+The quotes page displays a collection of philosophical quotes. Users can browse through quotes, filter them by source (book, video, or article), and view the full context of each quote. Quotes are presented in a card format with the text and its source.
+
+## User Account Pages
+
+### Account (`/cuenta`)
+The account page is where users can manage their profile information, view their subscription status, and access their reading history. Users can update their personal information and preferences.
+
+### Subscriptions (`/subscriptions`)
+The subscriptions page displays available subscription plans. Users can view different tiers, compare features, and select a plan. The page integrates with Stripe for payment processing. After successful payment, users are redirected to their account page.
+
+## Authentication Pages
+
+### Login
+Users can log in through the Keycloak authentication system. The login page provides options for email/password login and social authentication methods. After successful login, users are redirected to their previous location or the home page.
+
+### Register
+New users can create an account through the registration page. The form collects necessary information and creates a new user account in Keycloak. After registration, users are automatically logged in and redirected to the home page.
+
+## Legal Pages
+
+### Privacy Policy (`/privacidad`)
+The privacy policy page contains information about how user data is collected, used, and protected. It includes details about cookies, data sharing, and user rights.
+
+### Terms and Conditions (`/terminos-y-condiciones`)
+The terms and conditions page outlines the rules and guidelines for using the platform. It includes information about subscription terms, content usage rights, and platform policies.
+
+## Stripe Integration Pages
+### Stripe Checkout (/api/stripe-inventory/checkout)
+When users select a subscription plan, they are redirected to this endpoint. The page handles the Stripe Checkout session creation and displays the payment form. After successful payment, users are redirected back to the subscriptions page.
+### Stripe Portal (/api/stripe-inventory/portal)
+This endpoint provides access to the Stripe Customer Portal. Users can manage their subscription, update payment methods, view billing history, and cancel their subscription. The portal is embedded within the application but hosted by Stripe.
+### Stripe Update (/api/stripe-inventory/update)
+This endpoint handles subscription updates, such as:
+Canceling subscriptions at period end
+Reactivating canceled subscriptions
+Updating subscription details
+The endpoint processes these requests and communicates with Stripe to apply the changes. Users are redirected back to their account page after successful updates.
+### Stripe Webhook Handler (/api/stripe-inventory/webhook)
+This internal endpoint receives webhook events from Stripe. It processes various events including:
+- Subscription paused
+- Subscription updates
+- Subscription cancellations
+- Price deleted or updated
+The webhook handler updates the local database to reflect changes in the subscription status and triggers any necessary notifications or user updates.
+
+## Content Interaction
+
+### Comments
+Comments are managed through NodeBB integration. Users can view and post comments on articles, books, and videos. The comment system is separate from the main application but seamlessly integrated into the content pages.
+
+### Content Access
+Content access is controlled by subscription levels. Users without a subscription can view previews and limited content. Subscribers get full access to their subscribed content. The system checks permissions before displaying content and redirects non-subscribers to the subscription page when necessary.
+
+## Navigation Flow
+
+### Main Navigation
+The main navigation menu is present on all pages and provides quick access to:
+- Home
+- Articles
+- Books
+- Videos
+- Quotes
+- Account
+- Subscriptions
+
+### User Menu
+When logged in, users see a dropdown menu with options for:
+- Profile
+- Account Settings
+- Subscription Management
+- Logout
+
+### Content Navigation
+Within content pages, users can navigate through:
+- Related content
+- Category pages
+- Author pages
+- Source materials
+
+## Error Pages
+
+### 404 Not Found
+When users try to access non-existent pages, they are shown a 404 error page with options to return to the home page or search for content.
+
+### Access Denied
+When users try to access content without proper permissions, they are redirected to the subscription page or shown an access denied message.
+
+### Server Error
+In case of server errors, users see a 500 error page with information about the error and options to refresh or return home.
+
+## Search and Discovery
+
+### Search Results
+The search functionality allows users to find content across all types (articles, books, videos, quotes). Results are displayed in a grid layout with filters for content type and relevance.
+
+### Category Pages
+Category pages show all content within a specific category, allowing users to browse related content easily.
+
+### Related Content
+Each content page displays related items based on categories, tags, and user preferences.
+
