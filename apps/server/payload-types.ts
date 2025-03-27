@@ -1234,10 +1234,14 @@ export interface UIBlock {
     relationTo: 'permission';
     value: number | Permission;
   } | null;
-  uiBlock?: {
-    relationTo: 'ui_block';
-    value: number | UiBlock;
-  } | null;
+  displayMode?: ('sequential' | 'rotational') | null;
+  windowSize?: number | null;
+  uiBlocks?:
+    | {
+        relationTo: 'ui_block';
+        value: number | UiBlock;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'ui_block';

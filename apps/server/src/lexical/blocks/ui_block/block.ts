@@ -12,8 +12,33 @@ export const UIBlock: Block = {
   fields: [
     permissionEvaluationField,
     {
+      type: 'row',
+      fields: [
+        {
+          type: 'select',
+          name: 'displayMode',
+          label: 'Modo de visualización',
+          defaultValue: 'sequential',
+          options: [
+            { label: 'Secuencial', value: 'sequential' },
+            { label: 'Rotacional', value: 'rotational' },
+          ],
+        },
+        {
+          type: 'number',
+          name: 'windowSize',
+          defaultValue: 3,
+          label: 'Tamaño de ventana (días)',
+          admin: {
+            condition: (_, siblingData) => siblingData.displayMode === 'rotational',
+          },
+        }    
+      ]
+    },
+    {
       label: 'UI Block',
-      name: 'uiBlock',
+      name: 'uiBlocks',
+      hasMany: true,
       type: 'relationship',
       relationTo: ['ui_block'],
     }
