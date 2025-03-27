@@ -1,10 +1,11 @@
 "use server";
 
 import type Stripe from 'stripe'
-import { payloadUpsert } from './upsert'
-import { stripeBuilder } from './stripe-builder'
 import type { Payload } from 'payload'
-import { COLLECTION_SLUG_PRODUCTS } from '../constants/collections'
+import { payloadUpsert } from '../utils/upsert';
+import { stripeBuilder } from '../utils/stripe-builder';
+import { COLLECTION_SLUG_PRODUCTS } from '../../common';
+
 const logs = false
 
 export const updateProducts = async (payload: Payload) => {

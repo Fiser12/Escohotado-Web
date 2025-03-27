@@ -5,7 +5,7 @@ import {
   PricingType,
   PricingPlanInterval,
   formatOptions,
-} from "../constants/collections";
+} from "../../common";
 import { isAdminOrStripeActive, isAdmin } from "payload-access-control";
 
 export const prices: CollectionConfig = {

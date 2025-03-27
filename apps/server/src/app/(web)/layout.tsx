@@ -11,6 +11,7 @@ import "../tailwind.css";
 import { routes } from "@/core/routesGenerator";
 import { loadPayloadSingleton } from "payload-base-singleton";
 import { getPayload } from "@/payload/utils/getPayload";
+import { UnlocksProgress } from "@/ui/organisms/unlocks-progress.organism";
 
 const logoutMenuItem: MenuItem = {
   text: "Cerrar sesión",
@@ -69,6 +70,12 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
           <main className="flex flex-col flex-grow">
             {children}
           </main>
+          {
+            payloadUser && (
+              <UnlocksProgress user={payloadUser} className="flex-grow mr-4" />
+            )
+          }
+
           <Footer 
             youtubeHref={routes.otherExternal.youtube}
             xHref={routes.otherExternal.x}

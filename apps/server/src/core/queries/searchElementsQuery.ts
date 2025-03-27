@@ -3,7 +3,7 @@
 import { getPayload } from '@/payload/utils/getPayload'
 import { evaluateExpression } from 'hegel'
 import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
-import { evalPermissionByRoleQuery } from 'payload-access-control'
+import { BaseUser, evalPermissionByRoleQuery } from 'payload-access-control'
 import { User } from 'payload-types'
 
 export type SearchCollection = 'article_web' | 'quote' | 'book' | 'video'
@@ -79,7 +79,7 @@ const filterByCollections = (collections: SearchCollection[], filterExpression?:
   }
 }
 
-const mapToSearchResult = (user: User | null) => {
+const mapToSearchResult = (user: BaseUser | null) => {
   return (result: PayloadDoc): SearchResult => {
     if (!result.doc) {
       throw new Error('Invalid search result: missing doc field')

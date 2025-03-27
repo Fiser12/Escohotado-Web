@@ -73,14 +73,32 @@ export interface SubscriptionInventory extends BoughtProduct {
   };
 }
 
+export interface UnlockItem {
+  collection: string;
+  id: number;
+  dateUnlocked: Date;
+  payload: any;
+}
+
+export interface FavoriteItem {
+  collection: string;
+  id: string;
+  dateUnlocked: Date;
+  payload: any;
+}
+
 export interface UserInventory {
   stripeCustomerId: string;
   subscriptions: Record<string, SubscriptionInventory>;
   products: Record<string, BoughtProduct>;
+  unlocks: UnlockItem[];
+  favorites: FavoriteItem[];
 }
 
 export const generateUserInventory = (customerId: string): UserInventory => ({
   stripeCustomerId: customerId,
   subscriptions: {},
   products: {},
+  unlocks: [],
+  favorites: [],
 });

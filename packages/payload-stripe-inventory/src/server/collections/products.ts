@@ -1,8 +1,8 @@
 import { CollectionConfig } from "payload";
 import {
-  COLLECTION_SLUG_PRODUCTS,
   COLLECTION_SLUG_PRICES,
-} from "../constants/collections";
+  COLLECTION_SLUG_PRODUCTS
+} from "../../common";
 import {
   permissionRelationship,
   cachePermissionSeedsHook,
@@ -18,7 +18,7 @@ export const products: CollectionConfig = {
     components: {
       views: {
         list: {
-          actions: [{ path: "payload-stripe-inventory/admin#UpdateProductsButton" }],
+          actions: [{ path: "payload-stripe-inventory/client#UpdateProductsButton" }],
         },
       },
     },
