@@ -1,10 +1,12 @@
 import { getPayload } from "@/payload/utils/getPayload";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { MainButton } from "gaudi/client";
-import { ContentWrapper, H1, H4 } from "gaudi/server";
 import { signOut } from "@/payload/plugins/authjs/plugin";
-import { NewsletterToggleButton } from "@/ui/payload_admin/newsletter_toggle_button";
+import { NewsletterToggleButton } from "@/modules/payload_admin/newsletter_toggle_button";
 import { routes } from "@/core/routesGenerator";
+import { ContentWrapper } from "@/components/common/content_wrapper/content_wrapper";
+import { H1 } from "@/components/common/headers/H1";
+import { H4 } from "@/components/common/headers/H4";
+import { MainButton } from "@/components/common/main_button/main_button";
 
 const Page = async () => {
   const payload = await getPayload();

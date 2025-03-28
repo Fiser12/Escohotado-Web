@@ -1,6 +1,5 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2, GridCardsBlock } from "gaudi/server";
 import { Quote } from "payload-types";
 import { getQuotesQueryWithCache } from "@/core/queries/getQuotesQuery";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
@@ -8,10 +7,13 @@ import { convertContentModelToCard, generateFilterExpresionFromTags } from "hege
 import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { redirect } from 'next/navigation';
-import { DynamicLoadingQuotes } from '@/ui/dynamic-loading-lists/dynamic-loading-quotes';
-import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { TagsFilterBarSSR } from '@/ui/nuqs/tags_filter_bar_ssr';
+import { DynamicLoadingQuotes } from '@/modules/dynamic-loading-lists/dynamic-loading-quotes';
+import { SearchBarNuqs } from "@/modules/nuqs/search_bar_nuqs";
+import { TagsFilterBarSSR } from '@/modules/nuqs/tags_filter_bar_ssr';
 import { routes } from '@/core/routesGenerator';
+import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
+import { H2 } from '@/components/common/headers/H2';
+import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),

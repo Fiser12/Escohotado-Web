@@ -1,5 +1,6 @@
+import { Carouseltem } from "@/components/content/photo_carousel"
 import { LexicalRenderer } from "@/lexical/lexicalRenderer"
-import { PhotoCarousel, type Carouseltem } from "gaudi/client"
+import { PhotoCarousel } from "@/components/content/photo_carousel"
 
 export const renderer = async ({ node }: any) => {
     const items: Carouseltem[] = node.fields.items.map((item: any) => {

@@ -1,4 +1,6 @@
-import { ContentWrapper, H1, H4 } from "gaudi/server";
+import { ContentWrapper } from "@/components/common/content_wrapper/content_wrapper";
+import { H1 } from "@/components/common/headers/H1";
+import { H4 } from "@/components/common/headers/H4";
 
 const Page = async () => {
     return <ContentWrapper className="pt-10 flex flex-col items-right gap-6">

@@ -1,7 +1,7 @@
 import HomePage from "@/app/(web)/page";
 import { NextPage } from "next";
 import { getPayload } from "@/payload/utils/getPayload";
-import { ModalQuoteLayout } from "@/ui/modal-layouts/ModalQuoteLayout";
+import { ModalQuoteLayout } from "@/modules/modal-layouts/ModalQuoteLayout";
 import { routes } from "@/core/routesGenerator";
 interface Props {
   params: {

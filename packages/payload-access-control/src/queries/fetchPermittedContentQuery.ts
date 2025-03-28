@@ -5,7 +5,7 @@ import { evalPermissionByRoleQuery } from "./evalPermissionByRoleQuery";
  * Filtra contenido basado en los permisos del usuario
  */
 export const fetchPermittedContentQuery = <T extends BaseUser, C>(
-  user: T | null,
+  user: T | null | undefined,
   permissions_seeds: string,
   content: C,
   freeContent: C | null = null

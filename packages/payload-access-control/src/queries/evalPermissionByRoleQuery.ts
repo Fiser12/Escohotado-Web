@@ -5,7 +5,7 @@ import { getUserPermissions } from "../utils/getUserPermissions";
  * Evalúa si un usuario tiene los permisos necesarios basados en las semillas de permisos
  */
 export const evalPermissionByRoleQuery = <T extends BaseUser>(
-  user: T | null,
+  user: T | null | undefined,
   permissions_seeds?: string | null
 ): boolean => {
   const userPermissions = getUserPermissions(user);

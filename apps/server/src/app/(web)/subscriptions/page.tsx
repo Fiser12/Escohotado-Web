@@ -1,4 +1,4 @@
-import { SubscriptionsSection } from '@/ui/organisms/subscriptions.organism';
+import { SubscriptionsSection } from '@/modules/organisms/subscriptions.organism';
 
 const Page = async () => {
   return <SubscriptionsSection className='pt-12 pb-6'/>;

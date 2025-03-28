@@ -70,7 +70,7 @@ export const mapArticleCard =
     }
   }
 export const mapVideoCard =
-  (user: BaseUser | null) =>
+  (user?: BaseUser | null) =>
   (video: Video): ContentHeaderModel => {
     const href = fetchPermittedContentQuery(
       user,
@@ -112,7 +112,7 @@ const mapBookCard = (item: Book): ContentHeaderModel => {
   }
 }
 export const mapQuoteCard =
-  (user: BaseUser | null) =>
+  (user?: BaseUser | null) =>
   (item: Quote): QuoteHeaderModel => {
     const taxonomies = (item.categories ?? []) as Taxonomy[]
 
