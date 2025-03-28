@@ -1,7 +1,5 @@
 import { stripePlugin } from '@payloadcms/plugin-stripe'
-import { priceDeleted } from './utils/price'
-import { productDeleted } from './utils/product'
-import { subscriptionUpsert, subscriptionDeleted } from './utils/subscription'
+import { priceDeleted, subscriptionUpsert, subscriptionDeleted, productDeleted } from './actions';
 import { BasePayload } from 'payload'
 
 export let getPayload: () => Promise<BasePayload>;

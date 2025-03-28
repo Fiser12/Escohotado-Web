@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "description": "Sistema de inventario y suscripciones con Stripe para Payload CMS",
   "type": "module",
-  "module": "index.ts",
+  "module": "./common/index.ts",
   "main": "dist/index.js",
   "exports": {
     ".": "./src/index.ts",
-    "./admin": "./src/admin/index.ts"
+    "./server": "./src/server/index.ts",
+    "./client": "./src/client/index.ts"
   },
   "types": "dist/index.d.ts",
   "scripts": {

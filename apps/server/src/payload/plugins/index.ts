@@ -1,5 +1,5 @@
 import searchPlugin from '@/payload/plugins/search'
-import { stripePlugin } from 'payload-stripe-inventory'
+import { plugin as stripePlugin } from 'payload-stripe-inventory/server'
 import authJSPlugin from '@/payload/plugins/authjs'
 import nestedDocsPlugin from '@/payload/plugins/nestedDocs'
 import s3Plugin from '@/payload/plugins/s3'

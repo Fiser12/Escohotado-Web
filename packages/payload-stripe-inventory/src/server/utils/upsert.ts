@@ -1,3 +1,5 @@
+"use server";
+
 import { Payload } from 'payload'
 
 type Config = {

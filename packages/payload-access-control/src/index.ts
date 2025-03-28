@@ -6,16 +6,7 @@ export {
 } from "./constants";
 
 // Types
-export type {
-  Permission,
-  WithPermissions,
-  User,
-  BaseUser,
-  PayloadAccessControlConfig,
-  Subscription,
-  SubscriptionInventory,
-  UserInventory
-} from "./types";
+export type * from "./types";
 export {
   generateUserInventory
 } from "./types";

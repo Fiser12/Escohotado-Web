@@ -1,5 +1,5 @@
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2,  HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton, H4 } from "gaudi/server";
+import { ContentWrapper, H2, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton, H4 } from "gaudi/server";
 import { FreemiumHighlightSection, HighlightSection } from "gaudi/client";
 import { convertContentModelToCard } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
@@ -16,9 +16,10 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import classNames from "classnames";
 import { TagsFilterBarSSR } from "@/ui/nuqs/tags_filter_bar_ssr";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
-import { ContentProtected } from "@/ui/contentProtected";
+import { ContentProtected } from "payload-stripe-inventory/client";
 import Link from "next/link";
 import { generateDetailHref, routes } from "@/core/routesGenerator";
+import { evalPermissionByRoleQuery } from "payload-access-control";
 
 export const pageSize = 10;
 
@@ -89,15 +90,28 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         </ContentWrapper>
       </div>
       <ContentProtected
-        permissions_seeds={"basic"}
-        fallback={<FreemiumHighlightSection subscriptionHref={routes.nextJS.subscriptionPageHref} />}
+        user={user}
+        collection="article_web"
+        content={{ permissions_seeds: "basic" }}
       >
-        <HighlightSection>
-          <H4 label="Accede a las citas de Escohotado" />
-          <Link href={routes.nextJS.citasPageHref}>
-            <MainButton text={"Ir a las citas"} color="secondary" type="line"></MainButton>
-          </Link>
-        </HighlightSection>
+        {({ hasPermissions }) => {
+          return (
+            <>
+              { hasPermissions ?
+                <FreemiumHighlightSection 
+                  href={routes.nextJS.citasPageHref} 
+                  title="Accede a las citas de Escohotado" 
+                  buttonText="Ir a las citas" 
+                />
+              : <FreemiumHighlightSection 
+                  href={routes.nextJS.subscriptionPageHref} 
+                  title="¿Te gustaría acceder al contenido exclusivo de Escohotado?" 
+                  buttonText="Accede al contenido completo" 
+                />
+              }
+            </>
+          )
+        }}
       </ContentProtected>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
       {articulosDataPage.content &&

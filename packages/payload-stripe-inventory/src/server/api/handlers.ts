@@ -5,7 +5,6 @@ import { UserInventory } from "payload-access-control";
 import { stripeBuilder } from "../utils/stripe-builder";
 import { getPayloadSingleton } from "payload-base-singleton";
 
-// Checkout handler
 export async function handleCheckout(
   request: Request,
   getCurrentUser: () => Promise<BaseUser | null>,
@@ -50,7 +49,6 @@ async function createSubscriptionCheckout(
   });
 }
 
-// Portal handler
 export async function handlePortal(
   request: Request,
   getCurrentUser: () => Promise<BaseUser | null>,

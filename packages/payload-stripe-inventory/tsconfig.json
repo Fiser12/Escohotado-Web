@@ -19,10 +19,6 @@
         "name": "next"
       }
     ],
-    "paths": {
-      "@/*": ["./src/*"],
-      "@payload-config": ["./payload.config.ts"]
-    },
     "target": "ESNext"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

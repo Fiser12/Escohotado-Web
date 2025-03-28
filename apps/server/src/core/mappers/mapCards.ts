@@ -1,4 +1,4 @@
-import { evalPermissionByRoleQuery, fetchPermittedContentQuery } from 'payload-access-control'
+import { BaseUser, evalPermissionByRoleQuery, fetchPermittedContentQuery } from 'payload-access-control'
 import {
   getAuthorsNamesFromTaxonomies,
   getMediasFromTaxonomies,
@@ -32,7 +32,7 @@ type ContentRelationType = Extract<
 >['value'][number]
 
 const mapRelationToFeatured = (
-  user: User | null,
+  user: BaseUser | null,
   item: ContentRelationType,
 ): ContentHeaderModel | null => {
   if (typeof item.value === 'number') {
@@ -51,7 +51,7 @@ const mapRelationToFeatured = (
 }
 
 export const mapArticleCard =
-  (user: User | null) =>
+  (user: BaseUser | null) =>
   (item: ArticleWeb): ContentHeaderModel => {
     const taxonomies = item.categories?.cast<Taxonomy>() ?? []
     return {
@@ -70,7 +70,7 @@ export const mapArticleCard =
     }
   }
 export const mapVideoCard =
-  (user: User | null) =>
+  (user: BaseUser | null) =>
   (video: Video): ContentHeaderModel => {
     const href = fetchPermittedContentQuery(
       user,
@@ -112,7 +112,7 @@ const mapBookCard = (item: Book): ContentHeaderModel => {
   }
 }
 export const mapQuoteCard =
-  (user: User | null) =>
+  (user: BaseUser | null) =>
   (item: Quote): QuoteHeaderModel => {
     const taxonomies = (item.categories ?? []) as Taxonomy[]
 
@@ -144,7 +144,7 @@ export const mapQuoteCard =
   }
 
 const mapQueryField =
-  (user: User | null) =>
+  (user: BaseUser | null) =>
   async (queryField: QueryFieldType): Promise<(ContentHeaderModel | null)[]> => {
     if (queryField.blockType === 'staticQueryField') {
       return queryField.value.map((item) => mapRelationToFeatured(user, item))
@@ -178,7 +178,7 @@ const mapQueryField =
     return []
   }
 export const mapCards =
-  (user: User | null) =>
+  (user: BaseUser | null) =>
   async (
     gridCardsBlock: GridCardsBlock,
   ): Promise<{ gridClassname: string; features: ContentCardModel[] }> => {

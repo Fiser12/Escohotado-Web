@@ -7,13 +7,13 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from 'hegel';
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { mapTaxonomyToCategoryModel } from '@/core/mappers/mapTaxonomyToCategoryModel';
-import { ContentProtected } from '@/ui/contentProtected';
-import { FreemiumHighlightSection, SEOContentWrapper } from 'gaudi/client';
+import { SEOContentWrapper } from 'gaudi/client';
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { TypedLocale } from 'payload';
 import { mapQuoteCard } from '@/core/mappers/mapCards';
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs';
 import { routes } from '@/core/routesGenerator';
+import { ContentProtected } from 'payload-stripe-inventory/client';
 
 export const searchContentParamsCache = createSearchParamsCache({
   locale: parseAsString.withDefault('es'),
@@ -70,34 +70,24 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
       detailHref={routes.nextJS.generateDetailHref({ collection: "article_web", value: article })}
       categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
     >
-      {article.content &&
         <ContentProtected
-          fallback={<BlockedContentArea content={article.preview_content} />}
-          permissions_seeds={article.permissions_seeds}
+          user={user}
+          content={article}
+          collection={COLLECTION_SLUG_ARTICLE_WEB}
         >
-          <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
+            {({ hasPermissions, isUnlocked }) => <>
+              {article.content && (hasPermissions || isUnlocked) &&
+                <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content!} />
+              }
+            </>
+          }
         </ContentProtected>
-      }
       <DetailBottomSection
         quotesModel={[].mapNotNull(mapQuoteCard(user))}
         commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
       />
     </ArticleDetail>
   </SEOContentWrapper>
-};
-
-const BlockedContentArea: React.FC<{ content: any }> = ({ content }) => {
-  return (
-    <div className="flex flex-col">
-      <div className="relative w-full overflow-hidden">
-        <div className="relative">
-          <LexicalRenderer className="max-w-[48rem] mx-auto" data={content} />
-        </div>
-        <div className="absolute bottom-0 left-0 w-full h-50 bg-gradient-to-b from-transparent to-white pointer-events-none" />
-      </div>
-      <FreemiumHighlightSection subscriptionHref={routes.nextJS.subscriptionPageHref} />
-    </div>
-  );
 };
 
 export default Page;
