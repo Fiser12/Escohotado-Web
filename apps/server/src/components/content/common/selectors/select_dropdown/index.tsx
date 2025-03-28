@@ -16,7 +16,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
       icon?: React.ReactNode;
     }
   >;
-  onSelectedTagsChange: (selectedTags: string[]) => void;
+  onSelectedTagsChange?: (selectedTags: string[]) => void;
   color: "white" | "primary";
   iconButton?: React.ReactNode;
   className?: string;
@@ -45,20 +45,26 @@ export const SelectDropdown: React.FC<Props> = ({
   };
 
   const handleTagChange = (key: string) => {
-    setSelectedTags((prev) =>
+    if(onSelectedTagsChange) {
+      const newState =!_multiple
+      ? [key]
+      : selectedTagsState.includes(key)
+        ? selectedTagsState.filter((tag) => tag !== key)
+        : [...selectedTagsState, key]
+
+      onSelectedTagsChange(newState)
+    }
+    setSelectedTags((prev) =>(
       !_multiple
         ? [key]
         : prev.includes(key)
           ? prev.filter((tag) => tag !== key)
           : [...prev, key]
+    )
     );
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    if (process.env.STORYBOOK) return;
-    onSelectedTagsChange(selectedTagsState);
-  }, [selectedTagsState, onSelectedTagsChange]);
 
   const buttonClass = classNames(
     "w-full md:w-auto h-[40px] max-w-[300px] rounded px-5 py-2 text-primary-500 font-body text-sm text-center flex items-center gap-2 border-[1.5px]",
