@@ -1,7 +1,7 @@
 "use client";
 
+import { SearchBar } from "@/components/content/common/search_bar";
 import { parseAsString, useQueryState } from "nuqs";
-import { SearchBar } from "gaudi/client";
 
 interface Props extends React.HTMLAttributes<HTMLFormElement> {
 }

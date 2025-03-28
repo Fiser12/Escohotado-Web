@@ -3,11 +3,10 @@
 import { getQuotesQueryByTags } from "@/core/queries/getQuotesQuery";
 import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { convertContentModelToCard } from "hegel";
-import { GridCardsBlock } from "gaudi/server";
-import { Quote, User } from "payload-types";
+import { Quote } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 import { BaseUser } from "payload-access-control";
-
+import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;
     query: string;

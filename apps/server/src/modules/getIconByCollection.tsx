@@ -1,4 +1,7 @@
-import { ArticleIcon, BookIcon, VideoIcon, QuoteIcon } from "gaudi/client";
+import { ArticleIcon } from "@/components/common/icons/searchbar/article_icon";
+import { BookIcon } from "@/components/common/icons/searchbar/book_icon";
+import { QuoteIcon } from "@/components/common/icons/searchbar/quote_icon";
+import { VideoIcon } from "@/components/common/icons/searchbar/video_icon";
 import { collectionsContentsSlugs } from "@/core/collectionsSlugs";
 
 export const getIconByCollection = (collection: typeof collectionsContentsSlugs[number]): React.ReactNode => {

@@ -61,7 +61,7 @@ export function contentCollectionBuilder(
       components: {
         views: {
           list: {
-            actions: [{ path: '/src/ui/payload_admin/sync_forum_posts_button' }],
+            actions: [{ path: '/src/modules/payload_admin/sync_forum_posts_button' }],
           },
         },
       },

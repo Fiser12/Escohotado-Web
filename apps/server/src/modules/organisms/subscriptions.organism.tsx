@@ -1,9 +1,12 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2, H4, SubscriptionsGroupCard } from "gaudi/server";
 import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
 import { UserInventory } from 'payload-access-control';
+import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
+import { H2 } from '@/components/common/headers/H2';
+import { H4 } from '@/components/common/headers/H4';
+import { SubscriptionsGroupCard } from '@/components/subscription/subscriptions_card_group';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 

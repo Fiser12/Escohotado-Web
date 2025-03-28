@@ -1,15 +1,15 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { DetailBottomSection, VideoDetail } from "gaudi/server";
 import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from 'hegel';
 import { mapQuoteCard } from '@/core/mappers/mapCards';
-import { Quote } from 'payload-types';
 import { evalPermissionByRoleQuery, fetchPermittedContentQuery } from "payload-access-control";
-import { SEOContentWrapper } from 'gaudi/client';
 import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs';
 import { routes } from '@/core/routesGenerator';
+import { SEOContentWrapper } from '@/components/common/seo_content_wrapper';
+import { VideoDetail } from '@/components/content/pages/video_page/detalle';
+import { DetailBottomSection } from '@/components/common/detail_bottom_section';
 
 interface Props {
   params: {

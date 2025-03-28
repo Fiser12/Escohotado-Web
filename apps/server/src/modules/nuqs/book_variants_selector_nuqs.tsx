@@ -1,7 +1,8 @@
 "use client";
 
 import { parseAsString, useQueryState } from "nuqs";
-import { SelectBoxes, MainButton } from "gaudi/client";
+import { MainButton } from "@/components/common/main_button/main_button";
+import { SelectBoxes } from "@/components/content/common/selectors/grid_select_boxes";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	options: {

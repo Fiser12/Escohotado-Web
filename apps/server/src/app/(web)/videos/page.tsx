@@ -1,6 +1,5 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2 } from "gaudi/server";
 import { convertContentModelToCard } from "hegel";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { SearchBarNuqs } from "@/modules/nuqs/search_bar_nuqs";
@@ -8,10 +7,12 @@ import { getVideosQueryByTagsWithCache, ResultVideo } from "@/core/queries/getVi
 import { DynamicLoadingVideos } from '@/modules/dynamic-loading-lists/dynamic-loading-videos';
 export const pageSize = 10;
 import { mapVideoCard } from '@/core/mappers/mapCards';
-import { GridCardsBlock } from "gaudi/server";
 import { LexicalRenderer } from '@/lexical/lexicalRenderer';
 import { SortSelectorSSR } from '@/modules/nuqs/sort_selector_ssr';
 import { PlaylistsSelectorSSR } from '@/modules/nuqs/playlists_selector_ssr';
+import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
+import { H2 } from '@/components/common/headers/H2';
+import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),

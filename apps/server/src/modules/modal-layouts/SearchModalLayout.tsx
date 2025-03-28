@@ -2,10 +2,13 @@
 import { searchElementsQuery } from "@/core/queries/searchElementsQuery";
 import { mapSearchOptionsToCollections } from "@/core/mappers/mapSearchOptionsToCollections";
 import { getIconByCollection } from "@/modules/getIconByCollection";
-import { SearchedItem, SearchOptions, AnimatedModal, SearchModal } from "gaudi/client";
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+import { SearchOptions } from "@/components/common/search_modal";
 import { routes } from "@/core/routesGenerator";
+import { SearchedItem } from "@/components/common/search_modal";
+import { SearchModal } from "@/components/common/search_modal";
+import { AnimatedModal } from "@/components/common/animated-modal";
 
 export const SearchModalLayout: React.FC<{ goBackTo?: string; }> = ({ goBackTo }) => {
     const [items, setItems] = useState<SearchedItem[]>([]);

@@ -2,8 +2,7 @@
 
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { BookDetail, DetailBottomSection } from "gaudi/server";
-import { Media, Quote, Taxonomy } from "payload-types";
+import { Media, Taxonomy } from "payload-types";
 import { BookVariantsSelectorNuqs } from "@/modules/nuqs/book_variants_selector_nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from "hegel";
@@ -11,9 +10,11 @@ import { evalPermissionByRoleQuery } from "payload-access-control";
 import "hegel";
 import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
-import { SEOContentWrapper } from "gaudi/client";
 import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
 import { routes } from '@/core/routesGenerator';
+import { DetailBottomSection } from '@/components/common/detail_bottom_section';
+import { SEOContentWrapper } from '@/components/common/seo_content_wrapper';
+import { BookDetail } from '@/components/content/pages/book_page/detail';
 
 interface Props {
     params: {

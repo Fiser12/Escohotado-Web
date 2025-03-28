@@ -1,6 +1,6 @@
+import { CarouselBook } from "@/components/content/book/carousel"
 import { COLLECTION_SLUG_BOOK } from "@/core/collectionsSlugs"
 import { routes } from "@/core/routesGenerator"
-import { CarouselBook } from "gaudi/server"
 
 export const renderer = async ({ node }: any) => {
     const books = node.fields.books.map((book: any) => ({

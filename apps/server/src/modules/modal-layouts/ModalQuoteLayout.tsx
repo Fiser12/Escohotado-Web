@@ -2,8 +2,8 @@
 
 import { mapTaxonomyToCategoryModel, getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { Quote, Taxonomy } from "payload-types";
-import { ModalQuote } from "gaudi/client";
 import { useRouter } from "next/navigation";
+import { ModalQuote } from "@/components/content/featured_grid_home/content/quote/Modal/modalQuote";
 
 export const ModalQuoteLayout: React.FC<{ goBackTo?: string, quote: Quote }> = ({ goBackTo, quote }) => {
     const taxonomies = quote.categories?.cast<Taxonomy>() ?? []

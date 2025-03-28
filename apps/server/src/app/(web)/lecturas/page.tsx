@@ -1,6 +1,4 @@
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { ContentWrapper, H2, HeadlineCard, CarouselBook, escohotadoArticlesPortada, MainButton, H4 } from "gaudi/server";
-import { FreemiumHighlightSection } from "gaudi/client";
 import { convertContentModelToCard } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
@@ -9,7 +7,6 @@ import { getArticlesQueryByTagsWithCache } from "@/core/queries/getArticlesQuery
 import { getBooksQueryWithCache } from "@/core/queries/getBooksQuery";
 import Image from "next/image";
 import { mapArticleCard } from "@/core/mappers/mapCards";
-import { GridCardsBlock } from "gaudi/server";
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import classNames from "classnames";
@@ -18,6 +15,13 @@ import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryMod
 import { generateDetailHref, routes } from "@/core/routesGenerator";
 import { ContentProtected } from "payload-access-control";
 import { DynamicLoadingArticles } from "@/modules/dynamic-loading-lists/dynamic-loading-articles";
+import { escohotadoArticlesPortada } from "@/components/assets";
+import { ContentWrapper } from "@/components/common/content_wrapper/content_wrapper";
+import { H2 } from "@/components/common/headers/H2";
+import { HeadlineCard } from "@/components/content/article/cards/article_headline_card";
+import { FreemiumHighlightSection } from "@/components/content/article/highlight/section_highlight";
+import { CarouselBook } from "@/components/content/book/carousel";
+import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
 
 export const pageSize = 10;
 

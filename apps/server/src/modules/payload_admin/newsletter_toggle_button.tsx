@@ -1,7 +1,7 @@
 "use client";
 
+import { ToggleButtonGroup } from "@/components/common/toggle_button_group/toggle_button_group";
 import { updateSubscriptionStatus } from "@/core/newsletter/updateSubscriptionStatus";
-import { ToggleButtonGroup } from "gaudi/client";
 import { startTransition, useOptimistic } from "react";
 
 type NewsletterStatus = "active" | "inactive";
@@ -27,18 +27,14 @@ export const NewsletterToggleButton: React.FC<{newsletterIsActive: boolean}> = (
     });
 
     };
-    return (<div>
-        <div>
-            <ToggleButtonGroup
-                selected={user.newsletter}
-                options={[
-                    { id: "active", label: "Activo" },
-                    { id: "inactive", label: "Inactivo" },
-                ]}
-                setOption={handleToggle}
-            />
-        </div>
-    </div>
-    )
+    return <ToggleButtonGroup
+        selected={user.newsletter}
+        options={[
+            { id: "active", label: "Activo" },
+            { id: "inactive", label: "Inactivo" },
+        ]}
+        setOption={handleToggle}
+    />
+
 
 }

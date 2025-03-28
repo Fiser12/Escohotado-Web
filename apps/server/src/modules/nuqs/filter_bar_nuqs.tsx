@@ -1,7 +1,7 @@
 "use client";
 
 import { parseAsString, useQueryState } from "nuqs";
-import { SelectDropdown } from "gaudi/client";
+import { SelectDropdown } from "@/components/content/common/selectors/select_dropdown";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 	title: string
@@ -31,7 +31,7 @@ export function FilterBarNuqs({queryKey, className, ...props}: Props) {
 			color="white"
 			showClearButton={props.showClearButton ?? true}
 			selectedTags={tags.split(',').filter(Boolean) ?? []}
-			onSelectedTagsChange={(tags) => {
+			onSelectedTagsChange={(tags: string[]) => {
 				setSearch(tags.join(","))
 			}}
 		/>

@@ -1,9 +1,9 @@
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
-import { NewsletterSubscription } from "gaudi/server";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { SubscriptionsSection } from "@/modules/organisms/subscriptions.organism";
 import { evalPermissionByRoleQuery } from "payload-access-control";
+import { NewsletterSubscription } from "@/components/content/common/newsletterSubscription";
 
 const Page: React.FC<{action: string}> = async ({action}) => {
   const payload = await getPayload();

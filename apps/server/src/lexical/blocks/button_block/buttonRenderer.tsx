@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ButtonColorType, ButtonLexicalType } from "./buttonField"
-import { MainButton } from "gaudi/server"
 import React from "react"
+import { MainButton } from "@/components/common/main_button/main_button"
 
 export const LexicalButtonRenderer: React.FC<ButtonLexicalType> = (button) => {
     return <Link href={getHrefFromButton(button)}>

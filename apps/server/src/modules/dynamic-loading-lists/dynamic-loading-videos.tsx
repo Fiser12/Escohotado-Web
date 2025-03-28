@@ -3,9 +3,9 @@
 import { getVideosQueryByTags, ResultVideo } from "@/core/queries/getVideosQuery";
 import { mapVideoCard } from "@/core/mappers/mapCards";
 import { convertContentModelToCard } from "hegel";
-import { GridCardsBlock } from "gaudi/server";
 import { useEffect, useRef, useState } from "react";
 import { BaseUser } from "payload-access-control";
+import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;

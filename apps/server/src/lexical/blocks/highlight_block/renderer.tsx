@@ -1,8 +1,7 @@
-import { H4 } from 'gaudi/server';
-import { HighlightSection, MainButton } from 'gaudi/client';
+import { H4 } from '@/components/common/headers/H4';
 import { ButtonLexicalType } from '../button_block/buttonField';
 import { LexicalButtonsRenderer } from '../button_block/buttonRenderer';
-
+import { HighlightSection } from '@/components/content/article/highlight/section_highlight';
 export const renderer = async ({ node }: any) => {
   const buttons: ButtonLexicalType[] = node.fields.buttons
   const style = node.fields.background_style ?? "primary"

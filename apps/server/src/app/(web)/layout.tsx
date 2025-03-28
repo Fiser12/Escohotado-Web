@@ -1,17 +1,19 @@
 import React from "react";
-import { Header } from "gaudi/server";
 import { signIn, signOut } from "@/payload/plugins/authjs/plugin";
 import { NuqsAdapter } from 'nuqs/adapters/next'
 import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { Footer, Textures } from "gaudi/client";
 import { MenuItem } from "hegel";
 import { evalPermissionByRoleQuery } from "payload-access-control";
-import "../tailwind.css";
 import { routes } from "@/core/routesGenerator";
 import { loadPayloadSingleton } from "payload-base-singleton";
 import { getPayload } from "@/payload/utils/getPayload";
 import { UnlocksProgress } from "@/modules/organisms/unlocks-progress.organism";
+import { Header } from "@/components/common/header/header";
+import { Footer } from "@/components/content/common/footer";
+import { Textures } from "@/components/common/textures";
+import "./main.css";
+import "../tailwind.css";
 
 const logoutMenuItem: MenuItem = {
   text: "Cerrar sesión",
