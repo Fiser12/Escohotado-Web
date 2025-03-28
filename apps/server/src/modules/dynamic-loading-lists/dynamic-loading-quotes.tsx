@@ -6,9 +6,10 @@ import { convertContentModelToCard } from "hegel";
 import { GridCardsBlock } from "gaudi/server";
 import { Quote, User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
+import { BaseUser } from "payload-access-control";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    user: User | null;
+    user?: BaseUser | null;
     query: string;
     tags: string[];
     sortedBy: 'publishedAt' | 'popularity';

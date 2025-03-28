@@ -11,7 +11,7 @@ import "../tailwind.css";
 import { routes } from "@/core/routesGenerator";
 import { loadPayloadSingleton } from "payload-base-singleton";
 import { getPayload } from "@/payload/utils/getPayload";
-import { UnlocksProgress } from "@/ui/organisms/unlocks-progress.organism";
+import { UnlocksProgress } from "@/modules/organisms/unlocks-progress.organism";
 
 const logoutMenuItem: MenuItem = {
   text: "Cerrar sesión",

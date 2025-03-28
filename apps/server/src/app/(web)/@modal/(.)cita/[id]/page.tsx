@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { getPayload } from '@/payload/utils/getPayload';
-import { ModalQuoteLayout } from "@/ui/modal-layouts/ModalQuoteLayout";
+import { ModalQuoteLayout } from "@/modules/modal-layouts/ModalQuoteLayout";
 
 interface Props {
     params: {

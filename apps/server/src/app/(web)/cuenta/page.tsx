@@ -3,7 +3,7 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { MainButton } from "gaudi/client";
 import { ContentWrapper, H1, H4 } from "gaudi/server";
 import { signOut } from "@/payload/plugins/authjs/plugin";
-import { NewsletterToggleButton } from "@/ui/payload_admin/newsletter_toggle_button";
+import { NewsletterToggleButton } from "@/modules/payload_admin/newsletter_toggle_button";
 import { routes } from "@/core/routesGenerator";
 
 const Page = async () => {

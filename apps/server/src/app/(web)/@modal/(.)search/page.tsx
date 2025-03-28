@@ -1,4 +1,4 @@
-import { SearchModalLayout } from "@/ui/modal-layouts/SearchModalLayout";
+import { SearchModalLayout } from "@/modules/modal-layouts/SearchModalLayout";
 import { NextPage } from "next";
 
 const Page: NextPage<{}> = () => {

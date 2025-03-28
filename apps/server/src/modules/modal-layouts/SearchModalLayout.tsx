@@ -1,7 +1,7 @@
 "use client";
 import { searchElementsQuery } from "@/core/queries/searchElementsQuery";
 import { mapSearchOptionsToCollections } from "@/core/mappers/mapSearchOptionsToCollections";
-import { getIconByCollection } from "@/ui/getIconByCollection";
+import { getIconByCollection } from "@/modules/getIconByCollection";
 import { SearchedItem, SearchOptions, AnimatedModal, SearchModal } from "gaudi/client";
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";

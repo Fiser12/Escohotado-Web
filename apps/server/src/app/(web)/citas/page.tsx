@@ -8,9 +8,9 @@ import { convertContentModelToCard, generateFilterExpresionFromTags } from "hege
 import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { redirect } from 'next/navigation';
-import { DynamicLoadingQuotes } from '@/ui/dynamic-loading-lists/dynamic-loading-quotes';
-import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
-import { TagsFilterBarSSR } from '@/ui/nuqs/tags_filter_bar_ssr';
+import { DynamicLoadingQuotes } from '@/modules/dynamic-loading-lists/dynamic-loading-quotes';
+import { SearchBarNuqs } from "@/modules/nuqs/search_bar_nuqs";
+import { TagsFilterBarSSR } from '@/modules/nuqs/tags_filter_bar_ssr';
 import { routes } from '@/core/routesGenerator';
 
 export const searchContentParamsCache = createSearchParamsCache({

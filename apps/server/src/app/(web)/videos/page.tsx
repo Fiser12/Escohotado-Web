@@ -3,15 +3,15 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { ContentWrapper, H2 } from "gaudi/server";
 import { convertContentModelToCard } from "hegel";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { SearchBarNuqs } from "@/ui/nuqs/search_bar_nuqs";
+import { SearchBarNuqs } from "@/modules/nuqs/search_bar_nuqs";
 import { getVideosQueryByTagsWithCache, ResultVideo } from "@/core/queries/getVideosQuery";
-import { DynamicLoadingVideos } from '@/ui/dynamic-loading-lists/dynamic-loading-videos';
+import { DynamicLoadingVideos } from '@/modules/dynamic-loading-lists/dynamic-loading-videos';
 export const pageSize = 10;
 import { mapVideoCard } from '@/core/mappers/mapCards';
 import { GridCardsBlock } from "gaudi/server";
 import { LexicalRenderer } from '@/lexical/lexicalRenderer';
-import { SortSelectorSSR } from '@/ui/nuqs/sort_selector_ssr';
-import { PlaylistsSelectorSSR } from '@/ui/nuqs/playlists_selector_ssr';
+import { SortSelectorSSR } from '@/modules/nuqs/sort_selector_ssr';
+import { PlaylistsSelectorSSR } from '@/modules/nuqs/playlists_selector_ssr';
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),

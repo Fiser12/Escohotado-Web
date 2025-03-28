@@ -4,11 +4,11 @@ import { getVideosQueryByTags, ResultVideo } from "@/core/queries/getVideosQuery
 import { mapVideoCard } from "@/core/mappers/mapCards";
 import { convertContentModelToCard } from "hegel";
 import { GridCardsBlock } from "gaudi/server";
-import { User } from "payload-types";
 import { useEffect, useRef, useState } from "react";
+import { BaseUser } from "payload-access-control";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    user: User | null;
+    user?: BaseUser | null;
     query: string;
     playlist: string;
     sortedBy: string;

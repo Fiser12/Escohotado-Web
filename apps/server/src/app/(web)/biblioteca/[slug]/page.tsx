@@ -4,7 +4,7 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { BookDetail, DetailBottomSection } from "gaudi/server";
 import { Media, Quote, Taxonomy } from "payload-types";
-import { BookVariantsSelectorNuqs } from "@/ui/nuqs/book_variants_selector_nuqs";
+import { BookVariantsSelectorNuqs } from "@/modules/nuqs/book_variants_selector_nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from "hegel";
 import { evalPermissionByRoleQuery } from "payload-access-control";
