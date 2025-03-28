@@ -16,10 +16,8 @@ import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import classNames from "classnames";
 import { TagsFilterBarSSR } from "@/ui/nuqs/tags_filter_bar_ssr";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
-import { ContentProtected } from "payload-stripe-inventory/client";
-import Link from "next/link";
 import { generateDetailHref, routes } from "@/core/routesGenerator";
-import { evalPermissionByRoleQuery } from "payload-access-control";
+import { ContentProtected } from "payload-access-control";
 
 export const pageSize = 10;
 

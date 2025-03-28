@@ -5,7 +5,7 @@ import { NextPage } from "next/types";
 import { Media, Pdf, Taxonomy } from "payload-types";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from 'hegel';
-import { evalPermissionByRoleQuery } from "payload-access-control";
+import { evalPermissionByRoleQuery, ContentProtected } from "payload-access-control";
 import { mapTaxonomyToCategoryModel } from '@/core/mappers/mapTaxonomyToCategoryModel';
 import { SEOContentWrapper } from 'gaudi/client';
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
@@ -13,7 +13,6 @@ import { TypedLocale } from 'payload';
 import { mapQuoteCard } from '@/core/mappers/mapCards';
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs';
 import { routes } from '@/core/routesGenerator';
-import { ContentProtected } from 'payload-stripe-inventory/client';
 
 export const searchContentParamsCache = createSearchParamsCache({
   locale: parseAsString.withDefault('es'),

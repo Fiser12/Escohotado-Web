@@ -15,16 +15,7 @@ export {
 export { permissionCollection } from "./collections";
 
 // Access functions
-export {
-  isAdmin,
-  isAnyone,
-  isAdminOrCurrentUser,
-  isAdminOrPublished,
-  isAdminOrStripeActive,
-  isAdminOrUserFieldMatchingCurrentUser,
-  loggedInOrPublished,
-  checkReadPermissions,
-} from "./access";
+export * from "./access";
 
 // Fields
 export { permissionEvaluationField } from "./fields";
@@ -38,6 +29,6 @@ export {
   evalAdvancePermissionQuery,
   fetchPermittedContentQuery,
 } from "./queries";
-
+export * from './ui/ContentProtected'
 // Utils
 export { getUserPermissions } from "./utils";

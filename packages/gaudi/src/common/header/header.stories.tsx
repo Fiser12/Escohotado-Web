@@ -8,6 +8,11 @@ const meta: Meta<typeof Header> = {
 	component: Header,
 	args: {
 		user: mockUser,
+		pageItems: [],
+		logoutMenuItem: {
+			text: 'Logout',
+			href: '/logout',
+		},
 		signIn: async () => { },
 		menuSections: menuSectionsLoaderMock(mockUser),
 	},

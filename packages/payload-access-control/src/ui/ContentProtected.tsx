@@ -1,6 +1,4 @@
-import { evalPermissionByRoleQuery } from "payload-access-control";
-import { BaseUser } from "payload-access-control";
-import { isContentUnlocked } from "payload-stripe-inventory";
+import { BaseUser, evalPermissionByRoleQuery, isContentUnlocked } from "..";
 
 
 interface Props {
@@ -13,6 +11,11 @@ interface Props {
     children: (props: ReturnType) => React.ReactNode;
 }
 
+type ReturnType = { 
+    hasPermissions: boolean
+    isUnlocked: boolean
+ }
+
 export const ContentProtected: React.FC<Props> = async ({ user, children, collection, content: { id, permissions_seeds } }) => {
     if (!user) return children({ hasPermissions: false, isUnlocked: false });
 
@@ -21,8 +24,3 @@ export const ContentProtected: React.FC<Props> = async ({ user, children, collec
 
     return children({ hasPermissions, isUnlocked });
 }
-
-type ReturnType = { 
-    hasPermissions: boolean
-    isUnlocked: boolean
- }

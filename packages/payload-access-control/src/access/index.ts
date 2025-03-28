@@ -1,6 +1,7 @@
 import { Access } from "payload";
 import { permissionSlugs } from "../constants";
 import { getUserPermissions } from "../utils/getUserPermissions";
+import { BaseUser, UnlockItem } from "..";
 
 export const isAdmin: Access = ({ req }) => {
   return req?.user?.roles?.includes(permissionSlugs.webAdmin) || false;
@@ -71,3 +72,16 @@ export const checkReadPermissions: Access = (props) => {
     ...userPermissions.map(perm => ({ permissions_seeds: { contains: perm }}))
   ]}
 }
+
+export const isContentUnlocked = (
+  user: BaseUser,
+  contentId: number,
+  collection: string
+): boolean => {
+  if (!user?.inventory?.unlocks) return false;
+
+  return user.inventory.unlocks.some(
+    (unlock: UnlockItem) =>
+      unlock.id === contentId && unlock.collection === collection
+  );
+};
