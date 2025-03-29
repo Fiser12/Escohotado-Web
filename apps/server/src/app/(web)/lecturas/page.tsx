@@ -21,7 +21,7 @@ import { FreemiumHighlightSection } from "@/components/content/article/highlight
 import { CarouselBook } from "@/components/content/book/carousel";
 import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
 import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQuery";
-import { LecturasFilterBar } from "@/modules/nuqs/lecturas-filter-bar";
+import { LecturasFilterBar } from "@/modules/nuqs";
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({

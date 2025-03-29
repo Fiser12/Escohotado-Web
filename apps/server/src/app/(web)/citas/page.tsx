@@ -8,7 +8,7 @@ import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { redirect } from 'next/navigation';
 import { DynamicLoadingQuotes } from '@/modules/dynamic-loading-lists/dynamic-loading-quotes';
-import { QuotesFilterBar } from "@/modules/nuqs/quotes-filter-bar";
+import { QuotesFilterBar } from "@/modules/nuqs";
 import { routes } from '@/core/routesGenerator';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
 import { H2 } from '@/components/common/headers/H2';

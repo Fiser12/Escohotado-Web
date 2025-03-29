@@ -3,14 +3,21 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import React from "react";
 import "../src/app/tailwind.css";
 import { Textures } from "../src/components/common/textures";
+import {
+	AppRouterContext,
+	type AppRouterInstance,
+} from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const preview: Preview = {
 	decorators: [
 		(Story) => (
-			<>
-				<Story />
-				{Textures.map((Element: any, index) => <Element key={index} />)}
-			</>
+			<AppRouterContext.Provider value={{} as AppRouterInstance}>
+				<NuqsAdapter>
+					<Story />
+					{Textures.map((Element: any, index) => <Element key={index} />)}
+				</NuqsAdapter>
+			</AppRouterContext.Provider>
 		),
 	],
 	parameters: {

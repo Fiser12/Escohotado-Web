@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	}[]
 }
 
-export function BookVariantsSelectorNuqs({options, className, ...rest}: Props) {
+export function BookVariantsSelector({ options, className, ...rest }: Props) {
 	const [page, setPage] = useQueryState(
 		"variantId",
 		parseAsString
@@ -29,7 +29,6 @@ export function BookVariantsSelectorNuqs({options, className, ...rest}: Props) {
 					setPage(page.toString());
 				}}
 			/>
-
 			<a href={currentUrl ?? "#"} target="_blank">
 				<MainButton text="Comprar" />
 			</a>

@@ -3,7 +3,7 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { Media, Taxonomy } from "payload-types";
-import { BookVariantsSelectorNuqs } from "@/modules/nuqs/book_variants_selector";
+import { BookVariantsSelector } from "@/modules/nuqs";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import { mapAnyToComment } from "hegel";
 import { evalPermissionByRoleQuery } from "payload-access-control";
@@ -64,7 +64,7 @@ const Page = async (props: Props) => {
             author={getAuthorFromTaxonomies(book.categories as Taxonomy[])?.singular_name}
             coverHref={(book.cover as Media)?.url ?? "#"}
             langs={['es', 'en']}
-            bookButtons={<BookVariantsSelectorNuqs options={options} />}
+            bookButtons={<BookVariantsSelector options={options} />}
             link={book.Ediciones?.[0].link ?? "#"}
         >
             {book.content && <LexicalRenderer data={book.content} />}

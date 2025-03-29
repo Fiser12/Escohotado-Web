@@ -6,8 +6,8 @@ import { getVideosQueryByTagsWithCache, ResultVideo } from "@/core/queries/getVi
 import { DynamicLoadingVideos } from '@/modules/dynamic-loading-lists/dynamic-loading-videos';
 import { mapVideoCard } from '@/core/mappers/mapCards';
 import { LexicalRenderer } from '@/lexical/lexicalRenderer';
-import { SortSelector } from '@/modules/nuqs/sort_selector_bar';
-import { VideoFilterBar } from '@/modules/nuqs/video-filter-bar';
+import { SortSelector } from '@/modules/nuqs';
+import { VideoFilterBar } from '@/modules/nuqs';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
 import { H2 } from '@/components/common/headers/H2';
 import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';

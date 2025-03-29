@@ -10,8 +10,8 @@
    - Proporciona datos iniciales a los componentes cliente
 
 2. **Capa de Cliente (Client Layer)**
-   - Maneja la interacción del usuario
-   - Gestiona el estado de la URL usano nuqs
+   - Maneja la interacción del usuario usando nuqs
+   - Gestiona el estado de la URL
    - Renderiza componentes interactivos
 
 ### ¿Porque NUQS?
@@ -37,7 +37,7 @@ graph TD
 
 2. **Datos Estáticos (Client)**
    - Opciones de ordenamiento (sort)
-   - Playlists predefinidas (por el momento)
+   - Playlists predefinidas
    - Configuraciones de UI
 
 ## Implementación Actual
@@ -71,24 +71,25 @@ export function ClientComponent({ initialTags }) {
 }
 ```
 
-## Tareas Pendientes
+## Componentes Implementados
 
-### 1. Storybook Integration
-- Adaptar componentes para Storybook
-- Crear stories que simulen diferentes estados
-- Documentar props y comportamientos
+### 1. Filtros de Contenido
+- `LecturasFilterBar`: Filtrado de artículos
+- `QuotesFilterBar`: Filtrado de citas
+- `VideoFilterBar`: Filtrado de videos
+- `FilterBar`: Componente base para filtros
 
-### 2. Mejoras Futuras
+### 2. Selectores
+- `BookVariantsSelector`: Selección de variantes de libros
+- `SortSelectorSSR`: Ordenamiento de contenido
+- `PlaylistsSelectorSSR`: Selección de playlists
 
-#### Sistema de Slugs de las playlist
-- Implementar sistema para obtener slugs de Payload CMS
-- Crear colección específica para playlists de YouTube
-- Migrar playlists hardcodeadas a datos dinámicos
-
-
-### 3. Optimizaciones
-- Mejorar rendimiento de actualizaciones de URL
-- Añadir validación de datos
+### 3. Integración con Storybook
+Todos los componentes han sido documentados en Storybook con:
+- Estados por defecto
+- Mocks de datos
+- Decoradores consistentes
+- Documentación clara
 
 ## Consideraciones de Diseño
 
@@ -101,3 +102,27 @@ export function ClientComponent({ initialTags }) {
 - Interfaces claras entre capas
 - Validación de datos en cada nivel
 - Manejo de errores consistente
+
+### 3. Mantenibilidad
+- Documentación clara de flujos de datos
+- Tests para cada capa
+- Monitoreo de rendimiento
+
+## Beneficios de la Implementación
+
+1. **Rendimiento Mejorado**
+   - Eliminada la sobrecarga de una biblioteca externa
+   - Uso directo de las APIs nativas de Next.js
+
+2. **Mantenibilidad**
+   - Código más simple y directo
+   - Menos dependencias externas
+   - Mejor tipado con TypeScript
+
+3. **Consistencia**
+   - Interfaz unificada para todos los componentes
+   - Manejo consistente de parámetros de búsqueda
+
+4. **Flexibilidad**
+   - Mayor control sobre el comportamiento
+   - Más fácil de extender y personalizar
