@@ -2,8 +2,14 @@ import classNames from 'classnames'
 import { LexicalRenderer } from '../../lexicalRenderer'
 import { evalAdvancePermissionQuery } from 'payload-access-control';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
+import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery';
+import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
+import { WrapperBlock } from 'payload-types';
 
-export const renderer = async ({ node }: any) => {
+interface Props extends LexicalBlockProps<WrapperBlock> {
+}
+
+export const renderer = async ({ node }: Props) => {
   const className = classNames(
     'py-10 h-full ignore-wrapper',
     {
@@ -11,11 +17,17 @@ export const renderer = async ({ node }: any) => {
       'bg-gray-light': node.fields.type === 'gray',
     }
   );
+  const user = await getCurrentUserQuery()
+  const permissions = typeof node.fields.permissions?.value === "number" 
+    ? null 
+    : node.fields.permissions?.value
+
   const hasPermission = await evalAdvancePermissionQuery(
-    node.fields.type_of_permissions,
-    node.fields.permissions?.value?.slug
+    user,
+    node.fields.type_of_permissions ?? "all",
+    permissions?.slug
   )
-  if (!hasPermission) return null
+  if (!hasPermission || !node.fields.content) return null
   return <ContentWrapper backgroundClassname={className} >
     <LexicalRenderer data={node.fields.content} />
   </ContentWrapper>

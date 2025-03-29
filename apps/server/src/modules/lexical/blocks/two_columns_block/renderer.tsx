@@ -1,6 +1,11 @@
+import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
+import { TwoColumnsBlock } from 'payload-types';
 import { LexicalRenderer } from '../../lexicalRenderer';
 
-export const renderer = async ({ node }: any) => {
+interface Props extends LexicalBlockProps<TwoColumnsBlock> {
+}
+
+export const renderer = async ({ node }: Props) => {
     const type = node?.fields?.type;
     const leftSpan = type === "1x3" ? "col-span-1" :
         type === "2x2" ? "col-span-2" :

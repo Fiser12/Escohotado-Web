@@ -29,3 +29,4 @@ export * from "./social/tiktok_icon";
 export * from "./social/ivoox_icon";
 export * from "./social/telegram_icon";
 export * from "./social/whatsap_icon";
+export * from "./getIconByCollection";

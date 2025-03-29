@@ -85,34 +85,4 @@ function transformKeyToLabel(key: string): string {
   return formatted;
 }
 
-export type ButtonColorType = "primary_fill" | "secondary_fill" | "primary_line" | "secondary_line";
 
-interface ButtonStatic {
-  id: string;
-  label: string;
-  static: string;
-  type_of_button_link: "static";
-  type_of_button_style: ButtonColorType;
-}
-
-interface ButtonExternal {
-  id: string;
-  label: string;
-  href: string;
-  type_of_button_link: "external";
-  type_of_button_style: ButtonColorType;
-}
-
-interface ButtonCollection {
-  id: string;
-  label: string;
-  collections: {
-    value: {
-      href: string;
-    };
-  };
-  type_of_button_link: "collections";
-  type_of_button_style: ButtonColorType;
-}
-
-export type ButtonLexicalType = ButtonStatic | ButtonExternal | ButtonCollection;

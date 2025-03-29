@@ -8,17 +8,23 @@ import { H2 } from '../../../common/headers/H2';
 import { ContentWrapper } from '../../../common/content_wrapper/content_wrapper';
 import { NextButton, PrevButton, usePrevNextButtons } from './carousel-arrow';
 import "./styles.css";
+import { Book } from "payload-types"
+import { routes } from '@/core/routesGenerator';
+import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
+
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
-  books: Array<{
-    title: string;
-    coverHref: string;
-    link: string;
-  }>;
+  books: Array<Book>;
 }
 
-export const CarouselBook: React.FC<Props> = ({ className, title, books, ...rest}) => {
+export const CarouselBook: React.FC<Props> = ({ className, title, books: booksParam, ...rest}) => {
+  const books = booksParam.map((book) => ({
+    title: book.title,
+    coverHref: typeof book.cover === "number" ? "" : book.cover.url,
+    link: routes.nextJS.generateDetailHref({ collection: COLLECTION_SLUG_BOOK, value: book })
+  }))
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: false },
     [Autoplay({
@@ -61,7 +67,7 @@ export const CarouselBook: React.FC<Props> = ({ className, title, books, ...rest
         <div className={containerClass}>
           {books.map((book, index) => (
             <div key={index} className="flex-none w-[60%] sm:w-[50%] md:w-[30%] xl:w-[20%] 2xl:w-[14%]">
-              <BookCard title={book.title} coverHref={book.coverHref} link={book.link} />
+              <BookCard title={book.title} coverHref={book.coverHref ?? "/"} link={book.link} />
             </div>
           ))}
         </div>

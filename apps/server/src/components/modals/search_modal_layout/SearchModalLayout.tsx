@@ -2,7 +2,6 @@
 
 import { searchElementsQuery } from "@/core/queries/searchElementsQuery";
 import { mapSearchOptionsToCollections } from "@/core/mappers/mapSearchOptionsToCollections";
-import { getIconByCollection } from "@/modules/getIconByCollection";
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { SearchOptions } from ".";
@@ -10,6 +9,7 @@ import { routes } from "@/core/routesGenerator";
 import { SearchedItem } from ".";
 import { SearchModal } from ".";
 import { AnimatedModal } from "@/components/modals/animated-modal";
+import { getIconByCollection } from "@/components/assets/icons";
 
 export const SearchModalLayout: React.FC<{ goBackTo?: string; }> = ({ goBackTo }) => {
     const [items, setItems] = useState<SearchedItem[]>([]);

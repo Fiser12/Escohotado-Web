@@ -10,7 +10,7 @@ export interface Carouseltem {
       photoHref: string;
       title: string;
       description: React.ReactNode;
-      year: number
+      year?: number | null
 }
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
