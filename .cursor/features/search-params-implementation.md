@@ -11,15 +11,19 @@
 
 2. **Capa de Cliente (Client Layer)**
    - Maneja la interacción del usuario
-   - Gestiona el estado de la URL
+   - Gestiona el estado de la URL usano nuqs
    - Renderiza componentes interactivos
+
+### ¿Porque NUQS?
+
+Ofrece una gestión muy funcional de los query params. Muy fácil de extraerlos y ofrece una buena integración con NextJS lo que nos evita tener que controlar un soft change (sin provocar un refresco) o un hard change (que redirije y abre de nuevo la URL).
 
 ### Flujo de Datos
 
 ```mermaid
 graph TD
     A[Server Component] -->|Datos Iniciales| B[Client Component]
-    B -->|useQueryParams| C[URL State]
+    B -->|nuqs useQueryParams| C[URL State]
     C -->|Actualización| B
     D[Payload CMS] -->|Tags| A
     E[Hardcoded Data] -->|Sort/Playlists| B
@@ -34,7 +38,7 @@ graph TD
 
 2. **Datos Estáticos (Client)**
    - Opciones de ordenamiento (sort)
-   - Playlists predefinidas
+   - Playlists predefinidas (por el momento)
    - Configuraciones de UI
 
 ## Implementación Actual
@@ -77,7 +81,7 @@ export function ClientComponent({ initialTags }) {
 
 ### 2. Mejoras Futuras
 
-#### Sistema de Slugs Dinámicos
+#### Sistema de Slugs de las playlist
 - Implementar sistema para obtener slugs de Payload CMS
 - Crear colección específica para playlists de YouTube
 - Migrar playlists hardcodeadas a datos dinámicos
@@ -95,7 +99,6 @@ interface YouTubePlaylist {
 ```
 
 ### 3. Optimizaciones
-- Implementar caché para datos de Payload
 - Mejorar rendimiento de actualizaciones de URL
 - Añadir validación de datos
 
@@ -110,25 +113,3 @@ interface YouTubePlaylist {
 - Interfaces claras entre capas
 - Validación de datos en cada nivel
 - Manejo de errores consistente
-
-### 3. Mantenibilidad
-- Documentación clara de flujos de datos
-- Tests para cada capa
-- Monitoreo de rendimiento
-
-## Próximos Pasos
-
-1. **Corto Plazo**
-   - Integrar con Storybook
-   - Completar migración de componentes
-   - Implementar tests
-
-2. **Medio Plazo**
-   - Diseñar sistema de slugs dinámicos
-   - Migrar playlists a Payload
-   - Optimizar rendimiento
-
-3. **Largo Plazo**
-   - Sistema de caché avanzado
-   - Analytics y monitoreo
-   - Mejoras de UX 
