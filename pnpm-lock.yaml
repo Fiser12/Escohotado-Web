@@ -213,9 +213,6 @@ importers:
       typescript:
         specifier: 5.5.4
         version: 5.5.4
-      util:
-        specifier: ^0.12.5
-        version: 0.12.5
 
   packages/config: {}
 
