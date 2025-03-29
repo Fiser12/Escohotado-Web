@@ -1,6 +1,6 @@
 import { Carouseltem } from "@/components/content/photo_carousel"
-import { LexicalRenderer } from "@/lexical/lexicalRenderer"
 import { PhotoCarousel } from "@/components/content/photo_carousel"
+import { LexicalRenderer } from "../../lexicalRenderer"
 
 export const renderer = async ({ node }: any) => {
     const items: Carouseltem[] = node.fields.items.map((item: any) => {

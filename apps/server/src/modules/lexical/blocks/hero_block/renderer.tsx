@@ -1,6 +1,6 @@
-import { LexicalRenderer } from "@/lexical/lexicalRenderer"
 import Image from "next/image"
 import { MainHero } from "@/components/content/common/hero"
+import { LexicalRenderer } from "../../lexicalRenderer"
 export const renderer = async ({ node }: any) => {
     const { content, media, inverted, media_type } = node.fields
     const mimeType = media?.mimeType?.includes("video") ? "video" : "image"

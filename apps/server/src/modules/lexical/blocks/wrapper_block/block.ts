@@ -1,7 +1,7 @@
 import { Block } from 'payload'
 import { wrapperBlockSlug } from '../slug_blogs'
 import { permissionEvaluationField } from 'payload-access-control'
-import { lexicalEditorExcludingBlocks } from '@/lexical/lexicalEditorExcludingBlocks'
+import { lexicalEditorExcludingBlocks } from '@/modules/lexical/lexicalEditorExcludingBlocks'
 
 const editor = lexicalEditorExcludingBlocks(['wrapper_block'])
 

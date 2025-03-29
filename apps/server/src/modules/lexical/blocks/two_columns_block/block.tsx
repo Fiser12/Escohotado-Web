@@ -1,6 +1,6 @@
 import { Block } from 'payload'
 import { twoColumnsBlockSlug } from '../slug_blogs'
-import { lexicalEditorExcludingBlocks } from '@/lexical/lexicalEditorExcludingBlocks'
+import { lexicalEditorExcludingBlocks } from '@/modules/lexical/lexicalEditorExcludingBlocks'
 
 const editor = lexicalEditorExcludingBlocks([
   "two_columns_block",

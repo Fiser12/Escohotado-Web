@@ -11,7 +11,7 @@ import { migrations } from '@/migrations'
 import plugins from '@/payload/plugins'
 import globals from '@/payload/globals/static_pages'
 import collections from '@/payload/collections'
-import { defaultLexical } from '@/lexical/defaultLexical'
+import { defaultLexical } from '@/modules/lexical/defaultLexical'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -37,12 +37,11 @@ export default buildConfig({
   },
   logger: {
     options: {
-      level: 'debug'
-
-    }
-  },  
+      level: 'debug',
+    },
+  },
   graphQL: {
-    disable: true
+    disable: true,
   },
   localization: {
     locales: [
@@ -52,11 +51,11 @@ export default buildConfig({
       },
       {
         label: 'Español',
-        code: 'es'
+        code: 'es',
       },
     ],
     defaultLocale: 'es',
-    fallback: true
+    fallback: true,
   },
   cors: ['https://checkout.stripe.com', `${process.env.NEXT_PUBLIC_SITE_URL}` || ''],
   csrf: ['https://checkout.stripe.com', process.env.NEXT_PUBLIC_SITE_URL || ''],

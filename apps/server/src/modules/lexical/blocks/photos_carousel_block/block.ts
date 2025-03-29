@@ -1,6 +1,6 @@
 import { Block } from 'payload'
 import { photosCarouselBlock } from '../slug_blogs'
-import { lexicalEditorExcludingBlocks } from '@/lexical/lexicalEditorExcludingBlocks'
+import { lexicalEditorExcludingBlocks } from '@/modules/lexical/lexicalEditorExcludingBlocks'
 import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
 
 const editor = lexicalEditorExcludingBlocks([

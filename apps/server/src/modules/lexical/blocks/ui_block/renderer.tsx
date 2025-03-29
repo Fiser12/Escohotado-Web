@@ -1,5 +1,5 @@
 import { evalAdvancePermissionQuery } from "payload-access-control"
-import { LexicalRenderer } from "@/lexical/lexicalRenderer"
+import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer"
 import { getPayload } from "@/payload/utils/getPayload"
 
 const getDayOfYear = () => {

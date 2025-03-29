@@ -5,7 +5,7 @@ import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { getVideosQueryByTagsWithCache, ResultVideo } from "@/core/queries/getVideosQuery";
 import { DynamicLoadingVideos } from '@/modules/dynamic-loading-lists/dynamic-loading-videos';
 import { mapVideoCard } from '@/core/mappers/mapCards';
-import { LexicalRenderer } from '@/lexical/lexicalRenderer';
+import { LexicalRenderer } from '@/modules/lexical/lexicalRenderer';
 import { SortSelector } from '@/modules/nuqs';
 import { VideoFilterBar } from '@/modules/nuqs';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';

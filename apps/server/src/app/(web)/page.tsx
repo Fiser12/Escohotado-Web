@@ -1,11 +1,11 @@
 import { getPayload } from "@/payload/utils/getPayload";
-import { LexicalRenderer } from "@/lexical/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { SubscriptionsSection } from "@/modules/organisms/subscriptions.organism";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { NewsletterSubscription } from "@/components/content/common/newsletterSubscription";
+import { SubscriptionsSection } from "@/components/subscription/subscriptions.organism";
 
-const Page: React.FC<{action: string}> = async ({action}) => {
+const Page: React.FC<{ action: string }> = async ({ action }) => {
   const payload = await getPayload();
   const homeData = await payload.findGlobal({
     slug: "home_page"

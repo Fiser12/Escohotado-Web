@@ -2,7 +2,7 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { NextPage } from "next/types";
 import { Media, Pdf, Taxonomy } from "payload-types";
-import { LexicalRenderer } from "@/lexical/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
 import { mapAnyToComment } from 'hegel';
 import { evalPermissionByRoleQuery, ContentProtected } from "payload-access-control";
 import { mapTaxonomyToCategoryModel } from '@/core/mappers/mapTaxonomyToCategoryModel';
@@ -70,18 +70,18 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
       detailHref={routes.nextJS.generateDetailHref({ collection: "article_web", value: article })}
       categories={article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []}
     >
-        <ContentProtected
-          user={user}
-          content={article}
-          collection={COLLECTION_SLUG_ARTICLE_WEB}
-        >
-            {({ hasPermissions, isUnlocked }) => <>
-              {article.content && (hasPermissions || isUnlocked) &&
-                <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content!} />
-              }
-            </>
+      <ContentProtected
+        user={user}
+        content={article}
+        collection={COLLECTION_SLUG_ARTICLE_WEB}
+      >
+        {({ hasPermissions, isUnlocked }) => <>
+          {article.content && (hasPermissions || isUnlocked) &&
+            <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content!} />
           }
-        </ContentProtected>
+        </>
+        }
+      </ContentProtected>
       <DetailBottomSection
         quotesModel={[].mapNotNull(mapQuoteCard(user))}
         commentsSectionModel={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}

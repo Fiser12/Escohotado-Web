@@ -1,7 +1,7 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { NextPage } from "next/types";
-import { LexicalRenderer } from "@/lexical/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
 import { mapAnyToComment } from 'hegel';
 import { mapQuoteCard } from '@/core/mappers/mapCards';
 import { evalPermissionByRoleQuery, fetchPermittedContentQuery } from "payload-access-control";

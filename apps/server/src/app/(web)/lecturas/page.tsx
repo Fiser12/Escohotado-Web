@@ -7,7 +7,7 @@ import { getBooksQueryWithCache } from "@/core/queries/getBooksQuery";
 import Image from "next/image";
 import { mapArticleCard } from "@/core/mappers/mapCards";
 import { getPayload } from "@/payload/utils/getPayload";
-import { LexicalRenderer } from "@/lexical/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
 import classNames from "classnames";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { generateDetailHref, routes } from "@/core/routesGenerator";
@@ -101,16 +101,16 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         {({ hasPermissions }) => {
           return (
             <>
-              { hasPermissions ?
-                <FreemiumHighlightSection 
-                  href={routes.nextJS.citasPageHref} 
-                  title="Accede a las citas de Escohotado" 
-                  buttonText="Ir a las citas" 
+              {hasPermissions ?
+                <FreemiumHighlightSection
+                  href={routes.nextJS.citasPageHref}
+                  title="Accede a las citas de Escohotado"
+                  buttonText="Ir a las citas"
                 />
-              : <FreemiumHighlightSection 
-                  href={routes.nextJS.subscriptionPageHref} 
-                  title="¿Te gustaría acceder al contenido exclusivo de Escohotado?" 
-                  buttonText="Accede al contenido completo" 
+                : <FreemiumHighlightSection
+                  href={routes.nextJS.subscriptionPageHref}
+                  title="¿Te gustaría acceder al contenido exclusivo de Escohotado?"
+                  buttonText="Accede al contenido completo"
                 />
               }
             </>
