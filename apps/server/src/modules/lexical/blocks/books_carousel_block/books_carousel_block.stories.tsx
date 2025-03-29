@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { renderer } from './renderer'
 import { mockBooks } from '@/components/mockData/book.model'
-import { generateStoryForLexicalBlock } from 'payload-lexical-blocks-builder/renderer'
+import { generateStoryForLexicalBlock, StoryArgs } from 'payload-lexical-blocks-builder/renderer'
 
 const meta: Meta<typeof renderer> = {
     title: 'Modules/LexicalBlocks/BooksCarouselBlock',
@@ -21,7 +21,7 @@ const meta: Meta<typeof renderer> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = generateStoryForLexicalBlock({
+export const Default: Story = generateStoryForLexicalBlock<typeof meta>({
     books: mockBooks,
     title: "Libros destacados",
     blockType: "books_carousel_block",
