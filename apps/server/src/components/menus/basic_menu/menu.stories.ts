@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BasicMenu } from ".";
 import { mobileParameters } from "../../storybook-helpers";
-import { menuSectionsLoaderMock, mockAdminUser } from "../../mockData/user.model";
+import { menuSectionsLoaderMock, mockUsers } from "../../mockData/user.model";
 
 const meta: Meta<typeof BasicMenu> = {
   title: "Organism/Menus",
   component: BasicMenu,
   args: {
-    menuSections: menuSectionsLoaderMock(mockAdminUser),
+    menuSections: menuSectionsLoaderMock(mockUsers.admin),
     toggleMenu: () => {},
   },
   parameters: {

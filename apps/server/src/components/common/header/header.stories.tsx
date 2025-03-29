@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { mobileParameters } from '../../storybook-helpers';
 import { Header } from './header';
-import { mockUser, menuSectionsLoaderMock } from '../../mockData/user.model';
+import { mockUsers, menuSectionsLoaderMock } from '../../mockData/user.model';
 
 const meta: Meta<typeof Header> = {
 	title: 'Organism/Header',
 	component: Header,
 	args: {
-		user: mockUser,
+		user: mockUsers.free,
 		pageItems: [],
 		logoutMenuItem: {
 			text: 'Logout',
 			href: '/logout',
 		},
 		signIn: async () => { },
-		menuSections: menuSectionsLoaderMock(mockUser),
+		menuSections: menuSectionsLoaderMock(mockUsers.free),
 	},
 	parameters: {
 		layout: 'fullscreen',

@@ -19,10 +19,10 @@ export interface Subscription {
 /**
  * Tipo base para usuarios con sistema de permisos
  */
-export interface BaseUser {
+export interface BaseUser<T = any> {
   id: string | number;
   roles?: string[];
-  inventory?: any;
+  inventory?: T;
   [key: string]: any;
 }
 
