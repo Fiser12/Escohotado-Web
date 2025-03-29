@@ -1,8 +1,7 @@
 "use server";
 
 import { getPayload } from "@/payload/utils/getPayload";
-import { getCurrentUserQuery } from "../auth/payloadUser/getCurrentUserQuery";
-
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 export const updateSubscriptionStatus = async (isActive: boolean): Promise<boolean> => {
     try {
     const payload = await getPayload();

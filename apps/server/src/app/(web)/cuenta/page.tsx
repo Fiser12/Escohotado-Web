@@ -1,5 +1,5 @@
 import { getPayload } from "@/payload/utils/getPayload";
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { signOut } from "@/payload/plugins/authjs/plugin";
 import { NewsletterToggleButton } from "@/modules/payload_admin/newsletter_toggle_button";
 import { routes } from "@/core/routesGenerator";

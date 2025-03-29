@@ -1,5 +1,5 @@
 import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
 import { mapAnyToComment } from 'hegel';

@@ -1,4 +1,4 @@
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { arrayToRecord, convertContentModelToCard } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";

@@ -3,8 +3,7 @@ import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer"
 import { getPayload } from "@/payload/utils/getPayload"
 import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
 import { UIBlock } from "payload-types"
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery"
-
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 interface Props extends LexicalBlockProps<UIBlock> {
 }
 

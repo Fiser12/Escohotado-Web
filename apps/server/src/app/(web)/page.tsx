@@ -1,6 +1,6 @@
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { NewsletterSubscription } from "@/components/content/common/newsletterSubscription";
 import { SubscriptionsSection } from "@/components/subscription/subscriptions.organism";

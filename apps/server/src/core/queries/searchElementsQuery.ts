@@ -2,10 +2,8 @@
 
 import { getPayload } from '@/payload/utils/getPayload'
 import { evaluateExpression } from 'hegel'
-import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { BaseUser, evalPermissionByRoleQuery } from 'payload-access-control'
-import { User } from 'payload-types'
-
+import { getCurrentUserQuery } from '@/core/queries/getCurrentUserQuery'
 export type SearchCollection = 'article_web' | 'quote' | 'book' | 'video'
 
 export type SearchResult = {

@@ -1,10 +1,9 @@
-import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery'
+import { getCurrentUserQuery } from '@/core/queries/getCurrentUserQuery'
 import { routes } from '@/core/routesGenerator'
 import { createRouteHandlers } from 'payload-stripe-inventory/server'
 
-export const { GET }: { 
-  GET: (
-    request: Request, 
-    { params }: { params: { stripe: string[] } }
-  ) => Promise<Response> 
+export const {
+  GET,
+}: {
+  GET: (request: Request, { params }: { params: { stripe: string[] } }) => Promise<Response>
 } = createRouteHandlers(getCurrentUserQuery, () => routes)

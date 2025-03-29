@@ -1,5 +1,5 @@
 import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
 import { UserInventory } from 'payload-access-control';

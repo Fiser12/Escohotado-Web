@@ -1,7 +1,7 @@
 "use server";
 
 import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { Media, Taxonomy } from "payload-types";
 import { BookVariantsSelector } from "@/modules/nuqs";
 import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";

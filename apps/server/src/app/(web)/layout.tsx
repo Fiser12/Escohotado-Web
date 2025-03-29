@@ -1,8 +1,6 @@
 import React from "react";
 import { signIn, signOut } from "@/payload/plugins/authjs/plugin";
 import { NuqsAdapter } from 'nuqs/adapters/next'
-import { getAccountMenuQuery } from "@/core/auth/payloadUser/getAccounMenuQuery";
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { MenuItem } from "hegel";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { routes } from "@/core/routesGenerator";
@@ -14,6 +12,8 @@ import { Textures } from "@/components/assets/textures";
 import "./main.css";
 import "../tailwind.css";
 import { UnlocksProgress } from "@/components/subscription/unlocks-progress.organism";
+import { getAccountMenuQuery } from "@/core/queries/getAccounMenuQuery";
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 
 const logoutMenuItem: MenuItem = {
   text: "Cerrar sesión",

@@ -5,10 +5,9 @@ import { getPayload } from '@/payload/utils/getPayload'
 import { Video } from 'payload-types'
 import { searchElementsQuery } from './searchElementsQuery'
 import { fetchPermittedContentQuery } from 'payload-access-control'
-import { getCurrentUserQuery } from '../auth/payloadUser/getCurrentUserQuery'
 import { generateFilterExpresionFromTags } from 'hegel'
 import { withCache } from 'nextjs-query-cache'
-
+import { getCurrentUserQuery } from '@/core/queries/getCurrentUserQuery'
 const PAGE_SIZE = 20
 
 /**

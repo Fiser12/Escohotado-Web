@@ -2,9 +2,9 @@ import classNames from 'classnames'
 import { LexicalRenderer } from '../../lexicalRenderer'
 import { evalAdvancePermissionQuery } from 'payload-access-control';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
-import { getCurrentUserQuery } from '@/core/auth/payloadUser/getCurrentUserQuery';
 import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
 import { WrapperBlock } from 'payload-types';
+import { getCurrentUserQuery } from '@/core/queries/getCurrentUserQuery';
 
 interface Props extends LexicalBlockProps<WrapperBlock> {
 }

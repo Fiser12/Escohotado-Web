@@ -1,5 +1,5 @@
 import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
+import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { Quote } from "payload-types";
 import { getQuotesQueryWithCache } from "@/core/queries/getQuotesQuery";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
