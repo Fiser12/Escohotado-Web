@@ -49,7 +49,7 @@ const defaultItems: SearchedItem[] = [
 ];
 
 const meta: Meta<typeof SearchModal> = {
-  title: "Molecules/Modals",
+  title: "Organism/Modals",
   component: SearchModal,
   args: {
     secondsDelay: 0.5,

@@ -7,9 +7,8 @@ import Image from "next/image";
 import { CategoryModel } from "hegel";
 import { SocialMediaShare } from "../../../../common/social_media";
 import Link from "next/link";
-import { FlagWithLabels } from "../../../../common/icons/flags/Flags";
-import { DownloadDocIcon } from "../../../../common/icons/download_doc_icon";
 import { MainButton } from "../../../../common/main_button/main_button";
+import { DownloadDocIcon, FlagWithLabels } from "@/components/assets/icons";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;

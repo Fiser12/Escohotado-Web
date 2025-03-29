@@ -1,8 +1,9 @@
 import HomePage from "@/app/(web)/page";
 import { NextPage } from "next";
 import { getPayload } from "@/payload/utils/getPayload";
-import { ModalQuoteLayout } from "@/modules/modal-layouts/ModalQuoteLayout";
 import { routes } from "@/core/routesGenerator";
+import { ModalQuote } from "@/components/modals/modal-quote/modalQuote";
+
 interface Props {
   params: {
     id: string;
@@ -18,10 +19,10 @@ const Page: NextPage<Props> = async ({ params }) => {
   });
 
   return <>
-    <HomePage 
+    <HomePage
       action={routes.newsletter.newsletterSubscriptionForm}
     />
-    <ModalQuoteLayout
+    <ModalQuote
       quote={quote}
       goBackTo={routes.nextJS.homePageHref}
     />

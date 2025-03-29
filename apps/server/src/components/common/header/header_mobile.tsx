@@ -3,12 +3,12 @@
 import { MenuItem, MenuSection } from "hegel";
 import { Hamburguer } from "./hamburguer";
 import { Logo } from "./logo";
-import { MobileMenu } from "./user_dropdown/mobile_menu";
 import { useEffect, useState } from "react";
 import { ContentWrapper } from "../content_wrapper/content_wrapper";
 import { OpenModalButton } from "./open_search_modal_button";
 import { motion } from 'framer-motion';
 import { BaseUser } from "payload-access-control";
+import { MobileMenu } from "@/components/menus";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null

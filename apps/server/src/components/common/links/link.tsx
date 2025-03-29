@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { ArrowLinkIcon } from '../icons/arrow_link';
+import { ArrowLinkIcon } from "@/components/assets/icons";
 
 interface Props extends React.HTMLAttributes<HTMLAnchorElement> {
     text: string;

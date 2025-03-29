@@ -1,7 +1,6 @@
-import { MainButton } from "../../main_button/main_button";
 import { ENFlag } from "./EN";
 import { ESFlag } from "./ES";
-
+import { MainButton } from "@/components/common/main_button/main_button";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     locale: string;
 }

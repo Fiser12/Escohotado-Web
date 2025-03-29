@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { MenuSection } from "hegel";
-import { BasicMenu } from "../menu";
 import classNames from "classnames";
+import { BasicMenu } from "@/components/menus";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     text: string;

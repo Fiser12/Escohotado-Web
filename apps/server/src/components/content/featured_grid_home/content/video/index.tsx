@@ -2,12 +2,10 @@ import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
 import Image from "next/image";
 import { Link } from "../../../../common/links/link";
-import { LockIcon } from "../../../../common/icons/lock_icon";
-import { PlayIcon } from "../../../../common/icons/play_icon";
 import { BaseCardContainer } from "../../container_base";
-import { UnlockIcon } from "../../../../common/icons/unlock_icon";
 import "./style.css"
 import { CategoryModel } from "hegel";
+import { PlayIcon, LockIcon, UnlockIcon } from "@/components/assets/icons";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;

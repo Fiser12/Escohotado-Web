@@ -4,9 +4,9 @@ import { ContentWrapper } from "../content_wrapper/content_wrapper";
 import { OpenModalButton } from "./open_search_modal_button";
 import { NavItem } from "./nav_item";
 import { MainButton } from "../main_button/main_button";
-import { UserDropdown } from "./user_dropdown";
-import { ArrowLinkIcon } from "../icons/arrow_link";
 import { BaseUser } from "payload-access-control";
+import { UserDropdown } from "@/components/menus";
+import { ArrowLinkIcon } from "@/components/assets/icons";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null

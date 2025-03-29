@@ -2,14 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { CategoryModel } from 'hegel';
-import { SearchIcon } from '../icons/search_icon';
-import { ChevronDownIcon } from '../icons/chevron_down_icon';
-import { LockIcon } from '../icons/lock_icon';
-import { AllIcon } from '../icons/all_icon';
-import { ArticleIcon } from '../icons/searchbar/article_icon';
-import { BookIcon } from '../icons/searchbar/book_icon';
-import { QuoteIcon } from '../icons/searchbar/quote_icon';
-import { VideoIcon } from '../icons/searchbar/video_icon';
+import { SearchIcon } from '@payloadcms/ui';
+import { AllIcon, ChevronDownIcon, LockIcon, ArticleIcon, BookIcon, QuoteIcon, VideoIcon } from "@/components/assets/icons";
 
 export interface SearchedItem {
   id: number;
@@ -109,24 +103,24 @@ export const SearchModal: React.FC<Props> = ({
 
     return () => clearTimeout(timer);
   }, [searchTerm, secondsDelay, onType]);
-  const className="flex justify-start items-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
+  const className = "flex justify-start items-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2"
 
   return (
-      <div className="w-full" onClick={(e) => e.stopPropagation()}>
-        <div className="bg-white shadow-md rounded-lg px-3 py-2">
-          <div className="flex items-center bg-gray-200 rounded-md">
-            <div className="pl-2">
-              <SearchIcon />
-            </div>
-            <input
-              className="w-full rounded-md bg-gray-200 text-gray-700 leading-tight focus:outline-none py-2 px-2"
-              id="search"
-              type="text"
-              placeholder="Buscar"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <div className="relative ml-2">
+    <div className="w-full" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white shadow-md rounded-lg px-3 py-2">
+        <div className="flex items-center bg-gray-200 rounded-md">
+          <div className="pl-2">
+            <SearchIcon />
+          </div>
+          <input
+            className="w-full rounded-md bg-gray-200 text-gray-700 leading-tight focus:outline-none py-2 px-2"
+            id="search"
+            type="text"
+            placeholder="Buscar"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <div className="relative ml-2">
             <button
               onClick={toggleDropdown}
               className="flex items-center bg-gray-200 text-gray-700 leading-tight focus:outline-none py-2 px-2 rounded-md"
@@ -154,29 +148,29 @@ export const SearchModal: React.FC<Props> = ({
             )}
           </div>
 
-          </div>
-
-        { items.length !== 0 && <div
-            className="py-3 text-sm"
-            style={{ maxHeight: `${maxItemSize}px`, overflowY: 'auto' }}
-          >
-            {items.map((item, index) => {
-              const Content = <>
-                <div className="flex-none h-6 w-6">
-                  {item.icon}
-                </div>
-                <div className="ml-3 flex-grow font-medium line-clamp-2">{item.title}</div>
-                <div className="flex items-center space-x-2">
-                  { item.href == null && <div className='h-5 w-5'><LockIcon /> </div>}
-                </div>
-              </>
-              return <a href={item.href ?? subscriptionHref} key={index} className={className}>{Content}</a>
-            })}
-              {children}
-          </div>
-        }
         </div>
+
+        {items.length !== 0 && <div
+          className="py-3 text-sm"
+          style={{ maxHeight: `${maxItemSize}px`, overflowY: 'auto' }}
+        >
+          {items.map((item, index) => {
+            const Content = <>
+              <div className="flex-none h-6 w-6">
+                {item.icon}
+              </div>
+              <div className="ml-3 flex-grow font-medium line-clamp-2">{item.title}</div>
+              <div className="flex items-center space-x-2">
+                {item.href == null && <div className='h-5 w-5'><LockIcon /> </div>}
+              </div>
+            </>
+            return <a href={item.href ?? subscriptionHref} key={index} className={className}>{Content}</a>
+          })}
+          {children}
+        </div>
+        }
       </div>
+    </div>
   );
 };
 

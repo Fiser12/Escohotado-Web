@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { MainButton } from './main_button';
-import { EmailIcon } from '../icons/email_icon';
-import { Title, Subtitle, Canvas, Description, Controls, Stories } from "@storybook/blocks";
+import { Title, Subtitle, Canvas, Controls, Stories } from "@storybook/blocks";
+import { EmailIcon } from '@/components/assets/icons';
 
 const meta: Meta<typeof MainButton> = {
     title: 'Atoms/Button',

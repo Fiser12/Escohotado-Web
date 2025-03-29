@@ -2,7 +2,7 @@ import type { Preview } from "@storybook/react";
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import React from "react";
 import "../src/app/tailwind.css";
-import { Textures } from "../src/components/common/textures";
+import { Textures } from "../src/components/assets/textures";
 import {
 	AppRouterContext,
 	type AppRouterInstance,

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ModalQuote } from "./modalQuote";
 
 const meta: Meta = {
-    title: "Molecules/Modals",
+    title: "Organism/Modals",
     component: ModalQuote,
     parameters: {
         layout: "fullscreen",

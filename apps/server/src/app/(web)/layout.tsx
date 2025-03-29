@@ -11,7 +11,7 @@ import { getPayload } from "@/payload/utils/getPayload";
 import { UnlocksProgress } from "@/modules/organisms/unlocks-progress.organism";
 import { Header } from "@/components/common/header/header";
 import { Footer } from "@/components/content/common/footer";
-import { Textures } from "@/components/common/textures";
+import { Textures } from "@/components/assets/textures";
 import "./main.css";
 import "../tailwind.css";
 

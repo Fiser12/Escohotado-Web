@@ -1,6 +1,5 @@
-import { SearchIcon } from "../icons/search_icon";
 import Link from "next/link";
-
+import { SearchIcon } from "@/components/assets/icons";
 export function OpenModalButton() {
   return (
     <div className="border rounded border-gray-200 py-1.5 px-3">

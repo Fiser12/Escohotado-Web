@@ -1,9 +1,9 @@
-import { SearchModalLayout } from "@/modules/modal-layouts/SearchModalLayout";
+import { SearchModalLayout } from "@/components/modals/search_modal_layout/SearchModalLayout";
 import { NextPage } from "next";
 
 const Page: NextPage<{}> = () => {
 
-  return <SearchModalLayout/>
+  return <SearchModalLayout />
 }
 
 export default Page;

@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { TextField } from '.';
-import { EmailIcon } from '../icons/email_icon';
-
+import { EmailIcon } from '@/components/assets/icons';
 const meta: Meta<typeof TextField> = {
     title: 'Molecules/Inputs',
     component: TextField,

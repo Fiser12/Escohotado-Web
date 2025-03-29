@@ -1,9 +1,8 @@
 import classNames from "classnames";
 import { H3 } from "../../../common/headers/H3";
-import { EmailIcon } from "../../../common/icons/email_icon";
 import { InputForm } from "../../../common/input";
 import { MainButton } from "../../../common/main_button/main_button";
-
+import { EmailIcon } from "@/components/assets/icons";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       action: string
  }

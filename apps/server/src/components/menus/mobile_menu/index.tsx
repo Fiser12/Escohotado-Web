@@ -1,14 +1,13 @@
 "use client";
 import { MenuItem, MenuSection } from "hegel";
-import { UserIcon } from '../../icons/user_icon';
 import classNames from "classnames";
-import { NavItem } from "../nav_item";
-import { MainButton } from "../../main_button/main_button";
-import { ArrowLinkIcon } from "../../icons/arrow_link";
 import { BaseUser } from "payload-access-control";
-import { HighlightSection } from "../../../content/article/highlight/section_highlight";
+import { NavItem } from "@/components/common/header/nav_item";
+import { MainButton } from "@/components/common/main_button/main_button";
+import { HighlightSection } from "@/components/content/article/highlight/section_highlight";
+import { UserIcon, ArrowLinkIcon } from "@/components/assets/icons";
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null
     accountMenuItems: MenuSection[]
     pageItems: MenuItem[]

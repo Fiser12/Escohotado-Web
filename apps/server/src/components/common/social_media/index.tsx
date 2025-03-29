@@ -1,11 +1,7 @@
 import classNames from "classnames";
-import { TelegramIcon } from "../icons/social/telegram_icon";
-import { WhatssapIcon } from "../icons/social/whatsap_icon";
-import { InstagramIcon } from "../icons/social/instagram_icon";
-import { FacebookIcon } from "../icons/social/facebook_icon";
-import { XIcon } from "../icons/social/x_icon";
-import { MagenitcEffect } from "../../effects/magnetic-effect";
 
+import { MagenitcEffect } from "../../assets/effects/magnetic-effect";
+import { TelegramIcon, WhatssapIcon, InstagramIcon, FacebookIcon, XIcon } from "@/components/assets/icons";
 
 interface Props {
   textToShare: string;

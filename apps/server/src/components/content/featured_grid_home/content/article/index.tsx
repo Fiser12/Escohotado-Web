@@ -3,10 +3,9 @@ import { Tag } from "../../../../common/tag/tag";
 import { Link } from "../../../../common/links/link";
 import Image from "next/image";
 import { BaseCardContainer } from "../../container_base";
-import { UnlockIcon } from "../../../../common/icons/unlock_icon";
 import "./style.css";
 import { CategoryModel } from "hegel";
-
+import { UnlockIcon } from "@/components/assets/icons";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   author?: string;

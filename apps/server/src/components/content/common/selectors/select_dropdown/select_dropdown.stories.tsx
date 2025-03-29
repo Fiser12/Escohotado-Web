@@ -1,9 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { SelectDropdown } from ".";
-import { TagIcon } from "../../../../common/icons/tag_icon";
-import { PenIcon } from "../../../../common/icons/pen_icon";
-import { ESFlag } from "../../../../common/icons/flags/ES";
-import { ENFlag } from "../../../../common/icons/flags/EN";
+import { TagIcon, ESFlag, ENFlag } from "@/components/assets/icons";
 
 const meta: Meta<typeof SelectDropdown> = {
     title: "Atoms/Selectors",

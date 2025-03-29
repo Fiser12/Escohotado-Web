@@ -1,12 +1,7 @@
 import classNames from "classnames";
 import { ContentWrapper } from "../../../common/content_wrapper/content_wrapper";
 import { NavItem } from "../../../common/header/nav_item";
-import { XIcon } from "../../../common/icons/social/x_icon";
-import { FacebookIcon } from "../../../common/icons/social/facebook_icon";
-import { InstagramIcon } from "../../../common/icons/social/instagram_icon";
-import { YoutubeIcon } from "../../../common/icons/social/youtube_icon";
-import { TikTokIcon } from "../../../common/icons/social/tiktok_icon";
-import { IvooxIcon } from "../../../common/icons/social/ivoox_icon";
+import { YoutubeIcon, XIcon, FacebookIcon, InstagramIcon, TikTokIcon, IvooxIcon } from "@/components/assets/icons";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       youtubeHref?: string

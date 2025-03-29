@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { BasicDropdown } from ".";
-import { EmailIcon } from "../icons/email_icon";
+import { EmailIcon } from "@/components/assets/icons";
 
 const meta: Meta<typeof BasicDropdown> = {
     title: "Molecules/Dropdown",

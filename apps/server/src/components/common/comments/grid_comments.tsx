@@ -1,7 +1,6 @@
 import { H4 } from "../headers/H4";
-import { PenIcon } from "../icons/pen_icon";
 import { MainButton } from "../main_button/main_button";
-
+import { PenIcon } from "@/components/assets/icons";
 interface Props<T> {
       items: T[];
       forumTopicId?: string | null;

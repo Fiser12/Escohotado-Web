@@ -4,9 +4,8 @@ import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
 import { CategoryModel, OrigenModel } from "hegel";
 import "./style.css";
-import { ArrowLinkIcon } from "../../../../common/icons/arrow_link";
-import { EyeIcon } from "../../../../common/icons/eye_icon";
 import Link from "next/link";
+import { ArrowLinkIcon, EyeIcon } from "@/components/assets/icons";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       itemId: number;
