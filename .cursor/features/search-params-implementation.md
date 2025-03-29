@@ -26,7 +26,6 @@ graph TD
     B -->|nuqs useQueryParams| C[URL State]
     C -->|Actualización| B
     D[Payload CMS] -->|Tags| A
-    E[Hardcoded Data] -->|Sort/Playlists| B
 ```
 
 ### Tipos de Datos
@@ -86,17 +85,6 @@ export function ClientComponent({ initialTags }) {
 - Crear colección específica para playlists de YouTube
 - Migrar playlists hardcodeadas a datos dinámicos
 
-#### Estructura Propuesta para Playlists
-```typescript
-interface YouTubePlaylist {
-  id: string
-  slug: string
-  title: string
-  description?: string
-  thumbnailUrl?: string
-  videoCount: number
-}
-```
 
 ### 3. Optimizaciones
 - Mejorar rendimiento de actualizaciones de URL
