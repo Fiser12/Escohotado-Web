@@ -26,6 +26,9 @@ const config: StorybookConfig = {
   docs: {
     defaultName: 'Docs',
   },
+  features: {
+    experimentalRSC: true
+  },
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
