@@ -1,8 +1,8 @@
 import Image from "next/image"
 import { MainHero } from "@/components/content/common/hero"
 import { LexicalRenderer } from "../../lexicalRenderer"
-import { HeroBlock, Media } from "payload-types"
-import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
+import type { HeroBlock, Media } from "payload-types"
+import type { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
 
 interface Props extends LexicalBlockProps<HeroBlock> {
 
@@ -27,8 +27,8 @@ export const renderer = async ({ node }: Props) => {
             }
             {media && mimeType === "image" &&
                 <Image
-                    width={2610}
-                    height={3036}
+                    width={media.width ?? 1000}
+                    height={media.height ?? 1000}
                     src={media.url ?? "/"}
                     alt={"Antonio Escohotado"}
                 />
