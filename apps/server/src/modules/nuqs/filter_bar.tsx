@@ -1,27 +1,20 @@
 "use client";
 
-import { parseAsString, useQueryState } from "nuqs";
 import { SelectDropdown } from "@/components/content/common/selectors/select_dropdown";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 	title: string
 	multiple?: boolean;
 	queryKey: string;
-	tags: Record<string, {
-		label: string,
-		icon?: React.ReactNode
-	}
-	>;
+	listOfTags: Record<string, {
+		label: string
+	}>;
+	initialValue: string[];
+	setValue: (newValue:string) => void
 	showClearButton?: boolean;
 }
 
-export function FilterBarNuqs({queryKey, className, ...props}: Props) {
-	const [tags, setSearch] = useQueryState(
-		queryKey,
-		parseAsString
-			.withOptions({ shallow: false })
-			.withDefault("")
-	);
+export function FilterBar({queryKey, initialValue, setValue, className, listOfTags, ...props}: Props) {
 
 	return (
 		<SelectDropdown
@@ -29,10 +22,11 @@ export function FilterBarNuqs({queryKey, className, ...props}: Props) {
 			className={className}
 			showSelectionAtLabel={false}
 			color="white"
+			listOfTags={listOfTags}
 			showClearButton={props.showClearButton ?? true}
-			selectedTags={tags.split(',').filter(Boolean) ?? []}
+			selectedTags={initialValue}
 			onSelectedTagsChange={(tags: string[]) => {
-				setSearch(tags.join(","))
+				setValue(tags.join(","))
 			}}
 		/>
 	);

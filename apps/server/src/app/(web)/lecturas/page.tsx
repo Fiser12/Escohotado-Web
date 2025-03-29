@@ -1,8 +1,7 @@
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
-import { convertContentModelToCard } from "hegel";
+import { arrayToRecord, convertContentModelToCard } from "hegel";
 import { ArticleWeb, Taxonomy } from "payload-types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { SearchBarNuqs } from "@/modules/nuqs/search_bar_nuqs";
 import { getArticlesQueryByTagsWithCache } from "@/core/queries/getArticlesQuery";
 import { getBooksQueryWithCache } from "@/core/queries/getBooksQuery";
 import Image from "next/image";
@@ -10,7 +9,6 @@ import { mapArticleCard } from "@/core/mappers/mapCards";
 import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/lexical/lexicalRenderer";
 import classNames from "classnames";
-import { TagsFilterBarSSR } from "@/modules/nuqs/tags_filter_bar_ssr";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { generateDetailHref, routes } from "@/core/routesGenerator";
 import { ContentProtected } from "payload-access-control";
@@ -22,7 +20,8 @@ import { HeadlineCard } from "@/components/content/article/cards/article_headlin
 import { FreemiumHighlightSection } from "@/components/content/article/highlight/section_highlight";
 import { CarouselBook } from "@/components/content/book/carousel";
 import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
-
+import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQuery";
+import { LecturasFilterBar } from "@/modules/nuqs/lecturas-filter-bar";
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
@@ -51,6 +50,9 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
     getBooksQueryWithCache(),
     payload.findGlobal({ slug: "articulos_page" })
   ]);
+  const taxonomies = await tagsFromContentQueryWithCache(
+    "article_web", query, ["autor", "revisar"]
+  );
 
   const articleCardMapper = (article: ArticleWeb) => mapArticleCard(user)(article);
   const divClass = classNames(
@@ -121,16 +123,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
       }
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
         <H2 label="Artículos" id="h2-articles" />
-        <div className="flex flex-col sm:flex-row gap-3 items-end">
-          <TagsFilterBarSSR
-            collection={['article_web']}
-            query={query}
-            excludeSeeds={["autor", "revisar"]}
-            title='Etiquetas'
-            queryKey='tags'
-          />
-          <SearchBarNuqs />
-        </div>
+        <LecturasFilterBar listOfTags={arrayToRecord(taxonomies, "slug")} />
         <GridCardsBlock
           features={
             articles.results

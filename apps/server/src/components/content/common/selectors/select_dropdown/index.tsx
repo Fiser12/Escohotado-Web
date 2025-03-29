@@ -9,7 +9,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   showSelectionAtLabel: boolean;
   showClearButton?: boolean;
   selectedTags: string[];
-  tags: Record<
+  listOfTags: Record<
     string,
     {
       label: string;
@@ -26,7 +26,7 @@ export const SelectDropdown: React.FC<Props> = ({
   multiple,
   onSelectedTagsChange,
   selectedTags,
-  tags,
+  listOfTags,
   title,
   className,
   color,
@@ -100,7 +100,7 @@ export const SelectDropdown: React.FC<Props> = ({
     { hidden: !isOpen, block: isOpen }
   );
 
-  const selectedTag = selectedTagsState[0] ? tags[selectedTagsState[0]] : null;
+  const selectedTag = selectedTagsState[0] ? listOfTags[selectedTagsState[0]] : null;
   const showCustomTitle =
     showSelectionAtLabel && !_multiple && selectedTags.length === 1;
 
@@ -135,7 +135,7 @@ export const SelectDropdown: React.FC<Props> = ({
           className="max-h-[450px] overflow-scroll space-y-0.5 text-sm font-body w-full"
           aria-labelledby="dropdownBgHoverButton"
         >
-          {Object.entries(tags).map(([key, { label, icon }]) => (
+          {Object.entries(listOfTags).map(([key, { label, icon }]) => (
             <li key={key}>
               <div
                 className={classNames(
@@ -170,6 +170,9 @@ export const SelectDropdown: React.FC<Props> = ({
             onClick={() => {
               setSelectedTags([]);
               setIsOpen(false);
+              if(onSelectedTagsChange) {
+                onSelectedTagsChange([]);
+              }
             }}
           >
             Ver todos

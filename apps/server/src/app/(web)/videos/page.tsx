@@ -2,17 +2,17 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery";
 import { convertContentModelToCard } from "hegel";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { SearchBarNuqs } from "@/modules/nuqs/search_bar_nuqs";
 import { getVideosQueryByTagsWithCache, ResultVideo } from "@/core/queries/getVideosQuery";
 import { DynamicLoadingVideos } from '@/modules/dynamic-loading-lists/dynamic-loading-videos';
-export const pageSize = 10;
 import { mapVideoCard } from '@/core/mappers/mapCards';
 import { LexicalRenderer } from '@/lexical/lexicalRenderer';
-import { SortSelectorSSR } from '@/modules/nuqs/sort_selector_ssr';
-import { PlaylistsSelectorSSR } from '@/modules/nuqs/playlists_selector_ssr';
+import { SortSelector } from '@/modules/nuqs/sort_selector_bar';
+import { VideoFilterBar } from '@/modules/nuqs/video-filter-bar';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
 import { H2 } from '@/components/common/headers/H2';
 import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';
+
+export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),
@@ -49,10 +49,7 @@ const Page = async ({ searchParams }: Props) => {
         className="flex flex-col gap-y-5 relative pt-20"
         backgroundClassname="bg-white"
       >
-        <div className="flex flex-col sm:flex-row gap-3 items-end sm:justify-end">
-          <PlaylistsSelectorSSR />
-          <SearchBarNuqs />
-        </div>
+        <VideoFilterBar />
         {lastVideosResult.results.length !== 0 && <>
           <H2 label="Últimos vídeos" />
 
@@ -66,7 +63,7 @@ const Page = async ({ searchParams }: Props) => {
         </>}
         <div className="flex flex-col sm:flex-row gap-10 items-end justify-between">
           <H2 label="Todos los vídeos" />
-          <SortSelectorSSR />
+          <SortSelector />
         </div>
         <GridCardsBlock
           features={videosResult.results

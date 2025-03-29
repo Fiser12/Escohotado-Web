@@ -3,17 +3,17 @@ import { getCurrentUserQuery } from "@/core/auth/payloadUser/getCurrentUserQuery
 import { Quote } from "payload-types";
 import { getQuotesQueryWithCache } from "@/core/queries/getQuotesQuery";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { convertContentModelToCard, generateFilterExpresionFromTags } from "hegel";
+import { arrayToRecord, convertContentModelToCard, generateFilterExpresionFromTags } from "hegel";
 import { mapQuoteCard } from "@/core/mappers/mapCards";
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { redirect } from 'next/navigation';
 import { DynamicLoadingQuotes } from '@/modules/dynamic-loading-lists/dynamic-loading-quotes';
-import { SearchBarNuqs } from "@/modules/nuqs/search_bar_nuqs";
-import { TagsFilterBarSSR } from '@/modules/nuqs/tags_filter_bar_ssr';
+import { QuotesFilterBar } from "@/modules/nuqs/quotes-filter-bar";
 import { routes } from '@/core/routesGenerator';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
 import { H2 } from '@/components/common/headers/H2';
 import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';
+import { tagsFromContentQueryWithCache } from '@/core/queries/tagsFromContentQuery';
 
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),
@@ -36,6 +36,9 @@ const Page = async ({ searchParams }: Props) => {
   const quoteCardMapper = (video: Quote) => mapQuoteCard(user)(video);
   const hasPermission = evalPermissionByRoleQuery(user, "basic");
   if (!hasPermission) return redirect(routes.nextJS.subscriptionPageHref);
+  const taxonomies = await tagsFromContentQueryWithCache(
+    "quote", query, []
+  );
 
   return (
     <ContentWrapper
@@ -44,16 +47,7 @@ const Page = async ({ searchParams }: Props) => {
     >
       <div className="flex flex-col sm:flex-row gap-10 items-end justify-between w-full">
         <H2 label="Todas las citas" className='w-full' />
-        <div className='flex flex-row-reverse gap-3 w-full'>
-          <SearchBarNuqs />
-          <TagsFilterBarSSR
-            collection={['quote']}
-            query={query}
-            excludeSeeds={[]}
-            title='Etiquetas'
-            queryKey='tags'
-          />
-        </div>
+        <QuotesFilterBar listOfTags={arrayToRecord(taxonomies, "slug")} />
       </div>
       <GridCardsBlock
         features={quotesResult.results

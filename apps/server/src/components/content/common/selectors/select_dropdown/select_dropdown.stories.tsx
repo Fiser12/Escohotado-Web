@@ -48,7 +48,7 @@ export const Categories: Story = {
         iconButton: true,
         onSelectedTagsChange: () => { },
         selectedTags: ["Tecnología", "Filosofía", "Drogopedia", "Política"],
-        tags: {
+        listOfTags: {
             tag1: {
                 label: "Tecnología"
             },
@@ -82,7 +82,7 @@ export const Language: Story = {
         onSelectedTagsChange: () => { },
         showSelectionAtLabel: true,
         showClearButton: false,
-        tags: {
+        listOfTags: {
             tag1: {
                 label: "ES",
                 icon: <ESFlag />
