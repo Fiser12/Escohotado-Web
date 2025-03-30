@@ -1,10 +1,13 @@
 import { Video } from "payload-types";
+import { videoComments } from "./comments.model";
 
 export const generateMockVideo = ({title, url, url_free, thumbnailUrl}: {title: string, url: string, url_free?: string, thumbnailUrl: string}): Video => ({
     id: 1,
     title,
     url,
     url_free,
+    forum_post_id: "1",
+    last_forum_posts: videoComments,
     thumbnailUrl,
     updatedAt: new Date().toISOString(),
     createdAt: new Date().toISOString(),

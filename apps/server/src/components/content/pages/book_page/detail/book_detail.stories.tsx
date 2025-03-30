@@ -1,20 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { BookDetail } from ".";
-import { SelectBoxes } from "../../../common/selectors/grid_select_boxes";
-import { MainButton } from "../../../../common/main_button/main_button";
-import { useState } from "react";
-import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { mockBooks } from "@/components/mockData/book.model";
 import { mockQuotes } from "@/components/mockData/quotes.model";
 
-const options = [
-    { id: '1', label: 'eBook', },
-    { id: '2', label: 'Tapa blanda', },
-]
-
-
 const meta: Meta<typeof BookDetail> = {
-    title: "Pages/Book/Detail",
+    title: "Pages/Detail/Book",
     component: BookDetail,
     parameters: {
         layout: "fullscreen",

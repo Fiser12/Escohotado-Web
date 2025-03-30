@@ -1,9 +1,12 @@
 import { Book } from "payload-types";
+import { postsDePhysisAPolis } from "./comments.model";
 
 export const generateMockBook = ({title, coverHref}: {title: string, coverHref: string}): Book => ({
     id: 1,
     title,
     cover: { id: 1, url: coverHref, updatedAt: new Date().toISOString(), createdAt: new Date().toISOString() },
+    last_forum_posts: postsDePhysisAPolis,
+    last_forum_sync: "1",
     Ediciones: [
         {
             id: "1",

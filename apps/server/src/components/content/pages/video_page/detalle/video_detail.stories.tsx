@@ -5,7 +5,7 @@ import { mockUsers } from "@/components/mockData/user.model";
 import { mockQuotes } from "@/components/mockData/quotes.model";
 
 const meta: Meta<typeof VideoDetail> = {
-    title: "Pages/Videos/Detail",
+    title: "Pages/Detail/Video",
     component: VideoDetail,
     parameters: {
         layout: 'fullscreen',

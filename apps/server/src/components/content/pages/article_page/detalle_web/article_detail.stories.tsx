@@ -5,7 +5,7 @@ import { mockArticles } from "@/components/mockData/article.model";
 import { mockQuotes } from "@/components/mockData/quotes.model";
 
 const meta: Meta<typeof ArticleDetail> = {
-    title: "Pages/Articles/Detail/Web",
+    title: "Pages/Detail/Article",
     component: ArticleDetail,
     parameters: {
         layout: 'fullscreen',
@@ -20,8 +20,10 @@ const meta: Meta<typeof ArticleDetail> = {
     },
     args: {
         article: mockArticles[0],
+
         quotes: mockQuotes,
         user: mockUsers.free
+    
     },
 };
 
