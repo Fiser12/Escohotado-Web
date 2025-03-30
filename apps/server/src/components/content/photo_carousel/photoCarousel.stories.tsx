@@ -10,7 +10,7 @@ const photos = Array.from({ length: 20 }, (_, index) =>
 );
 
 const meta: Meta<typeof PhotoCarousel> = {
-      title: "Organism/Photo Carousel",
+      title: "Organism/Carousel/Photos",
       component: PhotoCarousel,
       args: {
             items: photos.map((photoHref, i) => ({

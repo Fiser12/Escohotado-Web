@@ -2,7 +2,7 @@ import {Meta, StoryObj} from "@storybook/react";
 import {NewsletterSubscription} from ".";
 
 const meta: Meta<typeof NewsletterSubscription> = {
-    title: "Organism/Newsletter Subscription",
+    title: "Organism/Layout/NewsletterSubscription",
     component: NewsletterSubscription,
     parameters: {
         layout: "fullscreen",

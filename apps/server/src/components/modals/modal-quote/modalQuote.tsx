@@ -50,7 +50,7 @@ export const ModalQuote: React.FC<ModalProps> = ({
             <div className="h-full flex flex-col justify-center gap-5 p-3">
               <h2 className="text-m font-bold font-body text-gray-dark">Cita completa</h2>
               <p className="font-handwritten text-2xl lg:text-xl">{quote.quote}</p>
-              <p className="text-m text-primary-900  font-display">- {author}</p>
+              {author && <p className="text-m text-primary-900  font-display">- {author}</p>}
               <div className="flex flex-row gap-2 flex-wrap">
                 {categories.map((category, index) =>
                   <Tag key={index} text={category.label} isActive={false} />

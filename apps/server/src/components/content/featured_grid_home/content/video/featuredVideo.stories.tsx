@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { FeaturedVideo } from ".";
 
 const meta: Meta<typeof FeaturedVideo> = {
-      title: "Molecules/Featured Home/Video",
+      title: "Molecules/GridCards",
       component: FeaturedVideo,
       parameters: {
             layout: "padded",

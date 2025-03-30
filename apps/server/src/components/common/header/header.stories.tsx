@@ -4,7 +4,7 @@ import { Header } from './header';
 import { mockUsers, menuSectionsLoaderMock } from '../../mockData/user.model';
 
 const meta: Meta<typeof Header> = {
-	title: 'Organism/Header',
+	title: 'Organism/Layout/Header',
 	component: Header,
 	args: {
 		user: mockUsers.free,

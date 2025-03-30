@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { ModalQuote } from "./modalQuote";
 
 const meta: Meta = {
-    title: "Organism/Modals",
+    title: "Organism/Modals/Quote",
     component: ModalQuote,
     parameters: {
         layout: "fullscreen",
@@ -12,7 +12,9 @@ const meta: Meta = {
         },
     },
     args: {
-        quote: '"Las drogas no son ni buenas ni malas, son sustancias que pueden usarse bien o mal, y el único antídoto real contra su mal uso es la educación. Las drogas no son ni buenas ni malas, son sustancias que pueden usarse bien o mal, y el único antídoto real contra su mal uso es la educación."',
+        quote: {
+            quote: '"Las drogas no son ni buenas ni malas, son sustancias que pueden usarse bien o mal, y el único antídoto real contra su mal uso es la educación. Las drogas no son ni buenas ni malas, son sustancias que pueden usarse bien o mal, y el único antídoto real contra su mal uso es la educación."'
+        },
         author: "Caos y Orden",
         categories: [
               {

@@ -4,7 +4,7 @@ import { mobileParameters } from "../../storybook-helpers";
 import { menuSectionsLoaderMock, mockUsers } from "../../mockData/user.model";
 
 const meta: Meta<typeof BasicMenu> = {
-  title: "Organism/Menus",
+  title: "Organism/Layout/Menus",
   component: BasicMenu,
   args: {
     menuSections: menuSectionsLoaderMock(mockUsers.admin),

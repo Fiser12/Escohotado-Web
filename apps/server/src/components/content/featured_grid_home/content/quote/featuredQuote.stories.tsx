@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { FeaturedQuote } from ".";
 
 const meta: Meta<typeof FeaturedQuote> = {
-      title: "Molecules/Featured Home",
+      title: "Molecules/GridCards",
       component: FeaturedQuote,
       argTypes: {
             quote: {

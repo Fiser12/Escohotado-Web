@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { FeaturedBook } from ".";
 
 const meta: Meta<typeof FeaturedBook> = {
-      title: "Molecules/Featured Home/Book",
+      title: "Molecules/GridCards/Book",
       component: FeaturedBook,
       parameters: {
             layout: "padded",

@@ -4,7 +4,7 @@ import { CommentCard } from ".";
 import { ContentWrapper } from "../content_wrapper/content_wrapper";
 
 const meta: Meta<typeof GridComments> = {
-      title: "Organism/Comment Grid",
+      title: "Organism/Details/CommentSection",
       component: GridComments,
       parameters: {
             layout: 'centered',

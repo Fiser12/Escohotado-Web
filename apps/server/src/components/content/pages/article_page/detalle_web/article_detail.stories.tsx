@@ -20,10 +20,9 @@ const meta: Meta<typeof ArticleDetail> = {
     },
     args: {
         article: mockArticles[0],
-
+        lang: "es",
         quotes: mockQuotes,
         user: mockUsers.free
-    
     },
 };
 
