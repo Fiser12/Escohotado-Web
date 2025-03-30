@@ -4,6 +4,27 @@ export const generateMockBook = ({title, coverHref}: {title: string, coverHref: 
     id: 1,
     title,
     cover: { id: 1, url: coverHref, updatedAt: new Date().toISOString(), createdAt: new Date().toISOString() },
+    Ediciones: [
+        {
+            id: "1",
+            variant: "book",
+            language: "es",
+            link: "https://www.amazon.com/dp/B000000000",
+        },
+        {
+            id: "2",
+            variant: "ebook",
+            language: "en",
+            link: "https://www.amazon.com/dp/B000000000",
+        },
+        {
+            id: "3",
+            variant: "audiobook",
+            language: "es",
+            link: "https://www.amazon.com/dp/B000000000",
+        }
+
+    ],
     updatedAt: new Date().toISOString(),
     createdAt: new Date().toISOString(),
 })

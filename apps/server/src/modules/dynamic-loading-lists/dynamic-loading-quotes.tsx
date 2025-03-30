@@ -1,7 +1,7 @@
 "use client";
 
 import { getQuotesQueryByTags } from "@/core/queries/getQuotesQuery";
-import { mapQuoteCard } from "@/core/mappers/mapCards";
+import { mapQuoteCard } from '@/core/mappers/mapQuoteCard';
 import { convertContentModelToCard } from "hegel";
 import { Quote } from "payload-types";
 import { useEffect, useRef, useState } from "react";

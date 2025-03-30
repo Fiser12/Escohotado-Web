@@ -4,38 +4,33 @@ import { H4 } from "../../../../common/headers/H4";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { Tag } from "../../../../common/tag/tag";
 import Image from "next/image";
-import { CategoryModel } from "hegel";
+import { CategoryModel, mapAnyToComment } from "hegel";
 import { SocialMediaShare } from "../../../../common/social_media";
 import Link from "next/link";
 import { MainButton } from "../../../../common/main_button/main_button";
 import { DownloadDocIcon, FlagWithLabels } from "@/components/assets/icons";
+import { DetailBottomSection } from "@/components/common/detail_bottom_section";
+import { ArticleWeb, Media, Pdf, Quote, Taxonomy } from "payload-types";
+import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
+import { SEOContentWrapper } from "@/components/common/seo_content_wrapper";
+import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/mapTaxonomyToCategoryModel";
+import { routes } from "@/core/routesGenerator";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    title: string;
+    article: ArticleWeb;
     currentLocale: string;
-    locales: string[];
-    publishedAt: string;
-    author?: string;
-    coverHref?: string | null;
-    detailHref: string;
-    downloadUrl?: string | null;
-    categories: CategoryModel[];
+    quotes: Quote[];
+    user?: BaseUser | null;
     children: React.ReactNode;
 }
 
 export const ArticleDetail: React.FC<Props> = ({
-    publishedAt,
-    author,
-    title,
-    coverHref,
-    categories,
-    downloadUrl,
-    detailHref,
-    locales,
+    article,
     currentLocale,
     children,
     className,
-    ...rest
+    quotes,
+    user
 }) => {
     const containerClass = classNames(
         'bg-white text-black flex flex-col gap-12 md:gap-16 mb-15',
@@ -49,29 +44,44 @@ export const ArticleDetail: React.FC<Props> = ({
     const categoriesClass = classNames(
         'flex flex-wrap gap-1'
     );
-    const date = new Date(publishedAt);
-    const formattedDate = date.toLocaleDateString('es-ES', {
+    const date = article.publishedAt ? new Date(article.publishedAt) : null;
+    const formattedDate = date ? date.toLocaleDateString('es-ES', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-    });
+    }) : "";
+    const cover = (article.cover as Media | null)?.url
+    const document = typeof article.document === "number" ? null : article.document as Pdf | null;
+    const downloadUrl = evalPermissionByRoleQuery(user, document?.permissions_seeds) ? document?.url : null;
+    const author = getAuthorFromTaxonomies(article.categories as Taxonomy[])?.singular_name
+    // @ts-ignore
+    const locales: string[] = article?.locales ?? [];
+    const coverHref= (article.cover as Media | null)?.url
+    const detailHref = routes.nextJS.generateDetailHref({ collection: "article_web", value: article })
+    const categories= article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []
 
     return (
-        <div className={containerClass} {...rest}>
-            { coverHref &&
-            <div className="relative w-full h-[200px] md:h-[350px]">
-                <Image
-                    fill
-                    src={coverHref}
-                    alt={title}
-                    className="object-cover"
-                />
-            </div> }
+        <SEOContentWrapper
+            title={article?.title ?? "No title"}
+            description={""}
+            imageHref={cover}
+            className={containerClass}
+            ogType="article"
+        >
+            {coverHref &&
+                <div className="relative w-full h-[200px] md:h-[350px]">
+                    <Image
+                        fill
+                        src={coverHref}
+                        alt={article?.title}
+                        className="object-cover"
+                    />
+                </div>}
             <ContentWrapper className="flex flex-col ">
                 <div className="md:pb-10 flex flex-col gap-6 md:gap-10">
                     <div className="flex flex-col gap-2">
-                        <H4 label={author ?? ""}></H4>
-                        <H1 label={title ?? "No title"} />
+                        { author && <H4 label={author}></H4>}
+                        <H1 label={article.title } />
                     </div>
                     <div className={tagDateContainerClass}>
                         <div className={categoriesClass}>
@@ -83,19 +93,19 @@ export const ArticleDetail: React.FC<Props> = ({
                     </div>
                 </div>
                 <div className="border-b-2 border-gray-light flex justify-between items-center pb-5">
-                    <SocialMediaShare 
-                        textToShare={`Quiero compartir con vosotros el artículo ${author ? `de ${author}`: ""}: ${title}`} 
-                        relativeLink={detailHref} 
-                        tags={["Artículo"]} 
+                    <SocialMediaShare
+                        textToShare={`Quiero compartir con vosotros el artículo ${author ? `de ${author}` : ""}: ${article.title}`}
+                        relativeLink={detailHref}
+                        tags={["Artículo"]}
                     />
                     <div className="flex gap-3">
-                        { locales
+                        {locales
                             .filter(locale => locale !== currentLocale)
-                            .map(locale => <Link key={locale} href={detailHref + `?locale=${locale}`}> 
+                            .map(locale => <Link key={locale} href={detailHref + `?locale=${locale}`}>
                                 <FlagWithLabels locale={locale} className="h-7 w-7" />
-                            </Link>) 
+                            </Link>)
                         }
-                        {downloadUrl && 
+                        {downloadUrl &&
                             <a href={downloadUrl} target="_blank">
                                 <MainButton text="Descargar PDF" icon={<DownloadDocIcon />} />
                             </a>
@@ -104,6 +114,11 @@ export const ArticleDetail: React.FC<Props> = ({
                 </div>
             </ContentWrapper>
             {children}
-        </div>
+            <DetailBottomSection
+                quotes={quotes}
+                comments={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
+                user={user}
+            />
+        </SEOContentWrapper>
     );
 };

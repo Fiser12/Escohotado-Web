@@ -1,18 +1,20 @@
-import { BaseUser, evalPermissionByRoleQuery, fetchPermittedContentQuery } from 'payload-access-control'
+import {
+  BaseUser,
+  evalPermissionByRoleQuery,
+  fetchPermittedContentQuery,
+} from 'payload-access-control'
 import {
   getAuthorsNamesFromTaxonomies,
   getMediasFromTaxonomies,
-  getSelectableTaxonomies,
   getTopicsFromTaxonomies,
 } from './mapTaxonomyToCategoryModel'
-import { ContentCardModel, ContentHeaderModel, QuoteHeaderModel } from 'hegel'
+import { ContentCardModel, ContentHeaderModel } from 'hegel'
 import {
   Taxonomy,
   ArticleWeb,
   Media,
   Video,
   Book,
-  Quote,
   GridCardsBlock,
   UiGridCard,
   User,
@@ -23,6 +25,7 @@ import { getVideosQueryWithCache } from '@/core/queries/getVideosQuery'
 import { getQuotesQueryWithCache } from '@/core/queries/getQuotesQuery'
 import { MediaHeaderModel } from 'node_modules/hegel/src/domain/content_model'
 import { routes } from '../routesGenerator'
+import { mapQuoteCard } from './mapQuoteCard'
 export const IMAGE_ERROR = 'https://placehold.co/600x300?text=Error+cargando+imagen'
 
 type QueryFieldType = GridCardsBlock['queryField'][number]
@@ -111,38 +114,6 @@ const mapBookCard = (item: Book): ContentHeaderModel => {
     title: item.title ?? 'No title',
   }
 }
-export const mapQuoteCard =
-  (user?: BaseUser | null) =>
-  (item: Quote): QuoteHeaderModel => {
-    const taxonomies = (item.categories ?? []) as Taxonomy[]
-
-    return {
-      type: 'quote',
-      categories: getSelectableTaxonomies(taxonomies),
-      context: item.context,
-      origen:
-        item.source && typeof item.source.value !== 'number'
-          ? {
-              title: item.source.value.title ?? 'No title',
-              type: item.source.relationTo,
-              hasPermissions: evalPermissionByRoleQuery(
-                user,
-                'permissions_seeds' in item.source.value
-                  ? (item.source.value.permissions_seeds?.trim() ?? '')
-                  : ('' as any),
-              ),
-              detailHref: routes.nextJS.generateDetailHref({
-                collection: item.source.relationTo,
-                value: item.source.value,
-              }),
-            }
-          : undefined,
-      id: item.id,
-      author: getAuthorsNamesFromTaxonomies((item.categories ?? []) as Taxonomy[]),
-      quote: item.quote,
-    }
-  }
-
 const mapQueryField =
   (user: BaseUser | null) =>
   async (queryField: QueryFieldType): Promise<(ContentHeaderModel | null)[]> => {

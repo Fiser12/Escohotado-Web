@@ -7,7 +7,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 
-export const SEOContentWrapper: React.FC<Props> = ({ children, title, description, imageHref, ogType }) => {
+export const SEOContentWrapper: React.FC<Props> = ({ children, title, description, imageHref, ogType, className }) => {
     const seoDescription = description.replaceAll(/<[^>]*>/g, '').slice(0, 200);
     return <>
         <title>{title}</title>
@@ -18,6 +18,8 @@ export const SEOContentWrapper: React.FC<Props> = ({ children, title, descriptio
         <meta property="og:description" content={seoDescription} />
         <meta name="description" content={seoDescription} />
         <meta property="og:type" content={ogType} />
-        {children}
+        <div className={className}>
+            {children}
+        </div>
     </>
 }

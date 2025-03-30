@@ -4,7 +4,7 @@ import { Quote } from "payload-types";
 import { getQuotesQueryWithCache } from "@/core/queries/getQuotesQuery";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { arrayToRecord, convertContentModelToCard, generateFilterExpresionFromTags } from "hegel";
-import { mapQuoteCard } from "@/core/mappers/mapCards";
+import { mapQuoteCard } from '@/core/mappers/mapQuoteCard';
 import { evalPermissionByRoleQuery } from "payload-access-control";
 import { redirect } from 'next/navigation';
 import { DynamicLoadingQuotes } from '@/modules/dynamic-loading-lists/dynamic-loading-quotes';

@@ -6,6 +6,7 @@ const nextConfig = {
   // Your Next.js config here
   experimental: {
     reactCompiler: true,
+    viewTransition: true
   },
   output: "standalone",
   typescript: {
