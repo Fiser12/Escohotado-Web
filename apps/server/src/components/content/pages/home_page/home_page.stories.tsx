@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { HomePage } from ".";
-import { featuredItem, featuredGrid01, featuredGrid02, featuredGrid03, featuredGrid04, featuredGrid05 } from "../../../mockData/grid_layout.model";
+import { featuredItem, featuredGrid01, featuredGrid02, featuredGrid03  } from "../../../mockData/grid_layout.model";
 
 const meta: Meta<typeof HomePage> = {
   title: "Pages/Home",
@@ -48,20 +48,9 @@ export const Grid02: Story = {
   }
 };
 
-export const Grid03: Story = {
+export const GridThree: Story = {
   args: {
     featuredItems: [featuredGrid03],
   }
 };
 
-export const Grid04: Story = {
-  args: {
-    featuredItems: [featuredGrid04],
-  }
-};
-
-export const Grid05: Story = {
-  args: {
-    featuredItems: [featuredGrid05],
-  }
-}; 
