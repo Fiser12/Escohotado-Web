@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { renderer } from './renderer'
-import { mockBooks } from '@/components/mockData/book.model'
+import { mockBooks } from '@/core/mockData/book.model'
 import { generateStoryForLexicalBlock, StoryArgs } from 'payload-lexical-blocks-builder/renderer'
 
 const meta: Meta<typeof renderer> = {

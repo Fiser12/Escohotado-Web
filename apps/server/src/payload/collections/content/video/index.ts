@@ -6,7 +6,7 @@ import {
   isAnyone,
   isAdmin,
 } from 'payload-access-control'
-import { forumPostsCacheField } from '../../../fields/forum/forumPostsCacheField'
+import { forumPostsCacheField } from '@/payload/fields/forum/forumPostsCacheField'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()

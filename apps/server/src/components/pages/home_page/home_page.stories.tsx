@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { HomePage } from ".";
-import { featuredItem, featuredGrid01, featuredGrid02, featuredGrid03  } from "../../mockData/grid_layout.model";
+import { featuredItem, featuredGrid01, featuredGrid02, featuredGrid03 } from "../../../core/mockData/grid_layout.model";
 
 const meta: Meta<typeof HomePage> = {
   title: "Pages/Home",

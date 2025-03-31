@@ -1,8 +1,9 @@
 import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
 import { ContentCardModel } from "hegel";
 import HomeHero from "@/components/organisms/home_hero";
-import { GridCards } from "@/components/organisms/common/grid_cards/GridCards";
+import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { NewsletterSubscription } from "@/components/layout/newsletterSubscription";
+
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   featuredItems: { gridClassname: string, features: ContentCardModel[] }[];
   description: string;

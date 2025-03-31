@@ -1,12 +1,12 @@
 "use client";
 
-import { ToggleButtonGroup } from "@/components/common/toggle_button_group/toggle_button_group";
+import { ToggleButtonGroup } from "@/components/molecules/toggle_button_group/toggle_button_group";
 import { updateSubscriptionStatus } from "@/core/newsletter/updateSubscriptionStatus";
 import { startTransition, useOptimistic } from "react";
 
 type NewsletterStatus = "active" | "inactive";
 
-export const NewsletterToggleButton: React.FC<{newsletterIsActive: boolean}> = ({ newsletterIsActive }) => {
+export const NewsletterToggleButton: React.FC<{ newsletterIsActive: boolean }> = ({ newsletterIsActive }) => {
     const [user, updateUser] = useOptimistic<{ newsletter: NewsletterStatus }>({
         newsletter: newsletterIsActive ? "active" : "inactive"
     });
@@ -24,7 +24,7 @@ export const NewsletterToggleButton: React.FC<{newsletterIsActive: boolean}> = (
                     newsletter: selectedId === "active" ? "inactive" : "active",
                 }));
             }
-    });
+        });
 
     };
     return <ToggleButtonGroup

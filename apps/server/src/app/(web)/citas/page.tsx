@@ -11,8 +11,8 @@ import { DynamicLoadingQuotes } from '@/modules/dynamic-loading-lists/dynamic-lo
 import { QuotesFilterBar } from "@/modules/nuqs";
 import { routes } from '@/core/routesGenerator';
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
-import { Typo } from '@/components/common/typographies/Typographies';
-import { GridCards } from "@/components/organisms/common/grid_cards/GridCards";
+import { Typo } from '@/components/atoms/typographies/Typographies';
+import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { tagsFromContentQueryWithCache } from '@/core/queries/tagsFromContentQuery';
 
 export const searchContentParamsCache = createSearchParamsCache({

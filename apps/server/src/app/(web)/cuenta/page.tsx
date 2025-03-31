@@ -4,8 +4,8 @@ import { signOut } from "@/payload/plugins/authjs/plugin";
 import { NewsletterToggleButton } from "@/modules/payload_admin/newsletter_toggle_button";
 import { routes } from "@/core/routesGenerator";
 import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
-import { MainButton } from "@/components/common/main_button/main_button";
-import { Typo } from "@/components/common/typographies/Typographies";
+import { MainButton } from "@/components/atoms/main_button/main_button";
+import { Typo } from "@/components/atoms/typographies/Typographies";
 
 const Page = async () => {
   const payload = await getPayload();

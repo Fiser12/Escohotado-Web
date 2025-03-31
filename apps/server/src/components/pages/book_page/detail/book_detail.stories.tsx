@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { BookDetail } from ".";
-import { mockBooks } from "@/components/mockData/book.model";
-import { mockQuotes } from "@/components/mockData/quotes.model";
+import { mockBooks } from "@/core/mockData/book.model";
+import { mockQuotes } from "@/core/mockData/quotes.model";
 
 const meta: Meta<typeof BookDetail> = {
     title: "Pages/Detail/Book",

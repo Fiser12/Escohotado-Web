@@ -6,7 +6,7 @@ import {
   HeadObjectCommandOutput,
   S3Client,
 } from '@aws-sdk/client-s3'
-import { CollectionAfterChangeHook } from 'payload'
+import { CollectionAfterChangeHook, CollectionBeforeChangeHook } from 'payload'
 
 const fetchObjectMetadata = async (
   s3: S3Client,

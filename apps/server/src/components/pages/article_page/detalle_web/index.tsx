@@ -1,19 +1,19 @@
 import classNames from "classnames";
 import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
-import { Tag } from "../../../common/tag/tag";
 import Image from "next/image";
-import { CategoryModel, mapAnyToComment } from "hegel";
-import { SocialMediaShare } from "../../../common/social_media";
+import { mapAnyToComment } from "hegel";
+import { SocialMediaShare } from "../../../molecules/social_media";
 import Link from "next/link";
-import { MainButton } from "../../../common/main_button/main_button";
+import { MainButton } from "../../../atoms/main_button/main_button";
 import { DownloadDocIcon, FlagWithLabels } from "@/components/assets/icons";
-import { DetailBottomSection } from "@/components/common/detail_bottom_section";
+import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
 import { ArticleWeb, Media, Pdf, Quote, Taxonomy } from "payload-types";
 import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
-import { SEOContentWrapper } from "@/components/common/seo_content_wrapper";
+import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
 import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { routes } from "@/core/routesGenerator";
-import { Typo } from "@/components/common/typographies/Typographies";
+import { Typo } from "@/components/atoms/typographies/Typographies";
+import { Tag } from "@/components/atoms/tag/tag";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     article: ArticleWeb;

@@ -1,6 +1,6 @@
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { mapCards } from "@/core/mappers/mapCards";
-import { GridCards } from "@/components/organisms/common/grid_cards/GridCards";
+import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer";
 import { GridCardsBlock } from 'payload-types'
 

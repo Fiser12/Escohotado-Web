@@ -1,7 +1,7 @@
 import {
+  COLLECTION_SLUG_QUOTE,
   COLLECTION_SLUG_ARTICLE_WEB,
   COLLECTION_SLUG_BOOK,
-  COLLECTION_SLUG_QUOTE,
   COLLECTION_SLUG_VIDEO,
 } from '@/core/collectionsSlugs'
 import { CollectionConfig } from 'payload'

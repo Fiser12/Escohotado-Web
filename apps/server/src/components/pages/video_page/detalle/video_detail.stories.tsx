@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { VideoDetail } from ".";
-import { mockVideos } from "@/components/mockData/video.model";
-import { mockUsers } from "@/components/mockData/user.model";
-import { mockQuotes } from "@/components/mockData/quotes.model";
+import { mockVideos } from "@/core/mockData/video.model";
+import { mockUsers } from "@/core/mockData/user.model";
+import { mockQuotes } from "@/core/mockData/quotes.model";
 
 const meta: Meta<typeof VideoDetail> = {
     title: "Pages/Detail/Video",

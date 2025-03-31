@@ -1,6 +1,6 @@
 "use client";
 
-import { SelectDropdown } from "@/components/common/selectors/select_dropdown";
+import { SelectDropdown } from "@/components/atoms/selectors/select_dropdown";
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 	title: string

@@ -1,11 +1,8 @@
 import { COLLECTION_SLUG_PDF } from '@/core/collectionsSlugs'
-import { addContentHashToFile } from '../../../hooks/media/addContentHashToFileHook'
+import { addContentHashToFile } from '@/payload/hooks/media/addContentHashToFileHook'
 import { CollectionConfig } from 'payload'
 import { checkReadPermissions, isAdmin } from 'payload-access-control'
-import {
-  cachePermissionSeedsHook,
-  permissionRelationship,
-} from 'payload-access-control'
+import { cachePermissionSeedsHook, permissionRelationship } from 'payload-access-control'
 
 export const pdf: CollectionConfig = {
   slug: COLLECTION_SLUG_PDF,
@@ -21,7 +18,7 @@ export const pdf: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    group: 'Contenido'
+    group: 'Contenido',
   },
   hooks: {
     beforeOperation: [addContentHashToFile],
@@ -32,7 +29,7 @@ export const pdf: CollectionConfig = {
       label: 'Título',
       name: 'title',
       type: 'text',
-      required: true
+      required: true,
     },
     ...permissionRelationship(),
   ],

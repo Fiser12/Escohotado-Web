@@ -1,5 +1,5 @@
 import { slugField } from '@/payload/fields/slug'
-import { contentWithPermissionsCollectionBuilder } from '../content_collection_builder'
+import { contentWithPermissionsCollectionBuilder } from '@/payload/collections/content/content_collection_builder'
 import { defaultLexical } from '@/modules/lexical/defaultLexical'
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs'
 import { routes } from '@/core/routesGenerator'

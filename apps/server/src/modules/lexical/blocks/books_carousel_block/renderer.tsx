@@ -1,4 +1,4 @@
-import { CarouselBook } from "@/components/organisms/book/carousel"
+import { CarouselBook } from "@/components/organisms/details/book/carousel"
 import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
 import { Book, BookCarouselBlock } from "payload-types"
 

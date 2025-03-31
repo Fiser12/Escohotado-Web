@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { ArticleDetail } from ".";
-import { mockUsers } from "@/components/mockData/user.model";
-import { mockArticles } from "@/components/mockData/article.model";
-import { mockQuotes } from "@/components/mockData/quotes.model";
+import { mockUsers } from "@/core/mockData/user.model";
+import { mockArticles } from "@/core/mockData/article.model";
+import { mockQuotes } from "@/core/mockData/quotes.model";
 
 const meta: Meta<typeof ArticleDetail> = {
     title: "Pages/Detail/Article",

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { SubscriptionCard } from './subscription_card';
-import { MainButton } from "../../common/main_button/main_button";
+import { MainButton } from "../../atoms/main_button/main_button";
 
 const meta: Meta<typeof SubscriptionCard> = {
   title: 'Molecules/Cards',

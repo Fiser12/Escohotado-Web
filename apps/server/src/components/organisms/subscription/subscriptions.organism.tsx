@@ -4,7 +4,7 @@ import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
 import { UserInventory } from 'payload-access-control';
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
-import { Typo } from '@/components/common/typographies/Typographies';
+import { Typo } from '@/components/atoms/typographies/Typographies';
 import { SubscriptionsGroupCard } from './subscriptions_card_group';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

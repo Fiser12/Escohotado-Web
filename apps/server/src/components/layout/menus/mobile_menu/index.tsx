@@ -2,8 +2,8 @@
 import { MenuItem, MenuSection } from "hegel";
 import classNames from "classnames";
 import { BaseUser } from "payload-access-control";
-import { MainButton } from "@/components/common/main_button/main_button";
-import { HighlightSection } from "@/components/organisms/article/highlight/section_highlight";
+import { MainButton } from "@/components/atoms/main_button/main_button";
+import { HighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
 import { UserIcon, ArrowLinkIcon } from "@/components/assets/icons";
 import { NavItem } from "../../header/nav_item";
 

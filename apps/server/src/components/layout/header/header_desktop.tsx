@@ -5,7 +5,7 @@ import { OpenModalButton } from "./open_search_modal_button";
 import { NavItem } from "./nav_item";
 import { BaseUser } from "payload-access-control";
 import { ArrowLinkIcon } from "@/components/assets/icons";
-import { MainButton } from "@/components/common/main_button/main_button";
+import { MainButton } from "@/components/atoms/main_button/main_button";
 import { UserDropdown } from "../menus/user_dropdown";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -24,9 +24,9 @@ export const HeaderDesktop: React.FC<Props> = ({ user, accountMenuItems, classNa
                 <Logo tabIndex={0} />
                 <div className="hidden lg:flex justify-center items-center gap-7 shrink-0">
                     {pageItems.map((item, index) => (
-                        <NavItem 
+                        <NavItem
                             key={index}
-                            href={item.href} 
+                            href={item.href}
                             tabindex={item.tabindex}
                         >
                             {item.text}

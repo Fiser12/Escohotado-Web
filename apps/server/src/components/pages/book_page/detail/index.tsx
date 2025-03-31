@@ -5,13 +5,13 @@ import { routes } from "@/core/routesGenerator";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { BaseUser } from "payload-access-control";
 import { BookVariantsSelector } from "@/modules/nuqs";
-import { DetailBottomSection } from "@/components/common/detail_bottom_section";
+import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
 import { mapAnyToComment } from "hegel";
-import { SEOContentWrapper } from "@/components/common/seo_content_wrapper";
-import { Typo } from "@/components/common/typographies/Typographies";
-import { SocialMediaShare } from "@/components/common/social_media";
-import { MainHero } from "@/components/organisms/common/hero";
-import { ImageParallax } from "@/components/organisms/book/cards/image_parallax";
+import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
+import { Typo } from "@/components/atoms/typographies/Typographies";
+import { SocialMediaShare } from "@/components/molecules/social_media";
+import { MainHero } from "@/components/organisms/lexical/hero";
+import { ImageParallax } from "@/components/organisms/details/book/cards/image_parallax";
 import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

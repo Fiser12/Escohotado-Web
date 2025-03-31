@@ -3,11 +3,12 @@ import {
   permissionRelationship,
   cachePermissionSeedsHook,
   checkReadPermissions,
+  checkWritePermissions,
   isAdmin,
 } from 'payload-access-control'
 import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
-import { taxonomyRelationship } from '../../fields/taxonomies/taxonomiesRelationshipFields'
-import { forumPostsCacheField } from '../../fields/forum/forumPostsCacheField'
+import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
+import { forumPostsCacheField } from '@/payload/fields/forum/forumPostsCacheField'
 import { clearCache } from 'nextjs-query-cache'
 
 export function contentWithPermissionsCollectionBuilder(

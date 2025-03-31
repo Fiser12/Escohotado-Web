@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
-import { ToggleButtonGroup } from "../../common/toggle_button_group/toggle_button_group";
+import { ToggleButtonGroup } from "@/components/molecules/toggle_button_group/toggle_button_group";
 import { SubscriptionCard } from "./subscription_card";
 import { Interval, IntervalOptions } from "hegel";
 import { SubscriptionButton } from "./subscription_button";

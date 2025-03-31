@@ -1,7 +1,7 @@
-import { MainHero } from "../../organisms/common/hero"
+import { MainHero } from "@/components/organisms/lexical/hero"
 import Image from "next/image"
-import heroHome from "../../assets/images/hero-home.png";
-import { MainButton } from "@/components/common/main_button/main_button";
+import heroHome from "@/components/assets/images/hero-home.png";
+import { MainButton } from "@/components/atoms/main_button/main_button";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     description: string

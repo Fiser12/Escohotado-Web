@@ -1,16 +1,16 @@
 import classNames from "classnames";
-import { Typo } from "@/components/common/typographies/Typographies";
+import { Typo } from "@/components/atoms/typographies/Typographies";
 import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
-import { Tag } from "../../../common/tag/tag";
 import { CategoryModel, mapAnyToComment } from "hegel";
-import { VideoEmbed } from "../../../common/video_embed/video_embed";
-import { SocialMediaShare } from "../../../common/social_media";
+import { VideoEmbed } from "../../../atoms/video_embed/video_embed";
+import { SocialMediaShare } from "../../../molecules/social_media";
 import { Video, Quote } from "payload-types";
 import { routes } from "@/core/routesGenerator";
-import { SEOContentWrapper } from "@/components/common/seo_content_wrapper";
+import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
 import { BaseUser, fetchPermittedContentQuery } from "payload-access-control";
-import { DetailBottomSection } from "@/components/common/detail_bottom_section";
-import { FreemiumHighlightSection } from "@/components/organisms/article/highlight/section_highlight";
+import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
+import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
+import { Tag } from "@/components/atoms/tag/tag";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     video: Video;

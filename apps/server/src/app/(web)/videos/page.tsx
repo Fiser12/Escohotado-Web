@@ -9,8 +9,8 @@ import { LexicalRenderer } from '@/modules/lexical/lexicalRenderer';
 import { SortSelector } from '@/modules/nuqs';
 import { VideoFilterBar } from '@/modules/nuqs';
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
-import { GridCards } from "@/components/organisms/common/grid_cards/GridCards";
-import { Typo } from '@/components/common/typographies/Typographies';
+import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { Typo } from '@/components/atoms/typographies/Typographies';
 
 export const pageSize = 10;
 

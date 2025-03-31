@@ -15,13 +15,13 @@ import { ContentProtected } from "payload-access-control";
 import { DynamicLoadingArticles } from "@/modules/dynamic-loading-lists/dynamic-loading-articles";
 import { escohotadoArticlesPortada } from "@/components/assets";
 import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
-import { HeadlineCard } from "@/components/organisms/article/cards/article_headline_card";
-import { FreemiumHighlightSection } from "@/components/organisms/article/highlight/section_highlight";
-import { CarouselBook } from "@/components/organisms/book/carousel";
-import { GridCards } from "@/components/organisms/common/grid_cards/GridCards";
+import { HeadlineCard } from "@/components/organisms/details/article/cards/article_headline_card";
+import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
+import { CarouselBook } from "@/components/organisms/details/book/carousel";
+import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQuery";
 import { LecturasFilterBar } from "@/modules/nuqs";
-import { Typo } from "@/components/common/typographies/Typographies";
+import { Typo } from "@/components/atoms/typographies/Typographies";
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({

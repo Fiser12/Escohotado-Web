@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ButtonsBlock } from 'payload-types';
 import React from "react"
-import { MainButton } from "@/components/common/main_button/main_button"
+import { MainButton } from "@/components/atoms/main_button/main_button"
 
 export type ButtonsLexicalType = NonNullable<ButtonsBlock["buttons"]>;
 export type ButtonLexicalType = ButtonsLexicalType[number];
@@ -44,7 +44,7 @@ const getHrefFromButton = (button: ButtonLexicalType): string => {
     if (button.type_of_button_link === "external") {
         return button.href ?? ""
     } else if (button.type_of_button_link === "collections") {
-        if(typeof button.collections?.value === "number") {
+        if (typeof button.collections?.value === "number") {
             return "/"
         } else {
             return button.collections?.value.href ?? "/"
