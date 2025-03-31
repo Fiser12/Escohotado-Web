@@ -27,5 +27,5 @@
   "engines": {
     "node": ">=18"
   },
-  "name": "with-svelte"
+  "name": "escohotado-portal"
 }

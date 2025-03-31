@@ -29,33 +29,14 @@
   },
   "postCreateCommand": "pnpm install",
   "postStartCommand": "echo 'Para iniciar el servidor de desarrollo, ejecuta: pnpm dev'",
-  "remoteUser": "node",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "version": "20"
     }
   },
-  "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "bradlc.vscode-tailwindcss",
-    "ms-vscode.vscode-typescript-next",
-    "formulahendry.auto-rename-tag",
-    "christian-kohler.path-intellisense",
-    "christian-kohler.npm-intellisense",
-    "streetsidesoftware.code-spell-checker",
-    "eamodio.gitlens",
-    "ms-azuretools.vscode-docker",
-    "cweijan.vscode-postgresql-client2",
-    "ms-vscode-remote.remote-containers",
-    "ms-azuretools.vscode-docker",
-    "dbaeumer.vscode-eslint",
-    "GitHub.vscode-github-actions"
-  ],
   "otherPortsAttributes": {
     "onAutoForward": "notify"
   },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "remoteEnv": {
