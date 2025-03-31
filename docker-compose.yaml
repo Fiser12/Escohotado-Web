@@ -8,7 +8,7 @@ services:
       target: runner
     ports:
       - 3000:3000
-    env_file: .docker.env
+    env_file: .env
     environment:
       VIRTUAL_HOST: local.nexolabs.dev
       VIRTUAL_PORT: 3000
@@ -47,7 +47,7 @@ services:
     image: cloudflare/cloudflared:latest
     command: tunnel --no-autoupdate run
     env_file:
-    - .docker.env
+    - .env
     restart: unless-stopped
     networks:
       - outside

@@ -7,6 +7,10 @@
       "outputs": [".turbo/**", ".next/**", ".vercel/**", "build/**"]
     },
     "lint": {},
+    "devcontainer": {
+      "cache": false,
+      "persistent": true
+    },
     "dev": {
       "cache": false,
       "persistent": true

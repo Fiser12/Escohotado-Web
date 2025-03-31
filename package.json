@@ -7,6 +7,7 @@
     "start": "turbo run start",
     "start:web": "turbo run start --filter=web",
     "dev": "turbo run dev --parallel",
+    "devcontainer": "turbo run devcontainer --parallel",
     "dev:server": "turbo run dev --filter=server",
     "dev:web": "turbo run dev --filter=web",
     "build:server": "turbo run build --filter=server",
