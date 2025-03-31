@@ -6,6 +6,7 @@ import { CategoryModel, OrigenModel } from "hegel";
 import "./style.css";
 import Link from "next/link";
 import { ArrowLinkIcon, EyeIcon } from "@/components/assets/icons";
+import { Typo } from "@/components/common/typographies/Typographies";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       itemId: number;
@@ -15,14 +16,14 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
       categories: CategoryModel[];
 }
 
-export const FeaturedQuote: React.FC<Props> = ({ 
+export const QuoteCard: React.FC<Props> = ({
       itemId,
-      className, 
-      quote, 
-      author, 
+      className,
+      quote,
+      author,
       categories,
-      origen, 
-      ...rest 
+      origen,
+      ...rest
 }) => {
 
       const containerClass = classNames(
@@ -30,20 +31,16 @@ export const FeaturedQuote: React.FC<Props> = ({
             'w-full h-full max-h-[21.875rem] flex flex-col px-5 justify-between'
       );
 
-      const quoteClass = classNames(
-            'text-primary-900 font-handwritten text-xl'
-      );
-
       return (
             <div className={`base-container-axis-quote ${containerClass}`} {...rest}>
                   {origen &&
                         <a href={origen.hasPermissions ? origen.detailHref : undefined} className="group w-full flex flex-row justify-between items-center hover:text-white text-primary-900 transition-colors duration-300 ease-in-out py-3">
-                              <p className="font-display">{origen.title}</p>
+                              <Typo.P>{origen.title}</Typo.P>
                               <ArrowLinkIcon className="opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                   }
                   <div className="h-full flex items-center">
-                        <p className={`dynamic-text-quote ${quoteClass} line-clamp-4`}>{quote}</p>
+                        <Typo.QuoteSmall className="dynamic-text-quote line-clamp-4">{quote}</Typo.QuoteSmall>
                   </div>
                   <div className="w-full flex justify-between items-center mb-4">
                         <div className="flex flex-row gap-2 flex-wrap">

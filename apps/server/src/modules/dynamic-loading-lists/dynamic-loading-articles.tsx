@@ -6,7 +6,7 @@ import { convertContentModelToCard } from "hegel";
 import { ArticleWeb } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 import { BaseUser } from "payload-access-control";
-import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
+import { GridCards } from "@/components/content/grid_cards/GridCards";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user: BaseUser | null;
@@ -66,7 +66,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, tagsArrays, max
     }, [loading, page, maxPage]);
 
     return <div>
-        <GridCardsBlock
+        <GridCards
             {...rest}
             features={Object
                 .values(articles)

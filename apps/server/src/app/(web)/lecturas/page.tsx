@@ -18,7 +18,7 @@ import { ContentWrapper } from "@/components/common/content_wrapper/content_wrap
 import { HeadlineCard } from "@/components/content/article/cards/article_headline_card";
 import { FreemiumHighlightSection } from "@/components/content/article/highlight/section_highlight";
 import { CarouselBook } from "@/components/content/book/carousel";
-import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
+import { GridCards } from "@/components/content/grid_cards/GridCards";
 import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQuery";
 import { LecturasFilterBar } from "@/modules/nuqs";
 import { Typo } from "@/components/common/typographies/Typographies";
@@ -124,7 +124,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
         <Typo.H2 className='w-full'>Artículos</Typo.H2>
         <LecturasFilterBar listOfTags={arrayToRecord(taxonomies, "slug")} />
-        <GridCardsBlock
+        <GridCards
           features={
             articles.results
               .map(articleCardMapper)

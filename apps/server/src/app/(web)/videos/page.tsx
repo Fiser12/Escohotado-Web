@@ -9,7 +9,7 @@ import { LexicalRenderer } from '@/modules/lexical/lexicalRenderer';
 import { SortSelector } from '@/modules/nuqs';
 import { VideoFilterBar } from '@/modules/nuqs';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
-import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';
+import { GridCards } from '@/components/content/grid_cards/GridCards';
 import { Typo } from '@/components/common/typographies/Typographies';
 
 export const pageSize = 10;
@@ -52,7 +52,7 @@ const Page = async ({ searchParams }: Props) => {
         <VideoFilterBar />
         {lastVideosResult.results.length !== 0 && <>
           <Typo.H2 className='w-full'>Últimos vídeos</Typo.H2>
-          <GridCardsBlock className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'
+          <GridCards className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'
             features={lastVideosResult.results
               .slice(0, 3)
               .map(videoCardMapper)
@@ -64,7 +64,7 @@ const Page = async ({ searchParams }: Props) => {
           <Typo.H2 className='w-full'>Todos los vídeos</Typo.H2>
           <SortSelector />
         </div>
-        <GridCardsBlock
+        <GridCards
           features={videosResult.results
             .map(videoCardMapper)
             .map(convertContentModelToCard("col-span-2"))}

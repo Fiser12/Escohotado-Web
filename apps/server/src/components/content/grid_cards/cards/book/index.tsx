@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { ImageParallax } from "../../../book/cards/image_parallax";
 import Image from "next/image";
-import { BaseCardContainer } from "../../container_base";
 import "./style.css";
+import { BaseCardContainer } from "..";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       title: string;
@@ -13,7 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
       className?: string;
 }
 
-export const FeaturedBook: React.FC<Props> = ({className, detailHref, coverHref, title, quote, author, ...rest}) => {
+export const BookCard: React.FC<Props> = ({ className, detailHref, coverHref, title, quote, author, ...rest }) => {
       const containerClass = classNames(className, 'w-full h-full px-4 py-6');
       const containerImageClass = classNames('w-full mx-auto');
       const ImageClass = classNames('object-cover');

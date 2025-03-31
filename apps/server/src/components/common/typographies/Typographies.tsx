@@ -34,4 +34,9 @@ export const Typo = {
     H2: createTypography('h2', 'text-primary-900 text-3xl md:text-5xl font-regular font-display'),
     H3: createTypography('h3', 'text-black text-2xl font-regular font-display'),
     H4: createTypography('h4', 'text-black text-lg md:text-xl font-normal font-body'),
+    P: createTypography('p', 'font-display'),
+    PSmall: createTypography('p', 'text-m text-primary-900 font-display'),
+
+    QuoteBig: createTypography('span', 'text-primary-900 font-handwritten text-2xl lg:text-xl'),
+    QuoteSmall: createTypography('span', 'text-primary-900 font-handwritten text-xl lg:text-lg'),
 };

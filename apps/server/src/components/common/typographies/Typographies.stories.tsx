@@ -51,3 +51,18 @@ export const H4: Story = {
         </div>
     ),
 }; 
+
+
+export const QuoteBig: Story = {
+    name: "QuoteBig",
+    render: () => (
+        <Typo.QuoteBig>QuoteBig Regular</Typo.QuoteBig>
+    ),
+};
+
+export const QuoteSmall: Story = {
+    name: "QuoteSmall",
+    render: () => (
+        <Typo.QuoteSmall>QuoteSmall Regular</Typo.QuoteSmall>
+    ),
+};

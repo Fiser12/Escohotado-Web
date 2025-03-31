@@ -6,7 +6,7 @@ import { convertContentModelToCard } from "hegel";
 import { Quote } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 import { BaseUser } from "payload-access-control";
-import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
+import { GridCards } from "@/components/content/grid_cards/GridCards";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;
     query: string;
@@ -62,7 +62,7 @@ export const DynamicLoadingQuotes: React.FC<Props> = ({ query, maxPage, user, so
         };
     }, [loading, page, maxPage]);
     return <div>
-        <GridCardsBlock
+        <GridCards
             {...rest}
             features={Object
                 .values(quotes)

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { CommentCard } from "../comments";
 import { GridComments } from "../comments/grid_comments";
 import { ContentWrapper } from "../content_wrapper/content_wrapper";
-import { GridCardsBlock } from "../../content/featured_grid_home/GridCardsBlock";
+import { GridCards } from "@/components/content/grid_cards/GridCards";
 import { Quote } from "payload-types";
 import { BaseUser } from "payload-access-control";
 import { mapQuoteCard } from '@/core/mappers/mapQuoteCard';
@@ -20,7 +20,7 @@ export const DetailBottomSection: React.FC<Props> = ({ quotes, comments, classNa
     return (
         <ContentWrapper className={divClass} {...rest}>
             {quotesModel.length !== 0 &&
-                <GridCardsBlock
+                <GridCards
                     features={quotesModel.map(t => ({ ...t, className: "col-span-2" }))}
                     className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8'
                 />

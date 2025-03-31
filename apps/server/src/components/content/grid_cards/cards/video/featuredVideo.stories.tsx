@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { FeaturedArticle } from ".";
+import { VideoCard } from ".";
 
-const meta: Meta<typeof FeaturedArticle> = {
-      title: "Molecules/GridCards/Article",
-      component: FeaturedArticle,
+const meta: Meta<typeof VideoCard> = {
+      title: "Molecules/GridCards",
+      component: VideoCard,
       parameters: {
             layout: "padded",
             design: {
                   type: "figspec",
-                  url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=7-378&t=cXsMNPXvpF6IKIkc-4"
+                  url: "https://www.figma.com/files/xq1hrsTcwvQMgX49pwXGcc/Escohotado?node-id=3-131&t=GjytMCl0EqfNmyGe-4"
             },
             backgrounds: {
                   default: "dark",
@@ -20,11 +20,7 @@ const meta: Meta<typeof FeaturedArticle> = {
                   description: "Title of the article",
                   type: { name: "string", required: true },
             },
-            author: {
-                  control: "text",
-                  description: "Author of the article",
-                  type: { name: "string", required: false },
-            },
+            publishedAt: { control: "text", description: "Publication date" },
             coverHref: {
                   control: "text",
                   description: "Image URL for the cover",
@@ -38,8 +34,8 @@ const meta: Meta<typeof FeaturedArticle> = {
       },
       args: {
             title: "Sample Article Title",
-            author: "Sample Author",
-            coverHref: "https://placehold.co/400x400",
+            publishedAt: "2024-11-18",
+            coverHref: "https://placehold.co/300x200",
             categories: [
                   { id: 1, label: "Tecnología" },
                   { id: 2, label: "Filosofía" },
@@ -55,7 +51,7 @@ type Story = StoryObj<typeof meta>;
 export const Horizontal: Story = {
       decorators: [
             (Story) => (
-                  <div style={{ height: '300px', overflow: 'auto' }}>
+                  <div style={{ overflow: 'auto' }}>
                         <Story />
                   </div>
             ),
@@ -65,7 +61,7 @@ export const Horizontal: Story = {
 export const Vertical: Story = {
       decorators: [
             (Story) => (
-                  <div style={{ width: '300px', height: '400px', overflow: 'auto' }}>
+                  <div style={{ width: '300px', overflow: 'auto' }}>
                         <Story />
                   </div>
             ),

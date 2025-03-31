@@ -2,17 +2,17 @@ import React from 'react'
 
 import classNames from 'classnames'
 import { ContentCardModel } from "hegel"
-import { FeaturedArticle } from './content/article'
-import { FeaturedQuote } from './content/quote'
-import { FeaturedBook } from './content/book'
-import { FeaturedVideo } from './content/video'
-import { FeaturedMedia } from './content/media'
+import { ArticleCard } from './cards/article'
+import { QuoteCard } from './cards/quote'
+import { BookCard } from './cards/book'
+import { VideoCard } from './cards/video'
+import { MediaCard } from './cards/media'
 
 export const renderFeatured = (item: ContentCardModel) => {
   switch (item.type) {
     case "article":
       return (
-        <FeaturedArticle
+        <ArticleCard
           key={item.id}
           className={item.className}
           title={item.title}
@@ -25,7 +25,7 @@ export const renderFeatured = (item: ContentCardModel) => {
       );
     case "quote":
       return (
-        <FeaturedQuote
+        <QuoteCard
           key={item.id}
           itemId={item.id}
           origen={item.origen}
@@ -37,7 +37,7 @@ export const renderFeatured = (item: ContentCardModel) => {
       );
     case "book":
       return (
-        <FeaturedBook
+        <BookCard
           key={item.id}
           className={item.className}
           title={item.title}
@@ -49,7 +49,7 @@ export const renderFeatured = (item: ContentCardModel) => {
       );
     case "video":
       return (
-        <FeaturedVideo
+        <VideoCard
           key={item.id}
           className={item.className}
           title={item.title}
@@ -63,7 +63,7 @@ export const renderFeatured = (item: ContentCardModel) => {
         />
       );
     case "media":
-      return <FeaturedMedia
+      return <MediaCard
         mediaHref={item.mediaHref!}
         alt={item.title}
       />
@@ -77,7 +77,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className: string
 }
 
-export const GridCardsBlock: React.FC<Props> = ({ className, features, ...rest }) => {
+export const GridCards: React.FC<Props> = ({ className, features, ...rest }) => {
   return <GridCardsBlockContainer className={className} {...rest}>
     {features.map(renderFeatured)}
   </GridCardsBlockContainer>

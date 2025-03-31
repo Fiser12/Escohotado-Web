@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { BaseCardContainer } from "../../container_base";
+import { BaseCardContainer } from "..";
 import "./style.css";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       alt?: string | null;
       mediaHref: string;
 }
 
-export const FeaturedMedia: React.FC<Props> = ({ className, mediaHref, title, ...rest }) => {
+export const MediaCard: React.FC<Props> = ({ className, mediaHref, title, ...rest }) => {
       const ImageClass = classNames('object-cover');
 
       return (

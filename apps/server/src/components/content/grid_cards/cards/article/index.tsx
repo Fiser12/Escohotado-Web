@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
 import { Link } from "../../../../common/links/link";
 import Image from "next/image";
-import { BaseCardContainer } from "../../container_base";
+import { BaseCardContainer } from "..";
 import "./style.css";
 import { CategoryModel } from "hegel";
 import { UnlockIcon } from "@/components/assets/icons";
@@ -16,7 +16,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export const FeaturedArticle: React.FC<Props> = ({
+export const ArticleCard: React.FC<Props> = ({
   hasPermission,
   categories,
   title,

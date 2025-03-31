@@ -12,7 +12,7 @@ import { QuotesFilterBar } from "@/modules/nuqs";
 import { routes } from '@/core/routesGenerator';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
 import { Typo } from '@/components/common/typographies/Typographies';
-import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';
+import { GridCards } from '@/components/content/grid_cards/GridCards';
 import { tagsFromContentQueryWithCache } from '@/core/queries/tagsFromContentQuery';
 
 export const searchContentParamsCache = createSearchParamsCache({
@@ -49,7 +49,7 @@ const Page = async ({ searchParams }: Props) => {
         <Typo.H2 className='w-full'>Todas las citas</Typo.H2>
         <QuotesFilterBar listOfTags={arrayToRecord(taxonomies, "slug")} />
       </div>
-      <GridCardsBlock
+      <GridCards
         features={quotesResult.results
           .map(quoteCardMapper)
           .map(item => convertContentModelToCard("col-span-3")(item))}

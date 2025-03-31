@@ -8,6 +8,7 @@ import { AnimatedModal } from "../animated-modal";
 import { Quote, Taxonomy } from "payload-types";
 import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { CloseXIcon } from "@/components/assets/icons";
+import { Typo } from "@/components/common/typographies/Typographies";
 
 interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   quote: Quote;
@@ -49,8 +50,8 @@ export const ModalQuote: React.FC<ModalProps> = ({
           <div className="w-full h-full">
             <div className="h-full flex flex-col justify-center gap-5 p-3">
               <h2 className="text-m font-bold font-body text-gray-dark">Cita completa</h2>
-              <p className="font-handwritten text-2xl lg:text-xl">{quote.quote}</p>
-              {author && <p className="text-m text-primary-900  font-display">- {author}</p>}
+              <Typo.QuoteBig className="dynamic-text-quote line-clamp-4">{quote.quote}</Typo.QuoteBig>
+              {author && <Typo.PSmall className="text-m text-primary-900  font-display">- {author}</Typo.PSmall>}
               <div className="flex flex-row gap-2 flex-wrap">
                 {categories.map((category, index) =>
                   <Tag key={index} text={category.label} isActive={false} />

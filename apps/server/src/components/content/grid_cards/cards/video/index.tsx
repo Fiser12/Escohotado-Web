@@ -2,10 +2,10 @@ import classNames from "classnames";
 import { Tag } from "../../../../common/tag/tag";
 import Image from "next/image";
 import { Link } from "../../../../common/links/link";
-import { BaseCardContainer } from "../../container_base";
-import "./style.css"
+import { BaseCardContainer } from "..";
 import { CategoryModel } from "hegel";
 import { PlayIcon, LockIcon, UnlockIcon } from "@/components/assets/icons";
+import "./style.css"
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -19,7 +19,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export const FeaturedVideo: React.FC<Props> = ({ hasPermission, publishedAt, className, detailHref, coverHref, title, categories, unlockHref, ...rest }) => {
+export const VideoCard: React.FC<Props> = ({ hasPermission, publishedAt, className, detailHref, coverHref, title, categories, unlockHref, ...rest }) => {
 
   const containerClass = classNames("w-full min-h-[300px] h-full gap-1");
   const containerImageClass = classNames("w-full rounded overflow-hidden relative");
