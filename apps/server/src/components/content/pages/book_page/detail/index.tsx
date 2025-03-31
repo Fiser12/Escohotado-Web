@@ -4,7 +4,6 @@ import { ImageParallax } from "../../../book/cards/image_parallax";
 import Image from "next/image";
 import classNames from "classnames";
 import { SocialMediaShare } from "../../../../common/social_media";
-import { H1 } from "../../../../common/headers/H1";
 import { Book, Media, Quote, Taxonomy } from "payload-types";
 import { routes } from "@/core/routesGenerator";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
@@ -13,6 +12,7 @@ import { BookVariantsSelector } from "@/modules/nuqs";
 import { DetailBottomSection } from "@/components/common/detail_bottom_section";
 import { mapAnyToComment } from "hegel";
 import { SEOContentWrapper } from "@/components/common/seo_content_wrapper";
+import { Typo } from "@/components/common/typographies/Typographies";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;
@@ -63,7 +63,7 @@ export const BookDetail: React.FC<Props> = ({
                     </ImageParallax>
                 }
             >
-                <H1 label={book.title} />
+                <Typo.H1 className='w-full'>{book.title}</Typo.H1>
                 <p className="line-clamp-6">{book.description ?? ""}</p>
                 <BookVariantsSelector options={options} />
             </MainHero>

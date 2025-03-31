@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { HighlightSection } from "./section_highlight";
-import { H4 } from "@/components/common/headers/H4";
+import { Typo } from "@/components/common/typographies/Typographies";
 import { MainButton } from "@/components/common/main_button/main_button";
 
 const meta: Meta<typeof HighlightSection> = {
@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 export const Highlight: Story = {
     args: {
         children: <>
-            <H4 label="¿Quieres descubrir toda la obra de Antonio Escohotado?" className="text-white"/>
+            <Typo.H4 className="text-white">¿Quieres descubrir toda la obra de Antonio Escohotado?</Typo.H4>
             <MainButton text="Suscribete" color="secondary" />
         </>
     },

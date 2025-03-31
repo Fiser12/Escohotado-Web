@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { ImageParallax } from "./image_parallax";
-import { H4 } from "../../../common/headers/H4";
 import Image from "next/image";
 import Link from 'next/link';
+import { Typo } from "@/components/common/typographies/Typographies";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -11,7 +11,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;
 }
 
-export const BookCard: React.FC<Props> = ({className, coverHref, link, title, ...rest}) => {
+export const BookCard: React.FC<Props> = ({ className, coverHref, link, title, ...rest }) => {
     const containerClass = classNames(
         'flex flex-col items-center gap-3 h-full',
         className
@@ -28,7 +28,7 @@ export const BookCard: React.FC<Props> = ({className, coverHref, link, title, ..
                         className="object-cover"
                     />
                 </ImageParallax>
-                <H4 label={title} className="line-clamp-3 text-center px-4 w-full md:max-w-[80%]"></H4>
+                <Typo.H4 className="line-clamp-3 text-center px-4 w-full md:max-w-[80%]">{title}</Typo.H4>
             </div>
         </Link>
     );

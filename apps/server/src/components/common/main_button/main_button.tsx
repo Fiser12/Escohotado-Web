@@ -1,8 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { twMerge } from 'tailwind-merge'
+import { classMerge } from 'hegel/react';
 import './style.css'
-import { classMerge } from '../../utils/classMerge';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     text: string;

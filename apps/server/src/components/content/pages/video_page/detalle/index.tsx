@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { H3 } from "../../../../common/headers/H3";
+import { Typo } from "@/components/common/typographies/Typographies";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { Tag } from "../../../../common/tag/tag";
 import { CategoryModel, mapAnyToComment } from "hegel";
@@ -36,7 +36,7 @@ export const VideoDetail: React.FC<Props> = ({
         month: 'long',
         day: 'numeric'
     }) : "";
-    const detailHref= routes.nextJS.generateDetailHref({ collection: "video", value: video })
+    const detailHref = routes.nextJS.generateDetailHref({ collection: "video", value: video })
     const duration = segundosAFormatoHHMMSS(video.duration ?? 0);
     const videoHref = fetchPermittedContentQuery(
         user,
@@ -62,7 +62,7 @@ export const VideoDetail: React.FC<Props> = ({
                 />
             }
             <div className="flex flex-col gap-6 md:gap-10">
-                <H3 label={video.title ?? "No title"} />
+                <Typo.H3 className='w-full'>{video.title ?? "No title"}</Typo.H3>
                 <div className={tagDateContainerClass}>
                     <div className={categoriesClass}>
                         {categories?.map((category, index) =>

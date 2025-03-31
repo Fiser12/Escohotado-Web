@@ -1,13 +1,13 @@
 import classNames from "classnames";
-import { H3 } from "../../../common/headers/H3";
+import { Typo } from "@/components/common/typographies/Typographies";
 import { InputForm } from "../../../common/input";
 import { MainButton } from "../../../common/main_button/main_button";
 import { EmailIcon } from "@/components/assets/icons";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       action: string
- }
+}
 
-export const NewsletterSubscription: React.FC<Props> = ({className, action }) => {
+export const NewsletterSubscription: React.FC<Props> = ({ className, action }) => {
       const divClass = classNames(
             "bg-primary-900 w-full py-16 px-10",
             className
@@ -20,7 +20,7 @@ export const NewsletterSubscription: React.FC<Props> = ({className, action }) =>
             target="_blank"
       >
             <div className="flex flex-col items-start gap-8 max-w-[600px] mx-auto">
-                  <H3 label="¡Únete a nuestra comunidad del conocimiento!" className="text-primary-100" />
+                  <Typo.H3 className="text-primary-100">¡Únete a nuestra comunidad del conocimiento!</Typo.H3>
                   <input type="hidden" name="nonce" />
                   <input type="hidden" name="l" value="d5e07ef4-a728-4003-b3a7-c803298ae4ce" />
                   <p className="text-white font-body">Introduce tu email para recibir nuestra newsletter con las últimas reflexiones filosóficas, análisis históricos y exploraciones sobre el capitalismo y las drogas, al estilo de Antonio Escohotado.</p>

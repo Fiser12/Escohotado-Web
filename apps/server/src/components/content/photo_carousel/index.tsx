@@ -2,9 +2,9 @@
 
 import { CirclePhoto } from "./circlePhoto";
 import Image from "next/image"
-import { H2 } from "../../common/headers/H2";
 import { useState } from "react";
 import "./style.css";
+import { Typo } from "@/components/common/typographies/Typographies";
 
 export interface Carouseltem {
       photoHref: string;
@@ -34,13 +34,13 @@ export const PhotoCarousel: React.FC<Props> = ({ items }) => {
                         </div>
                         <div className="flex flex-col gap-4 px-10 lg:px-16">
                               <div className="h-full flex flex-col gap-4 md:gap-6 justify-center">
-                                    <H2 label={selected.title} />
+                                    <Typo.H2 className='w-full'>{selected.title}</Typo.H2>
                                     {selected.description}
                               </div>
                               <p className="font-display text-7xl md:text-8xl bg-gradient-to-r from-primary-100 to-primary-300 bg-clip-text text-transparent translate-y-3">{selected.year}</p>
                         </div>
                   </div>
-                  { items.length > 1 && <div className="overflow-x-auto no-scrollbar">
+                  {items.length > 1 && <div className="overflow-x-auto no-scrollbar">
                         <div className="relative inline-block mx-10 my-8 md:my-10">
                               <div className="flex gap-16 md:gap-20">
                                     {items.map((item, i) => (
@@ -51,7 +51,7 @@ export const PhotoCarousel: React.FC<Props> = ({ items }) => {
                               </div>
                               <div className="w-full border border-gray-200 absolute top-1/2 transform -translate-y-1/2"></div>
                         </div>
-                  </div> }
+                  </div>}
             </div>
       );
 }

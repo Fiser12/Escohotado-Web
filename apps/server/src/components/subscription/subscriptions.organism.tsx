@@ -4,8 +4,7 @@ import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
 import { UserInventory } from 'payload-access-control';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
-import { H2 } from '@/components/common/headers/H2';
-import { H4 } from '@/components/common/headers/H4';
+import { Typo } from '@/components/common/typographies/Typographies';
 import { SubscriptionsGroupCard } from '@/components/subscription/subscriptions_card_group';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -28,8 +27,8 @@ export const SubscriptionsSection: React.FC<Props> = async ({ ...rest }) => {
       className={className}
       backgroundClassname="bg-white"
     >
-      <H2 label="Elige tu plan y accede al legado Escohotado." className='text-center' />
-      <H4 label="Descubre videos, artículos y textos exclusivos." />
+      <Typo.H2 className='text-center'>Elige tu plan y accede al legado Escohotado.</Typo.H2>
+      <Typo.H4 className='text-center'>Descubre videos, artículos y textos exclusivos.</Typo.H4>
       <p className="text-center text-cyan-950 text-base font-normal font-['Montserrat'] leading-normal">
         También puedes elegir la modalidad de pago que mejor se adapte a ti.
       </p>

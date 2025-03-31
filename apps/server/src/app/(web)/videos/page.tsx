@@ -9,8 +9,8 @@ import { LexicalRenderer } from '@/modules/lexical/lexicalRenderer';
 import { SortSelector } from '@/modules/nuqs';
 import { VideoFilterBar } from '@/modules/nuqs';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
-import { H2 } from '@/components/common/headers/H2';
 import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';
+import { Typo } from '@/components/common/typographies/Typographies';
 
 export const pageSize = 10;
 
@@ -51,8 +51,7 @@ const Page = async ({ searchParams }: Props) => {
       >
         <VideoFilterBar />
         {lastVideosResult.results.length !== 0 && <>
-          <H2 label="Últimos vídeos" />
-
+          <Typo.H2 className='w-full'>Últimos vídeos</Typo.H2>
           <GridCardsBlock className='grid-cols-2 md:grid-cols-2 lg:grid-cols-6 2xl:grid-cols-6'
             features={lastVideosResult.results
               .slice(0, 3)
@@ -62,7 +61,7 @@ const Page = async ({ searchParams }: Props) => {
           />
         </>}
         <div className="flex flex-col sm:flex-row gap-10 items-end justify-between">
-          <H2 label="Todos los vídeos" />
+          <Typo.H2 className='w-full'>Todos los vídeos</Typo.H2>
           <SortSelector />
         </div>
         <GridCardsBlock

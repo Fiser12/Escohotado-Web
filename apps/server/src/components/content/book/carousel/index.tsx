@@ -4,21 +4,20 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import classNames from 'classnames';
 import { BookCard } from '../cards';
-import { H2 } from '../../../common/headers/H2';
 import { ContentWrapper } from '../../../common/content_wrapper/content_wrapper';
 import { NextButton, PrevButton, usePrevNextButtons } from './carousel-arrow';
 import "./styles.css";
 import { Book } from "payload-types"
 import { routes } from '@/core/routesGenerator';
 import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
-
+import { Typo } from '@/components/common/typographies/Typographies';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   books: Array<Book>;
 }
 
-export const CarouselBook: React.FC<Props> = ({ className, title, books: booksParam, ...rest}) => {
+export const CarouselBook: React.FC<Props> = ({ className, title, books: booksParam, ...rest }) => {
   const books = booksParam.map((book) => ({
     title: book.title,
     coverHref: typeof book.cover === "number" ? "" : book.cover.url,
@@ -56,7 +55,7 @@ export const CarouselBook: React.FC<Props> = ({ className, title, books: booksPa
     <div className={divClass} {...rest}>
       <ContentWrapper>
         <div className="flex justify-between items-center">
-          <H2 label={title} />
+          <Typo.H2 className='w-full'>{title}</Typo.H2>
           <div className="grid grid-cols-2 gap-[0.6rem] items-center">
             <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
             <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />

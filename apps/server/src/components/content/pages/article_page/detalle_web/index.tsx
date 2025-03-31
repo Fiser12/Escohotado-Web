@@ -1,6 +1,4 @@
 import classNames from "classnames";
-import { H1 } from "../../../../common/headers/H1";
-import { H4 } from "../../../../common/headers/H4";
 import { ContentWrapper } from "../../../../common/content_wrapper/content_wrapper";
 import { Tag } from "../../../../common/tag/tag";
 import Image from "next/image";
@@ -15,6 +13,7 @@ import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
 import { SEOContentWrapper } from "@/components/common/seo_content_wrapper";
 import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { routes } from "@/core/routesGenerator";
+import { Typo } from "@/components/common/typographies/Typographies";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     article: ArticleWeb;
@@ -56,9 +55,9 @@ export const ArticleDetail: React.FC<Props> = ({
     const author = getAuthorFromTaxonomies(article.categories as Taxonomy[])?.singular_name
     // @ts-ignore
     const locales: string[] = article?.locales ?? [];
-    const coverHref= (article.cover as Media | null)?.url
+    const coverHref = (article.cover as Media | null)?.url
     const detailHref = routes.nextJS.generateDetailHref({ collection: "article_web", value: article })
-    const categories= article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []
+    const categories = article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []
 
     return (
         <SEOContentWrapper
@@ -80,8 +79,8 @@ export const ArticleDetail: React.FC<Props> = ({
             <ContentWrapper className="flex flex-col ">
                 <div className="md:pb-10 flex flex-col gap-6 md:gap-10">
                     <div className="flex flex-col gap-2">
-                        { author && <H4 label={author}></H4>}
-                        <H1 label={article.title } />
+                        {author && <Typo.H4>author</Typo.H4>}
+                        <Typo.H1 >{article.title}</Typo.H1>
                     </div>
                     <div className={tagDateContainerClass}>
                         <div className={categoriesClass}>

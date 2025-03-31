@@ -16,6 +16,7 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@types/react": "^19.0.12",
     "eslint": "^9.19.0",
     "eslint-config": "workspace:*",
     "prettier": "^3.4.2",

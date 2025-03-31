@@ -11,7 +11,7 @@ import { DynamicLoadingQuotes } from '@/modules/dynamic-loading-lists/dynamic-lo
 import { QuotesFilterBar } from "@/modules/nuqs";
 import { routes } from '@/core/routesGenerator';
 import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
-import { H2 } from '@/components/common/headers/H2';
+import { Typo } from '@/components/common/typographies/Typographies';
 import { GridCardsBlock } from '@/components/content/featured_grid_home/GridCardsBlock';
 import { tagsFromContentQueryWithCache } from '@/core/queries/tagsFromContentQuery';
 
@@ -46,7 +46,7 @@ const Page = async ({ searchParams }: Props) => {
       backgroundClassname="bg-white"
     >
       <div className="flex flex-col sm:flex-row gap-10 items-end justify-between w-full">
-        <H2 label="Todas las citas" className='w-full' />
+        <Typo.H2 className='w-full'>Todas las citas</Typo.H2>
         <QuotesFilterBar listOfTags={arrayToRecord(taxonomies, "slug")} />
       </div>
       <GridCardsBlock

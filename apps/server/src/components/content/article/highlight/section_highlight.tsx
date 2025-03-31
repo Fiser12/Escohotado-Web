@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import { H4 } from "../../../common/headers/H4";
 import Image from "next/image";
 import Link from "next/link";
 import { MainButton } from "../../../common/main_button/main_button";
 import handwrittenBackground from "../../../assets/images/handwritting-bg.jpg";
+import { Typo } from "@/components/common/typographies/Typographies";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     coverHref?: string;
@@ -40,13 +40,13 @@ export const HighlightSection: React.FC<Props> = ({
     );
 };
 
-export const FreemiumHighlightSection: React.FC<{ 
+export const FreemiumHighlightSection: React.FC<{
     href: string
     title: string
     buttonText: string
- }> = ({ href, title, buttonText }) => (
+}> = ({ href, title, buttonText }) => (
     <HighlightSection >
-        <H4 label={title} className="text-white text-center"></H4>
+        <Typo.H4 className="text-white text-center">{title}</Typo.H4>
         <Link href={href}>
             <MainButton text={buttonText} color="secondary" type="line" className="max-w-70"></MainButton>
         </Link>

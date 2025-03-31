@@ -1,4 +1,4 @@
-import { H4 } from "../headers/H4";
+import { Typo } from "../typographies/Typographies";
 import { MainButton } from "../main_button/main_button";
 import { PenIcon } from "@/components/assets/icons";
 interface Props<T> {
@@ -10,30 +10,30 @@ interface Props<T> {
 const generateTopicHref = (forumTopicId: string) => {
       return `${process.env.FORUM_URL}/topic/${forumTopicId}`;
 }
-export const GridComments: React.FC<Props<any>> = ({ 
-      items, 
+export const GridComments: React.FC<Props<any>> = ({
+      items,
       forumTopicId,
-      renderBox, 
+      renderBox,
 }): React.ReactNode => {
       return (
             <div className="w-full pb-8">
                   <div className="w-full flex justify-between items-center pb-4 border-b border-gray-400 mb-7">
-                  <H4 label="Comentarios"/>
-                  {forumTopicId &&
-                        <a href={generateTopicHref(forumTopicId)} target="_blank" rel="noreferrer">
-                              <MainButton 
-                                    text="Únete al debate" 
-                                    color="secondary"
-                                    type="fill"
-                                    icon={<PenIcon />}
-                              />
-                        </a>
-                  }
+                        <Typo.H4 className='w-full'>Comentarios</Typo.H4>
+                        {forumTopicId &&
+                              <a href={generateTopicHref(forumTopicId)} target="_blank" rel="noreferrer">
+                                    <MainButton
+                                          text="Únete al debate"
+                                          color="secondary"
+                                          type="fill"
+                                          icon={<PenIcon />}
+                                    />
+                              </a>
+                        }
                   </div>
                   <div className="flex flex-col gap-7">
                         {items.length === 0 && <p className="text-gray-500">Aún no hay comentarios</p>}
                         {items.map((item, index) => <div key={index}>
-                              { renderBox(item, index) }
+                              {renderBox(item, index)}
                         </div>)}
                   </div>
             </div>

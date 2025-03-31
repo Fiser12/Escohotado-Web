@@ -15,13 +15,13 @@ import { ContentProtected } from "payload-access-control";
 import { DynamicLoadingArticles } from "@/modules/dynamic-loading-lists/dynamic-loading-articles";
 import { escohotadoArticlesPortada } from "@/components/assets";
 import { ContentWrapper } from "@/components/common/content_wrapper/content_wrapper";
-import { H2 } from "@/components/common/headers/H2";
 import { HeadlineCard } from "@/components/content/article/cards/article_headline_card";
 import { FreemiumHighlightSection } from "@/components/content/article/highlight/section_highlight";
 import { CarouselBook } from "@/components/content/book/carousel";
 import { GridCardsBlock } from "@/components/content/featured_grid_home/GridCardsBlock";
 import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQuery";
 import { LecturasFilterBar } from "@/modules/nuqs";
+import { Typo } from "@/components/common/typographies/Typographies";
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
@@ -63,7 +63,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
     <div className={divClass} {...rest}>
       <div id="headerArticles" className="@container w-full bg-white pt-12.5">
         <ContentWrapper className="mx-auto flex flex-col gap-7.5">
-          <H2 label="Últimos artículos" id="last-articles" />
+          <Typo.H2 className='w-full'>Últimos artículos</Typo.H2>
           <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 md:gap-10 items-end">
             <Image
               src={escohotadoArticlesPortada.src}
@@ -122,7 +122,7 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
         <LexicalRenderer data={articulosDataPage.content} />
       }
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
-        <H2 label="Artículos" id="h2-articles" />
+        <Typo.H2 className='w-full'>Artículos</Typo.H2>
         <LecturasFilterBar listOfTags={arrayToRecord(taxonomies, "slug")} />
         <GridCardsBlock
           features={

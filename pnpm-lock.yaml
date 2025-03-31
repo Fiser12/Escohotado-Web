@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@types/react':
+        specifier: ^19.0.12
+        version: 19.0.12
       eslint:
         specifier: ^9.19.0
         version: 9.19.0(jiti@2.4.2)
@@ -245,16 +248,25 @@ importers:
       jsep:
         specifier: ^1.4.0
         version: 1.4.0
+      react:
+        specifier: ^19
+        version: 19.0.0
     devDependencies:
       '@types/node':
         specifier: ^22.13.1
         version: 22.13.1
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       eslint:
         specifier: ^9.19.0
         version: 9.19.0(jiti@2.4.2)
       eslint-config:
         specifier: workspace:*
         version: link:../eslint-config
+      tailwind-merge:
+        specifier: ^3.0.2
+        version: 3.0.2
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -3823,6 +3835,9 @@ packages:
     resolution: {integrity: sha512-8TV6R3h2j7a91c+1DXdJi3Syo69zzIZbz7Lg5tORM5LEJG7X/E6a1V3drRyBRZq7/utz7A+c4OgYLiLcYGHG6w==}
     peerDependencies:
       '@types/react': '*'
+
+  '@types/react@19.0.12':
+    resolution: {integrity: sha512-V6Ar115dBDrjbtXSrS+/Oruobc+qVbbUxDFC1RSbRqLt5SYvxxyIDrSC85RWml54g+jfNeEMZhEj7wW07ONQhA==}
 
   '@types/react@19.0.8':
     resolution: {integrity: sha512-9P/o1IGdfmQxrujGbIMDyYaaCykhLKc0NGCtYcECNUr9UAaDe4gwvV9bR6tvd5Br1SG0j+PBpbKr2UYY8CwqSw==}
@@ -13180,6 +13195,10 @@ snapshots:
   '@types/react-transition-group@4.4.12(types-react@19.0.0-rc.1)':
     dependencies:
       '@types/react': types-react@19.0.0-rc.1
+
+  '@types/react@19.0.12':
+    dependencies:
+      csstype: 3.1.3
 
   '@types/react@19.0.8':
     dependencies:

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { H3 } from '../common/headers/H3';
+import { Typo } from '@/components/common/typographies/Typographies';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -34,7 +34,7 @@ export const SubscriptionCard: React.FC<Props> = ({
       )}
     >
       <div className="flex-col justify-start items-center gap-4 flex">
-        <H3 label={title} />
+        <Typo.H3 className='w-full'>{title}</Typo.H3>
         <div className="justify-start items-end gap-2.5 inline-flex">
           <div className="text-[#426578] text-2xl font-bold font-montserrat leading-normal">
             {price}
