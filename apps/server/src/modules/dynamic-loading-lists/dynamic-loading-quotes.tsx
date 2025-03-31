@@ -6,7 +6,8 @@ import { convertContentModelToCard } from "hegel";
 import { Quote } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 import { BaseUser } from "payload-access-control";
-import { GridCards } from "@/components/content/grid_cards/GridCards";
+import { GridCards } from "@/components/organisms/common/grid_cards/GridCards";
+
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;
     query: string;

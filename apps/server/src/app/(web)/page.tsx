@@ -2,8 +2,8 @@ import { getPayload } from "@/payload/utils/getPayload";
 import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { evalPermissionByRoleQuery } from "payload-access-control";
-import { NewsletterSubscription } from "@/components/content/common/newsletterSubscription";
-import { SubscriptionsSection } from "@/components/subscription/subscriptions.organism";
+import { SubscriptionsSection } from "@/components/organisms/subscription/subscriptions.organism";
+import { NewsletterSubscription } from "@/components/layout/newsletterSubscription";
 
 const Page: React.FC<{ action: string }> = async ({ action }) => {
   const payload = await getPayload();

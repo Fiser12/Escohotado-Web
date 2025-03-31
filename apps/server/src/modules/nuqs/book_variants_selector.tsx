@@ -2,7 +2,7 @@
 
 import { parseAsString, useQueryState } from "nuqs";
 import { MainButton } from "@/components/common/main_button/main_button";
-import { SelectBoxes } from "@/components/content/common/selectors/grid_select_boxes";
+import { SelectBoxes } from "@/components/common/selectors/grid_select_boxes";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	options: {

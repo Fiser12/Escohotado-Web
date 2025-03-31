@@ -6,14 +6,14 @@ import { evalPermissionByRoleQuery } from "payload-access-control";
 import { routes } from "@/core/routesGenerator";
 import { loadPayloadSingleton } from "payload-base-singleton";
 import { getPayload } from "@/payload/utils/getPayload";
-import { Header } from "@/components/common/header/header";
-import { Footer } from "@/components/content/common/footer";
+import { Header } from "@/components/layout/header/header";
+import { Footer } from "@/components/layout/footer";
 import { Textures } from "@/components/assets/textures";
 import "./main.css";
 import "../tailwind.css";
-import { UnlocksProgress } from "@/components/subscription/unlocks-progress.organism";
 import { getAccountMenuQuery } from "@/core/queries/getAccounMenuQuery";
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
+import { UnlocksProgress } from "@/components/organisms/subscription/unlocks-progress.organism";
 
 const logoutMenuItem: MenuItem = {
   text: "Cerrar sesión",
@@ -27,18 +27,18 @@ const logoutMenuItem: MenuItem = {
 
 const navItemList: (hasPermission: Boolean) => MenuItem[] = (hasPermission) => {
   let items = [
-      { href: routes.nextJS.lecturasPageHref, tabindex: 2, text: "Lecturas" },
-      { href: routes.nextJS.videosPageHref, tabindex: 3, text: "Videos" },
-      { href: routes.nodeBB.root, tabindex: 4, text: "Foro" },
+    { href: routes.nextJS.lecturasPageHref, tabindex: 2, text: "Lecturas" },
+    { href: routes.nextJS.videosPageHref, tabindex: 3, text: "Videos" },
+    { href: routes.nodeBB.root, tabindex: 4, text: "Foro" },
   ]
   loadPayloadSingleton(getPayload)
 
   if (hasPermission) {
-      items.push({
-          href: routes.nextJS.citasPageHref,
-          tabindex: 5,
-          text: "Citas"
-      })
+    items.push({
+      href: routes.nextJS.citasPageHref,
+      tabindex: 5,
+      text: "Citas"
+    })
   }
   return items
 }
@@ -78,7 +78,7 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
             )
           }
 
-          <Footer 
+          <Footer
             youtubeHref={routes.otherExternal.youtube}
             xHref={routes.otherExternal.x}
             facebookHref={routes.otherExternal.facebook}

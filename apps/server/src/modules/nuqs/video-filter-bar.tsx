@@ -3,22 +3,22 @@
 import { parseAsString } from "nuqs";
 import { useQueryState } from "nuqs";
 import { FilterBar } from "./filter_bar";
-import { SearchBar } from "@/components/content/common/search_bar";
+import { SearchBar } from "@/components/layout/search_bar";
 
 export const VideoFilterBar = () => {
 	const [selectedPlaylists, setSelectedPlaylists] = useQueryState(
-		  "playlist",
-		  parseAsString
-			  .withOptions({ shallow: false })
-			  .withDefault("")
-	  );
+		"playlist",
+		parseAsString
+			.withOptions({ shallow: false })
+			.withDefault("")
+	);
 	const [querySelected, setQuery] = useQueryState(
-		  "query",
-		  parseAsString
-			  .withOptions({ shallow: false })
-			  .withDefault("")
-	  );
-	  return (
+		"query",
+		parseAsString
+			.withOptions({ shallow: false })
+			.withDefault("")
+	);
+	return (
 		<div className="flex flex-col sm:flex-row gap-3 items-end">
 			<FilterBar
 				title="Playlists"
@@ -48,9 +48,9 @@ export const VideoFilterBar = () => {
 				}}
 			/>
 			<SearchBar
-        		initialValue={querySelected}
-        		applyText={(text) => setQuery(text)}
-      		/>
+				initialValue={querySelected}
+				applyText={(text) => setQuery(text)}
+			/>
 		</div>
 	);
 }

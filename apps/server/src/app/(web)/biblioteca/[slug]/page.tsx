@@ -4,7 +4,7 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
 import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
-import { BookDetail } from '@/components/content/pages/book_page/detail';
+import { BookDetail } from '@/components/pages/book_page/detail';
 
 interface Props {
     params: {

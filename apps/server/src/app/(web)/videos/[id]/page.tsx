@@ -2,12 +2,8 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
-import { mapAnyToComment } from 'hegel';
-import { evalPermissionByRoleQuery, fetchPermittedContentQuery } from "payload-access-control";
 import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs';
-import { routes } from '@/core/routesGenerator';
-import { VideoDetail } from '@/components/content/pages/video_page/detalle';
-import { DetailBottomSection } from '@/components/common/detail_bottom_section';
+import { VideoDetail } from '@/components/pages/video_page/detalle';
 
 interface Props {
   params: {
@@ -27,10 +23,10 @@ const Page: NextPage<Props> = async (props) => {
   ]);
 
   return <VideoDetail user={user} video={video} quotes={[]}>
-      {video.content &&
-        <LexicalRenderer className="max-w-[48rem] mx-auto" data={video.content} />
-      }
-    </VideoDetail>
+    {video.content &&
+      <LexicalRenderer className="max-w-[48rem] mx-auto" data={video.content} />
+    }
+  </VideoDetail>
 };
 
 export default Page;

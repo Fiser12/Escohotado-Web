@@ -1,10 +1,10 @@
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { mapCards } from "@/core/mappers/mapCards";
-import { GridCards } from "@/components/content/grid_cards/GridCards";
+import { GridCards } from "@/components/organisms/common/grid_cards/GridCards";
 import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer";
-import { GridCardsBlock as GridCardsBlockPayload } from 'payload-types'
+import { GridCardsBlock } from 'payload-types'
 
-interface Props extends LexicalBlockProps<GridCardsBlockPayload> {
+interface Props extends LexicalBlockProps<GridCardsBlock> {
 
 }
 

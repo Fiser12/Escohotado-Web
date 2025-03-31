@@ -1,12 +1,12 @@
 import { CommentsSectionModel, QuoteHeaderModel } from "hegel";
 import classNames from "classnames";
-import { CommentCard } from "../comments";
-import { GridComments } from "../comments/grid_comments";
-import { ContentWrapper } from "../content_wrapper/content_wrapper";
-import { GridCards } from "@/components/content/grid_cards/GridCards";
+import { ContentWrapper } from "../../layout/content_wrapper/content_wrapper";
+import { GridCards } from "@/components/organisms/common/grid_cards/GridCards";
 import { Quote } from "payload-types";
 import { BaseUser } from "payload-access-control";
 import { mapQuoteCard } from '@/core/mappers/mapQuoteCard';
+import { CommentCard } from "@/components/organisms/comments";
+import { GridComments } from "@/components/organisms/comments/grid_comments";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     comments: CommentsSectionModel;

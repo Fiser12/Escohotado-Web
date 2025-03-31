@@ -1,6 +1,6 @@
 import { ButtonLexicalType } from '../button_block/buttonRenderer';
 import { LexicalButtonsRenderer } from '../button_block/buttonRenderer';
-import { HighlightSection } from '@/components/content/article/highlight/section_highlight';
+import { HighlightSection } from '@/components/organisms/article/highlight/section_highlight';
 import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
 import { HighlightBlock } from 'payload-types';
 import { Typo } from '@/components/common/typographies/Typographies';

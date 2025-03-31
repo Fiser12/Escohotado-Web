@@ -3,7 +3,7 @@ import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { signOut } from "@/payload/plugins/authjs/plugin";
 import { NewsletterToggleButton } from "@/modules/payload_admin/newsletter_toggle_button";
 import { routes } from "@/core/routesGenerator";
-import { ContentWrapper } from "@/components/common/content_wrapper/content_wrapper";
+import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
 import { MainButton } from "@/components/common/main_button/main_button";
 import { Typo } from "@/components/common/typographies/Typographies";
 

@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { LexicalRenderer } from '../../lexicalRenderer'
 import { evalAdvancePermissionQuery } from 'payload-access-control';
-import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
+import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
 import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
 import { WrapperBlock } from 'payload-types';
 import { getCurrentUserQuery } from '@/core/queries/getCurrentUserQuery';

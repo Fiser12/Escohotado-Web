@@ -1,4 +1,4 @@
-import { ContentWrapper } from "@/components/common/content_wrapper/content_wrapper";
+import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
 import { Typo } from "@/components/common/typographies/Typographies";
 
 const Page = async () => {

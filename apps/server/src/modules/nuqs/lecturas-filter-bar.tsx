@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchBar } from "@/components/content/common/search_bar";
+import { SearchBar } from "@/components/layout/search_bar";
 import { FilterBar } from "@/modules/nuqs";
 import { CategoryModel } from "hegel";
 import { parseAsString, useQueryState } from "nuqs";

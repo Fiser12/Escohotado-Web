@@ -11,7 +11,7 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 import classNames from 'classnames'
 import { blockRenderers } from './blockRenderers'
-import { ContentWrapper } from '@/components/common/content_wrapper/content_wrapper';
+import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
 type NodeTypes =
   | DefaultNodeTypes
 

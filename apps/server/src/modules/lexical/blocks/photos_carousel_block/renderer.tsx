@@ -1,9 +1,8 @@
-import { Carouseltem } from "@/components/content/photo_carousel"
-import { PhotoCarousel } from "@/components/content/photo_carousel"
 import { LexicalRenderer } from "../../lexicalRenderer"
 import { PhotosCarouselBlock } from "payload-types"
 import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
-
+import { Carouseltem } from "@/components/organisms/common/photo_carousel"
+import { PhotoCarousel } from "@/components/organisms/common/photo_carousel"
 interface Props extends LexicalBlockProps<PhotosCarouselBlock> {
 }
 
@@ -19,5 +18,5 @@ export const renderer = async ({ node }: Props) => {
         }
     }) ?? []
 
-    return <PhotoCarousel items={items}/>
+    return <PhotoCarousel items={items} />
 }

@@ -5,7 +5,7 @@ import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { TypedLocale } from 'payload';
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs';
-import { ArticleDetail } from '@/components/content/pages/article_page/detalle_web';
+import { ArticleDetail } from '@/components/pages/article_page/detalle_web';
 import { ContentProtected } from 'payload-access-control';
 
 export const searchContentParamsCache = createSearchParamsCache({
@@ -44,24 +44,24 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
   if (!article) return null;
 
   return <ArticleDetail
-      article={article}
-      quotes={[]}
+    article={article}
+    quotes={[]}
+    user={user}
+    currentLocale={locale}
+  >
+    <ContentProtected
       user={user}
-      currentLocale={locale}
+      content={article}
+      collection={COLLECTION_SLUG_ARTICLE_WEB}
     >
-      <ContentProtected
-        user={user}
-        content={article}
-        collection={COLLECTION_SLUG_ARTICLE_WEB}
-      >
-        {({ hasPermissions, isUnlocked }) => <>
-          {article.content && (hasPermissions || isUnlocked) &&
-            <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
-          }
-        </>
+      {({ hasPermissions, isUnlocked }) => <>
+        {article.content && (hasPermissions || isUnlocked) &&
+          <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
         }
-      </ContentProtected>
-    </ArticleDetail>
+      </>
+      }
+    </ContentProtected>
+  </ArticleDetail>
 };
 
 export default Page;
