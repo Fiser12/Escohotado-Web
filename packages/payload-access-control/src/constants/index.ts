@@ -11,3 +11,18 @@ export const PERMISSION_TYPES = {
   ONLY_NO_ROLES: "only_no_roles",
   ONLY_GUESS: "only_guess",
 } as const;
+
+export const PERMISSIONS = [
+  {
+    slug: 'freemium',
+    title: 'Freemium',
+  },
+  {
+    slug: 'basic',
+    title: 'Basic',
+  },
+  {
+    slug: 'admin',
+    title: 'Admin',
+  }
+]

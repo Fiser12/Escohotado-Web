@@ -12,6 +12,7 @@ import plugins from '@/payload/plugins'
 import globals from '@/payload/globals/static_pages'
 import collections from '@/payload/collections'
 import { defaultLexical } from '@/modules/lexical/defaultLexical'
+import { insertDefaultPermissions } from 'payload-access-control'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -43,6 +44,7 @@ export default buildConfig({
   graphQL: {
     disable: true,
   },
+  onInit: insertDefaultPermissions,
   localization: {
     locales: [
       {

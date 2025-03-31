@@ -3,13 +3,12 @@ export {
   COLLECTION_SLUG_PERMISSION,
   permissionSlugs,
   PERMISSION_TYPES,
+  PERMISSIONS
 } from "./constants";
 
 // Types
 export type * from "./types";
-export {
-  generateUserInventory
-} from "./types";
+export * from "./types";
 
 // Collections
 export { permissionCollection } from "./collections";
@@ -31,4 +30,4 @@ export {
 } from "./queries";
 export * from './ui/ContentProtected'
 // Utils
-export { getUserPermissions } from "./utils";
+export * from "./utils";
