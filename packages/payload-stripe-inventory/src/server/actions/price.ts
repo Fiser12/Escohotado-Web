@@ -46,7 +46,7 @@ interface PriceUpserted {
 export async function priceUpsert(price: Stripe.Price, payload: Payload): Promise<PriceUpserted | null> {
   const stripeProductID = typeof price.product === 'string' ? price.product : price.product.id
 
-  if (price.deleted) {
+  if (price.deleted !== undefined) {
     priceDeleted(price, payload)
     return null
   }

@@ -2,7 +2,6 @@
 @import 'atropos/scss';
 
 @plugin "@tailwindcss/typography";
-@source "../../../../packages/gaudi/src";
 @config "./tailwind.config.js";
 
 @theme {

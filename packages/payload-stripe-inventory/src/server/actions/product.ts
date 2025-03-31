@@ -16,7 +16,7 @@ export const updateProducts = async (payload: Payload) => {
 
 export const productSync = async (object: Stripe.Product, payload: Payload) => {
   const { id: stripeProductID, name, description, images } = object
-  if (object.deleted) return productDeleted(object, payload)
+  if (object.deleted !== undefined) return productDeleted(object, payload)
   try {
     await payloadUpsert({
       payload,

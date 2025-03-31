@@ -1,7 +1,7 @@
 import type Stripe from "stripe";
 import { generateUserInventory, UserInventory } from "payload-access-control";
 import { Payload } from "payload";
-import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_USER } from '../../common';
+import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_USER } from "../../common";
 
 const logs = false;
 
@@ -49,9 +49,10 @@ export const subscriptionUpsert = async (
     const product = products.at(0);
     if (!product) return;
 
-    const inventory =
-      (user.inventory as UserInventory | undefined) ??
-      generateUserInventory(customer as string);
+    const inventory = user.inventory
+      ? (user.inventory as unknown as UserInventory)
+      : generateUserInventory(customer as string);
+
     inventory.subscriptions[stripeID] = {
       productId: product.id as number,
       permissions: product.permissions_seeds?.split(",") ?? [],
@@ -76,9 +77,10 @@ export const subscriptionUpsert = async (
         },
       },
     };
+
     await payload.update({
       collection: COLLECTION_SLUG_USER,
-      data: { inventory: inventory as any },
+      data: { inventory: inventory as unknown as { [x: string]: {} } },
       where: { id: { equals: user.id } },
     });
 
@@ -110,14 +112,18 @@ export const subscriptionDeleted = async (
       collection: COLLECTION_SLUG_USER,
       id: metadata.userId,
     });
-    const inventory = user?.inventory as UserInventory | undefined;
-    if (!inventory) return;
+
+    if (!user?.inventory) return;
+
+    const inventory = user.inventory as unknown as UserInventory;
     delete inventory.subscriptions[id];
+
     await payload.update({
       collection: COLLECTION_SLUG_USER,
-      data: { inventory: inventory as any },
+      data: { inventory: inventory as unknown as { [x: string]: {} } },
       where: { id: { equals: user.id } },
     });
+
     await onSubscriptionUpdate("delete", metadata.keycloakUserId);
 
     if (logs)

@@ -10,7 +10,6 @@ interface Props extends LexicalBlockProps<GridCardsBlock> {
 
 export const renderer = async ({ node }: Props) => {
   const user = await getCurrentUserQuery();
-  const gridCards = node?.fields ?? []
-  const result = await mapCards(user)(gridCards)
+  const result = await mapCards(user)(node.fields)
   return <GridCards features={result.features} className={result.gridClassname} />
 }
