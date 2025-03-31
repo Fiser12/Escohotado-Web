@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+      - node_modules:/workspace/node_modules:delegated
+    command: sleep infinity
+    ports:
+      - "3000:3000"
+      - "6006:6006"
+    environment:
+      - DATABASE_URL=postgresql://admin:devsecret@localhost/escota-db
+      - NODE_ENV=development
+    env_file:
+      - .env.devcontainer
+    depends_on:
+      - escota_db
+    networks:
+      - outside
+
+  escota_db:
+    container_name: escota_db
+    image: postgres:17-alpine
+    restart: always
+    volumes:
+      - ../.docker/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=devsecret
+      - POSTGRES_USER=escota
+      - POSTGRES_DB=escota_db
+    ports:
+      - "5432:5432"
+    networks:
+      - outside
+
+volumes:
+  postgres-data:
+  node_modules:
+networks:
+  outside:
