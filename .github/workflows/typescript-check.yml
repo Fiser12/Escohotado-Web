@@ -5,8 +5,6 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  schedule:
-    - cron: '0 0 * * *'  # Ejecutar diariamente a medianoche
 
 jobs:
   type-check:
@@ -14,32 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
+          node-version: '20.x'
+      
+      - run: npm install -g pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Run TypeScript check
-        id: type-check
         run: |
           cd apps/server
-          pnpm tsc --noEmit --skipLibCheck > type-check-output.txt 2>&1 || true
-          if [ -s type-check-output.txt ]; then
-            echo "TypeScript errors found. Check the output file for details."
-            echo "::set-output name=has_errors::true"
-          else
-            echo "No TypeScript errors found."
-            echo "::set-output name=has_errors::false"
-          fi
+          pnpm tsc --noEmit --skipLibCheck
 
       - name: Send email notification
         if: steps.type-check.outputs.has_errors == 'true'
