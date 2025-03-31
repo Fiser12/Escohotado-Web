@@ -3,7 +3,6 @@ import {
   permissionRelationship,
   cachePermissionSeedsHook,
   checkReadPermissions,
-  checkWritePermissions,
   isAdmin,
 } from 'payload-access-control'
 import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'

@@ -1,5 +1,5 @@
 import { SearchCollection } from '@/core/queries/searchElementsQuery'
-import { SearchOptions } from 'node_modules/gaudi/src/common/search_modal'
+import { SearchOptions } from '@/components/organisms/modals/search_modal_layout'
 
 export const mapSearchOptionsToCollections = (option: SearchOptions): SearchCollection[] => {
   switch (option) {

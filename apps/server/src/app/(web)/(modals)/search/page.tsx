@@ -1,6 +1,6 @@
 import HomePage from "@/app/(web)/page";
 import { routes } from "@/core/routesGenerator";
-import { SearchModalLayout } from "@/components/modals/search_modal_layout/SearchModalLayout";
+import { SearchModalLayout } from "@/components/organisms/modals/search_modal_layout/SearchModalLayout";
 
 const Page = async () => {
   return <>

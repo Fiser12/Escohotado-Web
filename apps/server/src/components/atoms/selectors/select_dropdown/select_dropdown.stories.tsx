@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { SelectDropdown } from ".";
 import { TagIcon, ESFlag, ENFlag } from "@/components/assets/icons";
-
+import { SelectDropdown } from "./";
 const meta: Meta<typeof SelectDropdown> = {
     title: "Atoms/Selectors",
     component: SelectDropdown,
@@ -41,6 +40,7 @@ export const Categories: Story = {
     },
     args: {
         title: "Categorias",
+        
         color: "primary",
         iconButton: true,
         onSelectedTagsChange: () => { },
@@ -63,12 +63,7 @@ export const Categories: Story = {
             },
         },
         multiple: true,
-    },
-    render: (args) => (
-        <SelectDropdown {...args}
-            iconButton={args.iconButton ? <TagIcon /> : null}
-        />
-    ),
+    }
 };
 
 export const Language: Story = {
@@ -89,11 +84,7 @@ export const Language: Story = {
                 icon: <ENFlag />
             },
         },
+        className: "min-w-[190px]",
         multiple: false,
-    },
-    render: (args) => (
-        <SelectDropdown {...args}
-            className="min-w-[190px]"
-        />
-    ),
+    }
 };

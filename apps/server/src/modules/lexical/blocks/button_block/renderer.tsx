@@ -10,7 +10,7 @@ interface Props extends LexicalBlockProps<ButtonsBlock> {
 export const renderer = async ({ node }: Props) => {
   return <LexicalButtonsRenderer 
     buttons={node.fields.buttons ?? []} 
-    alignment={node.fields.alignment}
+    alignment={node.fields.alignment ?? "center"}
   />
 }
 

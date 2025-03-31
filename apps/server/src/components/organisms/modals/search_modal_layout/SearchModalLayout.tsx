@@ -8,8 +8,8 @@ import { SearchOptions } from ".";
 import { routes } from "@/core/routesGenerator";
 import { SearchedItem } from ".";
 import { SearchModal } from ".";
-import { AnimatedModal } from "@/components/modals/animated-modal";
 import { getIconByCollection } from "@/components/assets/icons";
+import { AnimatedModal } from "../animated-modal";
 
 export const SearchModalLayout: React.FC<{ goBackTo?: string; }> = ({ goBackTo }) => {
     const [items, setItems] = useState<SearchedItem[]>([]);

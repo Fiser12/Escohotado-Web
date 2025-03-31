@@ -26,25 +26,12 @@ const meta: Meta<typeof MainButton> = {
             ),
         },
     },
-    argTypes: {
-        text: {
-            control: 'text',
-        },
-        type: {
-            options: [ 'fill', 'line' ],
-            control: { type: 'select' },
-        },
-        color: {
-            option: ['primary', 'secondary'],
-            control: { type: 'select' },
-        },
-        className: {
-            control: 'text',
-        },
-        icon: {
-            control: 'boolean',
-        },
-    },
+    args: {
+        text: 'Sample Fill Button',
+        color: 'primary',
+        type: 'fill',
+        icon: false,
+    }
 };
 
 export default meta;
@@ -55,11 +42,10 @@ export const Basic: Story = {
     args: {
         text: 'Sample Fill Button',
         color: 'primary',
-        type: 'fill',
-        icon: false,
+        type: 'fill'
     },
     render: (args) => (
-            <MainButton {...args} icon={args.icon ? <EmailIcon /> : null} />
+            <MainButton text={args.text} color={args.color} type={args.type} icon={args.icon ? <EmailIcon /> : null} />
     ),
 };
 
@@ -71,7 +57,7 @@ export const Line: Story = {
         icon: false,
     },
     render: (args) => (
-        <MainButton {...args} icon={args.icon ? <EmailIcon /> : null} />
+        <MainButton text={args.text} color={args.color} type={args.type} icon={args.icon ? <EmailIcon /> : null} />
     ),
 };
 
@@ -81,14 +67,14 @@ export const All: Story = {
     },
     render: (args) => (
         <div className="flex gap-4 flex-wrap">
-            <MainButton {...args} />
-            <MainButton {...args} color="secondary" />
-            <MainButton {...args} type='line' />
-            <MainButton {...args} color="secondary"  type='line' />
-            <MainButton {...args} icon={<EmailIcon />} />
-            <MainButton {...args} icon={<EmailIcon />} color="secondary" />
-            <MainButton {...args} icon={<EmailIcon />} type='line' />
-            <MainButton {...args} icon={<EmailIcon />} color="secondary" type='line' />
+            <MainButton text={args.text} icon={args.icon ? <EmailIcon /> : null} />
+            <MainButton text={args.text} {...args} color="secondary" />
+            <MainButton text={args.text} {...args} type='line' />
+            <MainButton text={args.text} {...args} color="secondary"  type='line' />
+            <MainButton text={args.text} {...args} icon={<EmailIcon />} />
+            <MainButton text={args.text} {...args} icon={<EmailIcon />} color="secondary" />
+            <MainButton text={args.text} {...args} icon={<EmailIcon />} type='line' />
+            <MainButton text={args.text} {...args} icon={<EmailIcon />} color="secondary" type='line' />
         </div>
     ),
 };

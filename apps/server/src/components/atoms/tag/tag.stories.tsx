@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Tag } from './tag';
 import { Title, Subtitle, Canvas, Description, Controls, Stories } from "@storybook/blocks";
+import { Tag } from './tag';
 
 const meta: Meta<typeof Tag> = {
     title: 'Atoms/Tag',
@@ -75,8 +75,8 @@ export const All: Story = {
     },
     render: (args) => (
         <div className="flex gap-4 flex-wrap">
-            <Tag {...args} />
-            <Tag {...args} variant="light" />
+            <Tag {...args} text='Sample tag' />
+            <Tag {...args} text='Sample tag' variant="light" />
         </div>
     ),
 }

@@ -2,7 +2,7 @@ import HomePage from "@/app/(web)/page";
 import { NextPage } from "next";
 import { getPayload } from "@/payload/utils/getPayload";
 import { routes } from "@/core/routesGenerator";
-import { ModalQuote } from "@/components/modals/modal-quote/modalQuote";
+import { ModalQuote } from "@/components/organisms/modals/modal-quote/modalQuote";
 
 interface Props {
   params: {

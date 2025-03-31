@@ -1,0 +1,65 @@
+name: TypeScript Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'  # Ejecutar diariamente a medianoche
+
+jobs:
+  type-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run TypeScript check
+        id: type-check
+        run: |
+          cd apps/server
+          pnpm tsc --noEmit --skipLibCheck > type-check-output.txt 2>&1 || true
+          if [ -s type-check-output.txt ]; then
+            echo "TypeScript errors found. Check the output file for details."
+            echo "::set-output name=has_errors::true"
+          else
+            echo "No TypeScript errors found."
+            echo "::set-output name=has_errors::false"
+          fi
+
+      - name: Send email notification
+        if: steps.type-check.outputs.has_errors == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: TypeScript Errors Found in ${{ github.repository }}
+          body: |
+            TypeScript errors were found in the following commit:
+            Repository: ${{ github.repository }}
+            Commit: ${{ github.sha }}
+            Branch: ${{ github.ref_name }}
+            
+            Please check the following URL for details:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            TypeScript output:
+            $(cat apps/server/type-check-output.txt)
+          to: ${{ github.actor }}@users.noreply.github.com
+          from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}> 
