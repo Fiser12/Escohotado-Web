@@ -3,6 +3,8 @@ import { ServicesMockBuilder } from '@/modules/services-mock-builder';
 import { Meta, StoryObj } from "@storybook/react";
 import { HomePage } from ".";
 import { CardGridView00, CardGridView01, CardGridView02, CardGridView03 } from "../../../core/mockData/grid_layout.model";
+import HomeHero from "@/components/organisms/home_hero";
+
 const meta: Meta<typeof HomePage> = {
   title: "Pages/Home",
   component: HomePage,
@@ -26,19 +28,16 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Grid01: Story = {
-  args: {
-    services: ServicesMockBuilder({
-      children: <CardGridView01 />,
-      user: mockUsers.basic,
-    }),
-  }
-};
-
 export const Grid00: Story = {
   args: {
     services: ServicesMockBuilder({
-      children: <CardGridView00 />,
+      children: <>
+        <HomeHero
+          description="Antonio Escohotado"
+          buttons={[{ title: "Leer más", link: "#" }]}
+        />
+        <CardGridView00 />
+      </>,
       user: mockUsers.basic,
     }),
   }
@@ -47,7 +46,13 @@ export const Grid00: Story = {
 export const Grid00Mobile: Story = {
   args: {
     services: ServicesMockBuilder({
-      children: <CardGridView00 />,
+      children: <>
+        <HomeHero
+          description="Antonio Escohotado"
+          buttons={[{ title: "Leer más", link: "#" }]}
+        />
+        <CardGridView00 />
+      </>,
       user: mockUsers.basic,
     }),
   },
@@ -58,10 +63,31 @@ export const Grid00Mobile: Story = {
   }
 };
 
+export const Grid01: Story = {
+  args: {
+    services: ServicesMockBuilder({
+      children: <>
+        <HomeHero
+          description="Antonio Escohotado"
+          buttons={[{ title: "Leer más", link: "#" }]}
+        />
+        <CardGridView01 />
+      </>,
+      user: mockUsers.basic,
+    }),
+  }
+};
+
 export const Grid01Mobile: Story = {
   args: {
     services: ServicesMockBuilder({
-      children: <CardGridView01 />,
+      children: <>
+        <HomeHero
+          description="Antonio Escohotado"
+          buttons={[{ title: "Leer más", link: "#" }]}
+        />
+        <CardGridView01 />
+      </>,
       user: mockUsers.basic,
     }),
   },
@@ -75,7 +101,13 @@ export const Grid01Mobile: Story = {
 export const Grid02: Story = {
   args: {
     services: ServicesMockBuilder({
-      children: <CardGridView02 />,
+      children: <>
+        <HomeHero
+          description="Antonio Escohotado"
+          buttons={[{ title: "Leer más", link: "#" }]}
+        />
+        <CardGridView02 />
+      </>,
       user: mockUsers.basic,
     }),
   }
@@ -83,7 +115,13 @@ export const Grid02: Story = {
 export const Grid02Mobile: Story = {
   args: {
     services: ServicesMockBuilder({
-      children: <CardGridView02 />,
+      children: <>
+        <HomeHero
+          description="Antonio Escohotado"
+          buttons={[{ title: "Leer más", link: "#" }]}
+        />
+        <CardGridView02 />
+      </>,
       user: mockUsers.basic,
     }),
   },
@@ -97,7 +135,13 @@ export const Grid02Mobile: Story = {
 export const Grid03: Story = {
   args: {
     services: ServicesMockBuilder({
-      children: <CardGridView03 />,
+      children: <>
+        <HomeHero
+          description="Antonio Escohotado"
+          buttons={[{ title: "Leer más", link: "#" }]}
+        />
+        <CardGridView03 />
+      </>,
       user: mockUsers.basic,
     }),
   }
@@ -105,7 +149,13 @@ export const Grid03: Story = {
 export const Grid03Mobile: Story = {
   args: {
     services: ServicesMockBuilder({
-      children: <CardGridView03 />,
+      children: <>
+        <HomeHero
+          description="Antonio Escohotado"
+          buttons={[{ title: "Leer más", link: "#" }]}
+        />
+        <CardGridView03 />
+      </>,
       user: mockUsers.basic,
     }),
   },

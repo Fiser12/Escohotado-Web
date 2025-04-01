@@ -110,7 +110,7 @@ export const ArticlePageList = ({
         <CarouselBook books={books} title="Obras de Antonio Escohotado" />
         <LexicalRenderer
             data={articlesDataPage.content}
-            services={servicesProd}
+            services={services}
         />
         <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
             <Typo.H2 className='w-full'>Artículos</Typo.H2>
