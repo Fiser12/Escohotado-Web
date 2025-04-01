@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { ArticleDetail } from ".";
-import { mockUsers } from "@/core/mockData/user.model";
 import { mockArticles } from "@/core/mockData/article.model";
 import { mockQuotes } from "@/core/mockData/quotes.model";
-import { ServicesMockBuilder } from "@/modules/services";
+import { mockUsers } from "@/core/mockData/user.model";
+import { ServicesMockBuilder } from '@/modules/services-mock-builder';
+import { Meta, StoryObj } from "@storybook/react";
+import { ArticleDetail } from ".";
 
 const meta: Meta<typeof ArticleDetail> = {
     title: "Pages/Detail/Article",
@@ -24,7 +24,7 @@ const meta: Meta<typeof ArticleDetail> = {
         lang: "es",
         quotes: mockQuotes,
         user: mockUsers.free,
-        services: ServicesMockBuilder({children: <div>Mock</div>}),
+        services: ServicesMockBuilder({ children: <div>Mock</div> }),
     },
 };
 

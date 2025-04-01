@@ -12,6 +12,8 @@ export function LexicalRenderer({
   className, 
   useContentWrapper = true, 
   services: Services,
+  data,
+  children,
   ...rest 
 }: Props) {
   const classes = classNames(
@@ -22,9 +24,9 @@ export function LexicalRenderer({
   )
   if (useContentWrapper) {
     return <ContentWrapper>
-      <Services.LexicalRenderer className={classes} {...rest} />
+      <Services.LexicalRenderer className={classes} data={data} />
     </ContentWrapper>
 
   }
-  return <Services.LexicalRenderer className={classes} {...rest} />
+  return <Services.LexicalRenderer className={classes} {...rest} data={data} />
 }

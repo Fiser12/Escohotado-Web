@@ -1,3 +1,5 @@
+"use server"
+
 import { getPayload } from "@/payload/utils/getPayload";
 import { Product } from "payload-types";
 

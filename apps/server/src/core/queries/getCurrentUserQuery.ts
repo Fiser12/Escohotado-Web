@@ -1,3 +1,5 @@
+"use server";
+
 import { headers as getHeaders } from 'next/headers'
 import { BasePayload } from 'payload'
 import { getPayload } from '@/payload/utils/getPayload'

@@ -23,6 +23,7 @@ import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQue
 import { LecturasFilterBar } from "@/modules/nuqs";
 import { Typo } from "@/components/atoms/typographies/Typographies";
 import { servicesProd } from "@/modules/services";
+import { ArticlePageList } from "@/components/pages/article_page/list";
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
@@ -43,109 +44,31 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
     articles,
     lastArticles,
     books,
-    taxonomies
+    taxonomies,
+    articulosDataPage
   ] = await Promise.all([
     getCurrentUserQuery(),
     getArticlesQueryByTagsWithCache(query, tagsArrays, 0),
     getArticlesQueryByTagsWithCache("", [], 0, 4),
     getBooksQueryWithCache(),
-    tagsFromContentQueryWithCache(
-      "article_web", query, ["autor", "revisar"]
-    )
+    tagsFromContentQueryWithCache("article_web", query, ["autor", "revisar"]),
+    payload.findGlobal({ slug: "articulos_page" })
   ]);
-  const articulosDataPage = await payload.findGlobal({
-    slug: "articulos_page"
-  })
-  const articleCardMapper = (article: ArticleWeb) => mapArticleCard(user)(article);
-  const divClass = classNames(
-    "w-full bg-gray-light",
-    className
-  )
+
   return (
-    <div className={divClass} {...rest}>
-      <div id="headerArticles" className="@container w-full bg-white pt-12.5">
-        <ContentWrapper className="mx-auto flex flex-col gap-7.5">
-          <Typo.H2 className='w-full'>Últimos artículos</Typo.H2>
-          <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 md:gap-10 items-end">
-            <Image
-              src={escohotadoArticlesPortada.src}
-              alt="Escohotado image"
-              className="order-2 lg:order-none w-[15rem] lg:w-auto mx-auto"
-              width={650}
-              height={1080}
-            />
-            <div className="w-full col-span-2 order-1 lg:order-none">
-              {lastArticles.results.map((article, index) => {
-                const categories = article.categories?.cast<Taxonomy>() ?? []
-                const authorName = getAuthorFromTaxonomies(categories)?.singular_name ?? "No author"
-                return <HeadlineCard
-                  key={index}
-                  author={authorName}
-                  href={generateDetailHref({
-                    collection: 'article_web',
-                    value: { id: article.id, slug: article.slug }
-                  }
-                  )}
-                  title={article.title ?? "No title"}
-                  textLink={"Leer más"}
-                />
-              })
-              }
-            </div>
-          </div>
-        </ContentWrapper>
-      </div>
-      <ContentProtected
-        user={user}
-        collection="article_web"
-        content={{ permissions_seeds: "basic" }}
-      >
-        {({ hasPermissions }) => {
-          return (
-            <>
-              {hasPermissions ?
-                <FreemiumHighlightSection
-                  href={routes.nextJS.citasPageHref}
-                  title="Accede a las citas de Escohotado"
-                  buttonText="Ir a las citas"
-                />
-                : <FreemiumHighlightSection
-                  href={routes.nextJS.subscriptionPageHref}
-                  title="¿Te gustaría acceder al contenido exclusivo de Escohotado?"
-                  buttonText="Accede al contenido completo"
-                />
-              }
-            </>
-          )
-        }}
-      </ContentProtected>
-      <CarouselBook books={books} title="Obras de Antonio Escohotado" />
-      {articulosDataPage.content &&
-        <LexicalRenderer
-          data={articulosDataPage.content}
-          services={servicesProd}
-        />
-      }
-      <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
-        <Typo.H2 className='w-full'>Artículos</Typo.H2>
-        <LecturasFilterBar listOfTags={arrayToRecord(taxonomies, "slug")} />
-        <GridCards
-          features={
-            articles.results
-              .map(articleCardMapper)
-              .map(convertContentModelToCard("col-span-2"))
-          }
-          className='grid-cols-2 md:grid-cols-4 lg:grid-cols-8'
-        />
-        <DynamicLoadingArticles
-          user={user}
-          tagsArrays={tagsArrays}
-          query={query}
-          maxPage={articles.maxPage}
-        />
-      </ContentWrapper>
-    </div>
+    <ArticlePageList
+      user={user}
+      articlesDataPage={articulosDataPage}
+      articlesResult={articles}
+      lastArticles={lastArticles.results}
+      books={books}
+      taxonomies={taxonomies}
+      tags={tagsArrays}
+      query={query}
+      services={servicesProd}
+    />
   );
 };
+
 export default ArticlePage;
 

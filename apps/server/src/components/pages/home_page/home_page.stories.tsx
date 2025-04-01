@@ -1,8 +1,8 @@
+import { mockUsers } from "@/core/mockData/user.model";
+import { ServicesMockBuilder } from '@/modules/services-mock-builder';
 import { Meta, StoryObj } from "@storybook/react";
 import { HomePage } from ".";
 import { CardGridView00, CardGridView01, CardGridView02, CardGridView03 } from "../../../core/mockData/grid_layout.model";
-import { ServicesMockBuilder } from "@/modules/services";
-import { mockUsers } from "@/core/mockData/user.model";
 const meta: Meta<typeof HomePage> = {
   title: "Pages/Home",
   component: HomePage,

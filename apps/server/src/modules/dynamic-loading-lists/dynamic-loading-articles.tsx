@@ -7,15 +7,17 @@ import { ArticleWeb } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 import { BaseUser } from "payload-access-control";
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { Services } from "../services";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;
     query: string;
     tagsArrays: string[];
     maxPage: number;
+    contentServices: Services["content"];
 }
 
-export const DynamicLoadingArticles: React.FC<Props> = ({ query, tagsArrays, maxPage, user, className, ...rest }) => {
+export const DynamicLoadingArticles: React.FC<Props> = ({ query, tagsArrays, maxPage, user, className, contentServices, ...rest }) => {
     const [articles, setArticles] = useState<Record<string, ArticleWeb[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -27,7 +29,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, tagsArrays, max
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newArticles = await getArticlesQueryByTags(query, tagsArrays, page);
+                const newArticles = await contentServices.articles.getArticlesQueryByTags(query, tagsArrays, page);
                 setArticles((prev) => {
                     return {
                         ...prev,
@@ -41,7 +43,7 @@ export const DynamicLoadingArticles: React.FC<Props> = ({ query, tagsArrays, max
             }
         };
         loadArticles();
-    }, [page, maxPage, query, tagsArrays]);
+    }, [page, maxPage, query, tagsArrays, contentServices]);
 
     useEffect(() => {
         setArticles({});

@@ -28,7 +28,6 @@ const Page = async () => {
       <a href={routes.keycloak.changePassword}>
         <MainButton text="Cambiar contraseña" />
       </a>
-
       <a href={routes.keycloak.security}>
         <MainButton text="Seguridad" />
       </a>

@@ -7,6 +7,7 @@ import { Quote } from "payload-types";
 import { useEffect, useRef, useState } from "react";
 import { BaseUser } from "payload-access-control";
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { Services } from "../services";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;
@@ -14,9 +15,10 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     tags: string[];
     sortedBy: 'publishedAt' | 'popularity';
     maxPage: number;
+    contentServices: Services["content"];
 }
 
-export const DynamicLoadingQuotes: React.FC<Props> = ({ query, maxPage, user, sortedBy, tags, className, ...rest }) => {
+export const DynamicLoadingQuotes: React.FC<Props> = ({ query, maxPage, user, sortedBy, tags, className, contentServices, ...rest }) => {
     const [quotes, setQuotes] = useState<Record<string, Quote[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -27,7 +29,7 @@ export const DynamicLoadingQuotes: React.FC<Props> = ({ query, maxPage, user, so
             if (page === null || page > maxPage || page == 0) return
             try {
                 setLoading(true);
-                const newQuotes = await getQuotesQueryByTags(query, tags, page, sortedBy);
+                const newQuotes = await contentServices.quotes.getQuotes(query, tags, page, sortedBy);
                 setQuotes((prev) => ({
                     ...prev,
                     [page]: newQuotes.results
@@ -39,7 +41,7 @@ export const DynamicLoadingQuotes: React.FC<Props> = ({ query, maxPage, user, so
             }
         };
         load();
-    }, [page, maxPage, query, sortedBy, tags]);
+    }, [page, maxPage, query, sortedBy, tags, contentServices]);
 
     useEffect(() => {
         setQuotes({});

@@ -6,6 +6,7 @@ import { convertContentModelToCard } from "hegel";
 import { useEffect, useRef, useState } from "react";
 import { BaseUser } from "payload-access-control";
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { Services } from "../services";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;
@@ -13,9 +14,10 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     playlist: string;
     sortedBy: string;
     maxPage: number;
+    contentServices: Services["content"];
 }
 
-export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, sortedBy, playlist, className, ...rest }) => {
+export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, sortedBy, playlist, className, contentServices, ...rest }) => {
     const [videos, setVideos] = useState<Record<string, ResultVideo[]>>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -28,7 +30,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
             try {
                 setLoading(true);
                 const tags = playlist != '' ? playlist.split(',') : []
-                const newVideos = await getVideosQueryByTags(query, tags, page, sortedBy);
+                const newVideos = await contentServices.videos.getVideosQueryByTags(query, tags, page, sortedBy);
                 setVideos((prev) => ({
                     ...prev,
                     [page]: newVideos.results
@@ -40,7 +42,7 @@ export const DynamicLoadingVideos: React.FC<Props> = ({ query, maxPage, user, so
             }
         };
         load();
-    }, [page, maxPage, query, sortedBy, playlist]);
+    }, [page, maxPage, query, sortedBy, playlist, contentServices]);
 
     useEffect(() => {
         setVideos({});
