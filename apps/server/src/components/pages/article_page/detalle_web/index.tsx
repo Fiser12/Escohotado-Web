@@ -115,21 +115,21 @@ export const ArticleDetail: React.FC<Props> = ({
                 </div>
             </ContentWrapper>
             <ContentProtected
-      user={user}
-      content={article}
-      collection={COLLECTION_SLUG_ARTICLE_WEB}
-    >
-      {({ hasPermissions, isUnlocked }) => <>
-        {article.content && (hasPermissions || isUnlocked) &&
-          <LexicalRenderer 
-            className="max-w-[48rem] mx-auto" 
-            data={article.content}
-            services={services}
-          />
-        }
-      </>
-      }
-    </ContentProtected>
+                user={user}
+                content={article}
+                collection={COLLECTION_SLUG_ARTICLE_WEB}
+            >
+                {({ hasPermissions, isUnlocked }) => <>
+                    {article.content && (hasPermissions || isUnlocked) &&
+                        <LexicalRenderer
+                            className="max-w-[48rem] mx-auto"
+                            data={article.content}
+                            services={services}
+                        />
+                    }
+                </>
+                }
+            </ContentProtected>
 
             <DetailBottomSection
                 quotes={quotes}

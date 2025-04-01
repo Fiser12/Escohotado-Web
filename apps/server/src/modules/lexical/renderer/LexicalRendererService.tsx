@@ -1,33 +1,25 @@
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
-import { JSXConvertersFunction, LinkJSXConverter, RichText as RichTextWithoutBlocks } from '@payloadcms/richtext-lexical/react';
-import { blockRenderers } from '../blockRenderers';
-import { DefaultNodeTypes, SerializedLinkNode } from '@payloadcms/richtext-lexical';
-type NodeTypes = | DefaultNodeTypes
+import { RichtextLexicalRenderer } from './richtext-lexical-renderer';
 
-const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
-    const { value, relationTo } = linkNode.fields.doc!
-    if (typeof value !== 'object') {
-      throw new Error('Expected value to be an object')
-    }
-    const slug = value.slug
-    return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`
-}  
-
-const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
-    ...defaultConverters,
-    ...LinkJSXConverter({ internalDocToHref }),
-    blocks: blockRenderers,
-})
-  
-  
-export interface RichTextProps {
+type WithData = {
     className?: string;
-    data: SerializedEditorState;
-}
+    data?: SerializedEditorState | null;
+    children?: never;
+};
 
-export const LexicalRendererService: React.FC<RichTextProps> = (props) => {
-    return <RichTextWithoutBlocks
-        converters={jsxConverters}
-        className={props.className}
-        data={props.data} />;
+type WithChildren = {
+    className?: string;
+    children: React.ReactNode;
+    data?: SerializedEditorState | null;
+};
+
+export type RichTextProps = WithData | WithChildren;
+
+export const LexicalRendererService: React.FC<RichTextProps> = ({ children, data, className }) => {
+    if (children) return children
+    if (data) return <RichtextLexicalRenderer
+        className={className}
+        data={data}
+    />;
+    return <p>No data nor children, error in LexicalRendererService</p>
 };

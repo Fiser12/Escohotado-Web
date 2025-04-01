@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { HomePage } from ".";
-import { featuredItem, featuredGrid01, featuredGrid02, featuredGrid03 } from "../../../core/mockData/grid_layout.model";
+import { featuredGrid01, featuredGrid02, featuredGrid03 } from "../../../core/mockData/grid_layout.model";
+import { ServicesMockBuilder } from "@/modules/services";
 
 const meta: Meta<typeof HomePage> = {
   title: "Pages/Home",
@@ -13,11 +14,7 @@ const meta: Meta<typeof HomePage> = {
     },
   },
   args: {
-    featuredItems: [featuredItem as any],
-    buttons: [
-      { title: "Ver más", link: "/libros" },
-    ],
-    description: "Filósofo y ensayista español, dedicó su vida a explorar y desafiar las convenciones sociales."
+    services: ServicesMockBuilder({children: <div>Mock</div>}),
   }
 };
 

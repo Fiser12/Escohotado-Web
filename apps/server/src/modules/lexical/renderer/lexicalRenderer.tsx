@@ -4,7 +4,7 @@ import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import classNames from 'classnames'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
-  data: SerializedEditorState
+  data?: SerializedEditorState | null
   useContentWrapper?: boolean
 }
 

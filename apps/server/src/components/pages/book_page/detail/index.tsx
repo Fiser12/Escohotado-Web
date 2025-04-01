@@ -78,10 +78,10 @@ export const BookDetail: React.FC<Props> = ({
                     />
                 </div>
             </ContentWrapper>
-            {book.content && <LexicalRenderer 
+            <LexicalRenderer 
                 data={book.content}
                 services={services ?? servicesProd}
-            />}
+            />
             <DetailBottomSection
                 user={user}
                 quotes={quotes}

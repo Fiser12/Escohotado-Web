@@ -17,6 +17,16 @@ const config: StorybookConfig = {
     '../src/modules/**/*.mdx',
   ],
   staticDirs: ['../public'],
+  webpackFinal: async (config) => {
+    //WHY THIS?
+    //Sucede que el modulo richtext-lexical-renderer hace uso de node:util y es la única forma de evitar que storybook cargue
+    //Es fundamental pasar los mocks correspondientes en los services a los componentes que lo usan en storybook.
+    config.module?.rules?.push({
+      test: /richtext-lexical-renderer/,
+      use: 'null-loader', 
+    });
+    return config;
+  },  
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-designs'),

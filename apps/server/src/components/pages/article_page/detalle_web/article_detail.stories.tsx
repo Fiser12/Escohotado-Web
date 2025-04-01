@@ -3,6 +3,7 @@ import { ArticleDetail } from ".";
 import { mockUsers } from "@/core/mockData/user.model";
 import { mockArticles } from "@/core/mockData/article.model";
 import { mockQuotes } from "@/core/mockData/quotes.model";
+import { ServicesMockBuilder } from "@/modules/services";
 
 const meta: Meta<typeof ArticleDetail> = {
     title: "Pages/Detail/Article",
@@ -22,7 +23,8 @@ const meta: Meta<typeof ArticleDetail> = {
         article: mockArticles[0],
         lang: "es",
         quotes: mockQuotes,
-        user: mockUsers.free
+        user: mockUsers.free,
+        services: ServicesMockBuilder({children: <div>Mock</div>}),
     },
 };
 

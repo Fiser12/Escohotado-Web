@@ -14,6 +14,8 @@ export const generateMockArticle = ({title, coverHref}: {title: string, coverHre
     },
     forum_post_id: "1",
     last_forum_posts: postsArticle,
+    content: {} as any,
+    preview_content: {} as any,
     publishedAt: new Date().toISOString(),
 })
 

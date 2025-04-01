@@ -1,7 +1,10 @@
-import { RichTextProps } from "../lexical/renderer/LexicalRendererService";
+const DefaultLexicalMockRenderer = () => {
+    return <div>Default</div>
+}
 
-export const LexicalMocksServices: Record<string, React.FC<RichTextProps>> = {
-    Default: () => {
-        return <div>Default</div>
-    }
+interface LexicalMocksServicesProps {
+    children?: React.ReactNode
+}
+export const LexicalMocksService: React.FC<LexicalMocksServicesProps> = ({children = <DefaultLexicalMockRenderer />}) => {
+    return children
 }

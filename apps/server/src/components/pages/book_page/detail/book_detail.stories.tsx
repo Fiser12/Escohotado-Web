@@ -2,6 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { BookDetail } from ".";
 import { mockBooks } from "@/core/mockData/book.model";
 import { mockQuotes } from "@/core/mockData/quotes.model";
+import { ServicesMockBuilder } from "@/modules/services";
 
 const meta: Meta<typeof BookDetail> = {
     title: "Pages/Detail/Book",
@@ -16,7 +17,8 @@ const meta: Meta<typeof BookDetail> = {
     args: {
         title: "Rameras y Esposas",
         book: mockBooks[0],
-        quotes: mockQuotes
+        quotes: mockQuotes,
+        services: ServicesMockBuilder({children: <div>Mock</div>}),
     },
 };
 
