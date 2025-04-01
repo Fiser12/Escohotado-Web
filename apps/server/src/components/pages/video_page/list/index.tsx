@@ -36,9 +36,7 @@ export const VideoPageList = ({
     const videoCardMapper = (video: ResultVideo) => mapVideoCard(user)(video);
 
     return <div className='flex flex-col'>
-        {videosDataPage.content &&
-            <LexicalRenderer data={videosDataPage.content} services={servicesProd} />
-        }
+        <LexicalRenderer data={videosDataPage.content} services={services} />
         <ContentWrapper
             className="flex flex-col gap-y-5 relative pt-20"
             backgroundClassname="bg-white"

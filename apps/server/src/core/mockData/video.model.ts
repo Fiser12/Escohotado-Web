@@ -59,8 +59,11 @@ export const mockVideos = [
         url: "https://www.youtube.com/watch?v=K8GjV3W7zBY", 
         thumbnailUrl: "https://i.ytimg.com/vi/K8GjV3W7zBY/maxresdefault.jpg"
     },
-    
-
+    { 
+        title: "ESCOHOTADO y su polémica argumentación en ciertos debates", 
+        url: "https://www.youtube.com/watch?v=NjXoII_Wkzg", 
+        thumbnailUrl: "https://i.ytimg.com/vi/NjXoII_Wkzg/maxresdefault.jpg"
+    }
 ].map(generateMockVideo)
 
 
