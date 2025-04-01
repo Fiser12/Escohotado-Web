@@ -1,12 +1,10 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { NextPage } from "next/types";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { TypedLocale } from 'payload';
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs';
 import { ArticleDetail } from '@/components/pages/article_page/detalle_web';
-import { ContentProtected } from 'payload-access-control';
+import { servicesProd } from '@/modules/services';
 
 export const searchContentParamsCache = createSearchParamsCache({
   locale: parseAsString.withDefault('es'),
@@ -19,7 +17,7 @@ interface Props {
   searchParams: Record<string, string>;
 }
 
-const parseLocale = (locale: string): TypedLocale => {
+const parseLocale = (locale: string): "es" | "en" => {
   if (locale === 'es') return 'es';
   if (locale === 'en') return 'en';
   return 'es';
@@ -46,22 +44,10 @@ const Page: NextPage<Props> = async ({ params, searchParams }) => {
   return <ArticleDetail
     article={article}
     quotes={[]}
+    services={servicesProd}
     user={user}
     currentLocale={locale}
-  >
-    <ContentProtected
-      user={user}
-      content={article}
-      collection={COLLECTION_SLUG_ARTICLE_WEB}
-    >
-      {({ hasPermissions, isUnlocked }) => <>
-        {article.content && (hasPermissions || isUnlocked) &&
-          <LexicalRenderer className="max-w-[48rem] mx-auto" data={article.content} />
-        }
-      </>
-      }
-    </ContentProtected>
-  </ArticleDetail>
+  />
 };
 
 export default Page;

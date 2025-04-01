@@ -8,25 +8,27 @@ import { MainButton } from "../../../atoms/main_button/main_button";
 import { DownloadDocIcon, FlagWithLabels } from "@/components/assets/icons";
 import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
 import { ArticleWeb, Media, Pdf, Quote, Taxonomy } from "payload-types";
-import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
+import { BaseUser, ContentProtected, evalPermissionByRoleQuery } from "payload-access-control";
 import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
 import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { routes } from "@/core/routesGenerator";
 import { Typo } from "@/components/atoms/typographies/Typographies";
 import { Tag } from "@/components/atoms/tag/tag";
+import { COLLECTION_SLUG_ARTICLE_WEB } from "@/core/collectionsSlugs";
+import { ServiceInjector } from "@/modules/services";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
     article: ArticleWeb;
     currentLocale: string;
     quotes: Quote[];
     user?: BaseUser | null;
-    children: React.ReactNode;
 }
 
 export const ArticleDetail: React.FC<Props> = ({
     article,
     currentLocale,
-    children,
+    services,
     className,
     quotes,
     user
@@ -112,7 +114,23 @@ export const ArticleDetail: React.FC<Props> = ({
                     </div>
                 </div>
             </ContentWrapper>
-            {children}
+            <ContentProtected
+      user={user}
+      content={article}
+      collection={COLLECTION_SLUG_ARTICLE_WEB}
+    >
+      {({ hasPermissions, isUnlocked }) => <>
+        {article.content && (hasPermissions || isUnlocked) &&
+          <LexicalRenderer 
+            className="max-w-[48rem] mx-auto" 
+            data={article.content}
+            services={services}
+          />
+        }
+      </>
+      }
+    </ContentProtected>
+
             <DetailBottomSection
                 quotes={quotes}
                 comments={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}

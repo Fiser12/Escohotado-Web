@@ -11,6 +11,7 @@ import { VideoFilterBar } from '@/modules/nuqs';
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { Typo } from '@/components/atoms/typographies/Typographies';
+import { servicesProd } from '@/modules/services';
 
 export const pageSize = 10;
 
@@ -43,7 +44,7 @@ const Page = async ({ searchParams }: Props) => {
   return (
     <div className='flex flex-col'>
       {videosDataPage.content &&
-        <LexicalRenderer data={videosDataPage.content} />
+        <LexicalRenderer data={videosDataPage.content} services={servicesProd} />
       }
       <ContentWrapper
         className="flex flex-col gap-y-5 relative pt-20"

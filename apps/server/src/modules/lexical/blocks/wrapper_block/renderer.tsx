@@ -5,10 +5,13 @@ import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
 import { WrapperBlock } from 'payload-types';
 import { getCurrentUserQuery } from '@/core/queries/getCurrentUserQuery';
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer"
+import { Services, servicesProd } from '@/modules/services';
+
 interface Props extends LexicalBlockProps<WrapperBlock> {
+    services?: Services
 }
 
-export const renderer = async ({ node }: Props) => {
+export const renderer = async ({ node, services }: Props) => {
   const className = classNames(
     'py-10 h-full ignore-wrapper',
     {
@@ -27,8 +30,12 @@ export const renderer = async ({ node }: Props) => {
     permissions?.slug
   )
   if (!hasPermission || !node.fields.content) return null
+
   return <ContentWrapper backgroundClassname={className} >
-    <LexicalRenderer data={node.fields.content} />
+    <LexicalRenderer 
+      data={node.fields.content} 
+      services={services ?? servicesProd}
+    />
   </ContentWrapper>
 }
 

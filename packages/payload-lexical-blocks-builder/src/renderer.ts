@@ -1,5 +1,5 @@
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
-import type { ArgTypes, StoryObj, ReactRenderer } from "@storybook/react";
+import type { ArgTypes } from "@storybook/react";
 
 export interface LexicalBlockProps<T> {
   node: {

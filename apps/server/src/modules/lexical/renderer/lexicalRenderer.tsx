@@ -1,15 +1,19 @@
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper'
-import { Services } from '@/modules/services'
+import { ServiceInjector } from '@/modules/services'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import classNames from 'classnames'
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+export interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
   data: SerializedEditorState
   useContentWrapper?: boolean
 }
 
-export function LexicalRenderer(props: Props) {
-  const { className, useContentWrapper = true, ...rest } = props
+export function LexicalRenderer({ 
+  className, 
+  useContentWrapper = true, 
+  services: Services,
+  ...rest 
+}: Props) {
   const classes = classNames(
     'article-html-content',
     "max-w-none",

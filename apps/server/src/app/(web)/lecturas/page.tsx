@@ -22,6 +22,7 @@ import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQuery";
 import { LecturasFilterBar } from "@/modules/nuqs";
 import { Typo } from "@/components/atoms/typographies/Typographies";
+import { servicesProd } from "@/modules/services";
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({
@@ -42,18 +43,19 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
     articles,
     lastArticles,
     books,
-    articulosDataPage
+    taxonomies
   ] = await Promise.all([
     getCurrentUserQuery(),
     getArticlesQueryByTagsWithCache(query, tagsArrays, 0),
     getArticlesQueryByTagsWithCache("", [], 0, 4),
     getBooksQueryWithCache(),
-    payload.findGlobal({ slug: "articulos_page" })
+    tagsFromContentQueryWithCache(
+      "article_web", query, ["autor", "revisar"]
+    )
   ]);
-  const taxonomies = await tagsFromContentQueryWithCache(
-    "article_web", query, ["autor", "revisar"]
-  );
-
+  const articulosDataPage = await payload.findGlobal({
+    slug: "articulos_page"
+  })
   const articleCardMapper = (article: ArticleWeb) => mapArticleCard(user)(article);
   const divClass = classNames(
     "w-full bg-gray-light",
@@ -119,7 +121,10 @@ export const ArticlePage = async ({ searchParams, className, ...rest }: Props) =
       </ContentProtected>
       <CarouselBook books={books} title="Obras de Antonio Escohotado" />
       {articulosDataPage.content &&
-        <LexicalRenderer data={articulosDataPage.content} />
+        <LexicalRenderer
+          data={articulosDataPage.content}
+          services={servicesProd}
+        />
       }
       <ContentWrapper className="mx-auto flex flex-col gap-7.5 pb-16">
         <Typo.H2 className='w-full'>Artículos</Typo.H2>

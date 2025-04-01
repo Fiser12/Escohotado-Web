@@ -4,6 +4,7 @@ import { NextPage } from "next/types";
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs';
 import { VideoDetail } from '@/components/pages/video_page/detalle';
+import { servicesProd } from '@/modules/services';
 
 interface Props {
   params: {
@@ -24,7 +25,11 @@ const Page: NextPage<Props> = async (props) => {
 
   return <VideoDetail user={user} video={video} quotes={[]}>
     {video.content &&
-      <LexicalRenderer className="max-w-[48rem] mx-auto" data={video.content} />
+      <LexicalRenderer
+        className="max-w-[48rem] mx-auto"
+        data={video.content}
+        services={servicesProd}
+      />
     }
   </VideoDetail>
 };

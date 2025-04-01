@@ -3,11 +3,12 @@ import { MainHero } from "@/components/organisms/lexical/hero"
 import type { HeroBlock, Media } from "payload-types"
 import type { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer"
+import { Services, servicesProd } from "@/modules/services"
 interface Props extends LexicalBlockProps<HeroBlock> {
-
+    services?: Services
 }
 
-export const renderer = async ({ node }: Props) => {
+export const renderer = async ({ node, services }: Props) => {
     const { content, media: mediaPayload, inverted, media_type } = node.fields
     const media = typeof mediaPayload === "number" ? null : mediaPayload as Media
     const mimeType = media?.mimeType?.includes("video") ? "video" : "image"
@@ -35,6 +36,9 @@ export const renderer = async ({ node }: Props) => {
         </>
         }
     >
-        {content && <LexicalRenderer data={content} />}
+        {content && <LexicalRenderer 
+            data={content} 
+            services={services ?? servicesProd}
+        />}
     </MainHero>
 }

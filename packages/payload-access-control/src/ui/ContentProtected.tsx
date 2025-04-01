@@ -2,7 +2,7 @@ import { BaseUser, evalPermissionByRoleQuery, isContentUnlocked } from "..";
 
 
 interface Props {
-    user: BaseUser | null;
+    user?: BaseUser | null;
     collection: string;
     content: {
         id?: number;

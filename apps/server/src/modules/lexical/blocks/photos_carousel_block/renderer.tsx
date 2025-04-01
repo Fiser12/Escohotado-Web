@@ -3,17 +3,23 @@ import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
 import { Carouseltem } from "@/components/organisms/lexical/photo_carousel"
 import { PhotoCarousel } from "@/components/organisms/lexical/photo_carousel"
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer"
+import { Services, servicesProd } from "@/modules/services"
 
 interface Props extends LexicalBlockProps<PhotosCarouselBlock> {
+    services?: Services
 }
 
-export const renderer = async ({ node }: Props) => {
+export const renderer = async ({ node, services }: Props) => {
     const items: Carouseltem[] = node.fields.items?.map((item) => {
         return {
             photoHref: typeof item.cover === "number" ? "" : item.cover.url ?? "",
             title: item.title ?? "",
             description: <>
-                {item.description && <LexicalRenderer data={item.description} useContentWrapper={false} />}
+                {item.description && <LexicalRenderer
+                    data={item.description}
+                    useContentWrapper={false}
+                    services={services ?? servicesProd}
+                />}
             </>,
             year: item.year
         }

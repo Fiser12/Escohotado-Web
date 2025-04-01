@@ -4,10 +4,12 @@ import { getPayload } from "@/payload/utils/getPayload"
 import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
 import { UIBlock } from "payload-types"
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
+import { Services, servicesProd } from "@/modules/services";
 interface Props extends LexicalBlockProps<UIBlock> {
+    services?: Services
 }
 
-export const renderer = async ({ node }: Props) => {
+export const renderer = async ({ node, services }: Props) => {
     const blocks = node?.fields?.uiBlocks?.map((block: any) => block.value) || []
     if (blocks.length === 0) return <p>No hay bloques para mostrar</p>
     const permissions = typeof node.fields.permissions?.value === "number" 
@@ -31,7 +33,11 @@ export const renderer = async ({ node }: Props) => {
                 id: block.id,
                 collection: 'ui_block'
             })
-            return <LexicalRenderer key={block.id} data={blockData.block} />
+            return <LexicalRenderer 
+                key={block.id} 
+                data={blockData.block} 
+                services={services ?? servicesProd}
+            />
         }))}
     </div>
 }

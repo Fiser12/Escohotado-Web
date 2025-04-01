@@ -1,27 +1,32 @@
-import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
-import { ContentCardModel } from "hegel";
-import HomeHero from "@/components/organisms/home_hero";
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { NewsletterSubscription } from "@/components/layout/newsletterSubscription";
+import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
+import { SubscriptionsSection } from "@/components/organisms/subscription/subscriptions.organism";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
+import { ServiceInjector, Services, servicesProd } from "@/modules/services";
+import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  featuredItems: { gridClassname: string, features: ContentCardModel[] }[];
-  description: string;
-  buttons: Array<{ title: string; link: string }>;
+interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
+  user?: BaseUser | null
+  action: string
+  lexicalContent: SerializedEditorState
 }
 
-export const HomePage = ({ featuredItems, description, buttons, ...rest }: Props) => {
+export const HomePage = ({ user, action, lexicalContent, services, ...rest }: Props) => {
+  const hasPermission = evalPermissionByRoleQuery(user, 'basic');
+
   return (
     <div {...rest}>
-      <HomeHero description={description} buttons={buttons} />
-      <div id="gridContentHome" className="bg-gray-light py-10">
-        <ContentWrapper className="flex flex-col gap-4">
-          {featuredItems.map(({ gridClassname, features }, index) => (
-            <GridCards features={features} className={gridClassname} key={index} />
-          ))}
-        </ContentWrapper>
-      </div>
-      <NewsletterSubscription action={""} />
+      {lexicalContent &&
+        <LexicalRenderer
+          data={lexicalContent}
+          services={services ?? servicesProd}
+          className="h-full"
+        />
+      }
+      {!hasPermission &&
+        <SubscriptionsSection className="pb-16" />
+      }
+      <NewsletterSubscription action={action} />
     </div>
   );
 };

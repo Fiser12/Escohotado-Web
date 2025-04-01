@@ -9,7 +9,7 @@ import { BaseUser } from "payload-access-control";
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    user: BaseUser | null;
+    user?: BaseUser | null;
     query: string;
     tagsArrays: string[];
     maxPage: number;

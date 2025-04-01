@@ -35,7 +35,7 @@ type ContentRelationType = Extract<
 >['value'][number]
 
 const mapRelationToFeatured = (
-  user: BaseUser | null,
+  user: BaseUser | null | undefined,
   item: ContentRelationType,
 ): ContentHeaderModel | null => {
   if (typeof item.value === 'number') {
@@ -54,7 +54,7 @@ const mapRelationToFeatured = (
 }
 
 export const mapArticleCard =
-  (user: BaseUser | null) =>
+  (user?: BaseUser | null) =>
   (item: ArticleWeb): ContentHeaderModel => {
     const taxonomies = item.categories?.cast<Taxonomy>() ?? []
     return {

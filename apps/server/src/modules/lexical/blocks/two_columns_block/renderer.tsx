@@ -1,10 +1,12 @@
 import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
 import { TwoColumnsBlock } from 'payload-types';
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer"
+import { Services, servicesProd } from '@/modules/services';
 interface Props extends LexicalBlockProps<TwoColumnsBlock> {
+    services?: Services
 }
 
-export const renderer = async ({ node }: Props) => {
+export const renderer = async ({ node, services }: Props) => {
     const type = node?.fields?.type;
     const leftSpan = type === "1x3" ? "col-span-1" :
         type === "2x2" ? "col-span-2" :
@@ -18,11 +20,11 @@ export const renderer = async ({ node }: Props) => {
     return <div className="grid md:grid-cols-4 grid-cols-1 gap-4">
         {node?.fields?.left &&
             <div className={`article-html-content ${leftSpan}`}>
-                <LexicalRenderer data={node.fields.left} />
+                <LexicalRenderer data={node.fields.left} services={services ?? servicesProd} />
             </div>}
         {node?.fields?.right &&
             <div className={`article-html-content ${rightSpan}`}>
-                <LexicalRenderer data={node.fields.right} />
+                <LexicalRenderer data={node.fields.right} services={services ?? servicesProd} />
             </div>}
     </div>;
 };

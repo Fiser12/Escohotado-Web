@@ -5,6 +5,7 @@ import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
 import { BookDetail } from '@/components/pages/book_page/detail';
+import { servicesProd } from '@/modules/services';
 
 interface Props {
     params: {
@@ -26,9 +27,7 @@ const Page = async (props: Props) => {
     const book = books.docs.at(0);
     if (!book) return <p>Error Cargando el documento</p>
 
-    return <BookDetail user={user} book={book} quotes={[]}>
-        {book.content && <LexicalRenderer data={book.content} />}
-    </BookDetail>
+    return <BookDetail user={user} book={book} quotes={[]} services={servicesProd}/>
 };
 
 export default Page;

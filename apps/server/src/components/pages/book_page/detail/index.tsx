@@ -13,17 +13,19 @@ import { SocialMediaShare } from "@/components/molecules/social_media";
 import { MainHero } from "@/components/organisms/lexical/hero";
 import { ImageParallax } from "@/components/organisms/details/book/cards/image_parallax";
 import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
+import { ServiceInjector, servicesProd } from "@/modules/services";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
     user?: BaseUser | null;
     book: Book;
     quotes: Quote[];
-    children: React.ReactNode;
 }
 
 export const BookDetail: React.FC<Props> = ({
     user,
     book,
+    services,
     children,
     quotes,
     className
@@ -53,7 +55,7 @@ export const BookDetail: React.FC<Props> = ({
         >
             <MainHero
                 media={
-                    <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[366px] min-[469px]:h-[550px] my-6" shadow={false}>
+                    <ImageParallax className="relative h-[280px] w-[180px] min-[469px]:w-[366px] min-[469px]:h-[550px] my-6">
                         <Image
                             fill
                             src={coverHref}
@@ -76,7 +78,10 @@ export const BookDetail: React.FC<Props> = ({
                     />
                 </div>
             </ContentWrapper>
-            {children}
+            {book.content && <LexicalRenderer 
+                data={book.content}
+                services={services ?? servicesProd}
+            />}
             <DetailBottomSection
                 user={user}
                 quotes={quotes}
