@@ -11,7 +11,7 @@ interface Props extends LexicalBlockProps<WrapperBlock> {
     services?: Services
 }
 
-export const renderer = async ({ node, services }: Props) => {
+export const renderer = async ({ node, services = servicesProd }: Props) => {
   const className = classNames(
     'py-10 h-full ignore-wrapper',
     {
@@ -34,7 +34,7 @@ export const renderer = async ({ node, services }: Props) => {
   return <ContentWrapper backgroundClassname={className} >
     <LexicalRenderer 
       data={node.fields.content} 
-      services={services ?? servicesProd}
+      services={services}
     />
   </ContentWrapper>
 }

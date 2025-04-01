@@ -2,26 +2,21 @@ import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
-import { UserInventory } from 'payload-access-control';
+import { BaseUser, UserInventory } from 'payload-access-control';
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
 import { Typo } from '@/components/atoms/typographies/Typographies';
 import { SubscriptionsGroupCard } from './subscriptions_card_group';
+import { ServiceInjector } from '@/modules/services';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-
+interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
+  user?: BaseUser | null
 }
 
-export const SubscriptionsSection: React.FC<Props> = async ({ ...rest }) => {
-  const payload = await getPayload();
-  const user = await getCurrentUserQuery(payload);
-  const products = await payload.find({
-    collection: "products",
-    where: {
-      active: { equals: true },
-    },
-  })
+export const SubscriptionsSection: React.FC<Props> = async ({ services, user, ...rest }) => {
+  const products = await services.products.getActiveProducts();
   const className = classNames("space-y-6 gap-2 flex flex-col items-center", rest.className)
   const inventory = user?.inventory as UserInventory | null
+
   return (
     <ContentWrapper
       className={className}
@@ -38,7 +33,7 @@ export const SubscriptionsSection: React.FC<Props> = async ({ ...rest }) => {
           await signIn("keycloak");
         }}
         loggedIn={!!user}
-        products={products.docs}
+        products={products}
         subscription={
           Object.values(inventory?.subscriptions ?? {}).at(0)
         }

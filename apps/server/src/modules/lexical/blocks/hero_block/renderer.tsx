@@ -8,7 +8,7 @@ interface Props extends LexicalBlockProps<HeroBlock> {
     services?: Services
 }
 
-export const renderer = async ({ node, services }: Props) => {
+export const renderer = async ({ node, services = servicesProd }: Props) => {
     const { content, media: mediaPayload, inverted, media_type } = node.fields
     const media = typeof mediaPayload === "number" ? null : mediaPayload as Media
     const mimeType = media?.mimeType?.includes("video") ? "video" : "image"
@@ -38,7 +38,7 @@ export const renderer = async ({ node, services }: Props) => {
     >
         {content && <LexicalRenderer 
             data={content} 
-            services={services ?? servicesProd}
+            services={services}
         />}
     </MainHero>
 }

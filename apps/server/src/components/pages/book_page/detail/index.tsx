@@ -25,8 +25,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
 export const BookDetail: React.FC<Props> = ({
     user,
     book,
-    services,
-    children,
+    services = servicesProd,
     quotes,
     className
 }) => {
@@ -80,7 +79,7 @@ export const BookDetail: React.FC<Props> = ({
             </ContentWrapper>
             <LexicalRenderer 
                 data={book.content}
-                services={services ?? servicesProd}
+                services={services}
             />
             <DetailBottomSection
                 user={user}

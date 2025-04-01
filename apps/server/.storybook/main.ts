@@ -19,11 +19,14 @@ const config: StorybookConfig = {
   staticDirs: ['../public'],
   webpackFinal: async (config) => {
     //WHY THIS?
-    //Sucede que el modulo richtext-lexical-renderer hace uso de node:util y es la única forma de evitar que storybook cargue
+    //Algunos ficheros son de node y storybook no los soporta. Aunque no los llame este no carga, con lo que es mejor tenerlos identifidados y excluirlos de la compilación de storybook.
     //Es fundamental pasar los mocks correspondientes en los services a los componentes que lo usan en storybook.
-    config.module?.rules?.push({
-      test: /richtext-lexical-renderer/,
-      use: 'null-loader', 
+    const patterns = ['richtext-lexical-renderer', 'getPayload', 'plugins'];
+    patterns.forEach(pattern => {
+      config.module?.rules?.push({
+        test: new RegExp(pattern),
+        use: 'null-loader',
+      });
     });
     return config;
   },  

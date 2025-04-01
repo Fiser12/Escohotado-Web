@@ -9,7 +9,7 @@ interface Props extends LexicalBlockProps<PhotosCarouselBlock> {
     services?: Services
 }
 
-export const renderer = async ({ node, services }: Props) => {
+export const renderer = async ({ node, services = servicesProd }: Props) => {
     const items: Carouseltem[] = node.fields.items?.map((item) => {
         return {
             photoHref: typeof item.cover === "number" ? "" : item.cover.url ?? "",
@@ -18,7 +18,7 @@ export const renderer = async ({ node, services }: Props) => {
                 {item.description && <LexicalRenderer
                     data={item.description}
                     useContentWrapper={false}
-                    services={services ?? servicesProd}
+                    services={services}
                 />}
             </>,
             year: item.year

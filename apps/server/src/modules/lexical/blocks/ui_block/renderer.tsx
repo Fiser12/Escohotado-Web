@@ -9,7 +9,7 @@ interface Props extends LexicalBlockProps<UIBlock> {
     services?: Services
 }
 
-export const renderer = async ({ node, services }: Props) => {
+export const renderer = async ({ node, services = servicesProd }: Props) => {
     const blocks = node?.fields?.uiBlocks?.map((block: any) => block.value) || []
     if (blocks.length === 0) return <p>No hay bloques para mostrar</p>
     const permissions = typeof node.fields.permissions?.value === "number" 
@@ -36,7 +36,7 @@ export const renderer = async ({ node, services }: Props) => {
             return <LexicalRenderer 
                 key={block.id} 
                 data={blockData.block} 
-                services={services ?? servicesProd}
+                services={services}
             />
         }))}
     </div>

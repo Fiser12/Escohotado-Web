@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { HomePage } from ".";
-import { featuredGrid01, featuredGrid02, featuredGrid03 } from "../../../core/mockData/grid_layout.model";
+import { CardGridView00, CardGridView01, CardGridView02, CardGridView03 } from "../../../core/mockData/grid_layout.model";
 import { ServicesMockBuilder } from "@/modules/services";
-
+import { mockUsers } from "@/core/mockData/user.model";
 const meta: Meta<typeof HomePage> = {
   title: "Pages/Home",
   component: HomePage,
@@ -14,7 +14,11 @@ const meta: Meta<typeof HomePage> = {
     },
   },
   args: {
-    services: ServicesMockBuilder({children: <div>Mock</div>}),
+    user: mockUsers.basic,
+    services: ServicesMockBuilder({
+      children: <div>Mock</div>,
+      user: mockUsers.basic,
+    }),
   }
 };
 
@@ -22,10 +26,31 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Desktop: Story = {
+export const Grid01: Story = {
+  args: {
+    services: ServicesMockBuilder({
+      children: <CardGridView01 />,
+      user: mockUsers.basic,
+    }),
+  }
 };
 
-export const Mobile: Story = {
+export const Grid00: Story = {
+  args: {
+    services: ServicesMockBuilder({
+      children: <CardGridView00 />,
+      user: mockUsers.basic,
+    }),
+  }
+};
+
+export const Grid00Mobile: Story = {
+  args: {
+    services: ServicesMockBuilder({
+      children: <CardGridView00 />,
+      user: mockUsers.basic,
+    }),
+  },
   parameters: {
     viewport: {
       defaultViewport: 'iphonex',
@@ -33,21 +58,61 @@ export const Mobile: Story = {
   }
 };
 
-export const Grid01: Story = {
+export const Grid01Mobile: Story = {
   args: {
-    featuredItems: [featuredGrid01],
+    services: ServicesMockBuilder({
+      children: <CardGridView01 />,
+      user: mockUsers.basic,
+    }),
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphonex',
+    },
   }
 };
 
 export const Grid02: Story = {
   args: {
-    featuredItems: [featuredGrid02],
+    services: ServicesMockBuilder({
+      children: <CardGridView02 />,
+      user: mockUsers.basic,
+    }),
+  }
+};
+export const Grid02Mobile: Story = {
+  args: {
+    services: ServicesMockBuilder({
+      children: <CardGridView02 />,
+      user: mockUsers.basic,
+    }),
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphonex',
+    },
   }
 };
 
 export const Grid03: Story = {
   args: {
-    featuredItems: [featuredGrid03],
+    services: ServicesMockBuilder({
+      children: <CardGridView03 />,
+      user: mockUsers.basic,
+    }),
+  }
+};
+export const Grid03Mobile: Story = {
+  args: {
+    services: ServicesMockBuilder({
+      children: <CardGridView03 />,
+      user: mockUsers.basic,
+    }),
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphonex',
+    },
   }
 };
 

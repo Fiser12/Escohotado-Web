@@ -11,13 +11,22 @@ interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
   lexicalContent?: SerializedEditorState
 }
 
-export const HomePage = ({ user, action, lexicalContent, services, ...rest }: Props) => {
+export const HomePage = ({ user, action, lexicalContent, services = servicesProd, ...rest }: Props) => {
+  const hasPermission = evalPermissionByRoleQuery(user, 'basic')
+
   return <div {...rest}>
     <LexicalRenderer
       data={lexicalContent}
-      services={services ?? servicesProd}
+      services={services}
       className="h-full"
     />
+    { hasPermission &&
+      <SubscriptionsSection 
+        className="pb-16 pt-16" 
+        services={services} 
+        user={user}
+      />
+    }
     <NewsletterSubscription action={action} />
   </div>
 };
