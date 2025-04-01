@@ -1,7 +1,7 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { NextPage } from "next/types";
-import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs';
 import { VideoDetail } from '@/components/pages/video_page/detalle';
 

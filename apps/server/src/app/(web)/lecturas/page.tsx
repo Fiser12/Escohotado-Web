@@ -7,7 +7,7 @@ import { getBooksQueryWithCache } from "@/core/queries/getBooksQuery";
 import Image from "next/image";
 import { mapArticleCard } from "@/core/mappers/mapCards";
 import { getPayload } from "@/payload/utils/getPayload";
-import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 import classNames from "classnames";
 import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
 import { generateDetailHref, routes } from "@/core/routesGenerator";

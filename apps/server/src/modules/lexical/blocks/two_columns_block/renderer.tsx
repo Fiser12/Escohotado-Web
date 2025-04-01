@@ -1,7 +1,6 @@
 import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
 import { TwoColumnsBlock } from 'payload-types';
-import { LexicalRenderer } from '../../lexicalRenderer';
-
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer"
 interface Props extends LexicalBlockProps<TwoColumnsBlock> {
 }
 

@@ -16,7 +16,7 @@ services:
       - DATABASE_URL=postgresql://admin:devsecret@localhost/escota-db
       - NODE_ENV=development
     env_file:
-      - .env.devcontainer
+      - ../.env
     depends_on:
       - escota_db
     networks:

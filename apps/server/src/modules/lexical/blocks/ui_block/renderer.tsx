@@ -1,5 +1,5 @@
 import { evalAdvancePermissionQuery } from "payload-access-control"
-import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer"
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 import { getPayload } from "@/payload/utils/getPayload"
 import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
 import { UIBlock } from "payload-types"

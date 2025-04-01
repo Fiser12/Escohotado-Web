@@ -1,8 +1,9 @@
-import { LexicalRenderer } from "../../lexicalRenderer"
 import { PhotosCarouselBlock } from "payload-types"
 import { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
 import { Carouseltem } from "@/components/organisms/lexical/photo_carousel"
 import { PhotoCarousel } from "@/components/organisms/lexical/photo_carousel"
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer"
+
 interface Props extends LexicalBlockProps<PhotosCarouselBlock> {
 }
 

@@ -1,9 +1,8 @@
 import Image from "next/image"
 import { MainHero } from "@/components/organisms/lexical/hero"
-import { LexicalRenderer } from "../../lexicalRenderer"
 import type { HeroBlock, Media } from "payload-types"
 import type { LexicalBlockProps } from "payload-lexical-blocks-builder/renderer"
-
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer"
 interface Props extends LexicalBlockProps<HeroBlock> {
 
 }

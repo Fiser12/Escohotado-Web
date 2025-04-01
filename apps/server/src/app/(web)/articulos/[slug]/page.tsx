@@ -1,7 +1,7 @@
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
 import { NextPage } from "next/types";
-import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
 import { TypedLocale } from 'payload';
 import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs';

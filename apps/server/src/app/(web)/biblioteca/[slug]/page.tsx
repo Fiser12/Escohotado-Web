@@ -2,7 +2,7 @@
 
 import { getPayload } from '@/payload/utils/getPayload';
 import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
-import { LexicalRenderer } from "@/modules/lexical/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
 import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
 import { BookDetail } from '@/components/pages/book_page/detail';
 
