@@ -1,13 +1,12 @@
 "use client";
 
-import { getQuotesQueryByTags } from "@/core/queries/getQuotesQuery";
-import { mapQuoteCard } from '@/core/mappers/mapQuoteCard';
+import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { mapQuoteCard } from '@/core/mappers/map-quote-card';
 import { convertContentModelToCard } from "hegel";
+import { BaseUser } from "payload-access-control";
 import { Quote } from "payload-types";
 import { useEffect, useRef, useState } from "react";
-import { BaseUser } from "payload-access-control";
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
-import { Services } from "../services";
+import { Services } from "@/modules/services";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null;

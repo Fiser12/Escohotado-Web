@@ -1,5 +1,5 @@
-import { mockBooks } from "@/core/mockData/book.model";
-import { mockQuotes } from "@/core/mockData/quotes.model";
+import { mockBooks } from "@/core/mock-data/book.model";
+import { mockQuotes } from "@/core/mock-data/quotes.model";
 import { ServicesMockBuilder } from '@/modules/services-mock-builder';
 import { Meta, StoryObj } from "@storybook/react";
 import { BookDetail } from ".";

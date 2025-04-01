@@ -1,6 +1,6 @@
+import { COLLECTION_SLUG_UI_BLOCK } from '@/core/collections-slugs'
 import { CollectionConfig } from 'payload'
-import { isAnyone, isAdmin } from 'payload-access-control'
-import { COLLECTION_SLUG_UI_BLOCK } from '@/core/collectionsSlugs'
+import { isAdmin, isAnyone } from 'payload-access-control'
 
 export const uiBLock: CollectionConfig = {
   slug: COLLECTION_SLUG_UI_BLOCK,

@@ -1,7 +1,6 @@
-import { mockUsers } from '@/core/mockData';
-import { mockArticles } from '@/core/mockData/article.model';
-import { mockBooks } from '@/core/mockData/book.model';
-import { ArticlesQueryResult } from '@/core/queries/getArticlesQuery';
+import { mockArticles } from '@/core/mock-data/article.model';
+import { mockBooks } from '@/core/mock-data/book.model';
+import { ArticlesQueryResult } from '@/core/queries/get-articles-query';
 import { ServicesMockBuilder } from '@/modules/services-mock-builder';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CategoryModel } from 'hegel';

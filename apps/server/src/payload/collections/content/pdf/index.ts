@@ -1,8 +1,12 @@
-import { COLLECTION_SLUG_PDF } from '@/core/collectionsSlugs'
+import { COLLECTION_SLUG_PDF } from '@/core/collections-slugs'
 import { addContentHashToFile } from '@/payload/hooks/media/addContentHashToFileHook'
 import { CollectionConfig } from 'payload'
-import { checkReadPermissions, isAdmin } from 'payload-access-control'
-import { cachePermissionSeedsHook, permissionRelationship } from 'payload-access-control'
+import {
+  cachePermissionSeedsHook,
+  checkReadPermissions,
+  isAdmin,
+  permissionRelationship,
+} from 'payload-access-control'
 
 export const pdf: CollectionConfig = {
   slug: COLLECTION_SLUG_PDF,

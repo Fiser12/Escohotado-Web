@@ -1,6 +1,6 @@
-import { NextPage } from "next";
-import { getPayload } from '@/payload/utils/getPayload';
 import { ModalQuote } from "@/components/organisms/modals/modal-quote/modalQuote";
+import { getPayload } from '@/payload/utils/get-payload';
+import { NextPage } from "next";
 
 interface Props {
     params: {

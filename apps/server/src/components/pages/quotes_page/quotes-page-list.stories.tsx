@@ -1,6 +1,5 @@
-import { mockUsers } from '@/core/mockData';
-import { mockQuotes } from '@/core/mockData/quotes.model';
-import { QuotesQueryResult } from '@/core/queries/getQuotesQuery';
+import { mockQuotes } from '@/core/mock-data/quotes.model';
+import { QuotesQueryResult } from '@/core/queries/get-quotes-query';
 import { ServicesMockBuilder } from '@/modules/services-mock-builder';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CategoryModel } from 'hegel';

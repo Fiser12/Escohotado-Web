@@ -1,9 +1,8 @@
+import { mockVideos } from '@/core/mock-data/video.model';
+import { VideosQueryResult } from '@/core/queries/get-videos-query';
 import { ServicesMockBuilder } from '@/modules/services-mock-builder';
 import type { Meta, StoryObj } from '@storybook/react';
 import { VideoPageList } from './index';
-import { mockUsers } from '@/core/mockData';
-import { mockVideos } from '@/core/mockData/video.model';
-import { VideosQueryResult } from '@/core/queries/getVideosQuery';
 
 const randomVideos = mockVideos.sort(() => Math.random() - 0.5);
 
@@ -45,7 +44,7 @@ export const Default: Story = {
         sort: 'popularity',
         query: '',
         playlist: '',
-        services: ServicesMockBuilder({ 
+        services: ServicesMockBuilder({
             children: <div>Mock</div>,
             listVideos: randomVideos.sort(() => Math.random() - 0.5)
         })

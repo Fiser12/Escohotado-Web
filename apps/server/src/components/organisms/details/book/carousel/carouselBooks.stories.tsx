@@ -1,6 +1,6 @@
+import { mockBooks } from "@/core/mock-data/book.model";
 import { Meta, StoryObj } from "@storybook/react";
 import { CarouselBook } from ".";
-import { mockBooks } from "@/core/mockData/book.model";
 
 
 const meta: Meta<typeof CarouselBook> = {

@@ -1,12 +1,11 @@
 "use client";
 
-import { getArticlesQueryByTags } from "@/core/queries/getArticlesQuery";
-import { mapArticleCard } from "@/core/mappers/mapCards";
+import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { mapArticleCard } from "@/core/mappers/map-cards";
 import { convertContentModelToCard } from "hegel";
+import { BaseUser } from "payload-access-control";
 import { ArticleWeb } from "payload-types";
 import { useEffect, useRef, useState } from "react";
-import { BaseUser } from "payload-access-control";
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { Services } from "../services";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

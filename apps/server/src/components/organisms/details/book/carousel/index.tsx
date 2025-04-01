@@ -1,16 +1,16 @@
 "use client";
 
-import useEmblaCarousel from 'embla-carousel-react'
-import Autoplay from 'embla-carousel-autoplay'
-import classNames from 'classnames';
-import { BookCard } from '../cards';
+import { Typo } from '@/components/atoms/typographies/Typographies';
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
+import { COLLECTION_SLUG_BOOK } from '@/core/collections-slugs';
+import { routes } from '@/core/routes-generator';
+import classNames from 'classnames';
+import Autoplay from 'embla-carousel-autoplay';
+import useEmblaCarousel from 'embla-carousel-react';
+import { Book } from "payload-types";
+import { BookCard } from '../cards';
 import { NextButton, PrevButton, usePrevNextButtons } from './carousel-arrow';
 import "./styles.css";
-import { Book } from "payload-types"
-import { routes } from '@/core/routesGenerator';
-import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
-import { Typo } from '@/components/atoms/typographies/Typographies';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;

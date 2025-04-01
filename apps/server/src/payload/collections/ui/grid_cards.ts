@@ -1,6 +1,6 @@
+import { COLLECTION_SLUG_UI_GRID_CARDS } from '@/core/collections-slugs'
 import { CollectionConfig } from 'payload'
-import { isAnyone, isAdmin } from 'payload-access-control'
-import { COLLECTION_SLUG_UI_GRID_CARDS } from '@/core/collectionsSlugs'
+import { isAdmin, isAnyone } from 'payload-access-control'
 
 export const gridCards: CollectionConfig = {
   slug: COLLECTION_SLUG_UI_GRID_CARDS,

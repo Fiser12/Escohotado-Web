@@ -1,21 +1,14 @@
-import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
-import { Quote } from "payload-types";
-import { getQuotesQueryWithCache } from "@/core/queries/getQuotesQuery";
-import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { arrayToRecord, convertContentModelToCard, generateFilterExpresionFromTags } from "hegel";
-import { mapQuoteCard } from '@/core/mappers/mapQuoteCard';
-import { evalPermissionByRoleQuery } from "payload-access-control";
-import { redirect } from 'next/navigation';
-import { DynamicLoadingQuotes } from '@/modules/dynamic-loading-lists/dynamic-loading-quotes';
-import { QuotesFilterBar } from "@/modules/nuqs";
-import { routes } from '@/core/routesGenerator';
-import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
-import { Typo } from '@/components/atoms/typographies/Typographies';
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
-import { tagsFromContentQueryWithCache } from '@/core/queries/tagsFromContentQuery';
-import { servicesProd } from '@/modules/services';
 import { QuotesPageList } from '@/components/pages/quotes_page';
+import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
+import { getQuotesQueryWithCache } from "@/core/queries/get-quotes-query";
+import { tagsFromContentQueryWithCache } from '@/core/queries/tags-from-content-query';
+import { routes } from '@/core/routes-generator';
+import { servicesProd } from '@/modules/services';
+import { getPayload } from '@/payload/utils/get-payload';
+import { generateFilterExpresionFromTags } from "hegel";
+import { redirect } from 'next/navigation';
+import { createSearchParamsCache, parseAsString } from "nuqs/server";
+import { evalPermissionByRoleQuery } from "payload-access-control";
 export const searchContentParamsCache = createSearchParamsCache({
   query: parseAsString.withDefault(''),
   tags: parseAsString.withDefault(''),
@@ -31,7 +24,7 @@ const Page = async ({ searchParams }: Props) => {
   const { query, tags } = await searchContentParamsCache.parse(searchParams)
 
   const [
-    user, 
+    user,
     quotesResult
   ] = await Promise.all([
     getCurrentUserQuery(payload),
@@ -42,7 +35,7 @@ const Page = async ({ searchParams }: Props) => {
   const taxonomies = await tagsFromContentQueryWithCache(
     "quote", query, []
   );
-  
+
   return <QuotesPageList
     user={user}
     quotesResult={quotesResult}

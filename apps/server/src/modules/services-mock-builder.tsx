@@ -1,7 +1,7 @@
-import { mockArticles, mockQuotes, mockVideos } from '@/core/mockData'
+import { mockArticles, mockQuotes, mockVideos } from '@/core/mock-data'
 import { BaseUser } from 'payload-access-control'
 import { ArticleWeb, Product, Quote, Video } from 'payload-types'
-import { LexicalMocksService } from './mockServices/lexical_mock_service'
+import { LexicalMocksService } from './mock-services/lexical-mock-service'
 import { Services } from './services'
 
 interface ServiceMockBuilderProps {
@@ -24,7 +24,7 @@ export const ServicesMockBuilder = ({
   LexicalRenderer: () => LexicalMocksService({ children }),
   auth: {
     getCurrentUser: async () => user,
-    login: async () => {},
+    login: async () => { },
   },
   content: {
     videos: {

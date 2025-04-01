@@ -1,5 +1,5 @@
 import HomePage from "@/app/(web)/page";
-import { routes } from "@/core/routesGenerator";
+import { routes } from "@/core/routes-generator";
 import { SearchModalLayout } from "@/components/organisms/modals/search_modal_layout/SearchModalLayout";
 
 const Page = async () => {

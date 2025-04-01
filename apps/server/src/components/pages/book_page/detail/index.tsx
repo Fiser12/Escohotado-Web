@@ -1,20 +1,20 @@
-import Image from "next/image";
-import classNames from "classnames";
-import { Book, Media, Quote, Taxonomy } from "payload-types";
-import { routes } from "@/core/routesGenerator";
-import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
-import { BaseUser } from "payload-access-control";
-import { BookVariantsSelector } from "@/modules/nuqs";
-import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
-import { mapAnyToComment } from "hegel";
-import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
 import { Typo } from "@/components/atoms/typographies/Typographies";
-import { SocialMediaShare } from "@/components/molecules/social_media";
-import { MainHero } from "@/components/organisms/lexical/hero";
-import { ImageParallax } from "@/components/organisms/details/book/cards/image_parallax";
 import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
+import { SocialMediaShare } from "@/components/molecules/social_media";
+import { ImageParallax } from "@/components/organisms/details/book/cards/image_parallax";
+import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
+import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
+import { MainHero } from "@/components/organisms/lexical/hero";
+import { getAuthorFromTaxonomies } from "@/core/mappers/map-taxonomy-to-category-model";
+import { routes } from "@/core/routes-generator";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
+import { BookVariantsSelector } from "@/modules/nuqs";
 import { ServiceInjector, servicesProd } from "@/modules/services";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
+import classNames from "classnames";
+import { mapAnyToComment } from "hegel";
+import Image from "next/image";
+import { BaseUser } from "payload-access-control";
+import { Book, Media, Quote, Taxonomy } from "payload-types";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
     user?: BaseUser | null;
@@ -77,7 +77,7 @@ export const BookDetail: React.FC<Props> = ({
                     />
                 </div>
             </ContentWrapper>
-            <LexicalRenderer 
+            <LexicalRenderer
                 data={book.content}
                 services={services}
             />

@@ -1,7 +1,7 @@
+import { COLLECTION_SLUG_USER } from '@/core/collections-slugs'
+import syncNewsletterSubscription from '@/core/newsletter/sync-newsletter-subscription'
 import type { CollectionConfig } from 'payload'
-import { isAdminOrCurrentUser, isAdmin, permissionSlugs } from 'payload-access-control'
-import syncNewsletterSubscription from '@/core/newsletter/syncNewsletterSubscription'
-import { COLLECTION_SLUG_USER } from '@/core/collectionsSlugs'
+import { isAdmin, isAdminOrCurrentUser, permissionSlugs } from 'payload-access-control'
 
 const ADMIN_AUTH_GROUP = 'Auth'
 

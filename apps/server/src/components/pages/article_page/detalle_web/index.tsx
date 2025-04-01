@@ -1,22 +1,22 @@
-import classNames from "classnames";
-import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
-import Image from "next/image";
-import { mapAnyToComment } from "hegel";
-import { SocialMediaShare } from "../../../molecules/social_media";
-import Link from "next/link";
-import { MainButton } from "../../../atoms/main_button/main_button";
 import { DownloadDocIcon, FlagWithLabels } from "@/components/assets/icons";
-import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
-import { ArticleWeb, Media, Pdf, Quote, Taxonomy } from "payload-types";
-import { BaseUser, ContentProtected, evalPermissionByRoleQuery } from "payload-access-control";
-import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
-import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/mapTaxonomyToCategoryModel";
-import { routes } from "@/core/routesGenerator";
-import { Typo } from "@/components/atoms/typographies/Typographies";
 import { Tag } from "@/components/atoms/tag/tag";
-import { COLLECTION_SLUG_ARTICLE_WEB } from "@/core/collectionsSlugs";
+import { Typo } from "@/components/atoms/typographies/Typographies";
+import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
+import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
+import { COLLECTION_SLUG_ARTICLE_WEB } from "@/core/collections-slugs";
+import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/map-taxonomy-to-category-model";
+import { routes } from "@/core/routes-generator";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
 import { ServiceInjector } from "@/modules/services";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
+import classNames from "classnames";
+import { mapAnyToComment } from "hegel";
+import Image from "next/image";
+import Link from "next/link";
+import { BaseUser, ContentProtected, evalPermissionByRoleQuery } from "payload-access-control";
+import { ArticleWeb, Media, Pdf, Quote, Taxonomy } from "payload-types";
+import { MainButton } from "../../../atoms/main_button/main_button";
+import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
+import { SocialMediaShare } from "../../../molecules/social_media";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
     article: ArticleWeb;

@@ -1,5 +1,5 @@
-import { getCurrentUserQuery } from '@/core/queries/getCurrentUserQuery'
-import { routes } from '@/core/routesGenerator'
+import { getCurrentUserQuery } from '@/core/queries/get-current-user-query'
+import { routes } from '@/core/routes-generator'
 import { createRouteHandlers } from 'payload-stripe-inventory/server'
 
 export const {

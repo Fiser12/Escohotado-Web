@@ -1,9 +1,9 @@
+import { COLLECTION_SLUG_MEDIA } from '@/core/collections-slugs'
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
+import { isAdmin, isAnyone } from 'payload-access-control'
 import { addContentHashToFile } from '../../hooks/media/addContentHashToFileHook'
 import { handleSvgUpload } from '../../hooks/media/handleSvgUploadHook'
 import { updateCacheControl } from '../../hooks/media/updateCacheControl'
-import { isAnyone, isAdmin } from 'payload-access-control'
 
 const media: CollectionConfig = {
   slug: COLLECTION_SLUG_MEDIA,

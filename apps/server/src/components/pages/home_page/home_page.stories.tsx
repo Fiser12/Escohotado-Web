@@ -1,8 +1,8 @@
-import { mockUsers } from "@/core/mockData/user.model";
+import { mockUsers } from "@/core/mock-data/user.model";
 import { ServicesMockBuilder } from '@/modules/services-mock-builder';
 import { Meta, StoryObj } from "@storybook/react";
 import { HomePage } from ".";
-import { CardGridView00, CardGridView01, CardGridView02, CardGridView03 } from "../../../core/mockData/grid_layout.model";
+import { CardGridView00, CardGridView01, CardGridView02, CardGridView03 } from "../../../core/mock-data/grid_layout.model";
 import HomeHero from "@/components/organisms/home_hero";
 
 const meta: Meta<typeof HomePage> = {

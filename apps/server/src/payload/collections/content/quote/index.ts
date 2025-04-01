@@ -1,12 +1,12 @@
 import {
-  COLLECTION_SLUG_QUOTE,
   COLLECTION_SLUG_ARTICLE_WEB,
   COLLECTION_SLUG_BOOK,
+  COLLECTION_SLUG_QUOTE,
   COLLECTION_SLUG_VIDEO,
-} from '@/core/collectionsSlugs'
-import { CollectionConfig } from 'payload'
-import { isAnyone, isAdmin } from 'payload-access-control'
+} from '@/core/collections-slugs'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
+import { CollectionConfig } from 'payload'
+import { isAdmin, isAnyone } from 'payload-access-control'
 
 export const quoteOriginRelationTo = [
   COLLECTION_SLUG_BOOK,

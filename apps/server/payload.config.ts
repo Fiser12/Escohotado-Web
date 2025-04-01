@@ -11,7 +11,7 @@ import { migrations } from '@/migrations'
 import plugins from '@/payload/plugins'
 import globals from '@/payload/globals/static_pages'
 import collections from '@/payload/collections'
-import { defaultLexical } from '@/modules/lexical/defaultLexical'
+import { defaultLexical } from '@/modules/lexical/default-lexical'
 import { insertDefaultPermissions } from 'payload-access-control'
 
 const filename = fileURLToPath(import.meta.url)

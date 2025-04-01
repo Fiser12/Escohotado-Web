@@ -1,13 +1,13 @@
-import { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs'
-import {
-  permissionRelationship,
-  cachePermissionSeedsHook,
-  isAnyone,
-  isAdmin,
-} from 'payload-access-control'
+import { COLLECTION_SLUG_VIDEO } from '@/core/collections-slugs'
 import { forumPostsCacheField } from '@/payload/fields/forum/forumPostsCacheField'
 import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
+import { CollectionConfig } from 'payload'
+import {
+  cachePermissionSeedsHook,
+  isAdmin,
+  isAnyone,
+  permissionRelationship,
+} from 'payload-access-control'
 
 const [permissionRelationshipField, permissionSeedField] = permissionRelationship()
 export const video: CollectionConfig = {
@@ -32,8 +32,8 @@ export const video: CollectionConfig = {
       views: {
         list: {
           actions: [
-            { path: '/src/modules/payload_admin/refresh_yt_collection_button' },
-            { path: '/src/modules/payload_admin/sync_forum_posts_button' },
+            { path: '/src/modules/payload-admin/refresh-yt-collection-button' },
+            { path: '/src/modules/payload-admin/sync-forum-posts-button' },
           ],
         },
       },

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { menuSectionsLoaderMock, mockUsers } from '../../../core/mock-data/user.model';
 import { mobileParameters } from '../../storybook-helpers';
 import { Header } from './header';
-import { mockUsers, menuSectionsLoaderMock } from '../../../core/mockData/user.model';
 
 const meta: Meta<typeof Header> = {
 	title: 'Organism/Layout/Header',

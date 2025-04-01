@@ -1,10 +1,10 @@
-import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
+import { ArticleDetail } from '@/components/pages/article_page/detalle_web';
+import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collections-slugs';
+import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
+import { servicesProd } from '@/modules/services';
+import { getPayload } from '@/payload/utils/get-payload';
 import { NextPage } from "next/types";
 import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs';
-import { ArticleDetail } from '@/components/pages/article_page/detalle_web';
-import { servicesProd } from '@/modules/services';
 
 export const searchContentParamsCache = createSearchParamsCache({
   locale: parseAsString.withDefault('es'),

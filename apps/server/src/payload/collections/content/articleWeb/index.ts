@@ -1,8 +1,8 @@
-import { slugField } from '@/payload/fields/slug'
+import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collections-slugs'
+import { routes } from '@/core/routes-generator'
+import { defaultLexical } from '@/modules/lexical/default-lexical'
 import { contentWithPermissionsCollectionBuilder } from '@/payload/collections/content/content_collection_builder'
-import { defaultLexical } from '@/modules/lexical/defaultLexical'
-import { COLLECTION_SLUG_ARTICLE_WEB } from '@/core/collectionsSlugs'
-import { routes } from '@/core/routesGenerator'
+import { slugField } from '@/payload/fields/slug'
 
 export const articleWeb = contentWithPermissionsCollectionBuilder(
   {

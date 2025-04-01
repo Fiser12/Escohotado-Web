@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { BasicMenu } from '.'
+import { menuSectionsLoaderMock, mockUsers } from '../../../../core/mock-data/user.model'
 import { mobileParameters } from '../../../storybook-helpers'
-import { menuSectionsLoaderMock, mockUsers } from '../../../../core/mockData/user.model'
 
 const meta: Meta<typeof BasicMenu> = {
   title: 'Organism/Layout/Menus',

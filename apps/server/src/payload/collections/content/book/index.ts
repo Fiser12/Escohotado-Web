@@ -1,6 +1,6 @@
-import { slugField } from '@/payload/fields/slug'
-import { COLLECTION_SLUG_BOOK, COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
+import { COLLECTION_SLUG_BOOK, COLLECTION_SLUG_MEDIA } from '@/core/collections-slugs'
 import { contentCollectionBuilder } from '@/payload/collections/content/content_collection_builder'
+import { slugField } from '@/payload/fields/slug'
 
 export const book = contentCollectionBuilder(
   {

@@ -5,10 +5,12 @@ import type { ServerFunctionClient } from 'payload'
 import '@payloadcms/next/css'
 import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
 /* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
-import React from 'react'
-import './custom.scss'
-import { importMap } from './admin/importMap'
+import { getPayload } from "@/payload/utils/get-payload"
 import config from '@payload-config'
+import { loadPayloadSingleton } from 'payload-base-singleton'
+import React from 'react'
+import { importMap } from './admin/importMap'
+import './custom.scss'
 
 type Args = {
   children: React.ReactNode
@@ -22,19 +24,17 @@ const serverFunctions: ServerFunctionClient = async function (args) {
     importMap,
   })
 }
-import { loadPayloadSingleton } from 'payload-base-singleton'
-import { getPayload } from "@/payload/utils/getPayload";
 
 const Layout = ({ children }: Args) => {
   loadPayloadSingleton(getPayload)
   return (
 
-  <>
-    <RootLayout importMap={importMap} config={configPromise} serverFunction={serverFunctions}>
-      {children}
-    </RootLayout>
-  </>
-)
+    <>
+      <RootLayout importMap={importMap} config={configPromise} serverFunction={serverFunctions}>
+        {children}
+      </RootLayout>
+    </>
+  )
 }
 
 export default Layout

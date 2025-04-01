@@ -1,25 +1,23 @@
-import { arrayToRecord, CategoryModel, convertContentModelToCard } from "hegel";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
-import { CarouselBook } from "@/components/organisms/details/book/carousel";
-import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
-import { Typo } from '@/components/atoms/typographies/Typographies';
-import { Services, servicesProd } from '@/modules/services';
-import { mapArticleCard, mapVideoCard } from "@/core/mappers/mapCards";
-import { ResultVideo, VideosQueryResult } from "@/core/queries/getVideosQuery";
-import { BaseUser, ContentProtected } from "payload-access-control";
-import { ArticulosPage, Book, Taxonomy, VideosPage } from "payload-types";
-import { generateDetailHref, routes } from "@/core/routesGenerator";
-import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
-import { LecturasFilterBar } from "@/modules/nuqs";
-import { DynamicLoadingArticles } from "@/modules/dynamic-loading-lists/dynamic-loading-articles";
-import Image from "next/image";
 import { escohotadoArticlesPortada } from "@/components/assets";
-import classNames from "classnames";
-import { ArticlesQueryResult } from "@/core/queries/getArticlesQuery";
-import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
+import { Typo } from '@/components/atoms/typographies/Typographies';
+import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
 import { HeadlineCard } from "@/components/organisms/details/article/cards/article_headline_card";
-import { ArticleWeb } from "payload-types";
+import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
+import { CarouselBook } from "@/components/organisms/details/book/carousel";
+import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { mapArticleCard } from "@/core/mappers/map-cards";
+import { getAuthorFromTaxonomies } from "@/core/mappers/map-taxonomy-to-category-model";
+import { ArticlesQueryResult } from "@/core/queries/get-articles-query";
+import { generateDetailHref, routes } from "@/core/routes-generator";
+import { DynamicLoadingArticles } from "@/modules/dynamic-loading-lists/dynamic-loading-articles";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
+import { LecturasFilterBar } from "@/modules/nuqs";
+import { Services } from '@/modules/services';
+import classNames from "classnames";
+import { arrayToRecord, CategoryModel, convertContentModelToCard } from "hegel";
+import Image from "next/image";
+import { BaseUser, ContentProtected } from "payload-access-control";
+import { ArticleWeb, ArticulosPage, Book, Taxonomy } from "payload-types";
 
 interface Props {
     user: BaseUser | null;
@@ -48,8 +46,8 @@ export const ArticlePageList = ({
     ...rest
 }: Props) => {
     const articleCardMapper = (article: ArticleWeb) => mapArticleCard(user)(article);
-    const divClass = classNames( "w-full bg-gray-light", className)
-    
+    const divClass = classNames("w-full bg-gray-light", className)
+
     return <div className={divClass} {...rest}>
         <div id="headerArticles" className="@container w-full bg-white pt-12.5">
             <ContentWrapper className="mx-auto flex flex-col gap-7.5">

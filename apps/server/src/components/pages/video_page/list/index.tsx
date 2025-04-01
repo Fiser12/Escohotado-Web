@@ -1,14 +1,13 @@
-import { convertContentModelToCard } from "hegel";
-import { DynamicLoadingVideos } from '@/modules/dynamic-loading-lists/dynamic-loading-videos';
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
-import { SortSelector } from '@/modules/nuqs';
-import { VideoFilterBar } from '@/modules/nuqs';
+import { Typo } from '@/components/atoms/typographies/Typographies';
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
-import { Typo } from '@/components/atoms/typographies/Typographies';
-import { Services, servicesProd } from '@/modules/services';
-import { mapVideoCard } from "@/core/mappers/mapCards";
-import { ResultVideo, VideosQueryResult } from "@/core/queries/getVideosQuery";
+import { mapVideoCard } from "@/core/mappers/map-cards";
+import { ResultVideo, VideosQueryResult } from "@/core/queries/get-videos-query";
+import { DynamicLoadingVideos } from '@/modules/dynamic-loading-lists/dynamic-loading-videos';
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
+import { SortSelector, VideoFilterBar } from '@/modules/nuqs';
+import { Services } from '@/modules/services';
+import { convertContentModelToCard } from "hegel";
 import { BaseUser } from "payload-access-control";
 import { VideosPage } from "payload-types";
 

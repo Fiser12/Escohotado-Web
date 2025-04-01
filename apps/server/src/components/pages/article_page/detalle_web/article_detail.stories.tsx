@@ -1,6 +1,6 @@
-import { mockArticles } from "@/core/mockData/article.model";
-import { mockQuotes } from "@/core/mockData/quotes.model";
-import { mockUsers } from "@/core/mockData/user.model";
+import { mockArticles } from "@/core/mock-data/article.model";
+import { mockQuotes } from "@/core/mock-data/quotes.model";
+import { mockUsers } from "@/core/mock-data/user.model";
 import { ServicesMockBuilder } from '@/modules/services-mock-builder';
 import { Meta, StoryObj } from "@storybook/react";
 import { ArticleDetail } from ".";

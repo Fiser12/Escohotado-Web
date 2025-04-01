@@ -1,7 +1,7 @@
-import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUG_TAXONOMY } from '@/core/collectionsSlugs'
-import { isAnyone, isAdmin } from 'payload-access-control'
+import { COLLECTION_SLUG_TAXONOMY } from '@/core/collections-slugs'
 import { slugField } from '@/payload/fields/slug'
+import type { CollectionConfig } from 'payload'
+import { isAdmin, isAnyone } from 'payload-access-control'
 
 const taxonomy: CollectionConfig = {
   slug: COLLECTION_SLUG_TAXONOMY,

@@ -1,4 +1,4 @@
-import { collectionsContentsSlugs } from "@/core/collectionsSlugs";
+import { collectionsContentsSlugs } from "@/core/collections-slugs";
 import { ArticleIcon, BookIcon, VideoIcon, QuoteIcon } from "@/components/assets/icons";
 export const getIconByCollection = (collection: typeof collectionsContentsSlugs[number]): React.ReactNode => {
   switch (collection) {

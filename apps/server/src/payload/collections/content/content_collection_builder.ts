@@ -1,14 +1,14 @@
+import { COLLECTION_SLUG_MEDIA } from '@/core/collections-slugs'
+import { forumPostsCacheField } from '@/payload/fields/forum/forumPostsCacheField'
+import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
+import { clearCache } from 'nextjs-query-cache'
 import type { CollectionConfig } from 'payload'
 import {
-  permissionRelationship,
   cachePermissionSeedsHook,
   checkReadPermissions,
   isAdmin,
+  permissionRelationship,
 } from 'payload-access-control'
-import { COLLECTION_SLUG_MEDIA } from '@/core/collectionsSlugs'
-import { taxonomyRelationship } from '@/payload/fields/taxonomies/taxonomiesRelationshipFields'
-import { forumPostsCacheField } from '@/payload/fields/forum/forumPostsCacheField'
-import { clearCache } from 'nextjs-query-cache'
 
 export function contentWithPermissionsCollectionBuilder(
   config: Partial<CollectionConfig> & { slug: string },
@@ -61,7 +61,7 @@ export function contentCollectionBuilder(
       components: {
         views: {
           list: {
-            actions: [{ path: '/src/modules/payload_admin/sync_forum_posts_button' }],
+            actions: [{ path: '/src/modules/payload-admin/sync-forum-posts-button' }],
           },
         },
       },

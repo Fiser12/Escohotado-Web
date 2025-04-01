@@ -1,7 +1,7 @@
 import { NewsletterSubscription } from "@/components/layout/newsletterSubscription";
 import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
 import { SubscriptionsSection } from "@/components/organisms/subscription/subscriptions.organism";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
 import { ServiceInjector, Services, servicesProd } from "@/modules/services";
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 

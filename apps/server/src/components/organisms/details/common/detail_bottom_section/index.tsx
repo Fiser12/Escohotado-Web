@@ -4,7 +4,7 @@ import { ContentWrapper } from "../../../../layout/content_wrapper/content_wrapp
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
 import { Quote } from "payload-types";
 import { BaseUser } from "payload-access-control";
-import { mapQuoteCard } from '@/core/mappers/mapQuoteCard';
+import { mapQuoteCard } from '@/core/mappers/map-quote-card';
 import { CommentCard } from "@/components/organisms/details/common/comments";
 import { GridComments } from "@/components/organisms/details/common/comments/grid_comments";
 

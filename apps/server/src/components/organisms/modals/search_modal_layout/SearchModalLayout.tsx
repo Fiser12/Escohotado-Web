@@ -1,14 +1,12 @@
 "use client";
 
-import { searchElementsQuery } from "@/core/queries/searchElementsQuery";
-import { mapSearchOptionsToCollections } from "@/core/mappers/mapSearchOptionsToCollections";
-import { useRouter } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
-import { SearchOptions } from ".";
-import { routes } from "@/core/routesGenerator";
-import { SearchedItem } from ".";
-import { SearchModal } from ".";
 import { getIconByCollection } from "@/components/assets/icons";
+import { mapSearchOptionsToCollections } from "@/core/mappers/map-search-options-to-collections";
+import { searchElementsQuery } from "@/core/queries/search-elements-query";
+import { routes } from "@/core/routes-generator";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { SearchedItem, SearchModal, SearchOptions } from ".";
 import { AnimatedModal } from "../animated-modal";
 
 export const SearchModalLayout: React.FC<{ goBackTo?: string; }> = ({ goBackTo }) => {

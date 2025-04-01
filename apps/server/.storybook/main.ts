@@ -21,7 +21,7 @@ const config: StorybookConfig = {
     //WHY THIS?
     //Algunos ficheros son de node y storybook no los soporta. Aunque no los llame este no carga, con lo que es mejor tenerlos identifidados y excluirlos de la compilación de storybook.
     //Es fundamental pasar los mocks correspondientes en los services a los componentes que lo usan en storybook.
-    const patterns = ['richtext-lexical-renderer', 'getPayload', 'plugins'];
+    const patterns = ['richtext-lexical-renderer', 'get-payload', 'plugins'];
     patterns.forEach(pattern => {
       config.module?.rules?.push({
         test: new RegExp(pattern),

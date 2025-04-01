@@ -1,19 +1,19 @@
-import React from "react";
-import { signIn, signOut } from "@/payload/plugins/authjs/plugin";
-import { NuqsAdapter } from 'nuqs/adapters/next'
-import { MenuItem } from "hegel";
-import { evalPermissionByRoleQuery } from "payload-access-control";
-import { routes } from "@/core/routesGenerator";
-import { loadPayloadSingleton } from "payload-base-singleton";
-import { getPayload } from "@/payload/utils/getPayload";
-import { Header } from "@/components/layout/header/header";
-import { Footer } from "@/components/layout/footer";
 import { Textures } from "@/components/assets/textures";
-import "./main.css";
-import "../tailwind.css";
-import { getAccountMenuQuery } from "@/core/queries/getAccounMenuQuery";
-import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header/header";
 import { UnlocksProgress } from "@/components/organisms/subscription/unlocks-progress.organism";
+import { getAccountMenuQuery } from "@/core/queries/get-account-menu-query";
+import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
+import { routes } from "@/core/routes-generator";
+import { signIn, signOut } from "@/payload/plugins/authjs/plugin";
+import { getPayload } from "@/payload/utils/get-payload";
+import { MenuItem } from "hegel";
+import { NuqsAdapter } from 'nuqs/adapters/next';
+import { evalPermissionByRoleQuery } from "payload-access-control";
+import { loadPayloadSingleton } from "payload-base-singleton";
+import React from "react";
+import "../tailwind.css";
+import "./main.css";
 
 const logoutMenuItem: MenuItem = {
   text: "Cerrar sesión",

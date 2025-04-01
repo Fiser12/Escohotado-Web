@@ -1,29 +1,11 @@
-import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
-import { arrayToRecord, convertContentModelToCard } from "hegel";
-import { ArticleWeb, Taxonomy } from "payload-types";
-import { createSearchParamsCache, parseAsString } from "nuqs/server";
-import { getArticlesQueryByTagsWithCache } from "@/core/queries/getArticlesQuery";
-import { getBooksQueryWithCache } from "@/core/queries/getBooksQuery";
-import Image from "next/image";
-import { mapArticleCard } from "@/core/mappers/mapCards";
-import { getPayload } from "@/payload/utils/getPayload";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
-import classNames from "classnames";
-import { getAuthorFromTaxonomies } from "@/core/mappers/mapTaxonomyToCategoryModel";
-import { generateDetailHref, routes } from "@/core/routesGenerator";
-import { ContentProtected } from "payload-access-control";
-import { DynamicLoadingArticles } from "@/modules/dynamic-loading-lists/dynamic-loading-articles";
-import { escohotadoArticlesPortada } from "@/components/assets";
-import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
-import { HeadlineCard } from "@/components/organisms/details/article/cards/article_headline_card";
-import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
-import { CarouselBook } from "@/components/organisms/details/book/carousel";
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
-import { tagsFromContentQueryWithCache } from "@/core/queries/tagsFromContentQuery";
-import { LecturasFilterBar } from "@/modules/nuqs";
-import { Typo } from "@/components/atoms/typographies/Typographies";
-import { servicesProd } from "@/modules/services";
 import { ArticlePageList } from "@/components/pages/article_page/list";
+import { getArticlesQueryByTagsWithCache } from "@/core/queries/get-articles-query";
+import { getBooksQueryWithCache } from "@/core/queries/get-books-query";
+import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
+import { tagsFromContentQueryWithCache } from "@/core/queries/tags-from-content-query";
+import { servicesProd } from "@/modules/services";
+import { getPayload } from "@/payload/utils/get-payload";
+import { createSearchParamsCache, parseAsString } from "nuqs/server";
 export const pageSize = 10;
 
 export const searchContentParamsCache = createSearchParamsCache({

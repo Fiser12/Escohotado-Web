@@ -1,11 +1,11 @@
 "use client";
 
-import { getVideosQueryByTags, ResultVideo } from "@/core/queries/getVideosQuery";
-import { mapVideoCard } from "@/core/mappers/mapCards";
-import { convertContentModelToCard } from "hegel";
-import { useEffect, useRef, useState } from "react";
-import { BaseUser } from "payload-access-control";
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { mapVideoCard } from "@/core/mappers/map-cards";
+import { ResultVideo } from "@/core/queries/get-videos-query";
+import { convertContentModelToCard } from "hegel";
+import { BaseUser } from "payload-access-control";
+import { useEffect, useRef, useState } from "react";
 import { Services } from "../services";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

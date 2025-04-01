@@ -1,11 +1,11 @@
-import { getPayload } from "@/payload/utils/getPayload";
-import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
-import { signOut } from "@/payload/plugins/authjs/plugin";
-import { NewsletterToggleButton } from "@/modules/payload_admin/newsletter_toggle_button";
-import { routes } from "@/core/routesGenerator";
-import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
 import { MainButton } from "@/components/atoms/main_button/main_button";
 import { Typo } from "@/components/atoms/typographies/Typographies";
+import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
+import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
+import { routes } from "@/core/routes-generator";
+import { NewsletterToggleButton } from "@/modules/payload-admin/newsletter-toggle-button";
+import { signOut } from "@/payload/plugins/authjs/plugin";
+import { getPayload } from "@/payload/utils/get-payload";
 
 const Page = async () => {
   const payload = await getPayload();

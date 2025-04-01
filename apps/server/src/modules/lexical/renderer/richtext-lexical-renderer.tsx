@@ -1,7 +1,7 @@
+import { DefaultNodeTypes, SerializedLinkNode } from '@payloadcms/richtext-lexical';
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
 import { JSXConvertersFunction, LinkJSXConverter, RichText } from '@payloadcms/richtext-lexical/react';
-import { blockRenderers } from '../blockRenderers';
-import { DefaultNodeTypes, SerializedLinkNode } from '@payloadcms/richtext-lexical';
+import { blockRenderers } from '../block-renderers';
 type NodeTypes = | DefaultNodeTypes
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
@@ -21,7 +21,7 @@ function jsxConverters(): JSXConvertersFunction<NodeTypes> {
     })
 }
 
-export const RichtextLexicalRenderer = ({className, data}: {className?: string, data: SerializedEditorState}) => {
+export const RichtextLexicalRenderer = ({ className, data }: { className?: string, data: SerializedEditorState }) => {
     return <RichText
         converters={jsxConverters()}
         className={className}

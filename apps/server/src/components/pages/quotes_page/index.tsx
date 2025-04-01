@@ -1,13 +1,13 @@
-import { arrayToRecord, CategoryModel, convertContentModelToCard } from "hegel";
-import { QuotesFilterBar } from '@/modules/nuqs';
+import { Typo } from '@/components/atoms/typographies/Typographies';
 import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
 import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
-import { Typo } from '@/components/atoms/typographies/Typographies';
-import { Services } from '@/modules/services';
-import { BaseUser } from "payload-access-control";
+import { mapQuoteCard } from "@/core/mappers/map-quote-card";
+import { QuotesQueryResult } from "@/core/queries/get-quotes-query";
 import { DynamicLoadingQuotes } from "@/modules/dynamic-loading-lists/dynamic-loading-quotes";
-import { QuotesQueryResult } from "@/core/queries/getQuotesQuery";
-import { mapQuoteCard } from "@/core/mappers/mapQuoteCard";
+import { QuotesFilterBar } from '@/modules/nuqs';
+import { Services } from '@/modules/services';
+import { arrayToRecord, CategoryModel, convertContentModelToCard } from "hegel";
+import { BaseUser } from "payload-access-control";
 import { Quote } from "payload-types";
 
 interface Props {

@@ -1,16 +1,16 @@
-import classNames from "classnames";
-import { Typo } from "@/components/atoms/typographies/Typographies";
-import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
-import { CategoryModel, mapAnyToComment } from "hegel";
-import { VideoEmbed } from "../../../atoms/video_embed/video_embed";
-import { SocialMediaShare } from "../../../molecules/social_media";
-import { Video, Quote } from "payload-types";
-import { routes } from "@/core/routesGenerator";
-import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
-import { BaseUser, fetchPermittedContentQuery } from "payload-access-control";
-import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
-import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
 import { Tag } from "@/components/atoms/tag/tag";
+import { Typo } from "@/components/atoms/typographies/Typographies";
+import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
+import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
+import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
+import { routes } from "@/core/routes-generator";
+import classNames from "classnames";
+import { CategoryModel, mapAnyToComment } from "hegel";
+import { BaseUser, fetchPermittedContentQuery } from "payload-access-control";
+import { Quote, Video } from "payload-types";
+import { VideoEmbed } from "../../../atoms/video_embed/video_embed";
+import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
+import { SocialMediaShare } from "../../../molecules/social_media";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     video: Video;

@@ -1,12 +1,10 @@
-import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
+import { Typo } from '@/components/atoms/typographies/Typographies';
+import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
+import { ServiceInjector } from '@/modules/services';
 import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
 import { BaseUser, UserInventory } from 'payload-access-control';
-import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
-import { Typo } from '@/components/atoms/typographies/Typographies';
 import { SubscriptionsGroupCard } from './subscriptions_card_group';
-import { ServiceInjector } from '@/modules/services';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
   user?: BaseUser | null

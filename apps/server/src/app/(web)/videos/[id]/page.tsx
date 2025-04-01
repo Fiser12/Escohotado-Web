@@ -1,10 +1,10 @@
-import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
-import { NextPage } from "next/types";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
-import { COLLECTION_SLUG_VIDEO } from '@/core/collectionsSlugs';
 import { VideoDetail } from '@/components/pages/video_page/detalle';
+import { COLLECTION_SLUG_VIDEO } from '@/core/collections-slugs';
+import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
+import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
 import { servicesProd } from '@/modules/services';
+import { getPayload } from '@/payload/utils/get-payload';
+import { NextPage } from "next/types";
 
 interface Props {
   params: {

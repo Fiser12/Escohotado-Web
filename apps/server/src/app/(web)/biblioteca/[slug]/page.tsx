@@ -1,11 +1,10 @@
 "use server";
 
-import { getPayload } from '@/payload/utils/getPayload';
-import { getCurrentUserQuery } from "@/core/queries/getCurrentUserQuery";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexicalRenderer";
-import { COLLECTION_SLUG_BOOK } from '@/core/collectionsSlugs';
 import { BookDetail } from '@/components/pages/book_page/detail';
+import { COLLECTION_SLUG_BOOK } from '@/core/collections-slugs';
+import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
 import { servicesProd } from '@/modules/services';
+import { getPayload } from '@/payload/utils/get-payload';
 
 interface Props {
     params: {
@@ -27,7 +26,7 @@ const Page = async (props: Props) => {
     const book = books.docs.at(0);
     if (!book) return <p>Error Cargando el documento</p>
 
-    return <BookDetail user={user} book={book} quotes={[]} services={servicesProd}/>
+    return <BookDetail user={user} book={book} quotes={[]} services={servicesProd} />
 };
 
 export default Page;

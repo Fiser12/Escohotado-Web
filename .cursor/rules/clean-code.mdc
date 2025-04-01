@@ -49,6 +49,11 @@ globs:
 - Fix technical debt early
 - Leave code cleaner than you found it
 
+## Naming patterns
+- The files should be named in kebab-case, the folders too
+- The code should be in cammelCase
+- The react components should be in CammelCase
+
 ## Testing
 - Write tests before fixing bugs
 - Keep tests readable and maintainable

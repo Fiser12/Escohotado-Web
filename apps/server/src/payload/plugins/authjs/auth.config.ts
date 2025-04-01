@@ -1,4 +1,4 @@
-import { routes } from '@/core/routesGenerator'
+import { routes } from '@/core/routes-generator'
 import { NextAuthConfig } from 'next-auth'
 import keycloak from 'next-auth/providers/keycloak'
 
@@ -22,12 +22,12 @@ export const authConfig: NextAuthConfig = {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-          roles: [...profile.roles ?? [], profile.realm_access.roles ?? []],
+          roles: [...(profile.roles ?? []), profile.realm_access.roles ?? []],
         }
       },
     }),
   ],
   session: {
     strategy: SESSION_STRATEGY,
-  }
+  },
 }
