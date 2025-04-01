@@ -13,16 +13,9 @@ export const PERMISSION_TYPES = {
 } as const;
 
 export const PERMISSIONS = [
-  {
-    slug: 'freemium',
-    title: 'Freemium',
-  },
-  {
-    slug: 'basic',
-    title: 'Basic',
-  },
-  {
-    slug: 'admin',
-    title: 'Admin',
-  }
+  { slug: 'freemium', title: 'Freemium' },
+  { slug: 'tester', title: 'Tester' },
+  { slug: 'dev', title: 'Developer' },
+  { slug: 'basic', title: 'Basic' },
+  { slug: 'admin', title: 'Admin' },
 ]

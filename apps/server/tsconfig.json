@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "types": [
+      "react",
+      "react-dom"
+    ],
     "baseUrl": ".",
     "lib": [
       "dom",
