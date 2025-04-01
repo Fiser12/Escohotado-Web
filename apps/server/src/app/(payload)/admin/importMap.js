@@ -22,8 +22,8 @@ import { AlignFeatureClient as AlignFeatureClient_e70f5e05f09f93e00b997edb1ef0c8
 import { ParagraphFeatureClient as ParagraphFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { HeadingFeatureClient as HeadingFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { default as default_e2747b65398298af940fca0d9b7f26bd } from '/src/modules/payload_admin/sync_forum_posts_button'
-import { default as default_32d8dd6c22a90c61749fa5e953e07f93 } from '/src/modules/payload_admin/refresh_yt_collection_button'
+import { default as default_b8383d8d3cd3d4896a8cdc231adf951e } from '/src/modules/payload-admin/sync-forum-posts-button'
+import { default as default_dc4f6567f2889d86af23b7c58cc78363 } from '/src/modules/payload-admin/refresh-yt-collection-button'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { SignInWithAuthjsButton as SignInWithAuthjsButton_06d0cb594d8f6ba2ac35015f930c882e } from 'payload-authjs/components'
@@ -55,8 +55,8 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ParagraphFeatureClient": ParagraphFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#InlineToolbarFeatureClient": InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#HeadingFeatureClient": HeadingFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "/src/modules/payload_admin/sync_forum_posts_button#default": default_e2747b65398298af940fca0d9b7f26bd,
-  "/src/modules/payload_admin/refresh_yt_collection_button#default": default_32d8dd6c22a90c61749fa5e953e07f93,
+  "/src/modules/payload-admin/sync-forum-posts-button#default": default_b8383d8d3cd3d4896a8cdc231adf951e,
+  "/src/modules/payload-admin/refresh-yt-collection-button#default": default_dc4f6567f2889d86af23b7c58cc78363,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "payload-authjs/components#SignInWithAuthjsButton": SignInWithAuthjsButton_06d0cb594d8f6ba2ac35015f930c882e,
