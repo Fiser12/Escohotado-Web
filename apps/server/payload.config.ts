@@ -3,7 +3,7 @@ import { en } from 'payload/i18n/en'
 import { es } from 'payload/i18n/es'
 
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { buildConfig } from 'payload'
+import { Payload, buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { users } from '@/payload/collections/user/user'
@@ -13,9 +13,17 @@ import globals from '@/payload/globals/static_pages'
 import collections from '@/payload/collections'
 import { defaultLexical } from '@/modules/lexical/default-lexical'
 import { insertDefaultPermissions } from 'payload-access-control'
+import { seedQuotes } from '@/seed/quotes.seed'
+import { seedCategories, categoryNameToIdMap } from '@/seed/categories.seed'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+async function initializePayload(payload: Payload): Promise<void> {
+  await insertDefaultPermissions(payload)
+  await seedCategories(payload)
+  await seedQuotes(payload, categoryNameToIdMap)
+}
 
 export default buildConfig({
   editor: defaultLexical,
@@ -44,7 +52,7 @@ export default buildConfig({
   graphQL: {
     disable: true,
   },
-  onInit: insertDefaultPermissions,
+  onInit: initializePayload,
   localization: {
     locales: [
       {
