@@ -18,7 +18,10 @@
     "standalone-script": "payload run ./src/scripts/standalone-script.ts",
     "generate:importmap": "payload generate:importmap",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_43e63eeb06750a9 --skip=\"true\"",
+    "chromatic:ui": "npx chromatic --project-token=chpt_43e63eeb06750a9 --only-changed",
+    "chromatic:tag": "npx chromatic --project-token=chpt_43e63eeb06750a9 --only-changed --onlyTags='ui-test'"
   },
   "engines": {
     "node": ">=20.9.0"

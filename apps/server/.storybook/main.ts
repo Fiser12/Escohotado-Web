@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/nextjs'
 
-import { join, dirname } from 'path'
+import { dirname, join } from 'path'
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -21,26 +21,27 @@ const config: StorybookConfig = {
     //WHY THIS?
     //Algunos ficheros son de node y storybook no los soporta. Aunque no los llame este no carga, con lo que es mejor tenerlos identifidados y excluirlos de la compilación de storybook.
     //Es fundamental pasar los mocks correspondientes en los services a los componentes que lo usan en storybook.
-    const patterns = ['richtext-lexical-renderer', 'get-payload', 'plugins'];
-    patterns.forEach(pattern => {
+    const patterns = ['richtext-lexical-renderer', 'get-payload', 'plugins']
+    patterns.forEach((pattern) => {
       config.module?.rules?.push({
         test: new RegExp(pattern),
         use: 'null-loader',
-      });
-    });
-    return config;
-  },  
+      })
+    })
+    return config
+  },
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-designs'),
     getAbsolutePath('@storybook/addon-essentials'),
     getAbsolutePath('@storybook/addon-interactions'),
+    getAbsolutePath('@chromatic-com/storybook'),
   ],
   docs: {
     defaultName: 'Docs',
   },
   features: {
-    experimentalRSC: true
+    experimentalRSC: true,
   },
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),

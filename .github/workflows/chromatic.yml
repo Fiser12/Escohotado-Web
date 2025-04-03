@@ -1,0 +1,29 @@
+name: Chromatic
+
+on:
+  # Solo se ejecuta cuando se usa un tag específico
+  push:
+    tags:
+      - "ui-test-*"
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necesario para detectar cambios
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Publish to Chromatic
+        run: pnpm --filter server chromatic:tag
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

@@ -17,6 +17,7 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
     "@types/react": "^19.0.12",
     "eslint": "^9.19.0",
     "eslint-config": "workspace:*",
