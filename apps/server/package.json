@@ -19,9 +19,9 @@
     "generate:importmap": "payload generate:importmap",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_43e63eeb06750a9 --skip=\"true\"",
-    "chromatic:ui": "npx chromatic --project-token=chpt_43e63eeb06750a9 --only-changed",
-    "chromatic:tag": "npx chromatic --project-token=chpt_43e63eeb06750a9 --only-changed --onlyTags='ui-test'"
+    "chromatic": "npx chromatic --project-token=chpt_43e63eeb06750a9 --only-changed",
+    "chromatic:all": "npx chromatic --project-token=chpt_43e63eeb06750a9",
+    "chromatic:actions": "npx chromatic --project-token=chpt_43e63eeb06750a9 --only-changed --exit-once-uploaded"
   },
   "engines": {
     "node": ">=20.9.0"
@@ -69,6 +69,7 @@
     "uuid": "^11.0.2"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
     "@storybook/addon-designs": "^8.2.1",
     "@storybook/addon-essentials": "^8.6.11",
     "@storybook/addon-interactions": "^8.6.11",
@@ -84,6 +85,7 @@
     "@types/node": "^22.13.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chromatic": "^11.28.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-storybook": "^0.11.1",

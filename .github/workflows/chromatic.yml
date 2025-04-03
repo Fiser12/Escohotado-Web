@@ -24,6 +24,6 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Publish to Chromatic
-        run: pnpm --filter server chromatic:tag
+        run: pnpm --filter server chromatic:actions
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
