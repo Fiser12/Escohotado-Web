@@ -69,6 +69,7 @@ export const checkReadPermissions: Access = (props) => {
   const userPermissions = getUserPermissions(props.req.user)
   return {or: [
     {permissions_seeds: { equals: "" }},
+    {permissions_seeds: { equals: permissionSlugs.free }},
     ...userPermissions.map(perm => ({ permissions_seeds: { contains: perm }}))
   ]}
 }
