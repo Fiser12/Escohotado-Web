@@ -21,5 +21,5 @@ export const LexicalRendererService: React.FC<RichTextProps> = ({ children, data
         className={className}
         data={data}
     />;
-    return <p>No data nor children, error in LexicalRendererService</p>
+    return <p></p>
 };

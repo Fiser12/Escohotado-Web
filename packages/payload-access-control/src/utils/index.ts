@@ -1,2 +1,2 @@
 export { getUserPermissions } from "./getUserPermissions";
-export { insertDefaultPermissions } from "./insertDefaultPermissions";
+export { seedPermissions } from "./seedPermissions";

@@ -3,22 +3,21 @@ import { Tag } from "@/components/atoms/tag/tag";
 import { Typo } from "@/components/atoms/typographies/Typographies";
 import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
 import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
-import { COLLECTION_SLUG_ARTICLE_WEB } from "@/core/collections-slugs";
 import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/map-taxonomy-to-category-model";
 import { routes } from "@/core/routes-generator";
-import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
 import { ServiceInjector } from "@/modules/services";
 import classNames from "classnames";
 import { mapAnyToComment } from "hegel";
 import Image from "next/image";
 import Link from "next/link";
-import { BaseUser, ContentProtected, evalPermissionByRoleQuery } from "payload-access-control";
+import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
 import { ArticleWeb, Media, Pdf, Quote, Taxonomy } from "payload-types";
 import { MainButton } from "../../../atoms/main_button/main_button";
 import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
 import { SocialMediaShare } from "../../../molecules/social_media";
+import { ArticleContentProtected } from "./article-content-protected";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
+export interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
     article: ArticleWeb;
     currentLocale: string;
     quotes: Quote[];
@@ -114,23 +113,11 @@ export const ArticleDetail: React.FC<Props> = ({
                     </div>
                 </div>
             </ContentWrapper>
-            <ContentProtected
+            <ArticleContentProtected
                 user={user}
-                content={article}
-                collection={COLLECTION_SLUG_ARTICLE_WEB}
-            >
-                {({ hasPermissions, isUnlocked }) => <>
-                    {article.content && (hasPermissions || isUnlocked) &&
-                        <LexicalRenderer
-                            className="max-w-[48rem] mx-auto"
-                            data={article.content}
-                            services={services}
-                        />
-                    }
-                </>
-                }
-            </ContentProtected>
-
+                article={article}
+                services={services}
+            />
             <DetailBottomSection
                 quotes={quotes}
                 comments={mapAnyToComment(article.forum_post_id, article.last_forum_posts ?? [])}
@@ -139,3 +126,4 @@ export const ArticleDetail: React.FC<Props> = ({
         </SEOContentWrapper>
     );
 };
+

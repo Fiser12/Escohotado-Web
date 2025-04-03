@@ -86,24 +86,21 @@ export const ArticlePageList = ({
             collection="article_web"
             content={{ permissions_seeds: "basic" }}
         >
-            {({ hasPermissions }) => {
-                return (
-                    <>
-                        {hasPermissions ?
-                            <FreemiumHighlightSection
-                                href={routes.nextJS.citasPageHref}
-                                title="Accede a las citas de Escohotado"
-                                buttonText="Ir a las citas"
-                            />
-                            : <FreemiumHighlightSection
-                                href={routes.nextJS.subscriptionPageHref}
-                                title="¿Te gustaría acceder al contenido exclusivo de Escohotado?"
-                                buttonText="Accede al contenido completo"
-                            />
-                        }
-                    </>
-                )
-            }}
+            {({ hasPermissions }) => (
+                <> {hasPermissions ?
+                    <FreemiumHighlightSection
+                        href={routes.nextJS.citasPageHref}
+                        title="Accede a las citas de Escohotado"
+                        buttonText="Ir a las citas"
+                    />
+                    : <FreemiumHighlightSection
+                        href={routes.nextJS.subscriptionPageHref}
+                        title="¿Te gustaría acceder al contenido exclusivo de Escohotado?"
+                        buttonText="Accede al contenido completo"
+                    />
+                } </>
+            )
+            }
         </ContentProtected>
         <CarouselBook books={books} title="Obras de Antonio Escohotado" />
         <LexicalRenderer
