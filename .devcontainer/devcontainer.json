@@ -28,7 +28,7 @@
     }
   },
   "postCreateCommand": "pnpm install",
-  "postStartCommand": "echo 'Para iniciar el servidor de desarrollo, ejecuta: pnpm dev'",
+  "postStartCommand": "echo '🚀 Para iniciar el servidor de desarrollo, ejecuta: pnpm dev' && echo '\n🔔 Configuración del Webhook de Stripe:' && echo '1. El webhook está configurado para escuchar eventos en app:3000/api/stripe/webhooks' && echo '2. Para ver el webhook signing secret, ejecuta:' && echo '   docker-compose logs stripe_webhooks | grep \"webhook signing secret\"' && echo '3. Copia el secret y configúralo en tu archivo .env como STRIPE_WEBHOOK_SECRET' && echo '4. El webhook se reiniciará automáticamente si se detiene'",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "version": "20"

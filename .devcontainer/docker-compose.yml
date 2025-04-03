@@ -22,6 +22,27 @@ services:
     networks:
       - outside
 
+  stripe_webhooks:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      bash -c "stripe login --api-key \${STRIPE_API_KEY:-} &&
+      echo '====== WEBHOOK SETUP ======' &&
+      echo 'Stripe webhook está escuchando eventos...' &&
+      echo 'Copia el webhook signing secret a continuación y configúralo en tu archivo .env como STRIPE_WEBHOOK_SECRET:' &&
+      stripe listen --forward-to app:3000/api/stripe/webhooks"
+    environment:
+      - STRIPE_API_KEY=${STRIPE_API_KEY:-}
+    env_file:
+      - ../.env
+    volumes:
+      - ../.stripe:/root/.config/stripe
+    networks:
+      - outside
+    depends_on:
+      - app
+
   escota_db:
     container_name: escota_db
     image: postgres:17-alpine
