@@ -1,16 +1,16 @@
-import { Tag } from "@/components/atoms/tag";
-import { Typo } from "@/components/atoms/typographies";
-import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
-import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
-import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
-import { routes } from "@/core/routes-generator";
 import classNames from "classnames";
 import { CategoryModel, mapAnyToComment } from "hegel";
 import { BaseUser, fetchPermittedContentQuery } from "payload-access-control";
 import { Quote, Video } from "payload-types";
-import { VideoEmbed } from "../../../atoms/video_embed/video_embed";
-import { ContentWrapper } from "../../../layout/content-wrapper";
-import { SocialMediaShare } from "../../../molecules/social_media";
+import { Tag } from "@/components/atoms/tag";
+import { Typo } from "@/components/atoms/typographies";
+import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
+import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
+import { routes } from "@/core/routes-generator";
+import { ContentWrapper } from "@/components/layout/content-wrapper";
+import { SocialMediaShare } from "@/components/molecules/social_media";
+import { VideoEmbed } from "@/components/atoms/video-embed";
+import { LockedHighlightSection } from "@/components/organisms/details/article/highlight";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     video: Video;
@@ -55,11 +55,7 @@ export const VideoDetail: React.FC<Props> = ({
         <ContentWrapper className="flex flex-col gap-12">
             {videoHref ?
                 <VideoEmbed url={videoHref} /> :
-                <FreemiumHighlightSection
-                    href={routes.nextJS.subscriptionPageHref}
-                    title="¿Te gustaría acceder al contenido exclusivo de Escohotado?"
-                    buttonText="Accede al contenido completo"
-                />
+                <LockedHighlightSection />
             }
             <div className="flex flex-col gap-6 md:gap-10">
                 <Typo.H3 className='w-full'>{video.title ?? "No title"}</Typo.H3>

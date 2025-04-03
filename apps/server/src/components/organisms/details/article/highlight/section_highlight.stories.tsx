@@ -1,11 +1,11 @@
 import { MainButton } from "@/components/atoms/main-button";
 import { Typo } from "@/components/atoms/typographies";
 import { Meta, StoryObj } from "@storybook/react";
-import { HighlightSection } from "./section_highlight";
+import { BasicHighlightSection } from ".";
 
-const meta: Meta<typeof HighlightSection> = {
+const meta: Meta<typeof BasicHighlightSection> = {
     title: "Organism",
-    component: HighlightSection,
+    component: BasicHighlightSection,
     parameters: {
         layout: "fullscreen",
         design: {

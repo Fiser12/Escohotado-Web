@@ -2,16 +2,40 @@ import React from 'react';
 import classNames from 'classnames';
 import { classMerge } from 'hegel/react';
 import './style.css'
+import Link from 'next/link';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+export interface Action {
+    link?: {
+        target?: string
+        href: string
+    }
+    onClick?: () => void
+}
+
+
+export interface ButtonProps extends React.HTMLAttributes<HTMLDivElement> {
     text: string;
     color?: 'primary' | 'secondary';
     type?: 'fill' | 'line';
     className?: string;
     icon?: React.ReactNode;
 }
+export type MainButtonActionProps = Action & ButtonProps
 
-export const MainButton: React.FC<Props> = ({
+export const MainButtonAction: React.FC<MainButtonActionProps> = ({
+    link,
+    onClick,
+    ...rest
+}) => {
+    if (link) {
+        return <Link href={link.href} target={link.target}>
+            <MainButton {...rest} />
+        </Link>
+    }
+    return <MainButton {...rest} onClick={onClick} />
+}
+
+export const MainButton: React.FC<ButtonProps> = ({
     text,
     color = 'primary',
     type = 'fill',

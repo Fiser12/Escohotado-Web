@@ -1,8 +1,8 @@
 
 'use client';
 
+import { countWeeklyUnlocksQuery } from '@/core/queries/get-count-weekly-unlocks-query';
 import type { BaseUser } from 'payload-access-control';
-import { countWeeklyUnlocks } from 'payload-stripe-inventory';
 import { useEffect, useState } from 'react';
 
 interface UnlocksProgressProps {
@@ -20,8 +20,7 @@ export const UnlocksProgress: React.FC<UnlocksProgressProps> = ({
     const [percentage, setPercentage] = useState(0);
 
     useEffect(() => {
-        // Calcular el número de desbloqueos esta semana
-        const unlocks = countWeeklyUnlocks(user);
+        const unlocks = countWeeklyUnlocksQuery(user);
         setWeeklyUnlocks(unlocks);
         setPercentage(Math.min((unlocks / maxUnlocks) * 100, 100));
     }, [user, maxUnlocks]);

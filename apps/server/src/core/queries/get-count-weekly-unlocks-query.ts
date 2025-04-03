@@ -6,17 +6,15 @@ import { BaseUser, UserInventory } from "payload-access-control";
  * @returns Número de elementos desbloqueados en los últimos 7 días
  */
 
-export const countWeeklyUnlocks = (user: BaseUser): number => {
-  const inventory = user?.inventory as UserInventory | undefined;
+export const countWeeklyUnlocksQuery = (user: BaseUser<UserInventory>): number => {
+  const inventory = user.inventory;
   if (!inventory || !inventory.unlocks || inventory.unlocks.length === 0) {
     return 0;
   }
 
-  // Calcular la fecha de hace 7 días
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-  // Contar elementos desbloqueados en los últimos 7 días
   return inventory.unlocks.filter(
     unlock => new Date(unlock.dateUnlocked) >= sevenDaysAgo
   ).length;

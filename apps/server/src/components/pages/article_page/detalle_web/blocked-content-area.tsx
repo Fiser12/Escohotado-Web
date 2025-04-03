@@ -1,5 +1,4 @@
-import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
-import { routes } from "@/core/routes-generator";
+import { LockedHighlightSection } from "@/components/organisms/details/article/highlight";
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
 import { ServiceInjector } from "@/modules/services";
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
@@ -21,9 +20,6 @@ export const BlockedContentArea = ({
                 </div>
                 <div className="absolute bottom-0 left-0 w-full h-50 bg-gradient-to-b from-transparent to-white pointer-events-none" />
             </div>}
-        <FreemiumHighlightSection
-            href={routes.nextJS.subscriptionPageHref}
-            title="¿Te gustaría acceder al contenido exclusivo de Escohotado?"
-            buttonText="Accede al contenido completo" />
+        <LockedHighlightSection />
     </div>;
 };

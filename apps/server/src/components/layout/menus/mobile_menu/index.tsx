@@ -1,7 +1,7 @@
 "use client";
 import { ArrowLinkIcon, UserIcon } from "@/components/assets/icons";
 import { MainButton } from "@/components/atoms/main-button";
-import { HighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
+import { BasicHighlightSection } from "@/components/organisms/details/article/highlight";
 import classNames from "classnames";
 import { MenuItem, MenuSection } from "hegel";
 import { BaseUser } from "payload-access-control";
@@ -67,9 +67,9 @@ export const MobileMenu: React.FC<Props> = ({ user, accountMenuItems, className,
                 ))}
             </div>
             <a href={"https://laemboscadura.com"} target="_blank" tabIndex={6}>
-                <HighlightSection type="secondary">
+                <BasicHighlightSection type="secondary">
                     <MainButton text="La Emboscadura" color="primary" />
-                </HighlightSection>
+                </BasicHighlightSection>
             </a>
             {user &&
                 <div className={`${genericPYSectionClass}`}>

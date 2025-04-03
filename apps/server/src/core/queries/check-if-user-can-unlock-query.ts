@@ -6,7 +6,7 @@ import { BaseUser } from "payload-access-control";
  * @param permissions Permisos requeridos para el elemento
  * @returns Booleano indicando si el usuario puede desbloquear el elemento
  */
-export const checkIfUserCanUnlock = (
+export const checkIfUserCanUnlockQuery = (
   user: BaseUser,
   permissions: string[]
 ): boolean => {

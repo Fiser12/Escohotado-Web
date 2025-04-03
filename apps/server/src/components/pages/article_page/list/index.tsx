@@ -2,7 +2,7 @@ import { escohotadoArticlesPortada } from "@/components/assets";
 import { Typo } from '@/components/atoms/typographies';
 import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { HeadlineCard } from "@/components/organisms/details/article/cards/article_headline_card";
-import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
+import { LockedHighlightSection, QuotesLockedHighlightSection } from "@/components/organisms/details/article/highlight";
 import { CarouselBook } from "@/components/organisms/details/book/carousel";
 import { GridCards } from "@/components/organisms/lexical/grid_cards";
 import { mapArticleCard } from "@/core/mappers/map-cards";
@@ -87,20 +87,8 @@ export const ArticlePageList = ({
             content={{ permissions_seeds: "basic" }}
         >
             {({ hasPermissions }) => (
-                <> {hasPermissions ?
-                    <FreemiumHighlightSection
-                        href={routes.nextJS.citasPageHref}
-                        title="Accede a las citas de Escohotado"
-                        buttonText="Ir a las citas"
-                    />
-                    : <FreemiumHighlightSection
-                        href={routes.nextJS.subscriptionPageHref}
-                        title="¿Te gustaría acceder al contenido exclusivo de Escohotado?"
-                        buttonText="Accede al contenido completo"
-                    />
-                } </>
-            )
-            }
+                <> { hasPermissions ? <QuotesLockedHighlightSection /> : <LockedHighlightSection /> } </>
+            )}
         </ContentProtected>
         <CarouselBook books={books} title="Obras de Antonio Escohotado" />
         <LexicalRenderer
