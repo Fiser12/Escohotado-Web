@@ -1,12 +1,12 @@
 "use client"
 
+import { ArrowLinkIcon, EyeIcon } from "@/components/assets/icons";
+import { Tag } from "@/components/atoms/tag";
+import { Typo } from "@/components/atoms/typographies";
 import classNames from "classnames";
 import { CategoryModel, OrigenModel } from "hegel";
-import "./style.css";
 import Link from "next/link";
-import { ArrowLinkIcon, EyeIcon } from "@/components/assets/icons";
-import { Typo } from "@/components/atoms/typographies/Typographies";
-import { Tag } from "@/components/atoms/tag/tag";
+import "./style.css";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       itemId: number;

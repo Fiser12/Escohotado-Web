@@ -1,4 +1,4 @@
-import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
+import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { getCurrentUserQuery } from '@/core/queries/get-current-user-query';
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
 import { Services, servicesProd } from '@/modules/services';

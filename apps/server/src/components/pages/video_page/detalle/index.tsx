@@ -1,5 +1,5 @@
-import { Tag } from "@/components/atoms/tag/tag";
-import { Typo } from "@/components/atoms/typographies/Typographies";
+import { Tag } from "@/components/atoms/tag";
+import { Typo } from "@/components/atoms/typographies";
 import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
 import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
 import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
@@ -9,7 +9,7 @@ import { CategoryModel, mapAnyToComment } from "hegel";
 import { BaseUser, fetchPermittedContentQuery } from "payload-access-control";
 import { Quote, Video } from "payload-types";
 import { VideoEmbed } from "../../../atoms/video_embed/video_embed";
-import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
+import { ContentWrapper } from "../../../layout/content-wrapper";
 import { SocialMediaShare } from "../../../molecules/social_media";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

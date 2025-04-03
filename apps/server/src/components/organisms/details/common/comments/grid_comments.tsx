@@ -1,6 +1,6 @@
 import { PenIcon } from "@/components/assets/icons";
-import { Typo } from "@/components/atoms/typographies/Typographies";
-import { MainButton } from "@/components/atoms/main_button/main_button";
+import { MainButton } from "@/components/atoms/main-button";
+import { Typo } from "@/components/atoms/typographies";
 
 interface Props<T> {
       items: T[];

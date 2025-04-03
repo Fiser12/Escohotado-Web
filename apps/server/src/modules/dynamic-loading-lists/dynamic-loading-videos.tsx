@@ -1,6 +1,6 @@
 "use client";
 
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { GridCards } from "@/components/organisms/lexical/grid_cards";
 import { mapVideoCard } from "@/core/mappers/map-cards";
 import { ResultVideo } from "@/core/queries/get-videos-query";
 import { convertContentModelToCard } from "hegel";

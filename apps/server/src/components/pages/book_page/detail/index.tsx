@@ -1,5 +1,5 @@
-import { Typo } from "@/components/atoms/typographies/Typographies";
-import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
+import { Typo } from "@/components/atoms/typographies";
+import { ContentWrapper } from "@/components/layout/content-wrapper";
 import { SocialMediaShare } from "@/components/molecules/social_media";
 import { ImageParallax } from "@/components/organisms/details/book/cards/image_parallax";
 import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";

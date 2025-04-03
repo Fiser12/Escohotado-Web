@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { ToggleButtonGroup } from "@/components/molecules/toggle_button_group/toggle_button_group";
-import { SubscriptionCard } from "./subscription_card";
+import { SubscriptionCard } from "./subscription-card";
 import { Interval, IntervalOptions } from "hegel";
-import { SubscriptionButton } from "./subscription_button";
+import { SubscriptionButton } from "./subscription-button";
 import "hegel";
 import { SubscriptionInventory } from "payload-access-control";
 

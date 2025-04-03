@@ -1,6 +1,6 @@
 import { DownloadDocIcon, FlagWithLabels } from "@/components/assets/icons";
-import { Tag } from "@/components/atoms/tag/tag";
-import { Typo } from "@/components/atoms/typographies/Typographies";
+import { Tag } from "@/components/atoms/tag";
+import { Typo } from "@/components/atoms/typographies";
 import { DetailBottomSection } from "@/components/organisms/details/common/detail_bottom_section";
 import { SEOContentWrapper } from "@/components/organisms/details/common/seo_content_wrapper";
 import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/map-taxonomy-to-category-model";
@@ -12,10 +12,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
 import { ArticleWeb, Media, Pdf, Quote, Taxonomy } from "payload-types";
-import { MainButton } from "../../../atoms/main_button/main_button";
-import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
-import { SocialMediaShare } from "../../../molecules/social_media";
+import { ContentWrapper } from "@/components/layout/content-wrapper";
+import { SocialMediaShare } from "@/components/molecules/social_media";
 import { ArticleContentProtected } from "./article-content-protected";
+import { MainButton } from "@/components/atoms/main-button";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
     article: ArticleWeb;

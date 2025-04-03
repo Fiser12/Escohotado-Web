@@ -1,12 +1,12 @@
-import { MenuItem, MenuSection } from "hegel";
-import { Logo } from "./logo";
-import { ContentWrapper } from "../../layout/content_wrapper/content_wrapper";
-import { OpenModalButton } from "./open_search_modal_button";
-import { NavItem } from "./nav_item";
-import { BaseUser } from "payload-access-control";
 import { ArrowLinkIcon } from "@/components/assets/icons";
-import { MainButton } from "@/components/atoms/main_button/main_button";
+import { MainButton } from "@/components/atoms/main-button";
+import { MenuItem, MenuSection } from "hegel";
+import { BaseUser } from "payload-access-control";
+import { ContentWrapper } from "../content-wrapper";
 import { UserDropdown } from "../menus/user_dropdown";
+import { Logo } from "./logo";
+import { NavItem } from "./nav_item";
+import { OpenModalButton } from "./open_search_modal_button";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null

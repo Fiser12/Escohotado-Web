@@ -1,6 +1,6 @@
-import React from 'react';
+import { Typo } from '@/components/atoms/typographies';
 import classNames from 'classnames';
-import { Typo } from '@/components/atoms/typographies/Typographies';
+import React from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;

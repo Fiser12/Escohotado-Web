@@ -1,5 +1,5 @@
-import { GridCards } from '@/components/organisms/lexical/grid_cards/GridCards';
-import { ContentCardModel } from 'hegel'
+import { GridCards } from '@/components/organisms/lexical/grid_cards';
+import { ContentCardModel } from 'hegel';
 import React from 'react';
 
 export const cardGrid00: ContentCardModel[] = [

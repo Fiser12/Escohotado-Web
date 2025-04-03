@@ -1,10 +1,10 @@
-import { Typo } from '@/components/atoms/typographies/Typographies';
-import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
+import { Typo } from '@/components/atoms/typographies';
+import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { ServiceInjector } from '@/modules/services';
 import { signIn } from '@/payload/plugins/authjs/plugin';
 import classNames from 'classnames';
 import { BaseUser, UserInventory } from 'payload-access-control';
-import { SubscriptionsGroupCard } from './subscriptions_card_group';
+import { SubscriptionsGroupCard } from './subscriptions-card-group';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
   user?: BaseUser | null

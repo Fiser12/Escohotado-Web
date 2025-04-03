@@ -1,6 +1,6 @@
-import { Typo } from '@/components/atoms/typographies/Typographies';
-import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { Typo } from '@/components/atoms/typographies';
+import { ContentWrapper } from '@/components/layout/content-wrapper';
+import { GridCards } from "@/components/organisms/lexical/grid_cards";
 import { mapVideoCard } from "@/core/mappers/map-cards";
 import { ResultVideo, VideosQueryResult } from "@/core/queries/get-videos-query";
 import { DynamicLoadingVideos } from '@/modules/dynamic-loading-lists/dynamic-loading-videos';

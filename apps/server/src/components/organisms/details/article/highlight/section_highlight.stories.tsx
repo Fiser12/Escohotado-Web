@@ -1,7 +1,7 @@
+import { MainButton } from "@/components/atoms/main-button";
+import { Typo } from "@/components/atoms/typographies";
 import { Meta, StoryObj } from "@storybook/react";
 import { HighlightSection } from "./section_highlight";
-import { Typo } from "@/components/atoms/typographies/Typographies";
-import { MainButton } from "@/components/atoms/main_button/main_button";
 
 const meta: Meta<typeof HighlightSection> = {
     title: "Organism",

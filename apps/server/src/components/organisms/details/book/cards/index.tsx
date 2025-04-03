@@ -1,8 +1,8 @@
+import { Typo } from "@/components/atoms/typographies";
 import classNames from "classnames";
-import { ImageParallax } from "./image_parallax";
 import Image from "next/image";
 import Link from 'next/link';
-import { Typo } from "@/components/atoms/typographies/Typographies";
+import { ImageParallax } from "./image_parallax";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;

@@ -1,10 +1,10 @@
 import { escohotadoArticlesPortada } from "@/components/assets";
-import { Typo } from '@/components/atoms/typographies/Typographies';
-import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
+import { Typo } from '@/components/atoms/typographies';
+import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { HeadlineCard } from "@/components/organisms/details/article/cards/article_headline_card";
 import { FreemiumHighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
 import { CarouselBook } from "@/components/organisms/details/book/carousel";
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { GridCards } from "@/components/organisms/lexical/grid_cards";
 import { mapArticleCard } from "@/core/mappers/map-cards";
 import { getAuthorFromTaxonomies } from "@/core/mappers/map-taxonomy-to-category-model";
 import { ArticlesQueryResult } from "@/core/queries/get-articles-query";

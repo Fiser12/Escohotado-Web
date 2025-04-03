@@ -1,6 +1,6 @@
+import { FacebookIcon, InstagramIcon, IvooxIcon, TikTokIcon, XIcon, YoutubeIcon } from "@/components/assets/icons";
 import classNames from "classnames";
-import { ContentWrapper } from "../content_wrapper/content_wrapper";
-import { YoutubeIcon, XIcon, FacebookIcon, InstagramIcon, TikTokIcon, IvooxIcon } from "@/components/assets/icons";
+import { ContentWrapper } from "../content-wrapper";
 import { NavItem } from "../header/nav_item";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

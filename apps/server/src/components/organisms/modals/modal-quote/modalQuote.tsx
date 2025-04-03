@@ -1,14 +1,14 @@
 "use client";
 
-import React from "react";
+import { CloseXIcon } from "@/components/assets/icons";
+import { Tag } from "@/components/atoms/tag";
+import { Typo } from "@/components/atoms/typographies";
+import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/map-taxonomy-to-category-model";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
-import { AnimatedModal } from "../animated-modal";
 import { Quote, Taxonomy } from "payload-types";
-import { getAuthorFromTaxonomies, mapTaxonomyToCategoryModel } from "@/core/mappers/map-taxonomy-to-category-model";
-import { CloseXIcon } from "@/components/assets/icons";
-import { Typo } from "@/components/atoms/typographies/Typographies";
-import { Tag } from "@/components/atoms/tag/tag";
+import React from "react";
+import { AnimatedModal } from "../animated-modal";
 
 interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   quote: Quote;

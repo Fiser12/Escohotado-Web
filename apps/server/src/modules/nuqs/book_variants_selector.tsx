@@ -1,8 +1,8 @@
 "use client";
 
-import { parseAsString, useQueryState } from "nuqs";
-import { MainButton } from "@/components/atoms/main_button/main_button";
+import { MainButton } from "@/components/atoms/main-button";
 import { SelectBoxes } from "@/components/atoms/selectors/grid_select_boxes";
+import { parseAsString, useQueryState } from "nuqs";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	options: {

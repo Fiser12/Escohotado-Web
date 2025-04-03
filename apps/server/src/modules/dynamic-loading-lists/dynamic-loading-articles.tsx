@@ -1,6 +1,6 @@
 "use client";
 
-import { GridCards } from "@/components/organisms/lexical/grid_cards/GridCards";
+import { GridCards } from "@/components/organisms/lexical/grid_cards";
 import { mapArticleCard } from "@/core/mappers/map-cards";
 import { convertContentModelToCard } from "hegel";
 import { BaseUser } from "payload-access-control";

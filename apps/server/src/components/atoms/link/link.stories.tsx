@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Link } from './link';
+import { Link } from '.';
 
 const meta: Meta<typeof Link> = {
     title: 'Atoms/Link',

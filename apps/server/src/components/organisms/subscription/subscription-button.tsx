@@ -1,8 +1,8 @@
 'use client';
+import { MainButton } from "@/components/atoms/main-button";
 import { notNull } from "hegel";
-import { calculateButtonActionType } from "./subscriptions_card_group";
-import { MainButton } from "@/components/atoms/main_button/main_button";
 import { SubscriptionInventory } from "payload-access-control";
+import { calculateButtonActionType } from "./subscriptions-card-group";
 
 interface Props extends React.HTMLAttributes<HTMLAnchorElement> {
     href: string;

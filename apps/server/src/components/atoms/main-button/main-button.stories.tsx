@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { MainButton } from './main_button';
+import { MainButton } from '.';
 import { Title, Subtitle, Canvas, Controls, Stories } from "@storybook/blocks";
 import { EmailIcon } from '@/components/assets/icons';
 

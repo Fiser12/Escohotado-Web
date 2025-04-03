@@ -1,5 +1,5 @@
 import { InputForm } from "@/components/atoms/input";
-import { MainButton } from "@/components/atoms/main_button/main_button";
+import { MainButton } from "@/components/atoms/main-button";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       label: string;
       buttonText: string;

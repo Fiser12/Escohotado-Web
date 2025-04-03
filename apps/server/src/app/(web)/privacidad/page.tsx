@@ -1,5 +1,5 @@
-import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
-import { Typo } from "@/components/atoms/typographies/Typographies";
+import { Typo } from "@/components/atoms/typographies";
+import { ContentWrapper } from "@/components/layout/content-wrapper";
 
 const Page = async () => {
     return <ContentWrapper className="pt-10 flex flex-col items-right gap-6">ç

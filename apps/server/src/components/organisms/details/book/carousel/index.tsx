@@ -1,7 +1,7 @@
 "use client";
 
-import { Typo } from '@/components/atoms/typographies/Typographies';
-import { ContentWrapper } from '@/components/layout/content_wrapper/content_wrapper';
+import { Typo } from '@/components/atoms/typographies';
+import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { COLLECTION_SLUG_BOOK } from '@/core/collections-slugs';
 import { routes } from '@/core/routes-generator';
 import classNames from 'classnames';

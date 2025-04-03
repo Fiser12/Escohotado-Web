@@ -1,10 +1,10 @@
 "use client";
 
-import { CirclePhoto } from "./circlePhoto";
-import Image from "next/image"
+import { Typo } from "@/components/atoms/typographies";
+import Image from "next/image";
 import { useState } from "react";
+import { CirclePhoto } from "./circlePhoto";
 import "./style.css";
-import { Typo } from "@/components/atoms/typographies/Typographies";
 
 export interface Carouseltem {
       photoHref: string;

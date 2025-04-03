@@ -1,11 +1,11 @@
+import { LockIcon, PlayIcon, UnlockIcon } from "@/components/assets/icons";
+import { Tag } from "@/components/atoms/tag";
+import { Link } from "@payloadcms/ui";
 import classNames from "classnames";
+import { CategoryModel } from "hegel";
 import Image from "next/image";
 import { BaseCardContainer } from "..";
-import { CategoryModel } from "hegel";
-import { PlayIcon, LockIcon, UnlockIcon } from "@/components/assets/icons";
-import "./style.css"
-import { Tag } from "@/components/atoms/tag/tag";
-import { Link } from "@payloadcms/ui";
+import "./style.css";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   title: string;

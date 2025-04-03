@@ -1,14 +1,14 @@
 "use client";
 
+import { MobileMenu } from "@/components/layout/menus/mobile_menu";
+import { motion } from 'framer-motion';
 import { MenuItem, MenuSection } from "hegel";
+import { BaseUser } from "payload-access-control";
+import { useEffect, useState } from "react";
+import { ContentWrapper } from "../content-wrapper";
 import { Hamburguer } from "./hamburguer";
 import { Logo } from "./logo";
-import { useEffect, useState } from "react";
-import { ContentWrapper } from "../../layout/content_wrapper/content_wrapper";
 import { OpenModalButton } from "./open_search_modal_button";
-import { motion } from 'framer-motion';
-import { BaseUser } from "payload-access-control";
-import { MobileMenu } from "@/components/layout/menus/mobile_menu";
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
     user?: BaseUser | null
     accountMenuItems: MenuSection[]
@@ -28,17 +28,17 @@ export const HeaderMobile: React.FC<Props> = ({ user, accountMenuItems, classNam
 
     useEffect(() => {
         const handleResize = () => {
-          if (window.innerWidth >= 1024) {
-            document.body.style.overflow = '';
-          } else if (isOpenMenu) {
-            document.body.style.overflow = 'hidden';
-          }
+            if (window.innerWidth >= 1024) {
+                document.body.style.overflow = '';
+            } else if (isOpenMenu) {
+                document.body.style.overflow = 'hidden';
+            }
         };
-    
+
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-      }, [isOpenMenu]);
-    
+    }, [isOpenMenu]);
+
     return <header {...rest} className={`w-full bg-white ${className ?? ""}`} >
         <ContentWrapper>
             <nav className="flex justify-between items-center lg:hidden h-16 py-5">

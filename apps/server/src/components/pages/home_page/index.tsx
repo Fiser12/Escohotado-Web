@@ -1,8 +1,8 @@
-import { NewsletterSubscription } from "@/components/layout/newsletterSubscription";
+import { NewsletterSubscription } from "@/components/layout/newsletter-subscription";
 import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
 import { SubscriptionsSection } from "@/components/organisms/subscription/subscriptions.organism";
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
-import { ServiceInjector, Services, servicesProd } from "@/modules/services";
+import { ServiceInjector, servicesProd } from "@/modules/services";
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { ContentWrapper } from "../../../layout/content_wrapper/content_wrapper";
+import { ContentWrapper } from "../../../layout/content-wrapper";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     media: React.ReactNode;

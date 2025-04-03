@@ -1,9 +1,9 @@
+import handwrittenBackground from "@/components/assets/images/handwritting-bg.jpg";
+import { MainButton } from "@/components/atoms/main-button";
+import { Typo } from "@/components/atoms/typographies";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { MainButton } from "@/components/atoms/main_button/main_button";
-import handwrittenBackground from "@/components/assets/images/handwritting-bg.jpg";
-import { Typo } from "@/components/atoms/typographies/Typographies";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     coverHref?: string;

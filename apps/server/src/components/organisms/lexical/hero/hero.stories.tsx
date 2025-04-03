@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { MainHero } from ".";
-import { MainButton } from "../../../atoms/main_button/main_button";
-import { ImageParallax } from "../../details/book/cards/image_parallax";
 import Image from "next/image";
+import { MainHero } from ".";
+import { MainButton } from "@/components/atoms/main-button";
+import { ImageParallax } from "@/components/organisms/details/book/cards/image_parallax";
 
 const meta: Meta<typeof MainHero> = {
     title: "Organism/Hero",

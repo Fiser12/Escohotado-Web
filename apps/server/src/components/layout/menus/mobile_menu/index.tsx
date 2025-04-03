@@ -1,10 +1,10 @@
 "use client";
-import { MenuItem, MenuSection } from "hegel";
-import classNames from "classnames";
-import { BaseUser } from "payload-access-control";
-import { MainButton } from "@/components/atoms/main_button/main_button";
+import { ArrowLinkIcon, UserIcon } from "@/components/assets/icons";
+import { MainButton } from "@/components/atoms/main-button";
 import { HighlightSection } from "@/components/organisms/details/article/highlight/section_highlight";
-import { UserIcon, ArrowLinkIcon } from "@/components/assets/icons";
+import classNames from "classnames";
+import { MenuItem, MenuSection } from "hegel";
+import { BaseUser } from "payload-access-control";
 import { NavItem } from "../../header/nav_item";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

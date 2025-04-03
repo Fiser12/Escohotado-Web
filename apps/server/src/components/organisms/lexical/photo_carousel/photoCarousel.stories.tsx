@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from "@storybook/react"
-import { PhotoCarousel } from "."
-import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
+import { ContentWrapper } from "@/components/layout/content-wrapper";
+import { Meta, StoryObj } from "@storybook/react";
+import { PhotoCarousel } from ".";
 
 //Prueba photos
 const photoUrlEven = 'https://picsum.photos/200/200?random=1';
@@ -36,7 +36,7 @@ export const Desktop: Story = {
       ],
       parameters: {
             backgrounds: {
-              default: 'Gray',
+                  default: 'Gray',
             },
       },
 };

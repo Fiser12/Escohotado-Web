@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { GridComments } from "./grid_comments";
 import { CommentCard } from ".";
-import { ContentWrapper } from "../../../../layout/content_wrapper/content_wrapper";
+import { ContentWrapper } from "../../../../layout/content-wrapper";
+import { GridComments } from "./grid_comments";
 
 const meta: Meta<typeof GridComments> = {
       title: "Organism/Details/CommentSection",

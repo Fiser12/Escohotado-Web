@@ -1,6 +1,6 @@
-import { MainButton } from "@/components/atoms/main_button/main_button";
-import { Typo } from "@/components/atoms/typographies/Typographies";
-import { ContentWrapper } from "@/components/layout/content_wrapper/content_wrapper";
+import { MainButton } from "@/components/atoms/main-button";
+import { Typo } from "@/components/atoms/typographies";
+import { ContentWrapper } from "@/components/layout/content-wrapper";
 import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
 import { routes } from "@/core/routes-generator";
 import { NewsletterToggleButton } from "@/modules/payload-admin/newsletter-toggle-button";

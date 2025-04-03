@@ -1,7 +1,7 @@
-import Link from "next/link"
+import { MainButton } from "@/components/atoms/main-button";
+import Link from "next/link";
 import { ButtonsBlock } from 'payload-types';
-import React from "react"
-import { MainButton } from "@/components/atoms/main_button/main_button"
+import React from "react";
 
 export type ButtonsLexicalType = NonNullable<ButtonsBlock["buttons"]>;
 export type ButtonLexicalType = ButtonsLexicalType[number];

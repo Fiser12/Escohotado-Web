@@ -1,8 +1,8 @@
-import classNames from "classnames";
-import { Typo } from "@/components/atoms/typographies/Typographies";
 import { EmailIcon } from "@/components/assets/icons";
-import { MainButton } from "@/components/atoms/main_button/main_button";
 import { InputForm } from "@/components/atoms/input";
+import { MainButton } from "@/components/atoms/main-button";
+import { Typo } from "@/components/atoms/typographies";
+import classNames from "classnames";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
       action: string

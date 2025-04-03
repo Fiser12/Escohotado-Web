@@ -1,9 +1,8 @@
-import { ButtonLexicalType } from '@/modules/lexical/blocks/button-block/button-renderer';
-import { LexicalButtonsRenderer } from '@/modules/lexical/blocks/button-block/button-renderer';
+import { Typo } from '@/components/atoms/typographies';
 import { HighlightSection } from '@/components/organisms/details/article/highlight/section_highlight';
+import { ButtonLexicalType, LexicalButtonsRenderer } from '@/modules/lexical/blocks/button-block/button-renderer';
 import { LexicalBlockProps } from 'payload-lexical-blocks-builder/renderer';
 import { HighlightBlock } from 'payload-types';
-import { Typo } from '@/components/atoms/typographies/Typographies';
 
 interface Props extends LexicalBlockProps<HighlightBlock> {
 }
