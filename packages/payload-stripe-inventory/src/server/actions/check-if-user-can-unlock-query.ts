@@ -1,3 +1,4 @@
+import { permissionSlugs } from "node_modules/payload-access-control/src/constants";
 import { BaseUser } from "payload-access-control";
 
 /**
@@ -10,7 +11,5 @@ export const checkIfUserCanUnlockQuery = (
   user: BaseUser,
   permissions: string[]
 ): boolean => {
-  // Por ahora, siempre devolvemos true según los requisitos
-  // En el futuro, aquí se implementará la lógica para verificar permisos
-  return true;
+  return permissions.includes(permissionSlugs.freemium);
 };

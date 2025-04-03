@@ -2,7 +2,7 @@
 export {
   COLLECTION_SLUG_PERMISSION,
   permissionSlugs,
-  PERMISSION_TYPES,
+  QUERY_PERMISSION_TYPES,
   PERMISSIONS
 } from "./constants";
 

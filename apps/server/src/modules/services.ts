@@ -8,12 +8,14 @@ import { DependencyInjector } from 'hegel/react'
 import { BaseUser } from 'payload-access-control'
 import { Product } from 'payload-types'
 import { LexicalRendererService, RichTextProps } from './lexical/renderer/lexical-renderer-service'
+import { unlockItemForUser } from 'payload-stripe-inventory/server'
 
 export type ServiceInjector = DependencyInjector<Services, 'services'>
 
 export interface Services {
   LexicalRenderer: React.FC<RichTextProps>
   auth: {
+    unlockItemForUser: typeof unlockItemForUser
     getCurrentUser: () => Promise<BaseUser | undefined | null>
     login: () => Promise<void>
   }
@@ -38,6 +40,7 @@ export const servicesProd: Services = {
   auth: {
     getCurrentUser: getCurrentUserQuery,
     login: loginCommand,
+    unlockItemForUser: unlockItemForUser,
   },
   content: {
     videos: {

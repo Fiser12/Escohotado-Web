@@ -77,14 +77,14 @@ export interface UnlockItem {
   collection: string;
   id: number;
   dateUnlocked: Date;
-  payload: any;
+  payload?: any;
 }
 
 export interface FavoriteItem {
   collection: string;
-  id: string;
+  id: number;
   dateUnlocked: Date;
-  payload: any;
+  payload?: any;
 }
 
 export interface UserInventory {

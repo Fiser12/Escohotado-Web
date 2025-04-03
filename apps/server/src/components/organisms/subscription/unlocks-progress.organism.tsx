@@ -1,9 +1,9 @@
 
 'use client';
 
-import { countWeeklyUnlocksQuery } from '@/core/queries/get-count-weekly-unlocks-query';
 import type { BaseUser } from 'payload-access-control';
 import { useEffect, useState } from 'react';
+import { countWeeklyUnlocksQuery } from 'payload-stripe-inventory';
 
 interface UnlocksProgressProps {
     user: BaseUser;

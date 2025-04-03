@@ -10,9 +10,9 @@ import { getPayloadSingleton } from "payload-base-singleton";
  * @returns Objeto con éxito/error y mensaje
  */
 export const addToFavorites = async (
-  user: BaseUser,
+  user: BaseUser<UserInventory>,
   collection: string,
-  itemId: string,
+  itemId: number,
   itemPayload: any
 ): Promise<{ success: boolean; message: string }> => {
   if (!user || !user.id) {
@@ -26,12 +26,12 @@ export const addToFavorites = async (
     payload: itemPayload,
   };
 
-  const inventory = user.inventory as UserInventory | undefined;
-  if (!inventory) {
+
+  if (!user.inventory) {
     return { success: false, message: "Inventario de usuario no encontrado" };
   }
 
-  const existingFavorite = inventory.favorites?.find(
+  const existingFavorite = user.inventory.favorites?.find(
     fav => fav.collection === collection && fav.id === itemId
   );
 
@@ -42,7 +42,7 @@ export const addToFavorites = async (
     };
   }
 
-  const updatedFavorites = [...(inventory.favorites || []), newFavorite];
+  const updatedFavorites = [...(user.inventory.favorites || []), newFavorite];
 
   try {
     const payload = await getPayloadSingleton();
@@ -52,7 +52,7 @@ export const addToFavorites = async (
       id: user.id.toString(),
       data: {
         inventory: {
-          ...inventory,
+          ...user.inventory,
           favorites: updatedFavorites,
         },
       },

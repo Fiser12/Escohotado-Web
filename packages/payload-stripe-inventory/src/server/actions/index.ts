@@ -1,4 +1,5 @@
-
+export * from './check-if-user-can-unlock-query'
+export * from './unlock-item-for-user-action'
 export * from './price'
 export * from './product'
 export * from './subscription'

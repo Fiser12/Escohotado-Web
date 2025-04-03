@@ -1,15 +1,16 @@
 import React from 'react';
 import classNames from 'classnames';
 import { classMerge } from 'hegel/react';
-import './style.css'
 import Link from 'next/link';
+import './style.css'
 
 export interface Action {
     link?: {
         target?: string
         href: string
     }
-    onClick?: () => void
+    tabIndex?: number
+    onClick?: () => Promise<void>
 }
 
 
@@ -24,15 +25,16 @@ export type MainButtonActionProps = Action & ButtonProps
 
 export const MainButtonAction: React.FC<MainButtonActionProps> = ({
     link,
+    tabIndex,
     onClick,
     ...rest
 }) => {
     if (link) {
-        return <Link href={link.href} target={link.target}>
+        return <Link href={link.href} target={link.target} tabIndex={tabIndex}>
             <MainButton {...rest} />
         </Link>
     }
-    return <MainButton {...rest} onClick={onClick} />
+    return <MainButton {...rest} onClick={onClick} tabIndex={tabIndex} />
 }
 
 export const MainButton: React.FC<ButtonProps> = ({

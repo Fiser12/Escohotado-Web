@@ -1,6 +1,6 @@
 "use server";
 
-import { BaseUser } from "payload-access-control";
+import { BaseUser, UnlockItem } from "payload-access-control";
 import { unlockItemForUser } from "../actions/unlock-item-for-user-action";
 import { addToFavorites } from "./add-to-favorite-action";
 
@@ -9,9 +9,10 @@ import { addToFavorites } from "./add-to-favorite-action";
  */
 export async function unlockItem(
   user: BaseUser,
-  collection: string,
-  itemId: number,
-  itemPayload: any,
+  item: {
+    collection: string;
+    id: number;  
+  },
   permissions: string[] = []
 ) {
   if (!user || !user.id) {
@@ -22,12 +23,13 @@ export async function unlockItem(
   }
 
   try {
-    // Utilizar la función existente para desbloquear
     return await unlockItemForUser(
       user,
-      collection,
-      itemId,
-      itemPayload,
+      {
+        ...item,
+        dateUnlocked: new Date(),
+        payload: {}
+      },
       permissions
     );
   } catch (error) {
@@ -44,8 +46,10 @@ export async function unlockItem(
  */
 export async function favoriteItem(
   user: BaseUser,
-  collection: string,
-  itemId: string,
+  item: {
+    collection: string;
+    id: number;  
+  },
   itemPayload: any
 ) {
   if (!user || !user.id) {
@@ -57,7 +61,7 @@ export async function favoriteItem(
 
   try {
     // Utilizar la función existente para agregar a favoritos
-    return await addToFavorites(user, collection, itemId, itemPayload);
+    return await addToFavorites(user, item.collection, item.id, itemPayload);
   } catch (error) {
     console.error("Error en la acción de favoritos:", error);
     return {

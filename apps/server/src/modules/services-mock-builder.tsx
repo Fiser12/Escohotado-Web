@@ -25,6 +25,7 @@ export const ServicesMockBuilder = ({
   auth: {
     getCurrentUser: async () => user,
     login: async () => { },
+    unlockItemForUser: async () => { return { success: true, message: 'Item unlocked' } }
   },
   content: {
     videos: {

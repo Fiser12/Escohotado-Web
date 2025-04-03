@@ -65,6 +65,17 @@ export const LockedHighlightSection: React.FC = () => (
         title="¿Te gustaría acceder al contenido exclusivo de Escohotado?"
         buttons={[ {
             text: "Accede al contenido completo",
+            color: "secondary",
+            link: { href: routes.nextJS.subscriptionPageHref }
+        }]}
+    />
+)
+export const UnlocksDepletedHighlightSection: React.FC<{nextUnlockDate: Date}> = ({ nextUnlockDate }) => (
+    <HighlightCTASection
+        title={`¡Ya no quedan desbloqueos disponibles! Volveras a poder desbloquear el contenido el ${nextUnlockDate.toLocaleDateString()}`}
+        buttons={[ {
+            text: "Accede al contenido completo",
+            color: "secondary",
             link: { href: routes.nextJS.subscriptionPageHref }
         }]}
     />
@@ -76,6 +87,7 @@ export const QuotesLockedHighlightSection: React.FC = () => (
         title="Accede a las citas de Escohotado"
         buttons={[ {
             text: "Ir a las citas",
+            color: "secondary",
             link: { href: routes.nextJS.citasPageHref }
         }]}
     />

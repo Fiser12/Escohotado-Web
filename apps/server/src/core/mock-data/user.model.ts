@@ -1,5 +1,5 @@
 import { MenuSection } from 'hegel'
-import { BaseUser, SubscriptionInventory, UserInventory } from 'payload-access-control'
+import { BaseUser, SubscriptionInventory, UserInventory, permissionSlugs } from 'payload-access-control'
 
 interface MockSubscriptionProps {
   id?: string
@@ -40,7 +40,7 @@ function mockSubscription({
 
 export const mockUsers = {
   admin: mockUser({ isAdmin: true }),
-  basic: mockUser({ permissions: ['basic'] }),
+  basic: mockUser({ permissions: [permissionSlugs.basic] }),
   free: mockUser({ withSubscription: false }),
   noUser: null,
 }
@@ -56,7 +56,7 @@ export function menuSectionsLoaderMock(user: BaseUser): MenuSection[] {
       ],
     },
   ]
-  if (user.roles?.includes('webAdmin')) {
+  if (user.roles?.includes(permissionSlugs.webAdmin)) {
     sections.push({
       title: 'Administración',
       items: [
@@ -81,7 +81,7 @@ export function mockUser({ permissions, withSubscription = true, isAdmin = false
     name: 'Rubén',
     email: 'ruben@nexolabs.xyz',
     image: 'https://fake.com/image.jpg',
-    roles: isAdmin ? ['webAdmin'] : [],
+    roles: isAdmin ? [permissionSlugs.webAdmin] : [],
     inventory: {
       favorites: [],
       products: {},

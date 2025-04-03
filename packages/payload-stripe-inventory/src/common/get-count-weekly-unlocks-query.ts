@@ -1,4 +1,4 @@
-import { BaseUser, UserInventory } from "payload-access-control";
+import { BaseUser, UserInventory } from 'payload-access-control'
 
 /**
  * Cuenta cuántos elementos ha desbloqueado el usuario en los últimos 7 días
@@ -7,15 +7,13 @@ import { BaseUser, UserInventory } from "payload-access-control";
  */
 
 export const countWeeklyUnlocksQuery = (user: BaseUser<UserInventory>): number => {
-  const inventory = user.inventory;
+  const inventory = user.inventory
   if (!inventory || !inventory.unlocks || inventory.unlocks.length === 0) {
-    return 0;
+    return 0
   }
 
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const sevenDaysAgo = new Date()
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
 
-  return inventory.unlocks.filter(
-    unlock => new Date(unlock.dateUnlocked) >= sevenDaysAgo
-  ).length;
-};
+  return inventory.unlocks.filter((unlock) => new Date(unlock.dateUnlocked) >= sevenDaysAgo).length
+}

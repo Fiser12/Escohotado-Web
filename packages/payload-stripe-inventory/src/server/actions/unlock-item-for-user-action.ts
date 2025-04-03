@@ -1,7 +1,7 @@
 import { BaseUser, UnlockItem, UserInventory } from "payload-access-control";
 import { getPayloadSingleton } from "payload-base-singleton";
-import { checkIfUserCanUnlock, countWeeklyUnlocks } from "../../common";
-import { MAX_UNLOCKS_PER_WEEK } from "../../common";
+import { countWeeklyUnlocksQuery, MAX_UNLOCKS_PER_WEEK } from "../../common";
+import { checkIfUserCanUnlockQuery } from "./check-if-user-can-unlock-query";
 
 /**
  * Desbloquea un elemento para un usuario si tiene permisos y no ha excedido el límite semanal
@@ -14,9 +14,7 @@ import { MAX_UNLOCKS_PER_WEEK } from "../../common";
 
 export const unlockItemForUser = async (
   user: BaseUser,
-  collection: string,
-  itemId: number,
-  itemPayload: any,
+  item: UnlockItem,
   permissions: string[] = []
 ): Promise<{ success: boolean; message: string }> => {
   if (!user || !user.id) {
@@ -24,7 +22,7 @@ export const unlockItemForUser = async (
   }
 
   // Verificar si el usuario puede desbloquear el elemento
-  if (!checkIfUserCanUnlock(user, permissions)) {
+  if (!checkIfUserCanUnlockQuery(user, permissions)) {
     return {
       success: false,
       message: "No tienes permisos para desbloquear este elemento",
@@ -32,21 +30,13 @@ export const unlockItemForUser = async (
   }
 
   // Verificar si el usuario ha alcanzado el límite de desbloqueos semanales
-  const weeklyUnlocks = countWeeklyUnlocks(user);
+  const weeklyUnlocks = countWeeklyUnlocksQuery(user);
   if (weeklyUnlocks >= MAX_UNLOCKS_PER_WEEK) {
     return {
       success: false,
       message: `Has alcanzado el límite de ${MAX_UNLOCKS_PER_WEEK} desbloqueos para esta semana`,
     };
   }
-
-  // Crear el nuevo elemento desbloqueado
-  const newUnlock: UnlockItem = {
-    collection,
-    id: itemId,
-    dateUnlocked: new Date(),
-    payload: itemPayload,
-  };
 
   // Actualizar el inventario del usuario
   const inventory = user.inventory as UserInventory | undefined;
@@ -55,7 +45,7 @@ export const unlockItemForUser = async (
   }
 
   // Agregar el elemento desbloqueado al array de desbloqueos
-  const updatedUnlocks = [...(inventory.unlocks || []), newUnlock];
+  const updatedUnlocks = [...(inventory.unlocks || []), item];
 
   try {
     // Obtener la instancia de Payload
