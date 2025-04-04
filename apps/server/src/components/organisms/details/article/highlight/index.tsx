@@ -54,7 +54,7 @@ export const HighlightCTASection: React.FC<HighlightCTASectionProps> = ({
         <Typo.H4 className="text-white text-center">{title}</Typo.H4>
         <div className="flex flex-col gap-4">
             {buttons.map((button, index) => (
-                <MainButtonAction key={index} {...button} />
+                <MainButtonAction className="whitespace-nowrap" key={index} {...button} />
             ))}
         </div>
     </BasicHighlightSection>

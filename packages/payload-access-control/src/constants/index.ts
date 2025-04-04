@@ -14,7 +14,7 @@ const FREE_PERMISSION = "free"
 const TESTER_PERMISSION = "tester"
 const DEV_PERMISSION = "dev"
 const BASIC_PERMISSION = "basic"
-const ADMIN_PERMISSION = "admin"
+const ADMIN_PERMISSION = "web_admin"
 
 export const permissionSlugs = {
   webAdmin: ADMIN_PERMISSION,

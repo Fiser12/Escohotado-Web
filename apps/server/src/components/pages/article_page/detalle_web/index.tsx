@@ -77,10 +77,9 @@ export const ArticleDetail: React.FC<Props> = ({
                         className="object-cover"
                     />
                 </div>}
-            <ContentWrapper className="flex flex-col ">
+            <ContentWrapper className="flex flex-col pt-5">
                 <div className="md:pb-10 flex flex-col gap-6 md:gap-10">
                     <div className="flex flex-col gap-2">
-                        {author && <Typo.H4>{author}</Typo.H4>}
                         <Typo.H1 >{article.title}</Typo.H1>
                     </div>
                     <div className={tagDateContainerClass}>

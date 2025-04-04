@@ -23,7 +23,7 @@ export const GridComments: React.FC<Props<any>> = ({
                         {forumTopicId &&
                               <a href={generateTopicHref(forumTopicId)} target="_blank" rel="noreferrer">
                                     <MainButton
-                                          className="whitespace-nowrap flex-shrink-0"
+                                          className="whitespace-nowrap"
                                           text="Únete al debate"
                                           color="secondary"
                                           type="fill"

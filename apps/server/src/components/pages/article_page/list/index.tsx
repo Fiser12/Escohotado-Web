@@ -16,7 +16,7 @@ import { Services } from '@/modules/services';
 import classNames from "classnames";
 import { arrayToRecord, CategoryModel, convertContentModelToCard } from "hegel";
 import Image from "next/image";
-import { BaseUser, ContentProtected } from "payload-access-control";
+import { BaseUser, ContentProtected, permissionSlugs } from "payload-access-control";
 import { ArticleWeb, ArticulosPage, Book, Taxonomy } from "payload-types";
 
 interface Props {
@@ -84,7 +84,7 @@ export const ArticlePageList = ({
         <ContentProtected
             user={user}
             collection="article_web"
-            content={{ permissions_seeds: "basic" }}
+            content={{ permissions_seeds: permissionSlugs.basic }}
         >
             {({ hasPermissions }) => (
                 <> { hasPermissions ? <QuotesLockedHighlightSection /> : <LockedHighlightSection /> } </>

@@ -11,5 +11,7 @@ export const checkIfUserCanUnlockQuery = (
   user: BaseUser,
   permissions: string[]
 ): boolean => {
-  return permissions.includes(permissionSlugs.freemium);
+  return permissions
+    .flatMap(item => item.split(' '))
+    .includes(permissionSlugs.freemium) && !permissions.includes(permissionSlugs.free);
 };
