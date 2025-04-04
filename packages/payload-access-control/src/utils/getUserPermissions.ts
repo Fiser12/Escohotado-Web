@@ -6,7 +6,7 @@ import { BaseUser, UserInventory } from "../types";
 export const getUserPermissions = (user?: BaseUser | null): string[] => {
   if (!user) return [];
 
-  const inventory = user?.inventory as UserInventory | undefined;
+  const inventory = user?.inventory as UserInventory;
   if (!inventory) return [];
 
   const subscriptionPermissions = Object.values(inventory.subscriptions)

@@ -22,7 +22,7 @@ export const mapQuoteCard =
                 user,
                 'permissions_seeds' in item.source.value
                   ? (item.source.value.permissions_seeds?.trim() ?? '')
-                  : ('' as any),
+                  : "",
               ),
               detailHref: routes.nextJS.generateDetailHref({
                 collection: item.source.relationTo,

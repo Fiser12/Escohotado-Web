@@ -1,20 +1,26 @@
 import { MainButtonActionProps } from "@/components/atoms/main-button";
 import { HighlightCTASection, LockedHighlightSection, UnlocksDepletedHighlightSection } from "@/components/organisms/details/article/highlight";
+import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
+import { routes } from "@/core/routes-generator";
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
 import { ServiceInjector } from "@/modules/services";
+import { getPayload } from "@/payload/utils/get-payload";
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import { redirect } from "next/navigation";
 import { BaseUser } from "payload-access-control";
 import { getNextUnlockDateQuery, countWeeklyUnlocksQuery, MAX_UNLOCKS_PER_WEEK} from "payload-stripe-inventory";
-import { checkIfUserCanUnlockQuery } from "payload-stripe-inventory/server";
+import { checkIfUserCanUnlockQuery, unlockItemForUser } from "payload-stripe-inventory/server";
 
 interface Props extends ServiceInjector {
     user?: BaseUser | null;
     data?: SerializedEditorState | null;
+    collection: string;
+    contentId: number;
     permissions?: string[]
 
 }
 export const BlockedContentArea = ({
-    user, data, services, permissions = []
+    user, data, services, permissions = [], collection, contentId
 }: Props) => {
     return <div className="flex flex-col">
         {data && <div className="relative w-full overflow-hidden">
@@ -25,11 +31,11 @@ export const BlockedContentArea = ({
         </div>}
         {(!user || !checkIfUserCanUnlockQuery(user, permissions)) ?
             <LockedHighlightSection /> :
-            <UnlockableHighlightSection user={user} services={services} />}
+            <UnlockableHighlightSection user={user} services={services} collection={collection} contentId={contentId} />}
     </div>;
 };
 
-export const UnlockableHighlightSection: React.FC<Props> = ({ user, services, permissions }) => {
+export const UnlockableHighlightSection: React.FC<Props> = ({ user, services, permissions, collection, contentId }) => {
     if (!user) return null;
     const restOfWeeklyUnlocks = MAX_UNLOCKS_PER_WEEK - countWeeklyUnlocksQuery(user)
     if (restOfWeeklyUnlocks === 0) return <UnlocksDepletedHighlightSection nextUnlockDate={getNextUnlockDateQuery(user)} />
@@ -38,6 +44,16 @@ export const UnlockableHighlightSection: React.FC<Props> = ({ user, services, pe
         color: "secondary",
         onClick: async () => {
             "use server";
+            await unlockItemForUser(
+                getPayload,
+                getCurrentUserQuery,
+                collection,
+                contentId
+            )
+            redirect(routes.nextJS.generateDetailHref({ 
+                collection: collection as any, 
+                value: { id: contentId } 
+            }) + "?unlocked=true");
         }
     }
     return <HighlightCTASection

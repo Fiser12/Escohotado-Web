@@ -3,7 +3,7 @@
 
 import type { BaseUser } from 'payload-access-control';
 import { useEffect, useState } from 'react';
-import { countWeeklyUnlocksQuery } from 'payload-stripe-inventory';
+import { countWeeklyUnlocksQuery, getNextUnlockDateQuery } from 'payload-stripe-inventory';
 
 interface UnlocksProgressProps {
     user: BaseUser;
@@ -18,6 +18,7 @@ export const UnlocksProgress: React.FC<UnlocksProgressProps> = ({
 }) => {
     const [weeklyUnlocks, setWeeklyUnlocks] = useState(0);
     const [percentage, setPercentage] = useState(0);
+    const nextUnlockDate = getNextUnlockDateQuery(user);
 
     useEffect(() => {
         const unlocks = countWeeklyUnlocksQuery(user);
@@ -42,10 +43,14 @@ export const UnlocksProgress: React.FC<UnlocksProgressProps> = ({
                 <div className="text-xs text-gray-600 mt-1">
                     Te quedan {maxUnlocks - weeklyUnlocks} desbloqueos esta semana
                 </div>
-            ) : (
+            ) : (<>
                 <div className="text-xs text-red-600 mt-1">
                     Has alcanzado el límite de desbloqueos para esta semana
                 </div>
+                <div className="text-xs text-gray-600 mt-1">
+                    Próximo desbloqueo: {nextUnlockDate.toLocaleDateString()}
+                </div>
+            </>
             )}
         </div>
     );

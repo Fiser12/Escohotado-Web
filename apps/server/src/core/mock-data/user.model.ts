@@ -77,7 +77,7 @@ interface MockUserProps {
 
 export function mockUser({ permissions, withSubscription = true, isAdmin = false }: MockUserProps): BaseUser<UserInventory> {
   return {
-    id: '123',
+    id: 1,
     name: 'Rubén',
     email: 'ruben@nexolabs.xyz',
     image: 'https://fake.com/image.jpg',

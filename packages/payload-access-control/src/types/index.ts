@@ -88,14 +88,14 @@ export interface FavoriteItem {
 }
 
 export interface UserInventory {
-  stripeCustomerId: string;
+  stripeCustomerId?: string;
   subscriptions: Record<string, SubscriptionInventory>;
   products: Record<string, BoughtProduct>;
   unlocks: UnlockItem[];
   favorites: FavoriteItem[];
 }
 
-export const generateUserInventory = (customerId: string): UserInventory => ({
+export const generateUserInventory = (customerId?: string): UserInventory => ({
   stripeCustomerId: customerId,
   subscriptions: {},
   products: {},

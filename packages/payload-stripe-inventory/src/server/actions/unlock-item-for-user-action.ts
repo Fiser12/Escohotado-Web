@@ -1,25 +1,59 @@
-import { BaseUser, UnlockItem, UserInventory } from "payload-access-control";
-import { getPayloadSingleton } from "payload-base-singleton";
-import { countWeeklyUnlocksQuery, MAX_UNLOCKS_PER_WEEK } from "../../common";
+import { Payload } from "payload";
+import {
+  BaseUser,
+  generateUserInventory,
+  UnlockItem,
+  UserInventory,
+} from "payload-access-control";
+import {
+  COLLECTION_SLUG_USER,
+  countWeeklyUnlocksQuery,
+  MAX_UNLOCKS_PER_WEEK,
+} from "../../common";
 import { checkIfUserCanUnlockQuery } from "./check-if-user-can-unlock-query";
 
-/**
- * Desbloquea un elemento para un usuario si tiene permisos y no ha excedido el límite semanal
- * @param user Usuario base
- * @param collection Nombre de la colección del elemento
- * @param itemId ID del elemento a desbloquear
- * @param itemPayload Datos adicionales del elemento
- * @returns Objeto con éxito/error y mensaje
- */
+const addUniqueUnlock = (
+  unlocks: UnlockItem[],
+  collection: string,
+  contentId: number
+): UnlockItem[] => {
+  const isDuplicate = unlocks.some(
+    unlock => unlock.collection === collection && unlock.id === contentId
+  );
+
+  if (isDuplicate) {
+    return unlocks;
+  }
+  return [
+    ...unlocks,
+    {
+      collection,
+      id: contentId,
+      dateUnlocked: new Date(),
+    },
+  ];
+};
 
 export const unlockItemForUser = async (
-  user: BaseUser,
-  item: UnlockItem,
-  permissions: string[] = []
+  getPayload: () => Promise<Payload>,
+  getUser: () => Promise<BaseUser | null>,
+  collection: string,
+  contentId: number
 ): Promise<{ success: boolean; message: string }> => {
+  const user = await getUser();
   if (!user || !user.id) {
     return { success: false, message: "Usuario no válido" };
   }
+  const payload = await getPayload();
+  const item = await payload.findByID({
+    collection,
+    id: contentId.toString(),
+  });
+
+  if (!item) {
+    return { success: false, message: "Elemento no encontrado" };
+  }
+  const permissions = item.permissions_seeds?.split(",") || [];
 
   // Verificar si el usuario puede desbloquear el elemento
   if (!checkIfUserCanUnlockQuery(user, permissions)) {
@@ -39,21 +73,27 @@ export const unlockItemForUser = async (
   }
 
   // Actualizar el inventario del usuario
-  const inventory = user.inventory as UserInventory | undefined;
-  if (!inventory) {
-    return { success: false, message: "Inventario de usuario no encontrado" };
+  const inventory =
+    (user.inventory as UserInventory) ?? generateUserInventory();
+
+  // Agregar el elemento desbloqueado al array de desbloqueos, evitando duplicados
+  const updatedUnlocks = addUniqueUnlock(
+    inventory.unlocks,
+    collection,
+    contentId
+  );
+
+  // Si no hay cambios, significa que el elemento ya estaba desbloqueado
+  if (updatedUnlocks.length === inventory.unlocks.length) {
+    return {
+      success: true,
+      message: "Este elemento ya estaba desbloqueado para ti",
+    };
   }
 
-  // Agregar el elemento desbloqueado al array de desbloqueos
-  const updatedUnlocks = [...(inventory.unlocks || []), item];
-
   try {
-    // Obtener la instancia de Payload
-    const payload = await getPayloadSingleton();
-
-    // Actualizar el usuario en la base de datos
     await payload.update({
-      collection: "users", // Asegúrate de que esta sea la colección correcta para usuarios
+      collection: COLLECTION_SLUG_USER,
       id: user.id.toString(),
       data: {
         inventory: {

@@ -20,7 +20,13 @@ export const ArticleContentProtected = ({
     >
         {({ hasPermissions, isUnlocked }) => <> {(hasPermissions || isUnlocked) ?
             <LexicalRenderer data={article.content} services={services} /> :
-            <BlockedContentArea user={user} data={article.preview_content} services={services} permissions={article.permissions_seeds?.split(',')} />
+            <BlockedContentArea
+                user={user}
+                data={article.preview_content}
+                services={services}
+                permissions={article.permissions_seeds?.split(',')}
+                collection={COLLECTION_SLUG_ARTICLE_WEB}
+                contentId={article.id} />
         } </>}
     </ContentProtected>;
 };

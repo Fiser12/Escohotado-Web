@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { MainButton, MainButtonAction, MainButtonActionProps } from "@/components/atoms/main-button";
+import { MainButtonAction, MainButtonActionProps } from "@/components/atoms/main-button";
 import handwrittenBackground from "@/components/assets/images/handwritting-bg.jpg";
 import { Typo } from "@/components/atoms/typographies";
 import { routes } from "@/core/routes-generator";

@@ -1,7 +1,6 @@
 import { Textures } from "@/components/assets/textures";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header/header";
-import { UnlocksProgress } from "@/components/organisms/subscription/unlocks-progress.organism";
 import { getAccountMenuQuery } from "@/core/queries/get-account-menu-query";
 import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
 import { routes } from "@/core/routes-generator";
@@ -72,12 +71,6 @@ const Layout: React.FC<{ children: React.ReactNode, modal?: React.ReactNode }> =
           <main className="flex flex-col flex-grow">
             {children}
           </main>
-          {
-            payloadUser && (
-              <UnlocksProgress user={payloadUser} className="flex-grow mr-4" />
-            )
-          }
-
           <Footer
             youtubeHref={routes.otherExternal.youtube}
             xHref={routes.otherExternal.x}
