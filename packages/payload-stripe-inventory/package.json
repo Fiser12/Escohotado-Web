@@ -31,7 +31,8 @@
     "@payloadcms/plugin-stripe": "3.25.0",
     "stripe": "17.2.1",
     "payload-access-control": "workspace:*",
-    "payload-base-singleton": "workspace:*"
+    "payload-base-singleton": "workspace:*",
+    "hegel": "workspace:*"
   },
   "dependencies": {},
   "devDependencies": {

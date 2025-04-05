@@ -1,7 +1,7 @@
-import { COLLECTION_SLUG_USER } from '@/core/collections-slugs'
 import syncNewsletterSubscription from '@/core/newsletter/sync-newsletter-subscription'
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isAdminOrCurrentUser, permissionSlugs } from 'payload-access-control'
+import { COLLECTION_SLUG_USER } from 'payload-stripe-inventory'
 
 const ADMIN_AUTH_GROUP = 'Auth'
 
@@ -59,7 +59,7 @@ export const users: CollectionConfig = {
     {
       name: 'inventory',
       type: 'json',
-      admin: { readOnly: true },
+      admin: { readOnly: false },
     },
   ],
 } as const

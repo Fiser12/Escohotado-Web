@@ -11,6 +11,7 @@ import {
   MAX_UNLOCKS_PER_WEEK,
 } from "../../common";
 import { checkIfUserCanUnlockQuery } from "./check-if-user-can-unlock-query";
+import { Result } from "hegel";
 
 const addUniqueUnlock = (
   unlocks: UnlockItem[],
@@ -39,10 +40,10 @@ export const unlockItemForUser = async (
   getUser: () => Promise<BaseUser | null>,
   collection: string,
   contentId: number
-): Promise<{ success: boolean; message: string }> => {
+): Promise<Promise<Result<boolean>>> => {
   const user = await getUser();
   if (!user || !user.id) {
-    return { success: false, message: "Usuario no válido" };
+    return { error: "Usuario no válido" };
   }
   const payload = await getPayload();
   const item = await payload.findByID({
@@ -51,44 +52,29 @@ export const unlockItemForUser = async (
   });
 
   if (!item) {
-    return { success: false, message: "Elemento no encontrado" };
+    return { error: "Elemento no encontrado" };
   }
   const permissions = item.permissions_seeds?.split(",") || [];
 
-  // Verificar si el usuario puede desbloquear el elemento
   if (!checkIfUserCanUnlockQuery(user, permissions)) {
-    return {
-      success: false,
-      message: "No tienes permisos para desbloquear este elemento",
-    };
+    return { error: "No tienes permisos para desbloquear este elemento" };
   }
 
-  // Verificar si el usuario ha alcanzado el límite de desbloqueos semanales
   const weeklyUnlocks = countWeeklyUnlocksQuery(user);
   if (weeklyUnlocks >= MAX_UNLOCKS_PER_WEEK) {
-    return {
-      success: false,
-      message: `Has alcanzado el límite de ${MAX_UNLOCKS_PER_WEEK} desbloqueos para esta semana`,
-    };
+    return { error: `Has alcanzado el límite de ${MAX_UNLOCKS_PER_WEEK} desbloqueos para esta semana` };
   }
 
-  // Actualizar el inventario del usuario
-  const inventory =
-    (user.inventory as UserInventory) ?? generateUserInventory();
+  const inventory = (user.inventory as UserInventory) ?? generateUserInventory();
 
-  // Agregar el elemento desbloqueado al array de desbloqueos, evitando duplicados
   const updatedUnlocks = addUniqueUnlock(
     inventory.unlocks,
     collection,
     contentId
   );
 
-  // Si no hay cambios, significa que el elemento ya estaba desbloqueado
   if (updatedUnlocks.length === inventory.unlocks.length) {
-    return {
-      success: true,
-      message: "Este elemento ya estaba desbloqueado para ti",
-    };
+    return { data: true };
   }
 
   try {
@@ -103,15 +89,10 @@ export const unlockItemForUser = async (
       },
     });
 
-    return {
-      success: true,
-      message: `Elemento desbloqueado correctamente. Te quedan ${MAX_UNLOCKS_PER_WEEK - weeklyUnlocks - 1} desbloqueos esta semana`,
-    };
+    return { data: true};
   } catch (error) {
     console.error("Error al actualizar el inventario del usuario:", error);
-    return {
-      success: false,
-      message: "Error al actualizar el inventario del usuario",
-    };
+    return { error: "Error al actualizar el inventario del usuario" };
   }
 };
+

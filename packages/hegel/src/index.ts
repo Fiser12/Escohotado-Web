@@ -6,6 +6,7 @@ export {
 export type { MenuItem, MenuSection } from "./domain/header_submenu_model";
 export type { Interval, IntervalOptions } from "./domain/interval_options";
 import "./domain/optional_helpers";
+export type { Result } from "./domain/result";
 export { arrayToRecord } from "./domain/array_to_record";
 export type { Comment, CommentsSectionModel } from "./domain/types/Comment";
 export type { CategoryModel } from "./domain/types/CategoryModel";

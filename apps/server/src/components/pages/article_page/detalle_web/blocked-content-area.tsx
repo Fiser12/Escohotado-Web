@@ -1,63 +1,53 @@
-import { MainButtonActionProps } from "@/components/atoms/main-button";
-import { HighlightCTASection, LockedHighlightSection, UnlocksDepletedHighlightSection } from "@/components/organisms/details/article/highlight";
-import { getCurrentUserQuery } from "@/core/queries/get-current-user-query";
-import { routes } from "@/core/routes-generator";
+import { LockedHighlightSection, UnlocksDepletedHighlightSection } from "@/components/organisms/details/article/highlight";
+import { UnlockActionHighlightSection } from "@/components/organisms/details/article/highlight/unlock-action-highlight-section";
 import { LexicalRenderer } from "@/modules/lexical/renderer/lexical-renderer";
 import { ServiceInjector } from "@/modules/services";
-import { getPayload } from "@/payload/utils/get-payload";
 import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
-import { redirect } from "next/navigation";
 import { BaseUser } from "payload-access-control";
-import { getNextUnlockDateQuery, countWeeklyUnlocksQuery, MAX_UNLOCKS_PER_WEEK} from "payload-stripe-inventory";
-import { checkIfUserCanUnlockQuery, unlockItemForUser } from "payload-stripe-inventory/server";
+import { countWeeklyUnlocksQuery, getNextUnlockDateQuery, MAX_UNLOCKS_PER_WEEK } from "payload-stripe-inventory";
+import { checkIfUserCanUnlockQuery } from "payload-stripe-inventory/server";
 
 interface Props extends ServiceInjector {
     user?: BaseUser | null;
     data?: SerializedEditorState | null;
     collection: string;
     contentId: number;
-    permissions?: string[]
-
+    permissions?: string[];
 }
+
 export const BlockedContentArea = ({
     user, data, services, permissions = [], collection, contentId
 }: Props) => {
-    return <div className="flex flex-col">
-        {data && <div className="relative w-full overflow-hidden">
-            <div className="relative">
-                <LexicalRenderer className="max-w-[48rem] mx-auto" data={data} services={services} />
-            </div>
-            <div className="absolute bottom-0 left-0 w-full h-50 bg-gradient-to-b from-transparent to-white pointer-events-none" />
-        </div>}
-        {(!user || !checkIfUserCanUnlockQuery(user, permissions)) ?
-            <LockedHighlightSection /> :
-            <UnlockableHighlightSection user={user} services={services} collection={collection} contentId={contentId} />}
-    </div>;
-};
+    const canUserUnlock = user ? checkIfUserCanUnlockQuery(user, permissions) : false;
+    const restOfWeeklyUnlocks = user ? MAX_UNLOCKS_PER_WEEK - countWeeklyUnlocksQuery(user) : 0;
+    const hasDepletedUnlocks = user ? restOfWeeklyUnlocks <= 0 : false;
+    const nextUnlockDate = user ? getNextUnlockDateQuery(user) : undefined;
 
-export const UnlockableHighlightSection: React.FC<Props> = ({ user, services, permissions, collection, contentId }) => {
-    if (!user) return null;
-    const restOfWeeklyUnlocks = MAX_UNLOCKS_PER_WEEK - countWeeklyUnlocksQuery(user)
-    if (restOfWeeklyUnlocks === 0) return <UnlocksDepletedHighlightSection nextUnlockDate={getNextUnlockDateQuery(user)} />
-    const unlockButton: MainButtonActionProps = {
-        text: `Desbloquear`,
-        color: "secondary",
-        onClick: async () => {
-            "use server";
-            await unlockItemForUser(
-                getPayload,
-                getCurrentUserQuery,
-                collection,
-                contentId
-            )
-            redirect(routes.nextJS.generateDetailHref({ 
-                collection: collection as any, 
-                value: { id: contentId } 
-            }) + "?unlocked=true");
-        }
-    }
-    return <HighlightCTASection
-        title={`Puedes desbloquear ${restOfWeeklyUnlocks} contenidos más esta semana`}
-        buttons={[unlockButton]}
-    />
-}
+    return (
+        <div className="flex flex-col">
+            {data && (
+                <div className="relative w-full overflow-hidden">
+                    <div className="relative">
+                        <LexicalRenderer className="max-w-[48rem] mx-auto" data={data} services={services} />
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-full h-50 bg-gradient-to-b from-transparent to-white pointer-events-none" />
+                </div>
+            )}
+            {!canUserUnlock ? (
+                <LockedHighlightSection />
+            ) : hasDepletedUnlocks ? (
+                nextUnlockDate ? (
+                    <UnlocksDepletedHighlightSection nextUnlockDate={nextUnlockDate} />
+                ) : (
+                    <p className="text-center text-gray-500">Has agotado tus desbloqueos semanales.</p>
+                )
+            ) : (
+                <UnlockActionHighlightSection
+                    restOfWeeklyUnlocks={restOfWeeklyUnlocks}
+                    collection={collection}
+                    contentId={contentId}
+                />
+            )}
+        </div>
+    );
+};

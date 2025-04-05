@@ -10,7 +10,10 @@ export interface Action {
         href: string
     }
     tabIndex?: number
-    onClick?: () => Promise<void>
+    button?: {
+        onClick?: () => Promise<void>
+        type?:  "submit" | "reset" | "button";
+    }
 }
 
 
@@ -18,6 +21,7 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLDivElement> {
     text: string;
     color?: 'primary' | 'secondary';
     type?: 'fill' | 'line';
+    disabled?: boolean;
     className?: string;
     icon?: React.ReactNode;
 }
@@ -27,14 +31,27 @@ export const MainButtonAction: React.FC<MainButtonActionProps> = ({
     link,
     tabIndex,
     onClick,
+    disabled,
     ...rest
 }) => {
     if (link) {
-        return <Link href={link.href} target={link.target} tabIndex={tabIndex}>
+        return <Link 
+            href={link.href} 
+            target={link.target} 
+            tabIndex={tabIndex}
+            onClick={rest.button?.onClick}
+        >
             <MainButton {...rest} />
         </Link>
     }
-    return <MainButton {...rest} onClick={onClick} tabIndex={tabIndex} />
+    return <button 
+    type={rest.button?.type} 
+    tabIndex={tabIndex}
+    onClick={rest.button?.onClick}
+    disabled={disabled}
+    >
+        <MainButton {...rest} />
+    </button>
 }
 
 export const MainButton: React.FC<ButtonProps> = ({

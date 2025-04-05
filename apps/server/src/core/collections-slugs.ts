@@ -1,6 +1,5 @@
-import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES } from 'payload-stripe-inventory'
+import { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES, COLLECTION_SLUG_USER } from 'payload-stripe-inventory'
 
-export const COLLECTION_SLUG_USER = 'users' as const
 export const COLLECTION_SLUG_MEDIA = 'media' as const
 export const COLLECTION_SLUG_TAXONOMY = 'taxonomy' as const
 export { COLLECTION_SLUG_PRODUCTS, COLLECTION_SLUG_PRICES }

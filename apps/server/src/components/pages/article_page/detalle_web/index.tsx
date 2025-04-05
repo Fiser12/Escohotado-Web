@@ -10,12 +10,13 @@ import classNames from "classnames";
 import { mapAnyToComment } from "hegel";
 import Image from "next/image";
 import Link from "next/link";
-import { BaseUser, evalPermissionByRoleQuery } from "payload-access-control";
+import { BaseUser, evalPermissionByRoleQuery, isContentUnlocked } from "payload-access-control";
 import { ArticleWeb, Media, Pdf, Quote, Taxonomy } from "payload-types";
 import { ContentWrapper } from "@/components/layout/content-wrapper";
 import { SocialMediaShare } from "@/components/molecules/social_media";
 import { ArticleContentProtected } from "./article-content-protected";
 import { MainButton } from "@/components/atoms/main-button";
+import { COLLECTION_SLUG_ARTICLE_WEB } from "@/core/collections-slugs";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement>, ServiceInjector {
     article: ArticleWeb;
@@ -59,6 +60,7 @@ export const ArticleDetail: React.FC<Props> = ({
     const coverHref = (article.cover as Media | null)?.url
     const detailHref = routes.nextJS.generateDetailHref({ collection: "article_web", value: article })
     const categories = article.categories?.cast<Taxonomy>().map(mapTaxonomyToCategoryModel) ?? []
+    const isUnlocked = user && isContentUnlocked(user, article.id, COLLECTION_SLUG_ARTICLE_WEB)
 
     return (
         <SEOContentWrapper
@@ -87,6 +89,9 @@ export const ArticleDetail: React.FC<Props> = ({
                             {categories?.map((category, index) =>
                                 <Tag key={index} text={category.label}></Tag>
                             )}
+                            {isUnlocked &&
+                                <Tag text="Desbloqueado"></Tag>
+                            }
                         </div>
                         <p className="text-gray-disabled">{formattedDate}</p>
                     </div>

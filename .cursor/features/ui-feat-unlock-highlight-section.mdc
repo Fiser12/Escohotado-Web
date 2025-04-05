@@ -1,0 +1,28 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Este es prácticamente todo nuestro ámbito de trabajo, el LockedHighlightSection, pero quiero que hagamos una nueva versión del mismo y en un nuevo fichero ya que va a ReactClient en su interior va a tener que tener el "use client" encima. Se va a llamar UnlockActionHighlightSection
+
+Esta es nuestra otra área de trabajo. 
+
+Como puedes ver en ella tenemos la lógica de desbloqueo. Quiero que
+- Gestione cuando ha ido bien o mal el unlockItemForUser
+- Si ha ido mal quiero que salga un error en rojo en la parte inferior. Si es necesario crea un componente de error de texto independiente y haz uso de él así lo podremos reutilizar
+- Quiero que guardes en un estado multitipo, Result | Error, solo un state por componente 
+- Debemos evitar un refresco de toda la página y hacer uso de todas las capacidades que el cliente nos ofrece.
+- Los dos anteriores pasos puntos son relevantes de cara a la reutilización en lo que te voy a decir ahora. 
+- Por último y si te quedan tokens, pero ya al final quiero que implementes con framer una animación de cambio de estado
+- Debes hacer lo mismo que has hecho para el mensaje de error pero para el de success en verde. Reutilizable en componente 
+- tu ambito de acción es@blocked-content-area.tsx 
+- Quiero que elabores un plan de acción detallado antes de proceder. En caso de que consideres que no vas a ser capaz de sacar una respuesta buena quiero que me digas que.
+- "Considero que es mejor que empecemos de nuevo con el siguiente prompt ${Prompt}"
+- Procedamos, si tienes alguna duda en el plan consultame
+
+Quiero que hagas uso de las mejores prácticas de React19.1 y Tailwidcss v4.1
+Y ten en mente que ya estamos en la versión de NextJS 15, pero tal vez no te sea relevante, aplaza la investigación sobre esto a si la necesitas.
+
+No quiero que toques más allá de los ámbitos acordados
+
+@https://tailwindcss.com/docs @https://react.dev/learn/describing-the-ui 
